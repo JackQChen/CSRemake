@@ -16,7 +16,7 @@ void CHealthKit::Precache()
 	PRECACHE_SOUND("items/smallmedkit1.wav");
 }
 
-BOOL CHealthKit::MyTouch(CBasePlayer *pPlayer)
+BOOL CHealthKit::MyTouch(CBasePlayer* pPlayer)
 {
 #ifdef REGAMEDLL_ADD
 	if (pPlayer->HasRestrictItem(ITEM_HEALTHKIT, ITEM_TYPE_TOUCHED))
@@ -34,7 +34,7 @@ BOOL CHealthKit::MyTouch(CBasePlayer *pPlayer)
 	if (pPlayer->TakeHealth(healthValue, DMG_GENERIC))
 	{
 		MESSAGE_BEGIN(MSG_ONE, gmsgItemPickup, nullptr, pPlayer->pev);
-			WRITE_STRING(pev->classname);
+		WRITE_STRING(pev->classname);
 		MESSAGE_END();
 
 		EMIT_SOUND(ENT(pPlayer->pev), CHAN_ITEM, "items/smallmedkit1.wav", VOL_NORM, ATTN_NORM);
@@ -62,7 +62,7 @@ TYPEDESCRIPTION CWallHealth::m_SaveData[] =
 IMPLEMENT_SAVERESTORE(CWallHealth, CBaseEntity)
 LINK_ENTITY_TO_CLASS(func_healthcharger, CWallHealth, CCSWallHealth)
 
-void CWallHealth::KeyValue(KeyValueData *pkvd)
+void CWallHealth::KeyValue(KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "style") || FStrEq(pkvd->szKeyName, "height") || FStrEq(pkvd->szKeyName, "value1") || FStrEq(pkvd->szKeyName, "value2") || FStrEq(pkvd->szKeyName, "value3"))
 	{
@@ -127,7 +127,7 @@ void CWallHealth::Precache()
 	PRECACHE_SOUND("items/medcharge4.wav");
 }
 
-void CWallHealth::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void CWallHealth::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	// Make sure that we have a caller
 	if (!pActivator)

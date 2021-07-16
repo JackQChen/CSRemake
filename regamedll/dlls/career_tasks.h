@@ -34,33 +34,33 @@ class CCareerTask
 {
 public:
 	CCareerTask() {};
-	CCareerTask(const char *taskName, GameEventType event, const char *weaponName, int n, bool mustLive, bool crossRounds, int id, bool isComplete);
+	CCareerTask(const char* taskName, GameEventType event, const char* weaponName, int n, bool mustLive, bool crossRounds, int id, bool isComplete);
 
 	virtual ~CCareerTask() {}
 
 public:
-	virtual void OnEvent(GameEventType event, CBasePlayer *pAttacker, CBasePlayer *pVictim);
+	virtual void OnEvent(GameEventType event, CBasePlayer* pAttacker, CBasePlayer* pVictim);
 	virtual void Reset();
 	virtual bool IsTaskCompletableThisRound() { return true; }
 
 public:
-	static CCareerTask *NewTask(const char *taskName, GameEventType event, const char *weaponName, int n, bool mustLive, bool crossRounds, int id, bool isComplete);
+	static CCareerTask* NewTask(const char* taskName, GameEventType event, const char* weaponName, int n, bool mustLive, bool crossRounds, int id, bool isComplete);
 
-	void OnWeaponKill(int weaponId, int weaponClassId, bool headshot, bool killerHasShield, CBasePlayer *pAttacker, CBasePlayer *pVictim);
-	void OnWeaponInjury(int weaponId, int weaponClassId, bool attackerHasShield, CBasePlayer *pAttacker);
+	void OnWeaponKill(int weaponId, int weaponClassId, bool headshot, bool killerHasShield, CBasePlayer* pAttacker, CBasePlayer* pVictim);
+	void OnWeaponInjury(int weaponId, int weaponClassId, bool attackerHasShield, CBasePlayer* pAttacker);
 
 	bool IsComplete() { return m_isComplete; }
-	const char *GetTaskName() { return m_name; }
+	const char* GetTaskName() { return m_name; }
 
 	int GetWeaponId() { return m_weaponId; }
 	int GetWeaponClassId() { return m_weaponClassId; }
 
-	bool IsValidFor(CBasePlayer *pPlayer) { return true; }
+	bool IsValidFor(CBasePlayer* pPlayer) { return true; }
 	void SendPartialNotification();
 
 private:
 	bool m_isComplete;
-	const char *m_name;
+	const char* m_name;
 	int m_id;
 	GameEventType m_event;
 	int m_eventsNeeded;
@@ -75,30 +75,30 @@ private:
 	bool m_vip;
 };
 
-typedef std::list<CCareerTask *> CareerTaskList;
+typedef std::list<CCareerTask*> CareerTaskList;
 typedef CareerTaskList::iterator CareerTaskListIt;
 
-using TaskFactoryFunction = CCareerTask *(*)(const char *taskName, GameEventType event, const char *weaponName, int eventCount, bool mustLive, bool crossRounds, int nextId, bool isComplete);
+using TaskFactoryFunction = CCareerTask * (*)(const char* taskName, GameEventType event, const char* weaponName, int eventCount, bool mustLive, bool crossRounds, int nextId, bool isComplete);
 
 struct TaskInfo
 {
-	const char *taskName;
+	const char* taskName;
 	GameEventType event;
 	TaskFactoryFunction factory;
 };
 
-class CPreventDefuseTask: public CCareerTask
+class CPreventDefuseTask : public CCareerTask
 {
 public:
-	CPreventDefuseTask(const char *taskName, GameEventType event, const char *weaponName, int n, bool mustLive, bool crossRounds, int id, bool isComplete);
+	CPreventDefuseTask(const char* taskName, GameEventType event, const char* weaponName, int n, bool mustLive, bool crossRounds, int id, bool isComplete);
 
 public:
-	virtual void OnEvent(GameEventType event, CBasePlayer *pAttacker, CBasePlayer *pVictim);
+	virtual void OnEvent(GameEventType event, CBasePlayer* pAttacker, CBasePlayer* pVictim);
 	virtual void Reset();
 	virtual bool IsTaskCompletableThisRound() { return m_bombPlantedThisRound && !m_defuseStartedThisRound; }
 
 public:
-	static CCareerTask *NewTask(const char *taskName, GameEventType event, const char *weaponName, int n, bool mustLive, bool crossRounds, int id, bool isComplete);
+	static CCareerTask* NewTask(const char* taskName, GameEventType event, const char* weaponName, int n, bool mustLive, bool crossRounds, int id, bool isComplete);
 
 protected:
 	bool m_bombPlantedThisRound;
@@ -114,14 +114,14 @@ public:
 	static void Create();
 
 	void Reset(bool deleteTasks = true);
-	void AddTask(const char *taskName, const char *weaponName, int eventCount, bool mustLive, bool crossRounds, bool isComplete);
+	void AddTask(const char* taskName, const char* weaponName, int eventCount, bool mustLive, bool crossRounds, bool isComplete);
 
-	void HandleEvent(GameEventType event, CBasePlayer *pAttacker = nullptr, CBasePlayer *pVictim = nullptr);
-	void HandleEnemyKill(bool wasBlind, const char *weaponName, bool headshot, bool killerHasShield, CBasePlayer *pAttacker, CBasePlayer *pVictim);
-	void HandleWeaponKill(int weaponId, int weaponClassId, bool headshot, bool killerHasShield, CBasePlayer *pAttacker, CBasePlayer *pVictim);
-	void HandleDeath(int team, CBasePlayer *pAttacker = nullptr);
-	void HandleWeaponInjury(int weaponId, int weaponClassId, bool attackerHasShield, CBasePlayer *pAttacker);
-	void HandleEnemyInjury(const char *weaponName, bool attackerHasShield, CBasePlayer *pAttacker);
+	void HandleEvent(GameEventType event, CBasePlayer* pAttacker = nullptr, CBasePlayer* pVictim = nullptr);
+	void HandleEnemyKill(bool wasBlind, const char* weaponName, bool headshot, bool killerHasShield, CBasePlayer* pAttacker, CBasePlayer* pVictim);
+	void HandleWeaponKill(int weaponId, int weaponClassId, bool headshot, bool killerHasShield, CBasePlayer* pAttacker, CBasePlayer* pVictim);
+	void HandleDeath(int team, CBasePlayer* pAttacker = nullptr);
+	void HandleWeaponInjury(int weaponId, int weaponClassId, bool attackerHasShield, CBasePlayer* pAttacker);
+	void HandleEnemyInjury(const char* weaponName, bool attackerHasShield, CBasePlayer* pAttacker);
 
 	bool AreAllTasksComplete();
 	int GetNumRemainingTasks();
@@ -130,7 +130,7 @@ public:
 	void SetFinishedTaskTime(int val);
 	int GetFinishedTaskTime() { return m_finishedTaskTime; }
 	int GetFinishedTaskRound() { return m_finishedTaskRound; }
-	CareerTaskList *GetTasks() { return &m_tasks; }
+	CareerTaskList* GetTasks() { return &m_tasks; }
 	void LatchRoundEndMessage();
 	void UnlatchRoundEndMessage();
 
@@ -149,4 +149,4 @@ private:
 	bool m_shouldLatchRoundEndMessage;
 };
 
-extern CCareerTaskManager *TheCareerTasks;
+extern CCareerTaskManager* TheCareerTasks;

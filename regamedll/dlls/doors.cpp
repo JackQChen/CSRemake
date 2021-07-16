@@ -18,7 +18,7 @@ IMPLEMENT_SAVERESTORE(CBaseDoor, CBaseToggle)
 // if flocked is true, play 'door is locked' sound,
 // otherwise play 'door is unlocked' sound
 // NOTE: this routine is shared by doors and buttons
-void PlayLockSounds(entvars_t *pev, locksound_t *pls, int flocked, int fbutton)
+void PlayLockSounds(entvars_t* pev, locksound_t* pls, int flocked, int fbutton)
 {
 	// LOCKED SOUND
 
@@ -46,7 +46,7 @@ void PlayLockSounds(entvars_t *pev, locksound_t *pls, int flocked, int fbutton)
 		if (fplaysound)
 		{
 			// play 'door locked' sound
-			EMIT_SOUND(ENT(pev), CHAN_ITEM, (char *)STRING(pls->sLockedSound), fvol, ATTN_NORM);
+			EMIT_SOUND(ENT(pev), CHAN_ITEM, (char*)STRING(pls->sLockedSound), fvol, ATTN_NORM);
 			pls->flwaitSound = gpGlobals->time + flsoundwait;
 		}
 
@@ -81,7 +81,7 @@ void PlayLockSounds(entvars_t *pev, locksound_t *pls, int flocked, int fbutton)
 		// play 'door unlocked' sound if set
 		if (fplaysound)
 		{
-			EMIT_SOUND(ENT(pev), CHAN_ITEM, (char *)STRING(pls->sUnlockedSound), fvol, ATTN_NORM);
+			EMIT_SOUND(ENT(pev), CHAN_ITEM, (char*)STRING(pls->sUnlockedSound), fvol, ATTN_NORM);
 			pls->flwaitSound = gpGlobals->time + flsoundwait;
 		}
 
@@ -101,7 +101,7 @@ void PlayLockSounds(entvars_t *pev, locksound_t *pls, int flocked, int fbutton)
 }
 
 // Cache user-entity-field values until spawn is called.
-void CBaseDoor::KeyValue(KeyValueData *pkvd)
+void CBaseDoor::KeyValue(KeyValueData* pkvd)
 {
 	//skin is used for content type
 	if (FStrEq(pkvd->szKeyName, "skin"))
@@ -266,7 +266,7 @@ void CBaseDoor::SetToggleState(int state)
 
 void CBaseDoor::Precache()
 {
-	char *pszSound;
+	char* pszSound;
 
 	// set the door's "in-motion" sound
 	switch (m_bMoveSnd)
@@ -407,9 +407,9 @@ void CBaseDoor::Precache()
 }
 
 // Doors not tied to anything (e.g. button, another door) can be touched, to make them activate.
-void CBaseDoor::DoorTouch(CBaseEntity *pOther)
+void CBaseDoor::DoorTouch(CBaseEntity* pOther)
 {
-	entvars_t *pevToucher = pOther->pev;
+	entvars_t* pevToucher = pOther->pev;
 
 #ifdef REGAMEDLL_ADD
 	if ((pev->spawnflags & SF_DOOR_TOUCH_ONLY_CLIENTS) && !pOther->IsPlayer())
@@ -447,7 +447,7 @@ void CBaseDoor::DoorTouch(CBaseEntity *pOther)
 }
 
 // Used by SUB_UseTargets, when a door is the target of a button.
-void CBaseDoor::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void CBaseDoor::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	m_hActivator = pActivator;
 
@@ -490,7 +490,7 @@ int CBaseDoor::DoorActivate()
 // Starts the door going to its "up" position (simply ToggleData->vecPosition2).
 void CBaseDoor::DoorGoUp()
 {
-	entvars_t *pevActivator;
+	entvars_t* pevActivator;
 	bool isReversing = (m_toggle_state == TS_GOING_DOWN);
 
 	// It could be going-down, if blocked.
@@ -505,7 +505,7 @@ void CBaseDoor::DoorGoUp()
 		{
 			if (m_toggle_state != TS_GOING_UP && m_toggle_state != TS_GOING_DOWN)
 			{
-				EMIT_SOUND(ENT(pev), CHAN_STATIC, (char *)STRING(pev->noiseMoving), VOL_NORM, ATTN_NORM);
+				EMIT_SOUND(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseMoving), VOL_NORM, ATTN_NORM);
 			}
 
 			if (TheBots)
@@ -630,8 +630,8 @@ void CBaseDoor::DoorHitTop()
 	// water is silent
 	if (!(pev->spawnflags & SF_DOOR_ACTUALLY_WATER))
 	{
-		STOP_SOUND(ENT(pev), CHAN_STATIC, (char *)STRING(pev->noiseMoving));
-		EMIT_SOUND(ENT(pev), CHAN_STATIC, (char *)STRING(pev->noiseArrived), VOL_NORM, ATTN_NORM);
+		STOP_SOUND(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseMoving));
+		EMIT_SOUND(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseArrived), VOL_NORM, ATTN_NORM);
 	}
 
 	assert(m_toggle_state == TS_GOING_UP);
@@ -680,7 +680,7 @@ void CBaseDoor::DoorGoDown()
 		{
 			if (m_toggle_state != TS_GOING_UP && m_toggle_state != TS_GOING_DOWN)
 			{
-				EMIT_SOUND(ENT(pev), CHAN_STATIC, (char *)STRING(pev->noiseMoving), VOL_NORM, ATTN_NORM);
+				EMIT_SOUND(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseMoving), VOL_NORM, ATTN_NORM);
 			}
 
 			if (TheBots)
@@ -720,8 +720,8 @@ void CBaseDoor::DoorHitBottom()
 	// water is silent
 	if (!(pev->spawnflags & SF_DOOR_ACTUALLY_WATER))
 	{
-		STOP_SOUND(ENT(pev), CHAN_STATIC, (char *)STRING(pev->noiseMoving));
-		EMIT_SOUND(ENT(pev), CHAN_STATIC, (char *)STRING(pev->noiseArrived), VOL_NORM, ATTN_NORM);
+		STOP_SOUND(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseMoving));
+		EMIT_SOUND(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseArrived), VOL_NORM, ATTN_NORM);
 	}
 
 	assert(m_toggle_state == TS_GOING_DOWN);
@@ -749,10 +749,10 @@ void CBaseDoor::DoorHitBottom()
 	}
 }
 
-void CBaseDoor::Blocked(CBaseEntity *pOther)
+void CBaseDoor::Blocked(CBaseEntity* pOther)
 {
-	edict_t *pentTarget = nullptr;
-	CBaseDoor *pDoor = nullptr;
+	edict_t* pentTarget = nullptr;
+	CBaseDoor* pDoor = nullptr;
 	const float checkBlockedInterval = 0.25f;
 
 	// Hurt the blocker a little.
@@ -796,7 +796,7 @@ void CBaseDoor::Blocked(CBaseEntity *pOther)
 
 				if (FClassnameIs(pentTarget, "func_door") || FClassnameIs(pentTarget, "func_door_rotating"))
 				{
-					pDoor = GetClassPtr<CCSDoor>((CBaseDoor *)VARS(pentTarget));
+					pDoor = GetClassPtr<CCSDoor>((CBaseDoor*)VARS(pentTarget));
 
 					if (pDoor->m_flWait >= 0)
 					{
@@ -821,7 +821,7 @@ void CBaseDoor::Blocked(CBaseEntity *pOther)
 
 						if (!(pev->spawnflags & SF_DOOR_ACTUALLY_WATER))
 						{
-							STOP_SOUND(ENT(pev), CHAN_STATIC, (char *)STRING(pev->noiseMoving));
+							STOP_SOUND(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseMoving));
 						}
 
 						if (pDoor->m_toggle_state == TS_GOING_DOWN)
@@ -1072,7 +1072,7 @@ void CMomentaryDoor::Precache()
 	}
 }
 
-void CMomentaryDoor::KeyValue(KeyValueData *pkvd)
+void CMomentaryDoor::KeyValue(KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "movesnd"))
 	{
@@ -1093,7 +1093,7 @@ void CMomentaryDoor::KeyValue(KeyValueData *pkvd)
 		CBaseToggle::KeyValue(pkvd);
 }
 
-void CMomentaryDoor::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void CMomentaryDoor::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	// Momentary buttons will pass down a float in here
 	if (useType != USE_SET)
@@ -1119,7 +1119,7 @@ void CMomentaryDoor::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE
 	// play the sound when it starts moving (not yet thinking)
 	if (pev->nextthink < pev->ltime || pev->nextthink == 0)
 	{
-		EMIT_SOUND(ENT(pev), CHAN_STATIC, (char *)STRING(pev->noiseMoving), VOL_NORM, ATTN_NORM);
+		EMIT_SOUND(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseMoving), VOL_NORM, ATTN_NORM);
 	}
 #if 0
 	// If we already moving to designated point, return

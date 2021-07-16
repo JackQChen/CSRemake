@@ -170,7 +170,7 @@ enum SpewRetval_t
 };
 
 // Type of externally defined function used to display debug spew
-typedef SpewRetval_t (*SpewOutputFunc_t)(SpewType_t spewType, const char *pMsg);
+typedef SpewRetval_t(*SpewOutputFunc_t)(SpewType_t spewType, const char* pMsg);
 
 // Used to redirect spew output
 void SpewOutputFunc(SpewOutputFunc_t func);
@@ -179,13 +179,13 @@ void SpewOutputFunc(SpewOutputFunc_t func);
 SpewOutputFunc_t GetSpewOutputFunc();
 
 // Used to manage spew groups and subgroups
-void SpewActivate(const char *pGroupName, int level);
-bool IsSpewActive(const char *pGroupName, int level);
+void SpewActivate(const char* pGroupName, int level);
+bool IsSpewActive(const char* pGroupName, int level);
 
 // Used to display messages, should never be called directly.
-void _SpewInfo(SpewType_t type, const char *pFile, int line);
-SpewRetval_t _SpewMessage(const char *pMsg, ...);
-SpewRetval_t _DSpewMessage(const char *pGroupName, int level, const char *pMsg, ...);
+void _SpewInfo(SpewType_t type, const char* pFile, int line);
+SpewRetval_t _SpewMessage(const char* pMsg, ...);
+SpewRetval_t _DSpewMessage(const char* pGroupName, int level, const char* pMsg, ...);
 
 // Used to define macros, never use these directly.
 #define _Assert(_exp)                                                      \
@@ -296,16 +296,16 @@ SpewRetval_t _DSpewMessage(const char *pGroupName, int level, const char *pMsg, 
 #endif // _DEBUG
 
 // These are always compiled in
-void Msg(const char *pMsg, ...);
-void DMsg(const char *pGroupName, int level, const char *pMsg, ...);
+void Msg(const char* pMsg, ...);
+void DMsg(const char* pGroupName, int level, const char* pMsg, ...);
 
-void Warning(const char *pMsg, ...);
-void DWarning(const char *pGroupName, int level, const char *pMsg, ...);
+void Warning(const char* pMsg, ...);
+void DWarning(const char* pGroupName, int level, const char* pMsg, ...);
 
-void Log(const char *pMsg, ...);
-void DLog(const char *pGroupName, int level, const char *pMsg, ...);
+void Log(const char* pMsg, ...);
+void DLog(const char* pGroupName, int level, const char* pMsg, ...);
 
-void Error(const char *pMsg, ...);
+void Error(const char* pMsg, ...);
 
 // You can use this macro like a runtime assert macro.
 // If the condition fails, then Error is called with the message. This macro is called
@@ -323,13 +323,13 @@ void Error(const char *pMsg, ...);
 // A couple of super-common dynamic spew messages, here for convenience
 // These looked at the "developer" group
 void DevMsg(int level, char const* pMsg, ...);
-void DevWarning(int level, const char *pMsg, ...);
-void DevLog(int level, const char *pMsg, ...);
+void DevWarning(int level, const char* pMsg, ...);
+void DevLog(int level, const char* pMsg, ...);
 
 // default level versions (level 1)
 void DevMsg(char const* pMsg, ...);
-void DevWarning(const char *pMsg, ...);
-void DevLog(const char *pMsg, ...);
+void DevWarning(const char* pMsg, ...);
+void DevLog(const char* pMsg, ...);
 
 // Code macros, debugger interface
 #ifdef _DEBUG
@@ -358,14 +358,14 @@ void DevLog(const char *pMsg, ...);
 
 // Templates to assist in validating pointers:
 // Have to use these stubs so we don't have to include windows.h here.
-void _AssertValidReadPtr(void *ptr, int count = 1);
-void _AssertValidWritePtr(void *ptr, int count = 1);
-void _AssertValidReadWritePtr(void *ptr, int count = 1);
+void _AssertValidReadPtr(void* ptr, int count = 1);
+void _AssertValidWritePtr(void* ptr, int count = 1);
+void _AssertValidReadWritePtr(void* ptr, int count = 1);
 
- void AssertValidStringPtr(const char *ptr, int maxchar = 0xFFFFFF);
-template<class T> inline void AssertValidReadPtr(T *ptr, int count = 1)      { _AssertValidReadPtr((void *)ptr, count); }
-template<class T> inline void AssertValidWritePtr(T *ptr, int count = 1)     { _AssertValidWritePtr((void *)ptr, count); }
-template<class T> inline void AssertValidReadWritePtr(T *ptr, int count = 1) { _AssertValidReadWritePtr((void *)ptr, count); }
+void AssertValidStringPtr(const char* ptr, int maxchar = 0xFFFFFF);
+template<class T> inline void AssertValidReadPtr(T* ptr, int count = 1) { _AssertValidReadPtr((void*)ptr, count); }
+template<class T> inline void AssertValidWritePtr(T* ptr, int count = 1) { _AssertValidWritePtr((void*)ptr, count); }
+template<class T> inline void AssertValidReadWritePtr(T* ptr, int count = 1) { _AssertValidReadWritePtr((void*)ptr, count); }
 
 #define AssertValidThis() AssertValidReadWritePtr(this, sizeof(*this))
 
@@ -374,7 +374,7 @@ template<class T> inline void AssertValidReadWritePtr(T *ptr, int count = 1) { _
 class CReentryGuard
 {
 public:
-	CReentryGuard(int *pSemaphore)
+	CReentryGuard(int* pSemaphore)
 		: m_pSemaphore(pSemaphore)
 	{
 		++(*m_pSemaphore);
@@ -385,7 +385,7 @@ public:
 	}
 
 private:
-	int *m_pSemaphore;
+	int* m_pSemaphore;
 };
 
 #define ASSERT_NO_REENTRY()          \
@@ -400,7 +400,7 @@ private:
 class CDbgFmtMsg
 {
 public:
-	CDbgFmtMsg(const char *pszFormat, ...)
+	CDbgFmtMsg(const char* pszFormat, ...)
 	{
 		va_list arg_ptr;
 		va_start(arg_ptr, pszFormat);
@@ -409,7 +409,7 @@ public:
 		m_szBuf[sizeof(m_szBuf) - 1] = '\0';
 	}
 
-	operator const char *() const
+	operator const char* () const
 	{
 		return m_szBuf;
 	}

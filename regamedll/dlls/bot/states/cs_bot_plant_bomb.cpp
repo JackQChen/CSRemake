@@ -29,7 +29,7 @@
 #include "precompiled.h"
 
 // Plant the bomb.
-void PlantBombState::OnEnter(CCSBot *me)
+void PlantBombState::OnEnter(CCSBot* me)
 {
 	me->Crouch();
 	me->SetDisposition(CCSBot::SELF_DEFENSE);
@@ -42,9 +42,9 @@ void PlantBombState::OnEnter(CCSBot *me)
 }
 
 // Plant the bomb.
-void PlantBombState::OnUpdate(CCSBot *me)
+void PlantBombState::OnUpdate(CCSBot* me)
 {
-	CBasePlayerWeapon *pCurrentWeapon = me->GetActiveWeapon();
+	CBasePlayerWeapon* pCurrentWeapon = me->GetActiveWeapon();
 	bool holdingC4 = false;
 	if (pCurrentWeapon)
 	{
@@ -72,7 +72,7 @@ void PlantBombState::OnUpdate(CCSBot *me)
 		me->Idle();
 }
 
-void PlantBombState::OnExit(CCSBot *me)
+void PlantBombState::OnExit(CCSBot* me)
 {
 	// equip our rifle (in case we were interrupted while holding C4)
 	me->EquipBestWeapon();

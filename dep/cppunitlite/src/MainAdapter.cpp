@@ -6,8 +6,8 @@
 #include "cppunitlite/Test.h"
 #include "cppunitlite/TestRegistry.h"
 
-int MainAdapter::writeAllTestsInfoToFile(const char *fname) {
-	FILE *outFile = fopen(fname, "w");
+int MainAdapter::writeAllTestsInfoToFile(const char* fname) {
+	FILE* outFile = fopen(fname, "w");
 	if (!outFile) {
 		return 1;
 	}
@@ -15,7 +15,7 @@ int MainAdapter::writeAllTestsInfoToFile(const char *fname) {
 	fprintf(outFile, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 	fprintf(outFile, "<tests>\n");
 
-	Test *curTest = TestRegistry::getFirstTest();
+	Test* curTest = TestRegistry::getFirstTest();
 	while (curTest) {
 		fprintf(outFile, "<test ");
 
@@ -32,8 +32,8 @@ int MainAdapter::writeAllTestsInfoToFile(const char *fname) {
 	return 0;
 }
 
-int MainAdapter::runTest(const char *groupName, const char *testName) {
-	Test *curTest = TestRegistry::getFirstTest();
+int MainAdapter::runTest(const char* groupName, const char* testName) {
+	Test* curTest = TestRegistry::getFirstTest();
 	while (curTest) {
 		if (!strcmp(groupName, curTest->getGroup()) && !strcmp(testName, curTest->getName())) {
 			break;
@@ -60,8 +60,8 @@ int MainAdapter::runTest(const char *groupName, const char *testName) {
 	}
 }
 
-int MainAdapter::runGroup(const char *groupName) {
-	Test *curTest = TestRegistry::getFirstTest();
+int MainAdapter::runGroup(const char* groupName) {
+	Test* curTest = TestRegistry::getFirstTest();
 	int ranTests = 0;
 	int warnTest = 0;
 	while (curTest) {
@@ -100,7 +100,7 @@ int MainAdapter::runGroup(const char *groupName) {
 }
 
 int MainAdapter::runAllTests() {
-	Test *curTest = TestRegistry::getFirstTest();
+	Test* curTest = TestRegistry::getFirstTest();
 	int ranTests = 0;
 	int warnTest = 0;
 	while (curTest) {
@@ -128,7 +128,7 @@ int MainAdapter::runAllTests() {
 	return 0;
 }
 
-int MainAdapter::testsEntryPoint(int argc, char *argv[]) {
+int MainAdapter::testsEntryPoint(int argc, char* argv[]) {
 	if (argc < 2 || !strcmp(argv[1], "-all")) {
 		return runAllTests();
 	}

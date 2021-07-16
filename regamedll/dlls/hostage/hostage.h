@@ -28,11 +28,11 @@
 
 #pragma once
 
-const int MAX_NODES                    = 100;
-const int MAX_HOSTAGES                 = 12;
-const int MAX_HOSTAGES_NAV             = 20;
+const int MAX_NODES = 100;
+const int MAX_HOSTAGES = 12;
+const int MAX_HOSTAGES_NAV = 20;
 
-const float HOSTAGE_STEPSIZE           = 26.0f;
+const float HOSTAGE_STEPSIZE = 26.0f;
 const float MAX_HOSTAGES_RESCUE_RADIUS = 256.0f; // rescue zones from legacy info_*
 
 #define VEC_HOSTAGE_VIEW               Vector(0, 0, 12)
@@ -74,30 +74,30 @@ enum HostageChatterType
 // Improved the hostages from CZero
 #include "hostage/hostage_improv.h"
 
-extern CHostageManager *g_pHostages;
+extern CHostageManager* g_pHostages;
 extern int g_iHostageNumber;
 
 extern cvar_t cv_hostage_debug;
 extern cvar_t cv_hostage_stop;
 
 // A Counter-Strike Hostage Simple
-class CHostage: public CBaseMonster
+class CHostage : public CBaseMonster
 {
 public:
 	virtual void Spawn();
 	virtual void Precache();
 	virtual int ObjectCaps();		// make hostage "useable"
 	virtual int Classify() { return CLASS_HUMAN_PASSIVE; }
-	virtual void TraceAttack(entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType);
-	virtual BOOL TakeDamage(entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType);
+	virtual void TraceAttack(entvars_t* pevAttacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType);
+	virtual BOOL TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType);
 	virtual int BloodColor() { return BLOOD_COLOR_RED; }
 
 #ifndef REGAMEDLL_FIXES
 	virtual BOOL IsAlive() { return (pev->takedamage == DAMAGE_YES); }
 #endif
 
-	virtual void Touch(CBaseEntity *pOther);
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void Touch(CBaseEntity* pOther);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 public:
 	void EXPORT IdleThink();
@@ -110,23 +110,23 @@ public:
 	void SetDeathActivity();
 	void PlayPainSound();
 	void PlayFollowRescueSound();
-	void AnnounceDeath(CBasePlayer *pAttacker);
-	void ApplyHostagePenalty(CBasePlayer *pAttacker);
-	void GiveCTTouchBonus(CBasePlayer *pPlayer);
+	void AnnounceDeath(CBasePlayer* pAttacker);
+	void ApplyHostagePenalty(CBasePlayer* pAttacker);
+	void GiveCTTouchBonus(CBasePlayer* pPlayer);
 	void SendHostagePositionMsg();
 	void SendHostageEventMsg();
 	void DoFollow();
 	BOOL IsOnLadder();
-	void PointAt(const Vector &vecLoc);
-	void MoveToward(const Vector &vecLoc);
+	void PointAt(const Vector& vecLoc);
+	void MoveToward(const Vector& vecLoc);
 	void NavReady();
 	void Wiggle();
 	void PreThink();
-	bool CanTakeDamage(entvars_t *pevAttacker);
+	bool CanTakeDamage(entvars_t* pevAttacker);
 
 	// queries
 	bool IsFollowingSomeone() { return IsFollowing(); }
-	CBaseEntity *GetLeader()				// return our leader, or NULL
+	CBaseEntity* GetLeader()				// return our leader, or NULL
 	{
 		if (m_improv) {
 			return m_improv->GetFollowLeader();
@@ -134,7 +134,7 @@ public:
 
 		return m_hTargetEnt;
 	}
-	bool IsFollowing(const CBaseEntity *pEntity = nullptr)
+	bool IsFollowing(const CBaseEntity* pEntity = nullptr)
 	{
 		if (m_improv) {
 			return m_improv->IsFollowing(pEntity);
@@ -152,7 +152,7 @@ public:
 	bool IsValid()  const { return (pev->takedamage == DAMAGE_YES); }
 	bool IsDead()   const { return (pev->deadflag == DEAD_DEAD); }
 	bool IsAtHome() const { return !(pev->origin - m_vStart).IsLengthGreaterThan(20); }
-	const Vector *GetHomePosition() const { return &m_vStart; }
+	const Vector* GetHomePosition() const { return &m_vStart; }
 
 public:
 	BOOL m_bTouched;
@@ -169,8 +169,8 @@ public:
 	Vector m_vStartAngles;
 	Vector m_vPathToFollow[MAX_HOSTAGES_NAV];
 	int m_iWaypoint;
-	CBasePlayer *m_target;
-	CLocalNav *m_LocalNav;
+	CBasePlayer* m_target;
+	CLocalNav* m_LocalNav;
 	int m_nTargetNode;
 	Vector vecNodes[MAX_NODES];
 	EntityHandle<CBasePlayer> m_hStoppedTargetEnt;
@@ -184,7 +184,7 @@ public:
 	int m_iHostageIndex;
 	BOOL m_bStuck;
 	float m_flStuckTime;
-	CHostageImprov *m_improv;
+	CHostageImprov* m_improv;
 
 	enum ModelType { REGULAR_GUY, OLD_GUY, BLACK_GUY, GOOFY_GUY };
 	ModelType m_whichModel;
@@ -198,7 +198,7 @@ public:
 
 	struct SoundFile
 	{
-		char *filename;
+		char* filename;
 		float duration;
 	};
 
@@ -210,10 +210,10 @@ public:
 		bool needsShuffle;
 	};
 
-	void AddSound(HostageChatterType type, char *filename);
-	float PlaySound(CBaseEntity *pEntity, HostageChatterType type);
-	char *GetSound(HostageChatterType type, float *duration);
-	void Shuffle(ChatterSet *chatter);
+	void AddSound(HostageChatterType type, char* filename);
+	float PlaySound(CBaseEntity* pEntity, HostageChatterType type);
+	char* GetSound(HostageChatterType type, float* duration);
+	void Shuffle(ChatterSet* chatter);
 
 private:
 	ChatterSet m_chatter[NUM_HOSTAGE_CHATTER_TYPES];
@@ -228,23 +228,23 @@ public:
 	void ServerDeactivate();
 
 	void RestartRound();
-	void AddHostage(CHostage *hostage);
-	SimpleChatter *GetChatter()
+	void AddHostage(CHostage* hostage);
+	SimpleChatter* GetChatter()
 	{
 		return &m_chatter;
 	}
-	bool IsNearbyHostageTalking(CHostageImprov *improv);
-	bool IsNearbyHostageJumping(CHostageImprov *improv);
-	void OnEvent(GameEventType event, CBaseEntity *pEntity, CBaseEntity *pOther);
+	bool IsNearbyHostageTalking(CHostageImprov* improv);
+	bool IsNearbyHostageJumping(CHostageImprov* improv);
+	void OnEvent(GameEventType event, CBaseEntity* pEntity, CBaseEntity* pOther);
 
 	// Iterate over all active hostages in the game, invoking functor on each.
 	// If functor returns false, stop iteration and return false.
 	template<typename Functor>
-	inline bool ForEachHostage(Functor &func) const
+	inline bool ForEachHostage(Functor& func) const
 	{
 		for (int i = 0; i < m_hostageCount; i++)
 		{
-			CHostage *pHostage = m_hostage[i];
+			CHostage* pHostage = m_hostage[i];
 
 			if (!pHostage || pHostage->pev->deadflag == DEAD_DEAD)
 				continue;
@@ -255,11 +255,11 @@ public:
 
 		return true;
 	}
-	inline CHostage *GetClosestHostage(const Vector &pos, float *resultRange = nullptr)
+	inline CHostage* GetClosestHostage(const Vector& pos, float* resultRange = nullptr)
 	{
 		float range;
 		float closeRange = 1e8f;
-		CHostage *close = nullptr;
+		CHostage* close = nullptr;
 
 		for (int i = 0; i < m_hostageCount; i++)
 		{
@@ -279,7 +279,7 @@ public:
 	}
 
 private:
-	CHostage *m_hostage[MAX_HOSTAGES];
+	CHostage* m_hostage[MAX_HOSTAGES];
 	int m_hostageCount;
 	SimpleChatter m_chatter;
 };

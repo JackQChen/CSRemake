@@ -12,7 +12,7 @@ TYPEDESCRIPTION CRecharge::m_SaveData[] =
 IMPLEMENT_SAVERESTORE(CRecharge, CBaseEntity)
 LINK_ENTITY_TO_CLASS(func_recharge, CRecharge, CCSRecharge)
 
-void CRecharge::KeyValue(KeyValueData *pkvd)
+void CRecharge::KeyValue(KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "style")
 		|| FStrEq(pkvd->szKeyName, "height")
@@ -79,21 +79,21 @@ void CRecharge::Precache()
 	PRECACHE_SOUND("items/suitchargeok1.wav");
 }
 
-void CRecharge::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void CRecharge::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 #ifdef REGAMEDLL_FIXES
 	// Make sure that we have a caller
 	if (!pActivator)
 		return;
-	
+
 	// if it's not a player, ignore
 	if (!pActivator->IsPlayer())
 		return;
 #else
 	if (!FClassnameIs(pActivator->pev, "player"))
-		return;	
+		return;
 #endif // #ifdef REGAMEDLL_FIXES
-	
+
 	// if there is no juice left, turn it off
 	if (m_iJuice <= 0
 #ifdef REGAMEDLL_FIXES
@@ -156,7 +156,7 @@ void CRecharge::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useT
 	if (m_hActivator->pev->armorvalue < MAX_CHARGE_ARMOR)
 	{
 #ifdef REGAMEDLL_FIXES
-		CBasePlayer *pPlayer = m_hActivator.Get<CBasePlayer>();
+		CBasePlayer* pPlayer = m_hActivator.Get<CBasePlayer>();
 		if (pPlayer->m_iKevlar == ARMOR_NONE)
 			pPlayer->m_iKevlar = ARMOR_KEVLAR;
 #endif

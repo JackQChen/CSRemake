@@ -52,12 +52,12 @@ void CItemAirBox::OnDestroy()
 	m_hSprite.Remove();
 }
 
-void CItemAirBox::Touch(CBaseEntity *pOther)
+void CItemAirBox::Touch(CBaseEntity* pOther)
 {
 	CArmoury::Touch(pOther);
 
 	// airbox was picked up, so sprite to turn off
-	if ((pev->effects & EF_NODRAW) == EF_NODRAW) 
+	if ((pev->effects & EF_NODRAW) == EF_NODRAW)
 	{
 		m_hSprite->TurnOff();
 
@@ -87,7 +87,7 @@ void CItemAirBox::Precache()
 	}
 }
 
-void CItemAirBox::KeyValue(KeyValueData *pkvd)
+void CItemAirBox::KeyValue(KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "flyup"))
 	{

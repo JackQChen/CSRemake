@@ -147,7 +147,7 @@ inline T M_clamp(T a, T min, T max) {
 }
 
 template<class T>
-inline void SWAP(T &first, T &second) {
+inline void SWAP(T& first, T& second) {
 	T temp = first;
 	first = second;
 	second = temp;

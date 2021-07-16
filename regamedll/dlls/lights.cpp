@@ -10,7 +10,7 @@ LINK_ENTITY_TO_CLASS(light, CLight, CCSLight)
 IMPLEMENT_SAVERESTORE(CLight, CPointEntity)
 
 // Cache user-entity-field values until spawn is called.
-void CLight::KeyValue(KeyValueData *pkvd)
+void CLight::KeyValue(KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "style"))
 	{
@@ -50,7 +50,7 @@ void CLight::Spawn()
 			LIGHT_STYLE(m_iStyle, "a");
 
 		else if (m_iszPattern)
-			LIGHT_STYLE(m_iStyle, (char *)STRING(m_iszPattern));
+			LIGHT_STYLE(m_iStyle, (char*)STRING(m_iszPattern));
 		else
 			LIGHT_STYLE(m_iStyle, "m");
 	}
@@ -70,14 +70,14 @@ void CLight::Restart()
 			pev->spawnflags &= ~SF_LIGHT_START_OFF;
 
 			if (m_iszPattern)
-				LIGHT_STYLE(m_iStyle, (char *)STRING(m_iszPattern));
+				LIGHT_STYLE(m_iStyle, (char*)STRING(m_iszPattern));
 			else
 				LIGHT_STYLE(m_iStyle, "m");
 		}
 	}
 }
 
-void CLight::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void CLight::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	if (m_iStyle >= 32)
 	{
@@ -87,7 +87,7 @@ void CLight::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType
 		if (pev->spawnflags & SF_LIGHT_START_OFF)
 		{
 			if (m_iszPattern)
-				LIGHT_STYLE(m_iStyle, (char *)STRING(m_iszPattern));
+				LIGHT_STYLE(m_iStyle, (char*)STRING(m_iszPattern));
 			else
 				LIGHT_STYLE(m_iStyle, "m");
 
@@ -104,7 +104,7 @@ void CLight::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType
 LINK_ENTITY_TO_CLASS(light_spot, CLight, CCSLight)
 LINK_ENTITY_TO_CLASS(light_environment, CEnvLight, CCSEnvLight)
 
-void CEnvLight::KeyValue(KeyValueData *pkvd)
+void CEnvLight::KeyValue(KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "_light"))
 	{

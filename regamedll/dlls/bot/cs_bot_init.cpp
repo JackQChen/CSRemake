@@ -28,43 +28,43 @@
 
 #include "precompiled.h"
 
-cvar_t cv_bot_traceview              = { "bot_traceview", "0", FCVAR_SERVER, 0.0f, nullptr };
-cvar_t cv_bot_stop                   = { "bot_stop", "0", FCVAR_SERVER, 0.0f, nullptr };
-cvar_t cv_bot_show_nav               = { "bot_show_nav", "0", FCVAR_SERVER, 0.0f, nullptr };
-cvar_t cv_bot_show_danger            = { "bot_show_danger", "0", FCVAR_SERVER, 0.0f, nullptr };
-cvar_t cv_bot_nav_edit               = { "bot_nav_edit", "0", FCVAR_SERVER, 0.0f, nullptr };
-cvar_t cv_bot_nav_zdraw              = { "bot_nav_zdraw", "4", FCVAR_SERVER, 0.0f, nullptr };
-cvar_t cv_bot_walk                   = { "bot_walk", "0", FCVAR_SERVER, 0.0f, nullptr };
-cvar_t cv_bot_difficulty             = { "bot_difficulty", "0", FCVAR_SERVER, 0.0f, nullptr };
-cvar_t cv_bot_debug                  = { "bot_debug", "0", FCVAR_SERVER, 0.0f, nullptr };
-cvar_t cv_bot_quicksave              = { "bot_quicksave", "0", FCVAR_SERVER, 0.0f, nullptr };
-cvar_t cv_bot_quota                  = { "bot_quota", "0", FCVAR_SERVER, 0.0f, nullptr };
-cvar_t cv_bot_prefix                 = { "bot_prefix", "", FCVAR_SERVER, 0.0f, nullptr };
-cvar_t cv_bot_allow_rogues           = { "bot_allow_rogues", "1", FCVAR_SERVER, 0.0f, nullptr };
-cvar_t cv_bot_allow_pistols          = { "bot_allow_pistols", "1", FCVAR_SERVER, 0.0f, nullptr };
-cvar_t cv_bot_allow_shotguns         = { "bot_allow_shotguns", "1", FCVAR_SERVER, 0.0f, nullptr };
+cvar_t cv_bot_traceview = { "bot_traceview", "0", FCVAR_SERVER, 0.0f, nullptr };
+cvar_t cv_bot_stop = { "bot_stop", "0", FCVAR_SERVER, 0.0f, nullptr };
+cvar_t cv_bot_show_nav = { "bot_show_nav", "0", FCVAR_SERVER, 0.0f, nullptr };
+cvar_t cv_bot_show_danger = { "bot_show_danger", "0", FCVAR_SERVER, 0.0f, nullptr };
+cvar_t cv_bot_nav_edit = { "bot_nav_edit", "0", FCVAR_SERVER, 0.0f, nullptr };
+cvar_t cv_bot_nav_zdraw = { "bot_nav_zdraw", "4", FCVAR_SERVER, 0.0f, nullptr };
+cvar_t cv_bot_walk = { "bot_walk", "0", FCVAR_SERVER, 0.0f, nullptr };
+cvar_t cv_bot_difficulty = { "bot_difficulty", "0", FCVAR_SERVER, 0.0f, nullptr };
+cvar_t cv_bot_debug = { "bot_debug", "0", FCVAR_SERVER, 0.0f, nullptr };
+cvar_t cv_bot_quicksave = { "bot_quicksave", "0", FCVAR_SERVER, 0.0f, nullptr };
+cvar_t cv_bot_quota = { "bot_quota", "0", FCVAR_SERVER, 0.0f, nullptr };
+cvar_t cv_bot_prefix = { "bot_prefix", "", FCVAR_SERVER, 0.0f, nullptr };
+cvar_t cv_bot_allow_rogues = { "bot_allow_rogues", "1", FCVAR_SERVER, 0.0f, nullptr };
+cvar_t cv_bot_allow_pistols = { "bot_allow_pistols", "1", FCVAR_SERVER, 0.0f, nullptr };
+cvar_t cv_bot_allow_shotguns = { "bot_allow_shotguns", "1", FCVAR_SERVER, 0.0f, nullptr };
 cvar_t cv_bot_allow_sub_machine_guns = { "bot_allow_sub_machine_guns", "1", FCVAR_SERVER, 0.0f, nullptr };
-cvar_t cv_bot_allow_rifles           = { "bot_allow_rifles", "1", FCVAR_SERVER, 0.0f, nullptr };
-cvar_t cv_bot_allow_machine_guns     = { "bot_allow_machine_guns", "1", FCVAR_SERVER, 0.0f, nullptr };
-cvar_t cv_bot_allow_grenades         = { "bot_allow_grenades", "1", FCVAR_SERVER, 0.0f, nullptr };
-cvar_t cv_bot_allow_snipers          = { "bot_allow_snipers", "1", FCVAR_SERVER, 0.0f, nullptr };
-cvar_t cv_bot_allow_shield           = { "bot_allow_shield", "1", FCVAR_SERVER, 0.0f, nullptr };
-cvar_t cv_bot_join_team              = { "bot_join_team", "any", FCVAR_SERVER, 0.0f, nullptr };
-cvar_t cv_bot_join_after_player      = { "bot_join_after_player", "1", FCVAR_SERVER, 0.0f, nullptr };
-cvar_t cv_bot_auto_vacate            = { "bot_auto_vacate", "1", FCVAR_SERVER, 0.0f, nullptr };
-cvar_t cv_bot_zombie                 = { "bot_zombie", "0", FCVAR_SERVER, 0.0f, nullptr };
-cvar_t cv_bot_defer_to_human         = { "bot_defer_to_human", "0", FCVAR_SERVER, 0.0f, nullptr };
-cvar_t cv_bot_chatter                = { "bot_chatter", "normal", FCVAR_SERVER, 0.0f, nullptr };
-cvar_t cv_bot_profile_db             = { "bot_profile_db", "BotProfile.db", FCVAR_SERVER, 0.0f, nullptr };
+cvar_t cv_bot_allow_rifles = { "bot_allow_rifles", "1", FCVAR_SERVER, 0.0f, nullptr };
+cvar_t cv_bot_allow_machine_guns = { "bot_allow_machine_guns", "1", FCVAR_SERVER, 0.0f, nullptr };
+cvar_t cv_bot_allow_grenades = { "bot_allow_grenades", "1", FCVAR_SERVER, 0.0f, nullptr };
+cvar_t cv_bot_allow_snipers = { "bot_allow_snipers", "1", FCVAR_SERVER, 0.0f, nullptr };
+cvar_t cv_bot_allow_shield = { "bot_allow_shield", "1", FCVAR_SERVER, 0.0f, nullptr };
+cvar_t cv_bot_join_team = { "bot_join_team", "any", FCVAR_SERVER, 0.0f, nullptr };
+cvar_t cv_bot_join_after_player = { "bot_join_after_player", "1", FCVAR_SERVER, 0.0f, nullptr };
+cvar_t cv_bot_auto_vacate = { "bot_auto_vacate", "1", FCVAR_SERVER, 0.0f, nullptr };
+cvar_t cv_bot_zombie = { "bot_zombie", "0", FCVAR_SERVER, 0.0f, nullptr };
+cvar_t cv_bot_defer_to_human = { "bot_defer_to_human", "0", FCVAR_SERVER, 0.0f, nullptr };
+cvar_t cv_bot_chatter = { "bot_chatter", "normal", FCVAR_SERVER, 0.0f, nullptr };
+cvar_t cv_bot_profile_db = { "bot_profile_db", "BotProfile.db", FCVAR_SERVER, 0.0f, nullptr };
 
 #ifdef REGAMEDLL_ADD
-cvar_t cv_bot_deathmatch             = { "bot_deathmatch", "0", FCVAR_SERVER, 0.0f, nullptr };
-cvar_t cv_bot_quota_mode             = { "bot_quota_mode", "normal", FCVAR_SERVER, 0.0f, nullptr };
-cvar_t cv_bot_join_delay             = { "bot_join_delay", "0", FCVAR_SERVER, 0.0f, nullptr };
-cvar_t cv_bot_freeze                 = { "bot_freeze", "0", 0, 0.0f, nullptr };
+cvar_t cv_bot_deathmatch = { "bot_deathmatch", "0", FCVAR_SERVER, 0.0f, nullptr };
+cvar_t cv_bot_quota_mode = { "bot_quota_mode", "normal", FCVAR_SERVER, 0.0f, nullptr };
+cvar_t cv_bot_join_delay = { "bot_join_delay", "0", FCVAR_SERVER, 0.0f, nullptr };
+cvar_t cv_bot_freeze = { "bot_freeze", "0", 0, 0.0f, nullptr };
 #else
 // Migrated to bot_quota_mode, use "match"
-cvar_t cv_bot_quota_match            = { "bot_quota_match", "0", FCVAR_SERVER, 0.0f, nullptr };
+cvar_t cv_bot_quota_match = { "bot_quota_match", "0", FCVAR_SERVER, 0.0f, nullptr };
 #endif
 
 void InstallBotControl()
@@ -82,7 +82,7 @@ void Bot_ServerCommand()
 {
 	if (TheBots)
 	{
-		const char *pcmd = CMD_ARGV(0);
+		const char* pcmd = CMD_ARGV(0);
 		TheBots->ServerCommand(pcmd);
 	}
 }
@@ -142,7 +142,7 @@ CCSBot::CCSBot() : m_gameState(this), m_chatter(this)
 }
 
 // Prepare bot for action
-bool CCSBot::Initialize(const BotProfile *profile)
+bool CCSBot::Initialize(const BotProfile* profile)
 {
 	// extend
 	CBot::Initialize(profile);

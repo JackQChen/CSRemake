@@ -12,13 +12,13 @@
 class Test
 {
 public:
-	Test (const char* testName, const char* group, int timeout);
+	Test(const char* testName, const char* group, int timeout);
 
-	virtual void	runInternal () = 0;
+	virtual void	runInternal() = 0;
 
 
-	void			setNext(Test *test);
-	Test			*getNext () const;
+	void			setNext(Test* test);
+	Test* getNext() const;
 	void run(TestResult& result);
 
 	const char* getName() {
@@ -37,7 +37,7 @@ protected:
 
 	std::string		name_;
 	std::string		group_;
-	Test			*next_;
+	Test* next_;
 	int timeout_;
 
 };

@@ -38,7 +38,7 @@ void CM3::Precache()
 	m_usFireM3 = PRECACHE_EVENT(1, "events/m3.sc");
 }
 
-int CM3::GetItemInfo(ItemInfo *p)
+int CM3::GetItemInfo(ItemInfo* p)
 {
 	p->pszName = STRING(pev->classname);
 	p->pszAmmo1 = "buckshot";
@@ -144,7 +144,7 @@ void CM3::PrimaryAttack()
 		flag = 0;
 #endif
 
-	PLAYBACK_EVENT_FULL(flag, m_pPlayer->edict(), m_usFireM3, 0, (float *)&g_vecZero, (float *)&g_vecZero, 0, 0, 0, 0, FALSE, FALSE);
+	PLAYBACK_EVENT_FULL(flag, m_pPlayer->edict(), m_usFireM3, 0, (float*)&g_vecZero, (float*)&g_vecZero, 0, 0, 0, 0, FALSE, FALSE);
 
 	if (!m_iClip && m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] <= 0)
 	{

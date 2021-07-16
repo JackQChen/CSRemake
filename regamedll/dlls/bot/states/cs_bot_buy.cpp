@@ -28,9 +28,9 @@
 
 #include "precompiled.h"
 
-bool HasDefaultPistol(CCSBot *me)
+bool HasDefaultPistol(CCSBot* me)
 {
-	CBasePlayerWeapon *pSecondary = static_cast<CBasePlayerWeapon *>(me->m_rgpPlayerItems[PISTOL_SLOT]);
+	CBasePlayerWeapon* pSecondary = static_cast<CBasePlayerWeapon*>(me->m_rgpPlayerItems[PISTOL_SLOT]);
 
 	if (!pSecondary)
 		return false;
@@ -45,7 +45,7 @@ bool HasDefaultPistol(CCSBot *me)
 }
 
 // Buy weapons, armor, etc.
-void BuyState::OnEnter(CCSBot *me)
+void BuyState::OnEnter(CCSBot* me)
 {
 	m_retries = 0;
 	m_prefRetries = 0;
@@ -101,7 +101,7 @@ void BuyState::OnEnter(CCSBot *me)
 
 	if (TheCSBots()->AllowPistols())
 	{
-		CBasePlayerWeapon *pSecondary = static_cast<CBasePlayerWeapon *>(me->m_rgpPlayerItems[PISTOL_SLOT]);
+		CBasePlayerWeapon* pSecondary = static_cast<CBasePlayerWeapon*>(me->m_rgpPlayerItems[PISTOL_SLOT]);
 
 		// check if we have a pistol
 		if (pSecondary)
@@ -154,7 +154,7 @@ struct BuyInfo
 {
 	WeaponType type;
 	bool preferred; // more challenging bots prefer these weapons
-	char *buyAlias; // the buy alias for this equipment
+	char* buyAlias; // the buy alias for this equipment
 };
 
 // These tables MUST be kept in sync with the CT and T buy aliases
@@ -177,11 +177,11 @@ BuyInfo primaryWeaponBuyInfoCT[MAX_BUY_WEAPON_PRIMARY] =
 
 BuyInfo secondaryWeaponBuyInfoCT[MAX_BUY_WEAPON_SECONDARY] =
 {
-//	{ PISTOL, false, "glock"  },
-//	{ PISTOL, false, "usp"    },
-	{ PISTOL, true,  "p228"   },
-	{ PISTOL, true,  "deagle" },
-	{ PISTOL, true,  "fn57"   },
+	//	{ PISTOL, false, "glock"  },
+	//	{ PISTOL, false, "usp"    },
+		{ PISTOL, true,  "p228"   },
+		{ PISTOL, true,  "deagle" },
+		{ PISTOL, true,  "fn57"   },
 };
 
 BuyInfo primaryWeaponBuyInfoT[MAX_BUY_WEAPON_PRIMARY] =
@@ -203,15 +203,15 @@ BuyInfo primaryWeaponBuyInfoT[MAX_BUY_WEAPON_PRIMARY] =
 
 BuyInfo secondaryWeaponBuyInfoT[MAX_BUY_WEAPON_SECONDARY] =
 {
-//	{ PISTOL, false, "glock"  },
-//	{ PISTOL, false, "usp"    },
-	{ PISTOL, true,  "p228"   },
-	{ PISTOL, true,  "deagle" },
-	{ PISTOL, true,  "elites" },
+	//	{ PISTOL, false, "glock"  },
+	//	{ PISTOL, false, "usp"    },
+		{ PISTOL, true,  "p228"   },
+		{ PISTOL, true,  "deagle" },
+		{ PISTOL, true,  "elites" },
 };
 
 // Given a weapon alias, return the kind of weapon it is
-inline WeaponType GetWeaponType(const char *alias)
+inline WeaponType GetWeaponType(const char* alias)
 {
 	int i;
 	for (i = 0; i < MAX_BUY_WEAPON_PRIMARY; i++)
@@ -235,7 +235,7 @@ inline WeaponType GetWeaponType(const char *alias)
 	return NUM_WEAPON_TYPES;
 }
 
-void BuyState::OnUpdate(CCSBot *me)
+void BuyState::OnUpdate(CCSBot* me)
 {
 	// wait for a Navigation Mesh
 	if (!TheNavAreaList.size())
@@ -304,7 +304,7 @@ void BuyState::OnUpdate(CCSBot *me)
 			int weaponPreference = me->GetProfile()->GetWeaponPreference(m_prefIndex);
 
 			// don't buy it again if we still have one from last round
-			CBasePlayerWeapon *pCurrentWeapon = me->GetActiveWeapon();
+			CBasePlayerWeapon* pCurrentWeapon = me->GetActiveWeapon();
 			if (pCurrentWeapon && pCurrentWeapon->m_iId == weaponPreference)
 			{
 				// done with buying preferred weapon
@@ -319,7 +319,7 @@ void BuyState::OnUpdate(CCSBot *me)
 				return;
 			}
 
-			const char *buyAlias = nullptr;
+			const char* buyAlias = nullptr;
 			if (weaponPreference == WEAPON_SHIELDGUN)
 			{
 				if (TheCSBots()->AllowTacticalShield())
@@ -387,8 +387,8 @@ void BuyState::OnUpdate(CCSBot *me)
 			else
 			{
 				// build list of allowable weapons to buy
-				BuyInfo *masterPrimary = (me->m_iTeam == TERRORIST) ? primaryWeaponBuyInfoT : primaryWeaponBuyInfoCT;
-				BuyInfo *stockPrimary[MAX_BUY_WEAPON_PRIMARY];
+				BuyInfo* masterPrimary = (me->m_iTeam == TERRORIST) ? primaryWeaponBuyInfoT : primaryWeaponBuyInfoCT;
+				BuyInfo* stockPrimary[MAX_BUY_WEAPON_PRIMARY];
 				int stockPrimaryCount = 0;
 
 				// dont choose sniper rifles as often
@@ -530,7 +530,7 @@ void BuyState::OnUpdate(CCSBot *me)
 	}
 }
 
-void BuyState::OnExit(CCSBot *me)
+void BuyState::OnExit(CCSBot* me)
 {
 	me->ResetStuckMonitor();
 	me->EquipBestWeapon();

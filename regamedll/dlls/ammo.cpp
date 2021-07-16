@@ -17,7 +17,7 @@ void CBasePlayerAmmo::Spawn()
 	}
 }
 
-BOOL CBasePlayerAmmo::AddAmmo(CBaseEntity *pOther)
+BOOL CBasePlayerAmmo::AddAmmo(CBaseEntity* pOther)
 {
 	auto ammoInfo = GetAmmoInfo(pev->classname);
 	if (pOther->GiveAmmo(ammoInfo->buyClipSize, ammoInfo->ammoName2) == -1)
@@ -29,7 +29,7 @@ BOOL CBasePlayerAmmo::AddAmmo(CBaseEntity *pOther)
 	return TRUE;
 }
 
-CBaseEntity *CBasePlayerAmmo::Respawn()
+CBaseEntity* CBasePlayerAmmo::Respawn()
 {
 	pev->effects |= EF_NODRAW;
 	SetTouch(nullptr);
@@ -60,7 +60,7 @@ void CBasePlayerAmmo::Materialize()
 	SetTouch(&CBasePlayerAmmo::DefaultTouch);
 }
 
-void CBasePlayerAmmo::DefaultTouch(CBaseEntity *pOther)
+void CBasePlayerAmmo::DefaultTouch(CBaseEntity* pOther)
 {
 	if (!pOther->IsPlayer())
 		return;

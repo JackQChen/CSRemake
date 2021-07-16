@@ -6,7 +6,7 @@
 #include <sstream>
 #include <cmath>
 
-void Assertions::StringEquals(std::string message, std::string expected, std::string actual, const char *fileName, long lineNumber) {
+void Assertions::StringEquals(std::string message, std::string expected, std::string actual, const char* fileName, long lineNumber) {
 	if (expected != actual) {
 		std::stringstream ss;
 		ss << message << " (expected '" << expected << "', got '" << actual << "')";
@@ -14,7 +14,7 @@ void Assertions::StringEquals(std::string message, std::string expected, std::st
 	}
 }
 
-void Assertions::StringEquals(std::string message, const char *expected, const char *actual, const char *fileName, long lineNumber) {
+void Assertions::StringEquals(std::string message, const char* expected, const char* actual, const char* fileName, long lineNumber) {
 	if (actual == nullptr) {
 		std::stringstream ss;
 		ss << message << " (expected '" << expected << "', got NULL";
@@ -27,7 +27,7 @@ void Assertions::StringEquals(std::string message, const char *expected, const c
 	}
 }
 
-void Assertions::ConditionFailed(std::string message, std::string condition, const char *fileName, long lineNumber, bool onlyWarning) {
+void Assertions::ConditionFailed(std::string message, std::string condition, const char* fileName, long lineNumber, bool onlyWarning) {
 	std::stringstream ss;
 	ss << message << " (condition failed: " << condition << ")";
 	throw TestFailException(ss.str(), std::string(fileName), lineNumber, onlyWarning);
@@ -71,7 +71,7 @@ void Assertions::MemoryEquals(std::string message, void* expected, void* actual,
 		ss << message << " (expected '";
 		for (int i = 0; i < size; i++) {
 			unsigned char b = *((unsigned char*)expected + i);
-			ss << std::hex << (unsigned int) b << " ";
+			ss << std::hex << (unsigned int)b << " ";
 		}
 		ss << "', got '";
 		for (int i = 0; i < size; i++) {

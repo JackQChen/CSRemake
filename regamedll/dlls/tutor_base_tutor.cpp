@@ -1,6 +1,6 @@
 #include "precompiled.h"
 
-CBaseTutor *TheTutor = nullptr;
+CBaseTutor* TheTutor = nullptr;
 
 TutorMessageEvent::TutorMessageEvent(int mid, int duplicateID, float time, float lifetime, int priority)
 {
@@ -50,22 +50,22 @@ int TutorMessageEvent::GetDuplicateID()
 	return m_duplicateID;
 }
 
-void TutorMessageEvent::SetNext(TutorMessageEvent *next)
+void TutorMessageEvent::SetNext(TutorMessageEvent* next)
 {
 	m_next = next;
 }
 
-TutorMessageEvent *TutorMessageEvent::GetNext()
+TutorMessageEvent* TutorMessageEvent::GetNext()
 {
 	return m_next;
 }
 
-void TutorMessageEvent::AddParameter(char *str)
+void TutorMessageEvent::AddParameter(char* str)
 {
 	if (str == nullptr)
 		return;
 
-	TutorMessageEventParam *param = new TutorMessageEventParam;
+	TutorMessageEventParam* param = new TutorMessageEventParam;
 
 	param->m_next = nullptr;
 	param->m_data = new char[Q_strlen(str) + 1];
@@ -78,7 +78,7 @@ void TutorMessageEvent::AddParameter(char *str)
 
 		if (m_paramList)
 		{
-			TutorMessageEventParam *temp = m_paramList;
+			TutorMessageEventParam* temp = m_paramList;
 
 			while (temp->m_next)
 				temp = temp->m_next;
@@ -90,9 +90,9 @@ void TutorMessageEvent::AddParameter(char *str)
 	}
 }
 
-char *TutorMessageEvent::GetNextParameter(char *buf, int buflen)
+char* TutorMessageEvent::GetNextParameter(char* buf, int buflen)
 {
-	TutorMessageEventParam *param = m_paramList;
+	TutorMessageEventParam* param = m_paramList;
 	if (!param)
 	{
 		return nullptr;
@@ -125,17 +125,17 @@ CBaseTutor::CBaseTutor()
 
 CBaseTutor::~CBaseTutor()
 {
-	TutorMessageEvent *event = m_eventList;
+	TutorMessageEvent* event = m_eventList;
 	while (event)
 	{
-		TutorMessageEvent *temp = event;
+		TutorMessageEvent* temp = event;
 		event = event->GetNext();
 
 		delete temp;
 	}
 }
 
-void CBaseTutor::OnEvent(GameEventType event, CBaseEntity *pEntity, CBaseEntity *pOther)
+void CBaseTutor::OnEvent(GameEventType event, CBaseEntity* pEntity, CBaseEntity* pOther)
 {
 	CallEventHandler(event, pEntity, pOther);
 	CheckForStateTransition(event, pEntity, pOther);
@@ -146,7 +146,7 @@ void CBaseTutor::ShotFired(Vector source, Vector target)
 	HandleShotFired(source, target);
 }
 
-void CBaseTutor::CheckForStateTransition(GameEventType event, CBaseEntity *pEntity, CBaseEntity *pOther)
+void CBaseTutor::CheckForStateTransition(GameEventType event, CBaseEntity* pEntity, CBaseEntity* pOther)
 {
 	if (m_stateSystem->UpdateState(event, pEntity, pOther))
 	{
@@ -159,9 +159,9 @@ void CBaseTutor::StartFrame(float time)
 	TutorThink(time);
 }
 
-void CBaseTutor::DisplayMessageToPlayer(CBasePlayer *pPlayer, int id, const char *szMessage, TutorMessageEvent *event)
+void CBaseTutor::DisplayMessageToPlayer(CBasePlayer* pPlayer, int id, const char* szMessage, TutorMessageEvent* event)
 {
-	TutorMessage *definition;
+	TutorMessage* definition;
 	int numArgs;
 	char param[512];
 
@@ -169,25 +169,25 @@ void CBaseTutor::DisplayMessageToPlayer(CBasePlayer *pPlayer, int id, const char
 	definition = GetTutorMessageDefinition(event->GetID());
 
 	MESSAGE_BEGIN(MSG_ONE, gmsgTutorText, nullptr, pPlayer->pev);
-		WRITE_STRING(szMessage);
-		WRITE_BYTE(numArgs);
+	WRITE_STRING(szMessage);
+	WRITE_BYTE(numArgs);
 
-		for (int arg = 0; arg < numArgs; arg++)
-		{
-			char *str = event->GetNextParameter(param, sizeof(param));
-			if (str)
-				WRITE_STRING(str);
-			else
-				WRITE_STRING("");
-		}
-
-		WRITE_SHORT(id);
-		WRITE_SHORT(pPlayer->IsAlive() == FALSE);
-
-		if (definition)
-			WRITE_SHORT(definition->m_type);
+	for (int arg = 0; arg < numArgs; arg++)
+	{
+		char* str = event->GetNextParameter(param, sizeof(param));
+		if (str)
+			WRITE_STRING(str);
 		else
-			WRITE_SHORT(TUTORMESSAGETYPE_DEFAULT);
+			WRITE_STRING("");
+	}
+
+	WRITE_SHORT(id);
+	WRITE_SHORT(pPlayer->IsAlive() == FALSE);
+
+	if (definition)
+		WRITE_SHORT(definition->m_type);
+	else
+		WRITE_SHORT(TUTORMESSAGETYPE_DEFAULT);
 	MESSAGE_END();
 
 	m_deadAirStartTime = -1.0f;
@@ -217,17 +217,17 @@ void CBaseTutor::DisplayMessageToPlayer(CBasePlayer *pPlayer, int id, const char
 	}
 }
 
-NOXREF void CBaseTutor::DrawLineToEntity(CBasePlayer *pPlayer, int entindex, int id)
+NOXREF void CBaseTutor::DrawLineToEntity(CBasePlayer* pPlayer, int entindex, int id)
 {
 	MESSAGE_BEGIN(MSG_ONE, gmsgTutorLine, nullptr, pPlayer->pev);
-		WRITE_SHORT(entindex);
-		WRITE_SHORT(id);
+	WRITE_SHORT(entindex);
+	WRITE_SHORT(id);
 	MESSAGE_END();
 }
 
 void CBaseTutor::DisplayNewStateDescriptionToPlayer()
 {
-	CBasePlayer *pLocalPlayer = UTIL_GetLocalPlayer();
+	CBasePlayer* pLocalPlayer = UTIL_GetLocalPlayer();
 	if (!pLocalPlayer)
 	{
 		return;
@@ -237,14 +237,14 @@ void CBaseTutor::DisplayNewStateDescriptionToPlayer()
 	if (!desc)
 	{
 		MESSAGE_BEGIN(MSG_ONE, gmsgTutorState, nullptr, pLocalPlayer->pev);
-			WRITE_STRING(nullptr);
+		WRITE_STRING(nullptr);
 		MESSAGE_END();
 	}
 }
 
 void CBaseTutor::CloseCurrentWindow()
 {
-	CBasePlayer *pLocalPlayer = UTIL_GetLocalPlayer();
+	CBasePlayer* pLocalPlayer = UTIL_GetLocalPlayer();
 	if (pLocalPlayer)
 	{
 		MESSAGE_BEGIN(MSG_ONE, gmsgTutorClose, nullptr, pLocalPlayer->pev);
@@ -254,12 +254,12 @@ void CBaseTutor::CloseCurrentWindow()
 	}
 }
 
-void CBaseTutor::CalculatePathForObjective(CBaseEntity *pPlayer)
+void CBaseTutor::CalculatePathForObjective(CBaseEntity* pPlayer)
 {
 	;
 }
 
-bool CBaseTutor::IsEntityInViewOfPlayer(CBaseEntity *pEntity, CBasePlayer *pPlayer)
+bool CBaseTutor::IsEntityInViewOfPlayer(CBaseEntity* pEntity, CBasePlayer* pPlayer)
 {
 	if (!pEntity || !pPlayer)
 		return false;
@@ -283,7 +283,7 @@ bool CBaseTutor::IsEntityInViewOfPlayer(CBaseEntity *pEntity, CBasePlayer *pPlay
 	return false;
 }
 
-bool CBaseTutor::IsPlayerLookingAtPosition(Vector *origin, CBasePlayer *pPlayer)
+bool CBaseTutor::IsPlayerLookingAtPosition(Vector* origin, CBasePlayer* pPlayer)
 {
 	if (!origin || !pPlayer)
 		return false;
@@ -305,7 +305,7 @@ bool CBaseTutor::IsPlayerLookingAtPosition(Vector *origin, CBasePlayer *pPlayer)
 	return false;
 }
 
-bool CBaseTutor::IsPlayerLookingAtEntity(CBaseEntity *pEntity, CBasePlayer *pPlayer)
+bool CBaseTutor::IsPlayerLookingAtEntity(CBaseEntity* pEntity, CBasePlayer* pPlayer)
 {
 	if (!pEntity || !pPlayer)
 		return false;
@@ -329,7 +329,7 @@ bool CBaseTutor::IsPlayerLookingAtEntity(CBaseEntity *pEntity, CBasePlayer *pPla
 	return false;
 }
 
-bool CBaseTutor::IsBombsiteInViewOfPlayer(CBaseEntity *pEntity, CBasePlayer *pPlayer)
+bool CBaseTutor::IsBombsiteInViewOfPlayer(CBaseEntity* pEntity, CBasePlayer* pPlayer)
 {
 	if (!pEntity || !pPlayer)
 		return false;
@@ -354,7 +354,7 @@ bool CBaseTutor::IsBombsiteInViewOfPlayer(CBaseEntity *pEntity, CBasePlayer *pPl
 	return false;
 }
 
-bool CBaseTutor::IsEntityInBombsite(CBaseEntity *bombsite, CBaseEntity *pEntity)
+bool CBaseTutor::IsEntityInBombsite(CBaseEntity* bombsite, CBaseEntity* pEntity)
 {
 	if (!bombsite || !pEntity)
 		return false;
@@ -367,8 +367,8 @@ bool CBaseTutor::DoMessagesHaveSameID(int id1, int id2)
 	if (id1 == id2)
 		return true;
 
-	TutorMessage *message1 = GetTutorMessageDefinition(id1);
-	TutorMessage *message2 = GetTutorMessageDefinition(id2);
+	TutorMessage* message1 = GetTutorMessageDefinition(id1);
+	TutorMessage* message2 = GetTutorMessageDefinition(id2);
 
 	if (!message1 || !message2)
 		return false;

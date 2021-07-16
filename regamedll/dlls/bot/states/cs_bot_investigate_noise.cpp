@@ -29,7 +29,7 @@
 #include "precompiled.h"
 
 // Move towards currently heard noise
-void InvestigateNoiseState::AttendCurrentNoise(CCSBot *me)
+void InvestigateNoiseState::AttendCurrentNoise(CCSBot* me)
 {
 	if (!me->IsNoiseHeard() && me->GetNoisePosition())
 		return;
@@ -49,13 +49,13 @@ void InvestigateNoiseState::AttendCurrentNoise(CCSBot *me)
 	me->ForgetNoise();
 }
 
-void InvestigateNoiseState::OnEnter(CCSBot *me)
+void InvestigateNoiseState::OnEnter(CCSBot* me)
 {
 	AttendCurrentNoise(me);
 }
 
 // Use TravelDistance instead of distance...
-void InvestigateNoiseState::OnUpdate(CCSBot *me)
+void InvestigateNoiseState::OnUpdate(CCSBot* me)
 {
 	float newNoiseDist;
 	if (me->ShouldInvestigateNoise(&newNoiseDist))
@@ -132,7 +132,7 @@ void InvestigateNoiseState::OnUpdate(CCSBot *me)
 	}
 }
 
-void InvestigateNoiseState::OnExit(CCSBot *me)
+void InvestigateNoiseState::OnExit(CCSBot* me)
 {
 	// reset to run mode in case we were sneaking about
 	me->Run();

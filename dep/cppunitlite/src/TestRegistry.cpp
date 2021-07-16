@@ -2,17 +2,17 @@
 #include "cppunitlite/TestResult.h"
 #include "cppunitlite/TestRegistry.h"
 
-void TestRegistry::addTest(Test *test)
+void TestRegistry::addTest(Test* test)
 {
 	instance().add(test);
 }
 
-void TestRegistry::runAllTests(TestResult &result)
+void TestRegistry::runAllTests(TestResult& result)
 {
 	instance().run(result);
 }
 
-Test *TestRegistry::getFirstTest() {
+Test* TestRegistry::getFirstTest() {
 	return instance().tests;
 }
 
@@ -22,7 +22,7 @@ TestRegistry& TestRegistry::instance()
 	return registry;
 }
 
-void TestRegistry::add(Test *test)
+void TestRegistry::add(Test* test)
 {
 	if (tests == 0) {
 		tests = test;
@@ -33,11 +33,11 @@ void TestRegistry::add(Test *test)
 	tests = test;
 }
 
-void TestRegistry::run(TestResult &result)
+void TestRegistry::run(TestResult& result)
 {
 	result.testsStarted();
 
-	for (Test *test = tests; test; test = test->getNext())
+	for (Test* test = tests; test; test = test->getNext())
 		test->run(result);
 
 	result.testsEnded();

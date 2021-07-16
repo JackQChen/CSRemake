@@ -71,7 +71,7 @@ typedef float vec_t;
 struct vrect_t
 {
 	int      x, y, width, height;
-	vrect_t  *pnext;
+	vrect_t* pnext;
 };
 
 #endif // BASETYPES_H

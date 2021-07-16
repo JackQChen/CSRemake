@@ -1,6 +1,6 @@
 #include "precompiled.h"
 
-edict_t *g_pBodyQueueHead;
+edict_t* g_pBodyQueueHead;
 CGlobalState gGlobalState;
 
 DLL_DECALLIST gDecals[] =
@@ -53,15 +53,15 @@ char g_szMapBriefingText[512];
 
 #define SF_DECAL_NOTINDEATHMATCH BIT(11)
 
-class CDecal: public CBaseEntity
+class CDecal : public CBaseEntity
 {
 public:
 	virtual void Spawn();
-	virtual void KeyValue(KeyValueData *pkvd);
+	virtual void KeyValue(KeyValueData* pkvd);
 
 public:
 	void EXPORT StaticDecal();
-	void EXPORT TriggerDecal(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	void EXPORT TriggerDecal(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 };
 
 LINK_ENTITY_TO_CLASS(infodecal, CDecal, CCSDecal)
@@ -89,7 +89,7 @@ void CDecal::Spawn()
 	}
 }
 
-void CDecal::TriggerDecal(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void CDecal::TriggerDecal(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	// this is set up as a USE function for infodecals that have targetnames, so that the
 	// decal doesn't get applied until it is fired. (usually by a scripted sequence)
@@ -99,17 +99,17 @@ void CDecal::TriggerDecal(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYP
 	UTIL_TraceLine(pev->origin - Vector(5, 5, 5), pev->origin + Vector(5, 5, 5), ignore_monsters, ENT(pev), &trace);
 
 	MESSAGE_BEGIN(MSG_BROADCAST, SVC_TEMPENTITY);
-		WRITE_BYTE(TE_BSPDECAL);
-		WRITE_COORD(pev->origin.x);
-		WRITE_COORD(pev->origin.y);
-		WRITE_COORD(pev->origin.z);
-		WRITE_SHORT(int(pev->skin));
-		entityIndex = (short)ENTINDEX(trace.pHit);
-		WRITE_SHORT(entityIndex);
-		if (entityIndex)
-		{
-			WRITE_SHORT(int(VARS(trace.pHit)->modelindex));
-		}
+	WRITE_BYTE(TE_BSPDECAL);
+	WRITE_COORD(pev->origin.x);
+	WRITE_COORD(pev->origin.y);
+	WRITE_COORD(pev->origin.z);
+	WRITE_SHORT(int(pev->skin));
+	entityIndex = (short)ENTINDEX(trace.pHit);
+	WRITE_SHORT(entityIndex);
+	if (entityIndex)
+	{
+		WRITE_SHORT(int(VARS(trace.pHit)->modelindex));
+	}
 	MESSAGE_END();
 
 	SetThink(&CDecal::SUB_Remove);
@@ -134,7 +134,7 @@ void CDecal::StaticDecal()
 	SUB_Remove();
 }
 
-void CDecal::KeyValue(KeyValueData *pkvd)
+void CDecal::KeyValue(KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "texture"))
 	{
@@ -153,7 +153,7 @@ void CDecal::KeyValue(KeyValueData *pkvd)
 }
 
 // Body queue class here.... It's really just CBaseEntity
-class CCorpse: public CBaseEntity
+class CCorpse : public CBaseEntity
 {
 public:
 	virtual int ObjectCaps() { return FCAP_DONT_SAVE; }
@@ -168,13 +168,13 @@ static void InitBodyQue()
 
 // make a body que entry for the given ent so the ent can be respawned elsewhere
 // GLOBALS ASSUMED SET:  g_eoBodyQueueHeadstion
-void CopyToBodyQue(entvars_t *pev)
+void CopyToBodyQue(entvars_t* pev)
 {
 #if 0
 	if (pev->effects & EF_NODRAW)
 		return;
 
-	entvars_t *pevHead = VARS(g_pBodyQueueHead);
+	entvars_t* pevHead = VARS(g_pBodyQueueHead);
 
 	pevHead->angles = pev->angles;
 	pevHead->model = pev->model;
@@ -219,7 +219,7 @@ void CWorld::Spawn()
 	Q_sprintf(szMapBriefingFile, "maps/%s.txt", STRING(gpGlobals->mapname));
 
 	int flength = 0;
-	char *pFile = (char *)LOAD_FILE_FOR_ME(szMapBriefingFile, &flength);
+	char* pFile = (char*)LOAD_FILE_FOR_ME(szMapBriefingFile, &flength);
 
 	if (pFile && flength)
 	{
@@ -230,7 +230,7 @@ void CWorld::Spawn()
 	}
 	else
 	{
-		pFile = (char *)LOAD_FILE_FOR_ME("maps/default.txt", &flength);
+		pFile = (char*)LOAD_FILE_FOR_ME("maps/default.txt", &flength);
 		if (pFile && flength)
 		{
 			Q_strncpy(g_szMapBriefingText, pFile, ARRAYSIZE(g_szMapBriefingText) - 2);
@@ -252,7 +252,7 @@ void CWorld::Spawn()
 	g_szMapBriefingText[0] = '\0';
 
 	int flength = 0;
-	char *pFile = (char *)LOAD_FILE_FOR_ME(UTIL_VarArgs("maps/%s.txt", STRING(gpGlobals->mapname)), &flength);
+	char* pFile = (char*)LOAD_FILE_FOR_ME(UTIL_VarArgs("maps/%s.txt", STRING(gpGlobals->mapname)), &flength);
 
 	if (pFile && flength)
 	{
@@ -262,7 +262,7 @@ void CWorld::Spawn()
 	}
 	else
 	{
-		pFile = (char *)LOAD_FILE_FOR_ME(UTIL_VarArgs("maps/default.txt"), &flength);
+		pFile = (char*)LOAD_FILE_FOR_ME(UTIL_VarArgs("maps/default.txt"), &flength);
 
 		if (pFile && flength)
 		{
@@ -301,7 +301,7 @@ void CWorld::Precache()
 
 	// LATER - do we want a sound ent in deathmatch? (sjb)
 	//pSoundEnt = CBaseEntity::Create("soundent", g_vecZero, g_vecZero, edict());
-	pSoundEnt = GetClassPtr<CCSSoundEnt>((CSoundEnt *)nullptr);
+	pSoundEnt = GetClassPtr<CCSSoundEnt>((CSoundEnt*)nullptr);
 
 	if (pSoundEnt == nullptr)
 	{
@@ -424,7 +424,7 @@ void CWorld::Precache()
 	{
 		ALERT(at_aiconsole, "Chapter title: %s\n", STRING(pev->netname));
 
-		CBaseEntity *pEntity = CBaseEntity::Create("env_message", g_vecZero, g_vecZero, nullptr);
+		CBaseEntity* pEntity = CBaseEntity::Create("env_message", g_vecZero, g_vecZero, nullptr);
 		if (pEntity)
 		{
 			pEntity->SetThink(&CBaseEntity::SUB_CallUseToggle);
@@ -455,7 +455,7 @@ void CWorld::Precache()
 		gDisplayTitle = FALSE;
 }
 
-void CWorld::KeyValue(KeyValueData *pkvd)
+void CWorld::KeyValue(KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "skyname"))
 	{

@@ -116,15 +116,15 @@ private:
 };
 
 // Inlines
-inline edict_t *FIND_ENTITY_BY_CLASSNAME(edict_t *entStart, const char *pszName) { return FIND_ENTITY_BY_STRING(entStart, "classname", pszName); }
-inline edict_t *FIND_ENTITY_BY_TARGETNAME(edict_t *entStart, const char *pszName) { return FIND_ENTITY_BY_STRING(entStart, "targetname", pszName); }
+inline edict_t* FIND_ENTITY_BY_CLASSNAME(edict_t* entStart, const char* pszName) { return FIND_ENTITY_BY_STRING(entStart, "classname", pszName); }
+inline edict_t* FIND_ENTITY_BY_TARGETNAME(edict_t* entStart, const char* pszName) { return FIND_ENTITY_BY_STRING(entStart, "targetname", pszName); }
 
-inline edict_t *ENT(const entvars_t *pev) { return pev->pContainingEntity; }
-inline edict_t *ENT(EOFFSET eoffset) { return (*g_engfuncs.pfnPEntityOfEntOffset)(eoffset); }
-inline EOFFSET OFFSET(const edict_t *pent) { return (*g_engfuncs.pfnEntOffsetOfPEntity)(pent); }
-inline EOFFSET OFFSET(const entvars_t *pev) { return OFFSET(ENT(pev)); }
+inline edict_t* ENT(const entvars_t* pev) { return pev->pContainingEntity; }
+inline edict_t* ENT(EOFFSET eoffset) { return (*g_engfuncs.pfnPEntityOfEntOffset)(eoffset); }
+inline EOFFSET OFFSET(const edict_t* pent) { return (*g_engfuncs.pfnEntOffsetOfPEntity)(pent); }
+inline EOFFSET OFFSET(const entvars_t* pev) { return OFFSET(ENT(pev)); }
 
-inline entvars_t *VARS(edict_t *pent)
+inline entvars_t* VARS(edict_t* pent)
 {
 	if (!pent)
 		return nullptr;
@@ -132,57 +132,57 @@ inline entvars_t *VARS(edict_t *pent)
 	return &pent->v;
 }
 
-inline entvars_t *VARS(EOFFSET eoffset)
+inline entvars_t* VARS(EOFFSET eoffset)
 {
 	return VARS(ENT(eoffset));
 }
 
 #ifndef ENTINDEX
-inline int ENTINDEX(const edict_t *pEdict) { return (*g_engfuncs.pfnIndexOfEdict)(pEdict); }
-inline int ENTINDEX(const entvars_t *pev) { return (*g_engfuncs.pfnIndexOfEdict)(ENT(pev)); }
+inline int ENTINDEX(const edict_t* pEdict) { return (*g_engfuncs.pfnIndexOfEdict)(pEdict); }
+inline int ENTINDEX(const entvars_t* pev) { return (*g_engfuncs.pfnIndexOfEdict)(ENT(pev)); }
 #endif // ENTINDEX
 
 #ifndef INDEXENT
-inline edict_t *INDEXENT(int iEdictNum) { return (*g_engfuncs.pfnPEntityOfEntIndex)(iEdictNum); }
+inline edict_t* INDEXENT(int iEdictNum) { return (*g_engfuncs.pfnPEntityOfEntIndex)(iEdictNum); }
 #endif // INDEXENT
 
-inline void MESSAGE_BEGIN(int msg_dest, int msg_type, const float *pOrigin, entvars_t *ent) { MESSAGE_BEGIN(msg_dest, msg_type, pOrigin, ENT(ent)); }
+inline void MESSAGE_BEGIN(int msg_dest, int msg_type, const float* pOrigin, entvars_t* ent) { MESSAGE_BEGIN(msg_dest, msg_type, pOrigin, ENT(ent)); }
 inline bool FNullEnt(EOFFSET eoffset) { return (eoffset == 0); }
-inline bool FNullEnt(entvars_t *pev) { return (pev == nullptr || FNullEnt(OFFSET(pev))); }
-inline bool FNullEnt(const edict_t *pent) { return (pent == nullptr || pent->free || FNullEnt(OFFSET(pent))); }
+inline bool FNullEnt(entvars_t* pev) { return (pev == nullptr || FNullEnt(OFFSET(pev))); }
+inline bool FNullEnt(const edict_t* pent) { return (pent == nullptr || pent->free || FNullEnt(OFFSET(pent))); }
 inline bool FStringNull(string_t iString) { return (iString == iStringNull); }
-inline bool FStrEq(const char *sz1, const char *sz2) { return (Q_strcmp(sz1, sz2) == 0); }
-inline bool FStrnEq(const char *sz1, const char *sz2, size_t elem) { return (Q_strncmp(sz1, sz2, elem) == 0); }
+inline bool FStrEq(const char* sz1, const char* sz2) { return (Q_strcmp(sz1, sz2) == 0); }
+inline bool FStrnEq(const char* sz1, const char* sz2, size_t elem) { return (Q_strncmp(sz1, sz2, elem) == 0); }
 
-inline bool FClassnameIs(entvars_t *pev, const char *szClassname) { return FStrEq(STRING(pev->classname), szClassname); }
-inline bool FClassnameIs(edict_t *pent, const char *szClassname) { return FStrEq(STRING(VARS(pent)->classname), szClassname); }
-inline void UTIL_MakeVectorsPrivate(Vector vecAngles, float *p_vForward, float *p_vRight, float *p_vUp) { g_engfuncs.pfnAngleVectors(vecAngles, p_vForward, p_vRight, p_vUp); }
+inline bool FClassnameIs(entvars_t* pev, const char* szClassname) { return FStrEq(STRING(pev->classname), szClassname); }
+inline bool FClassnameIs(edict_t* pent, const char* szClassname) { return FStrEq(STRING(VARS(pent)->classname), szClassname); }
+inline void UTIL_MakeVectorsPrivate(Vector vecAngles, float* p_vForward, float* p_vRight, float* p_vUp) { g_engfuncs.pfnAngleVectors(vecAngles, p_vForward, p_vRight, p_vUp); }
 
 #include "ehandle.h"
 
-extern void EMIT_SOUND_DYN(edict_t *entity, int channel, const char *sample, float volume, float attenuation, int flags, int pitch);
+extern void EMIT_SOUND_DYN(edict_t* entity, int channel, const char* sample, float volume, float attenuation, int flags, int pitch);
 
 // NOTE: use EMIT_SOUND_DYN to set the pitch of a sound. Pitch of 100
 // is no pitch shift.  Pitch > 100 up to 255 is a higher pitch, pitch < 100
 // down to 1 is a lower pitch.   150 to 70 is the realistic range.
 // EMIT_SOUND_DYN with pitch != 100 should be used sparingly, as it's not quite as
 // fast as EMIT_SOUND (the pitchshift mixer is not native coded).
-inline void EMIT_SOUND(edict_t *entity, int channel, const char *sample, float volume, float attenuation)
+inline void EMIT_SOUND(edict_t* entity, int channel, const char* sample, float volume, float attenuation)
 {
 	EMIT_SOUND_DYN(entity, channel, sample, volume, attenuation, 0, PITCH_NORM);
 }
 
-inline void STOP_SOUND(edict_t *entity, int channel, const char *sample)
+inline void STOP_SOUND(edict_t* entity, int channel, const char* sample)
 {
 	EMIT_SOUND_DYN(entity, channel, sample, 0, 0, SND_STOP, PITCH_NORM);
 }
 
-inline void EMIT_SOUND_MSG(edict_t *entity, int msg_type, int channel, const char *sample, float volume, float attenuation, int flags, int pitch = PITCH_NORM, Vector vecOrigin = g_vecZero, edict_t *player = nullptr)
+inline void EMIT_SOUND_MSG(edict_t* entity, int msg_type, int channel, const char* sample, float volume, float attenuation, int flags, int pitch = PITCH_NORM, Vector vecOrigin = g_vecZero, edict_t* player = nullptr)
 {
 	BUILD_SOUND_MSG(entity, channel, sample, (volume * 255.0f), attenuation, flags, pitch, msg_type, SVC_NOP, vecOrigin, player);
 }
 
-inline void STOP_SOUND_MSG(edict_t *entity, int msg_type, int channel, const char *sample, edict_t *player)
+inline void STOP_SOUND_MSG(edict_t* entity, int msg_type, int channel, const char* sample, edict_t* player)
 {
 	BUILD_SOUND_MSG(entity, channel, sample, 0, 0, SND_STOP, PITCH_NORM, msg_type, SVC_NOP, g_vecZero, player);
 }
@@ -196,128 +196,128 @@ unsigned int U_Random();
 void U_Srand(unsigned int seed);
 int UTIL_SharedRandomLong(unsigned int seed, int low, int high);
 float UTIL_SharedRandomFloat(unsigned int seed, float low, float high);
-void UTIL_ParametricRocket(entvars_t *pev, Vector vecOrigin, Vector vecAngles, edict_t *owner);
+void UTIL_ParametricRocket(entvars_t* pev, Vector vecOrigin, Vector vecAngles, edict_t* owner);
 void UTIL_SetGroupTrace(int groupmask, int op);
 void UTIL_UnsetGroupTrace();
-BOOL UTIL_GetNextBestWeapon(CBasePlayer *pPlayer, CBasePlayerItem *pCurrentWeapon);
+BOOL UTIL_GetNextBestWeapon(CBasePlayer* pPlayer, CBasePlayerItem* pCurrentWeapon);
 float UTIL_AngleMod(float a);
 float UTIL_AngleDiff(float destAngle, float srcAngle);
-Vector UTIL_VecToAngles(const Vector &vec);
-void UTIL_MoveToOrigin(edict_t *pent, const Vector &vecGoal, float flDist, int iMoveType);
-int UTIL_EntitiesInBox(CBaseEntity **pList, int listMax, const Vector &mins, const Vector &maxs, int flagMask);
-int UTIL_MonstersInSphere(CBaseEntity **pList, int listMax, const Vector &center, float radius);
-CBaseEntity *UTIL_FindEntityInSphere(CBaseEntity *pStartEntity, const Vector &vecCenter, float flRadius);
-CBaseEntity *UTIL_FindEntityByString_Old(CBaseEntity *pStartEntity, const char *szKeyword, const char *szValue);
-CBaseEntity *UTIL_FindEntityByString(CBaseEntity *pStartEntity, const char *szKeyword, const char *szValue);
-CBaseEntity *UTIL_FindEntityByClassname(CBaseEntity *pStartEntity, const char *szName);
-CBaseEntity *UTIL_FindEntityByTargetname(CBaseEntity *pStartEntity, const char *szName);
-CBaseEntity *UTIL_FindEntityGeneric(const char *szWhatever, const Vector &vecSrc, float flRadius);
+Vector UTIL_VecToAngles(const Vector& vec);
+void UTIL_MoveToOrigin(edict_t* pent, const Vector& vecGoal, float flDist, int iMoveType);
+int UTIL_EntitiesInBox(CBaseEntity** pList, int listMax, const Vector& mins, const Vector& maxs, int flagMask);
+int UTIL_MonstersInSphere(CBaseEntity** pList, int listMax, const Vector& center, float radius);
+CBaseEntity* UTIL_FindEntityInSphere(CBaseEntity* pStartEntity, const Vector& vecCenter, float flRadius);
+CBaseEntity* UTIL_FindEntityByString_Old(CBaseEntity* pStartEntity, const char* szKeyword, const char* szValue);
+CBaseEntity* UTIL_FindEntityByString(CBaseEntity* pStartEntity, const char* szKeyword, const char* szValue);
+CBaseEntity* UTIL_FindEntityByClassname(CBaseEntity* pStartEntity, const char* szName);
+CBaseEntity* UTIL_FindEntityByTargetname(CBaseEntity* pStartEntity, const char* szName);
+CBaseEntity* UTIL_FindEntityGeneric(const char* szWhatever, const Vector& vecSrc, float flRadius);
 #ifndef REGAMEDLL_FIXES
-CBasePlayer *UTIL_PlayerByIndex(int playerIndex);
+CBasePlayer* UTIL_PlayerByIndex(int playerIndex);
 #endif
-void UTIL_MakeVectors(const Vector &vecAngles);
-void UTIL_MakeAimVectors(const Vector &vecAngles);
-void UTIL_MakeInvVectors(const Vector &vec, globalvars_t *pgv);
-void UTIL_EmitAmbientSound(edict_t *entity, const Vector &vecOrigin, const char *samp, float vol, float attenuation, int fFlags, int pitch);
+void UTIL_MakeVectors(const Vector& vecAngles);
+void UTIL_MakeAimVectors(const Vector& vecAngles);
+void UTIL_MakeInvVectors(const Vector& vec, globalvars_t* pgv);
+void UTIL_EmitAmbientSound(edict_t* entity, const Vector& vecOrigin, const char* samp, float vol, float attenuation, int fFlags, int pitch);
 unsigned short FixedUnsigned16(float value, float scale);
 short FixedSigned16(float value, float scale);
-void UTIL_ScreenShake(const Vector &center, float amplitude, float frequency, float duration, float radius);
-void UTIL_ScreenShakeAll(const Vector &center, float amplitude, float frequency, float duration);
-void UTIL_ScreenFadeBuild(ScreenFade &fade, const Vector &color, float fadeTime, float fadeHold, int alpha, int flags);
-void UTIL_ScreenFadeWrite(const ScreenFade &fade, CBaseEntity *pEntity);
-void UTIL_ScreenFadeAll(const Vector &color, float fadeTime, float fadeHold, int alpha, int flags);
-void UTIL_ScreenFade(CBaseEntity *pEntity, const Vector &color, float fadeTime, float fadeHold = 0.0f, int alpha = 0, int flags = 0);
-void UTIL_HudMessage(CBaseEntity *pEntity, const hudtextparms_t &textparms, const char *pMessage);
-void UTIL_HudMessageAll(const hudtextparms_t &textparms, const char *pMessage);
-void UTIL_ClientPrintAll(int msg_dest, const char *msg_name, const char *param1 = nullptr, const char *param2 = nullptr, const char *param3 = nullptr, const char *param4 = nullptr);
-void ClientPrint(entvars_t *client, int msg_dest, const char *msg_name, const char *param1 = nullptr, const char *param2 = nullptr, const char *param3 = nullptr, const char *param4 = nullptr);
-void UTIL_Log(const char *fmt, ...);
-void UTIL_ServerPrint(const char *fmt, ...);
-void UTIL_PrintConsole(edict_t *pEdict, const char *fmt, ...);
-void UTIL_SayText(CBaseEntity *pEntity, const char *fmt, ...);
-void UTIL_SayTextAll(const char *pText, CBaseEntity *pEntity);
-char *UTIL_dtos1(int d);
-char *UTIL_dtos2(int d);
-char *UTIL_dtos3(int d);
-char *UTIL_dtos4(int d);
-void UTIL_ShowMessageArgs(const char *pString, CBaseEntity *pPlayer, CUtlVector<char*> *args, bool isHint = false);
-void UTIL_ShowMessage(const char *pString, CBaseEntity *pEntity, bool isHint = false);
-void UTIL_ShowMessageAll(const char *pString, bool isHint = false);
-void UTIL_TraceLine(const Vector &vecStart, const Vector &vecEnd, IGNORE_MONSTERS igmon, edict_t *pentIgnore, TraceResult *ptr);
-void UTIL_TraceLine(const Vector &vecStart, const Vector &vecEnd, IGNORE_MONSTERS igmon, IGNORE_GLASS ignoreGlass, edict_t *pentIgnore, TraceResult *ptr);
-void UTIL_TraceHull(const Vector &vecStart, const Vector &vecEnd, IGNORE_MONSTERS igmon, int hullNumber, edict_t *pentIgnore, TraceResult *ptr);
-void UTIL_TraceModel(const Vector &vecStart, const Vector &vecEnd, int hullNumber, edict_t *pentModel, TraceResult *ptr);
+void UTIL_ScreenShake(const Vector& center, float amplitude, float frequency, float duration, float radius);
+void UTIL_ScreenShakeAll(const Vector& center, float amplitude, float frequency, float duration);
+void UTIL_ScreenFadeBuild(ScreenFade& fade, const Vector& color, float fadeTime, float fadeHold, int alpha, int flags);
+void UTIL_ScreenFadeWrite(const ScreenFade& fade, CBaseEntity* pEntity);
+void UTIL_ScreenFadeAll(const Vector& color, float fadeTime, float fadeHold, int alpha, int flags);
+void UTIL_ScreenFade(CBaseEntity* pEntity, const Vector& color, float fadeTime, float fadeHold = 0.0f, int alpha = 0, int flags = 0);
+void UTIL_HudMessage(CBaseEntity* pEntity, const hudtextparms_t& textparms, const char* pMessage);
+void UTIL_HudMessageAll(const hudtextparms_t& textparms, const char* pMessage);
+void UTIL_ClientPrintAll(int msg_dest, const char* msg_name, const char* param1 = nullptr, const char* param2 = nullptr, const char* param3 = nullptr, const char* param4 = nullptr);
+void ClientPrint(entvars_t* client, int msg_dest, const char* msg_name, const char* param1 = nullptr, const char* param2 = nullptr, const char* param3 = nullptr, const char* param4 = nullptr);
+void UTIL_Log(const char* fmt, ...);
+void UTIL_ServerPrint(const char* fmt, ...);
+void UTIL_PrintConsole(edict_t* pEdict, const char* fmt, ...);
+void UTIL_SayText(CBaseEntity* pEntity, const char* fmt, ...);
+void UTIL_SayTextAll(const char* pText, CBaseEntity* pEntity);
+char* UTIL_dtos1(int d);
+char* UTIL_dtos2(int d);
+char* UTIL_dtos3(int d);
+char* UTIL_dtos4(int d);
+void UTIL_ShowMessageArgs(const char* pString, CBaseEntity* pPlayer, CUtlVector<char*>* args, bool isHint = false);
+void UTIL_ShowMessage(const char* pString, CBaseEntity* pEntity, bool isHint = false);
+void UTIL_ShowMessageAll(const char* pString, bool isHint = false);
+void UTIL_TraceLine(const Vector& vecStart, const Vector& vecEnd, IGNORE_MONSTERS igmon, edict_t* pentIgnore, TraceResult* ptr);
+void UTIL_TraceLine(const Vector& vecStart, const Vector& vecEnd, IGNORE_MONSTERS igmon, IGNORE_GLASS ignoreGlass, edict_t* pentIgnore, TraceResult* ptr);
+void UTIL_TraceHull(const Vector& vecStart, const Vector& vecEnd, IGNORE_MONSTERS igmon, int hullNumber, edict_t* pentIgnore, TraceResult* ptr);
+void UTIL_TraceModel(const Vector& vecStart, const Vector& vecEnd, int hullNumber, edict_t* pentModel, TraceResult* ptr);
 TraceResult UTIL_GetGlobalTrace();
-void UTIL_SetSize(entvars_t *pev, const Vector &vecMin, const Vector &vecMax);
-float UTIL_VecToYaw(const Vector &vec);
-void UTIL_SetOrigin(entvars_t *pev, const Vector &vecOrigin);
-void UTIL_ParticleEffect(const Vector &vecOrigin, const Vector &vecDirection, ULONG ulColor, ULONG ulCount);
+void UTIL_SetSize(entvars_t* pev, const Vector& vecMin, const Vector& vecMax);
+float UTIL_VecToYaw(const Vector& vec);
+void UTIL_SetOrigin(entvars_t* pev, const Vector& vecOrigin);
+void UTIL_ParticleEffect(const Vector& vecOrigin, const Vector& vecDirection, ULONG ulColor, ULONG ulCount);
 float UTIL_Approach(float target, float value, float speed);
 real_t UTIL_ApproachAngle(float target, float value, float speed);
 real_t UTIL_AngleDistance(float next, float cur);
 float UTIL_SplineFraction(float value, float scale);
-char *UTIL_VarArgs(char *format, ...);
-Vector UTIL_GetAimVector(edict_t *pent, float flSpeed);
-bool UTIL_IsMasterTriggered(string_t sMaster, CBaseEntity *pActivator);
+char* UTIL_VarArgs(char* format, ...);
+Vector UTIL_GetAimVector(edict_t* pent, float flSpeed);
+bool UTIL_IsMasterTriggered(string_t sMaster, CBaseEntity* pActivator);
 BOOL UTIL_ShouldShowBlood(int color);
-int UTIL_PointContents(const Vector &vec);
-void UTIL_BloodStream(const Vector &origin, const Vector &direction, int color, int amount);
-void UTIL_BloodDrips(const Vector &origin, const Vector &direction, int color, int amount);
+int UTIL_PointContents(const Vector& vec);
+void UTIL_BloodStream(const Vector& origin, const Vector& direction, int color, int amount);
+void UTIL_BloodDrips(const Vector& origin, const Vector& direction, int color, int amount);
 Vector UTIL_RandomBloodVector();
-void UTIL_BloodDecalTrace(TraceResult *pTrace, int bloodColor);
-void UTIL_DecalTrace(TraceResult *pTrace, int decalNumber);
-void UTIL_PlayerDecalTrace(TraceResult *pTrace, int playernum, int decalNumber, BOOL bIsCustom);
-void UTIL_GunshotDecalTrace(TraceResult *pTrace, int decalNumber, bool ClientOnly, entvars_t *pShooter);
-void UTIL_Sparks(const Vector &position);
-void UTIL_Ricochet(const Vector &position, float scale);
-bool UTIL_TeamsMatch(const char *pTeamName1, const char *pTeamName2);
-void UTIL_StringToVector(float *pVector, const char *pString);
-void UTIL_StringToVector(Vector &vecIn, const char *pString, char cSeparator);
-void UTIL_StringToVectorND(Vector &vecIn, int nCount, const char *pString, char cSeparator);
-void UTIL_StringToIntArray(int *pVector, int count, const char *pString);
-Vector UTIL_ClampVectorToBox(const Vector &input, const Vector &clampSize);
-float UTIL_WaterLevel(const Vector &position, float minz, float maxz);
+void UTIL_BloodDecalTrace(TraceResult* pTrace, int bloodColor);
+void UTIL_DecalTrace(TraceResult* pTrace, int decalNumber);
+void UTIL_PlayerDecalTrace(TraceResult* pTrace, int playernum, int decalNumber, BOOL bIsCustom);
+void UTIL_GunshotDecalTrace(TraceResult* pTrace, int decalNumber, bool ClientOnly, entvars_t* pShooter);
+void UTIL_Sparks(const Vector& position);
+void UTIL_Ricochet(const Vector& position, float scale);
+bool UTIL_TeamsMatch(const char* pTeamName1, const char* pTeamName2);
+void UTIL_StringToVector(float* pVector, const char* pString);
+void UTIL_StringToVector(Vector& vecIn, const char* pString, char cSeparator);
+void UTIL_StringToVectorND(Vector& vecIn, int nCount, const char* pString, char cSeparator);
+void UTIL_StringToIntArray(int* pVector, int count, const char* pString);
+Vector UTIL_ClampVectorToBox(const Vector& input, const Vector& clampSize);
+float UTIL_WaterLevel(const Vector& position, float minz, float maxz);
 void UTIL_Bubbles(Vector mins, Vector maxs, int count);
 void UTIL_BubbleTrail(Vector from, Vector to, int count);
-void UTIL_Remove(CBaseEntity *pEntity);
-BOOL UTIL_IsValidEntity(edict_t *pent);
-void UTIL_PrecacheOther(const char *szClassname);
-void UTIL_RestartOther(const char *szClassname);
+void UTIL_Remove(CBaseEntity* pEntity);
+BOOL UTIL_IsValidEntity(edict_t* pent);
+void UTIL_PrecacheOther(const char* szClassname);
+void UTIL_RestartOther(const char* szClassname);
 void UTIL_ResetEntities();
-void UTIL_RemoveOther(const char *szClassname, int nCount = 0);
-void UTIL_LogPrintf(const char *fmt, ...);
-float UTIL_DotPoints(const Vector &vecSrc, const Vector &vecCheck, const Vector &vecDir);
-void EntvarsKeyvalue(entvars_t *pev, KeyValueData *pkvd);
-char UTIL_TextureHit(TraceResult *ptr, Vector vecSrc, Vector vecEnd);
+void UTIL_RemoveOther(const char* szClassname, int nCount = 0);
+void UTIL_LogPrintf(const char* fmt, ...);
+float UTIL_DotPoints(const Vector& vecSrc, const Vector& vecCheck, const Vector& vecDir);
+void EntvarsKeyvalue(entvars_t* pev, KeyValueData* pkvd);
+char UTIL_TextureHit(TraceResult* ptr, Vector vecSrc, Vector vecEnd);
 int GetPlayerTeam(int index);
-bool UTIL_IsGame(const char *pszGameName);
+bool UTIL_IsGame(const char* pszGameName);
 real_t UTIL_GetPlayerGaitYaw(int playerIndex);
-int UTIL_ReadFlags(const char *c);
+int UTIL_ReadFlags(const char* c);
 bool UTIL_AreBotsAllowed();
 bool UTIL_IsBeta();
 bool UTIL_AreHostagesImprov();
 int UTIL_GetNumPlayers();
-bool UTIL_IsSpawnPointOccupied(CBaseEntity *pSpot);
-void MAKE_STRING_CLASS(const char *str, entvars_t *pev);
-void NORETURN Sys_Error(const char *error, ...);
+bool UTIL_IsSpawnPointOccupied(CBaseEntity* pSpot);
+void MAKE_STRING_CLASS(const char* str, entvars_t* pev);
+void NORETURN Sys_Error(const char* error, ...);
 
 // Inlines
 template <typename T = CBaseEntity>
-inline T *UTIL_FindEntityByClassname(T *pStartEntity, const char *szName)
+inline T* UTIL_FindEntityByClassname(T* pStartEntity, const char* szName)
 {
-	return (T *)UTIL_FindEntityByString(pStartEntity, "classname", szName);
+	return (T*)UTIL_FindEntityByString(pStartEntity, "classname", szName);
 }
 
 template <typename T = CBaseEntity>
-inline T *UTIL_FindEntityByTargetname(T *pStartEntity, const char *szName)
+inline T* UTIL_FindEntityByTargetname(T* pStartEntity, const char* szName)
 {
-	return (T *)UTIL_FindEntityByString(pStartEntity, "targetname", szName);
+	return (T*)UTIL_FindEntityByString(pStartEntity, "targetname", szName);
 }
 
 template <typename T = CBaseEntity>
-inline T *UTIL_FindEntityInSphere(T *pStartEntity, const Vector &vecCenter, float flRadius)
+inline T* UTIL_FindEntityInSphere(T* pStartEntity, const Vector& vecCenter, float flRadius)
 {
-	edict_t	*pentEntity;
+	edict_t* pentEntity;
 	if (pStartEntity)
 		pentEntity = pStartEntity->edict();
 	else
@@ -334,7 +334,7 @@ inline T *UTIL_FindEntityInSphere(T *pStartEntity, const Vector &vecCenter, floa
 }
 
 template <size_t nSize>
-void UTIL_StripToken(const char *pKey, char (&pDest)[nSize])
+void UTIL_StripToken(const char* pKey, char(&pDest)[nSize])
 {
 	int i = 0;
 	while (i < nSize && pKey[i] && pKey[i] != '#')
@@ -350,10 +350,10 @@ class CPlayerInVolumeAdapter
 {
 public:
 	virtual ~CPlayerInVolumeAdapter() {};
-	virtual void PlayerDetected(const bool fInVolume, CBasePlayer *pPlayer) = 0;
+	virtual void PlayerDetected(const bool fInVolume, CBasePlayer* pPlayer) = 0;
 };
 
-int UTIL_CountPlayersInBrushVolume(bool bOnlyAlive, CBaseEntity *pBrushEntity, int &playersInCount, int &playersOutCount, CPlayerInVolumeAdapter *pAdapter = nullptr);
+int UTIL_CountPlayersInBrushVolume(bool bOnlyAlive, CBaseEntity* pBrushEntity, int& playersInCount, int& playersOutCount, CPlayerInVolumeAdapter* pAdapter = nullptr);
 
 inline real_t UTIL_FixupAngle(real_t v)
 {
@@ -368,7 +368,7 @@ inline real_t UTIL_FixupAngle(real_t v)
 	return angle;
 }
 
-inline void UTIL_FixupAngles(Vector &v)
+inline void UTIL_FixupAngles(Vector& v)
 {
 	v.x = UTIL_FixupAngle(v.x);
 	v.y = UTIL_FixupAngle(v.y);

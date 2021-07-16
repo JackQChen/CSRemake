@@ -65,7 +65,7 @@ NEW_DLL_FUNCTIONS gNewDLLFunctions =
 
 CMemoryPool hashItemMemPool(sizeof(hash_item_t), 64);
 
-int CaseInsensitiveHash(const char *string, int iBounds)
+int CaseInsensitiveHash(const char* string, int iBounds)
 {
 	unsigned int hash = 0;
 
@@ -88,7 +88,7 @@ int CaseInsensitiveHash(const char *string, int iBounds)
 void EmptyEntityHashTable()
 {
 	int i;
-	hash_item_t *item, *temp, *free;
+	hash_item_t* item, * temp, * free;
 
 	for (i = 0; i < stringsHashTable.Count(); i++)
 	{
@@ -109,12 +109,12 @@ void EmptyEntityHashTable()
 	}
 }
 
-void AddEntityHashValue(entvars_t *pev, const char *value, hash_types_e fieldType)
+void AddEntityHashValue(entvars_t* pev, const char* value, hash_types_e fieldType)
 {
 	int count;
-	hash_item_t *item, *next, *temp, *newp;
+	hash_item_t* item, * next, * temp, * newp;
 	int hash, pevIndex;
-	entvars_t *pevtemp;
+	entvars_t* pevtemp;
 
 	if (fieldType != CLASSNAME)
 		return;
@@ -161,7 +161,7 @@ void AddEntityHashValue(entvars_t *pev, const char *value, hash_types_e fieldTyp
 		if (item->pev != pevtemp)
 		{
 			temp = item->next;
-			newp = (hash_item_t *)hashItemMemPool.Alloc(sizeof(hash_item_t));
+			newp = (hash_item_t*)hashItemMemPool.Alloc(sizeof(hash_item_t));
 
 			item->next = newp;
 			newp->pev = pevtemp;
@@ -182,11 +182,11 @@ void AddEntityHashValue(entvars_t *pev, const char *value, hash_types_e fieldTyp
 	}
 }
 
-void RemoveEntityHashValue(entvars_t *pev, const char *value, hash_types_e fieldType)
+void RemoveEntityHashValue(entvars_t* pev, const char* value, hash_types_e fieldType)
 {
 	int hash;
-	hash_item_t *item;
-	hash_item_t *last;
+	hash_item_t* item;
+	hash_item_t* last;
 	int pevIndex;
 	int count;
 
@@ -249,9 +249,9 @@ void RemoveEntityHashValue(entvars_t *pev, const char *value, hash_types_e field
 	}
 }
 
-NOINLINE edict_t *CREATE_NAMED_ENTITY(string_t iClass)
+NOINLINE edict_t* CREATE_NAMED_ENTITY(string_t iClass)
 {
-	edict_t *named = g_engfuncs.pfnCreateNamedEntity(iClass);
+	edict_t* named = g_engfuncs.pfnCreateNamedEntity(iClass);
 	if (named)
 	{
 		AddEntityHashValue(&named->v, STRING(iClass), CLASSNAME);
@@ -260,7 +260,7 @@ NOINLINE edict_t *CREATE_NAMED_ENTITY(string_t iClass)
 	return named;
 }
 
-void REMOVE_ENTITY(edict_t *pEntity)
+void REMOVE_ENTITY(edict_t* pEntity)
 {
 	if (pEntity)
 	{
@@ -268,7 +268,7 @@ void REMOVE_ENTITY(edict_t *pEntity)
 	}
 }
 
-C_DLLEXPORT int GetEntityAPI(DLL_FUNCTIONS *pFunctionTable, int interfaceVersion)
+C_DLLEXPORT int GetEntityAPI(DLL_FUNCTIONS* pFunctionTable, int interfaceVersion)
 {
 	if (!pFunctionTable || interfaceVersion != INTERFACE_VERSION)
 		return 0;
@@ -284,7 +284,7 @@ C_DLLEXPORT int GetEntityAPI(DLL_FUNCTIONS *pFunctionTable, int interfaceVersion
 	return 1;
 }
 
-NOXREF int GetEntityAPI2(DLL_FUNCTIONS *pFunctionTable, int *interfaceVersion)
+NOXREF int GetEntityAPI2(DLL_FUNCTIONS* pFunctionTable, int* interfaceVersion)
 {
 	if (!pFunctionTable || *interfaceVersion != INTERFACE_VERSION)
 	{
@@ -296,7 +296,7 @@ NOXREF int GetEntityAPI2(DLL_FUNCTIONS *pFunctionTable, int *interfaceVersion)
 	return 1;
 }
 
-C_DLLEXPORT int GetNewDLLFunctions(NEW_DLL_FUNCTIONS *pFunctionTable, int *interfaceVersion)
+C_DLLEXPORT int GetNewDLLFunctions(NEW_DLL_FUNCTIONS* pFunctionTable, int* interfaceVersion)
 {
 	if (!pFunctionTable || *interfaceVersion != NEW_DLL_FUNCTIONS_VERSION)
 	{
@@ -308,9 +308,9 @@ C_DLLEXPORT int GetNewDLLFunctions(NEW_DLL_FUNCTIONS *pFunctionTable, int *inter
 	return 1;
 }
 
-int DispatchSpawn(edict_t *pent)
+int DispatchSpawn(edict_t* pent)
 {
-	CBaseEntity *pEntity = GET_PRIVATE<CBaseEntity>(pent);
+	CBaseEntity* pEntity = GET_PRIVATE<CBaseEntity>(pent);
 	if (pEntity)
 	{
 		// Initialize these or entities who don't link to the world won't have anything in here
@@ -340,7 +340,7 @@ int DispatchSpawn(edict_t *pent)
 		// Handle global stuff here
 		if (pEntity && pEntity->pev->globalname)
 		{
-			const globalentity_t *pGlobal = gGlobalState.EntityFromTable(pEntity->pev->globalname);
+			const globalentity_t* pGlobal = gGlobalState.EntityFromTable(pEntity->pev->globalname);
 
 			if (pGlobal)
 			{
@@ -366,7 +366,7 @@ int DispatchSpawn(edict_t *pent)
 	return 0;
 }
 
-void DispatchKeyValue(edict_t *pentKeyvalue, KeyValueData *pkvd)
+void DispatchKeyValue(edict_t* pentKeyvalue, KeyValueData* pkvd)
 {
 	if (!pkvd || !pentKeyvalue)
 		return;
@@ -379,7 +379,7 @@ void DispatchKeyValue(edict_t *pentKeyvalue, KeyValueData *pkvd)
 		return;
 
 	// Get the actualy entity object
-	CBaseEntity *pEntity = GET_PRIVATE<CBaseEntity>(pentKeyvalue);
+	CBaseEntity* pEntity = GET_PRIVATE<CBaseEntity>(pentKeyvalue);
 	if (!pEntity)
 		return;
 
@@ -388,27 +388,27 @@ void DispatchKeyValue(edict_t *pentKeyvalue, KeyValueData *pkvd)
 
 // HACKHACK -- this is a hack to keep the node graph entity from "touching" things (like triggers)
 // while it builds the graph
-void DispatchTouch(edict_t *pentTouched, edict_t *pentOther)
+void DispatchTouch(edict_t* pentTouched, edict_t* pentOther)
 {
-	CBaseEntity *pEntity = GET_PRIVATE<CBaseEntity>(pentTouched);
-	CBaseEntity *pOther = GET_PRIVATE<CBaseEntity>(pentOther);
+	CBaseEntity* pEntity = GET_PRIVATE<CBaseEntity>(pentTouched);
+	CBaseEntity* pOther = GET_PRIVATE<CBaseEntity>(pentOther);
 
 	if (pEntity && pOther && !((pEntity->pev->flags | pOther->pev->flags) & FL_KILLME))
 		pEntity->Touch(pOther);
 }
 
-void DispatchUse(edict_t *pentUsed, edict_t *pentOther)
+void DispatchUse(edict_t* pentUsed, edict_t* pentOther)
 {
-	CBaseEntity *pEntity = GET_PRIVATE<CBaseEntity>(pentUsed);
-	CBaseEntity *pOther = GET_PRIVATE<CBaseEntity>(pentOther);
+	CBaseEntity* pEntity = GET_PRIVATE<CBaseEntity>(pentUsed);
+	CBaseEntity* pOther = GET_PRIVATE<CBaseEntity>(pentOther);
 
 	if (pEntity && !(pEntity->pev->flags & FL_KILLME))
 		pEntity->Use(pOther, pOther, USE_TOGGLE, 0);
 }
 
-void DispatchThink(edict_t *pent)
+void DispatchThink(edict_t* pent)
 {
-	CBaseEntity *pEntity = GET_PRIVATE<CBaseEntity>(pent);
+	CBaseEntity* pEntity = GET_PRIVATE<CBaseEntity>(pent);
 
 	if (pEntity)
 	{
@@ -421,10 +421,10 @@ void DispatchThink(edict_t *pent)
 	}
 }
 
-void DispatchBlocked(edict_t *pentBlocked, edict_t *pentOther)
+void DispatchBlocked(edict_t* pentBlocked, edict_t* pentOther)
 {
-	CBaseEntity *pEntity = GET_PRIVATE<CBaseEntity>(pentBlocked);
-	CBaseEntity *pOther = GET_PRIVATE<CBaseEntity>(pentOther);
+	CBaseEntity* pEntity = GET_PRIVATE<CBaseEntity>(pentBlocked);
+	CBaseEntity* pOther = GET_PRIVATE<CBaseEntity>(pentOther);
 
 	if (pEntity)
 	{
@@ -432,13 +432,13 @@ void DispatchBlocked(edict_t *pentBlocked, edict_t *pentOther)
 	}
 }
 
-void DispatchSave(edict_t *pent, SAVERESTOREDATA *pSaveData)
+void DispatchSave(edict_t* pent, SAVERESTOREDATA* pSaveData)
 {
-	CBaseEntity *pEntity = GET_PRIVATE<CBaseEntity>(pent);
+	CBaseEntity* pEntity = GET_PRIVATE<CBaseEntity>(pent);
 
 	if (pEntity && pSaveData)
 	{
-		ENTITYTABLE *pTable = &pSaveData->pTable[pSaveData->currentIndex];
+		ENTITYTABLE* pTable = &pSaveData->pTable[pSaveData->currentIndex];
 
 		if (pTable->pent != pent)
 		{
@@ -472,10 +472,10 @@ void DispatchSave(edict_t *pent, SAVERESTOREDATA *pSaveData)
 
 // Find the matching global entity.  Spit out an error if the designer made entities of
 // different classes with the same global name
-CBaseEntity *FindGlobalEntity(string_t classname, string_t globalname)
+CBaseEntity* FindGlobalEntity(string_t classname, string_t globalname)
 {
-	edict_t *pent = FIND_ENTITY_BY_STRING(nullptr, "globalname", STRING(globalname));
-	CBaseEntity *pReturn = CBaseEntity::Instance(pent);
+	edict_t* pent = FIND_ENTITY_BY_STRING(nullptr, "globalname", STRING(globalname));
+	CBaseEntity* pReturn = CBaseEntity::Instance(pent);
 
 	if (pReturn)
 	{
@@ -489,9 +489,9 @@ CBaseEntity *FindGlobalEntity(string_t classname, string_t globalname)
 	return pReturn;
 }
 
-int DispatchRestore(edict_t *pent, SAVERESTOREDATA *pSaveData, int globalEntity)
+int DispatchRestore(edict_t* pent, SAVERESTOREDATA* pSaveData, int globalEntity)
 {
-	CBaseEntity *pEntity = GET_PRIVATE<CBaseEntity>(pent);
+	CBaseEntity* pEntity = GET_PRIVATE<CBaseEntity>(pent);
 
 	if (pEntity && pSaveData)
 	{
@@ -509,7 +509,7 @@ int DispatchRestore(edict_t *pent, SAVERESTOREDATA *pSaveData, int globalEntity)
 			pSaveData->size = pSaveData->pTable[pSaveData->currentIndex].location;
 			pSaveData->pCurrentData = pSaveData->pBaseData + pSaveData->size;
 
-			const globalentity_t *pGlobal = gGlobalState.EntityFromTable(tmpVars.globalname);
+			const globalentity_t* pGlobal = gGlobalState.EntityFromTable(tmpVars.globalname);
 
 			// Don't overlay any instance of the global that isn't the latest
 			// pSaveData->szCurrentMapName is the level this entity is coming from
@@ -522,7 +522,7 @@ int DispatchRestore(edict_t *pent, SAVERESTOREDATA *pSaveData, int globalEntity)
 
 			// Compute the new global offset
 			oldOffset = pSaveData->vecLandmarkOffset;
-			CBaseEntity *pNewEntity = FindGlobalEntity(tmpVars.classname, tmpVars.globalname);
+			CBaseEntity* pNewEntity = FindGlobalEntity(tmpVars.classname, tmpVars.globalname);
 
 			if (pNewEntity)
 			{
@@ -575,7 +575,7 @@ int DispatchRestore(edict_t *pent, SAVERESTOREDATA *pSaveData, int globalEntity)
 		}
 		else if (pEntity && pEntity->pev->globalname)
 		{
-			const globalentity_t *pGlobal = gGlobalState.EntityFromTable(pEntity->pev->globalname);
+			const globalentity_t* pGlobal = gGlobalState.EntityFromTable(pEntity->pev->globalname);
 
 			if (pGlobal)
 			{
@@ -603,9 +603,9 @@ int DispatchRestore(edict_t *pent, SAVERESTOREDATA *pSaveData, int globalEntity)
 	return 0;
 }
 
-void DispatchObjectCollsionBox(edict_t *pent)
+void DispatchObjectCollsionBox(edict_t* pent)
 {
-	CBaseEntity *pEntity = GET_PRIVATE<CBaseEntity>(pent);
+	CBaseEntity* pEntity = GET_PRIVATE<CBaseEntity>(pent);
 	if (pEntity)
 	{
 		pEntity->SetObjectCollisionBox();
@@ -615,13 +615,13 @@ void DispatchObjectCollsionBox(edict_t *pent)
 	SetObjectCollisionBox(&pent->v);
 }
 
-void SaveWriteFields(SAVERESTOREDATA *pSaveData, const char *pname, void *pBaseData, TYPEDESCRIPTION *pFields, int fieldCount)
+void SaveWriteFields(SAVERESTOREDATA* pSaveData, const char* pname, void* pBaseData, TYPEDESCRIPTION* pFields, int fieldCount)
 {
 	CSave saveHelper(pSaveData);
 	saveHelper.WriteFields(pname, pBaseData, pFields, fieldCount);
 }
 
-void SaveReadFields(SAVERESTOREDATA *pSaveData, const char *pname, void *pBaseData, TYPEDESCRIPTION *pFields, int fieldCount)
+void SaveReadFields(SAVERESTOREDATA* pSaveData, const char* pname, void* pBaseData, TYPEDESCRIPTION* pFields, int fieldCount)
 {
 	CRestore restoreHelper(pSaveData);
 	restoreHelper.ReadFields(pname, pBaseData, pFields, fieldCount);
@@ -653,7 +653,7 @@ bool CBaseEntity::CanTakeHealth(float flHealth) const
 	return true;
 }
 
-BOOL CBaseEntity::TakeDamage(entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType)
+BOOL CBaseEntity::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
 {
 	Vector vecTemp;
 
@@ -704,19 +704,19 @@ BOOL CBaseEntity::TakeDamage(entvars_t *pevInflictor, entvars_t *pevAttacker, fl
 	return TRUE;
 }
 
-void CBaseEntity::Killed(entvars_t *pevAttacker, int iGib)
+void CBaseEntity::Killed(entvars_t* pevAttacker, int iGib)
 {
 	pev->takedamage = DAMAGE_NO;
 	pev->deadflag = DEAD_DEAD;
 	UTIL_Remove(this);
 }
 
-CBaseEntity *CBaseEntity::GetNextTarget()
+CBaseEntity* CBaseEntity::GetNextTarget()
 {
 	if (FStringNull(pev->target))
 		return nullptr;
 
-	edict_t *pTarget = FIND_ENTITY_BY_TARGETNAME(nullptr, STRING(pev->target));
+	edict_t* pTarget = FIND_ENTITY_BY_TARGETNAME(nullptr, STRING(pev->target));
 	if (FNullEnt(pTarget))
 	{
 		return nullptr;
@@ -735,7 +735,7 @@ TYPEDESCRIPTION	CBaseEntity::m_SaveData[] =
 	DEFINE_FIELD(CBaseEntity, m_pfnBlocked, FIELD_FUNCTION),
 };
 
-int CBaseEntity::Save(CSave &save)
+int CBaseEntity::Save(CSave& save)
 {
 	if (save.WriteEntVars("ENTVARS", pev))
 	{
@@ -745,7 +745,7 @@ int CBaseEntity::Save(CSave &save)
 	return 0;
 }
 
-int CBaseEntity::Restore(CRestore &restore)
+int CBaseEntity::Restore(CRestore& restore)
 {
 	int status = restore.ReadEntVars("ENTVARS", pev);
 	if (status)
@@ -761,7 +761,7 @@ int CBaseEntity::Restore(CRestore &restore)
 		mins = pev->mins;
 		maxs = pev->maxs;
 
-		PRECACHE_MODEL((char *)STRING(pev->model));
+		PRECACHE_MODEL((char*)STRING(pev->model));
 		SET_MODEL(ENT(pev), STRING(pev->model));
 
 		// Reset them
@@ -772,7 +772,7 @@ int CBaseEntity::Restore(CRestore &restore)
 }
 
 // Initialize absmin & absmax to the appropriate box
-void SetObjectCollisionBox(entvars_t *pev)
+void SetObjectCollisionBox(entvars_t* pev)
 {
 	if (pev->solid == SOLID_BSP && (pev->angles.x || pev->angles.y || pev->angles.z))
 	{
@@ -783,13 +783,13 @@ void SetObjectCollisionBox(entvars_t *pev)
 		max = 0;
 		for (i = 0; i < 3; i++)
 		{
-			v = Q_fabs(real_t(((float *)pev->mins)[i]));
+			v = Q_fabs(real_t(((float*)pev->mins)[i]));
 			if (v > max)
 			{
 				max = v;
 			}
 
-			v = Q_fabs(real_t(((float *)pev->maxs)[i]));
+			v = Q_fabs(real_t(((float*)pev->maxs)[i]));
 			if (v > max)
 			{
 				max = v;
@@ -797,8 +797,8 @@ void SetObjectCollisionBox(entvars_t *pev)
 		}
 		for (i = 0; i < 3; i++)
 		{
-			((float *)pev->absmin)[i] = ((float *)pev->origin)[i] - max;
-			((float *)pev->absmax)[i] = ((float *)pev->origin)[i] + max;
+			((float*)pev->absmin)[i] = ((float*)pev->origin)[i] - max;
+			((float*)pev->absmax)[i] = ((float*)pev->origin)[i] + max;
 		}
 	}
 	else
@@ -821,12 +821,12 @@ void CBaseEntity::SetObjectCollisionBox()
 	::SetObjectCollisionBox(pev);
 }
 
-bool CBaseEntity::Intersects(CBaseEntity *pOther)
+bool CBaseEntity::Intersects(CBaseEntity* pOther)
 {
 	return Intersects(pOther->pev->absmin, pOther->pev->absmax);
 }
 
-bool CBaseEntity::Intersects(const Vector &mins, const Vector &maxs)
+bool CBaseEntity::Intersects(const Vector& mins, const Vector& maxs)
 {
 	if (mins.x > pev->absmax.x
 		|| mins.y > pev->absmax.y
@@ -902,16 +902,16 @@ int CBaseEntity::DamageDecal(int bitsDamageType)
 
 // NOTE: szName must be a pointer to constant memory, e.g. "monster_class" because the entity
 // will keep a pointer to it after this call.
-CBaseEntity *CBaseEntity::Create(const char *szName, const Vector &vecOrigin, const Vector &vecAngles, edict_t *pentOwner)
+CBaseEntity* CBaseEntity::Create(const char* szName, const Vector& vecOrigin, const Vector& vecAngles, edict_t* pentOwner)
 {
-	edict_t	*pent = CREATE_NAMED_ENTITY(MAKE_STRING(szName));
+	edict_t* pent = CREATE_NAMED_ENTITY(MAKE_STRING(szName));
 	if (FNullEnt(pent))
 	{
 		ALERT(at_console, "NULL Ent in Create!\n");
 		return nullptr;
 	}
 
-	CBaseEntity *pEntity = Instance(pent);
+	CBaseEntity* pEntity = Instance(pent);
 
 	pEntity->pev->owner = pentOwner;
 	pEntity->pev->origin = vecOrigin;
@@ -923,7 +923,7 @@ CBaseEntity *CBaseEntity::Create(const char *szName, const Vector &vecOrigin, co
 }
 
 // Returns true if a line can be traced from the caller's eyes to the target
-BOOL CBaseEntity::FVisible(CBaseEntity *pEntity)
+BOOL CBaseEntity::FVisible(CBaseEntity* pEntity)
 {
 	TraceResult tr;
 	Vector vecLookerOrigin;
@@ -955,7 +955,7 @@ BOOL CBaseEntity::FVisible(CBaseEntity *pEntity)
 }
 
 // Returns true if a line can be traced from the caller's eyes to the target vector
-BOOL CBaseEntity::FVisible(const Vector &vecOrigin)
+BOOL CBaseEntity::FVisible(const Vector& vecOrigin)
 {
 	TraceResult tr;
 	Vector vecLookerOrigin;
@@ -977,7 +977,7 @@ BOOL CBaseEntity::FVisible(const Vector &vecOrigin)
 	}
 }
 
-void CBaseEntity::TraceAttack(entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType)
+void CBaseEntity::TraceAttack(entvars_t* pevAttacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType)
 {
 	Vector vecOrigin = ptr->vecEndPos - vecDir * 4;
 
@@ -996,9 +996,9 @@ void CBaseEntity::TraceAttack(entvars_t *pevAttacker, float flDamage, Vector vec
 }
 
 
-LINK_HOOK_CLASS_VOID_CHAIN(CBaseEntity, FireBullets, (ULONG cShots, VectorRef vecSrc, VectorRef vecDirShooting, VectorRef vecSpread, float flDistance, int iBulletType, int iTracerFreq, int iDamage, entvars_t *pevAttacker), cShots, vecSrc, vecDirShooting, vecSpread, flDistance, iBulletType, iTracerFreq, iDamage, pevAttacker)
+LINK_HOOK_CLASS_VOID_CHAIN(CBaseEntity, FireBullets, (ULONG cShots, VectorRef vecSrc, VectorRef vecDirShooting, VectorRef vecSpread, float flDistance, int iBulletType, int iTracerFreq, int iDamage, entvars_t* pevAttacker), cShots, vecSrc, vecDirShooting, vecSpread, flDistance, iBulletType, iTracerFreq, iDamage, pevAttacker)
 
-void CBaseEntity::__API_HOOK(FireBullets)(ULONG cShots, VectorRef vecSrc, VectorRef vecDirShooting, VectorRef vecSpread, float flDistance, int iBulletType, int iTracerFreq, int iDamage, entvars_t *pevAttacker)
+void CBaseEntity::__API_HOOK(FireBullets)(ULONG cShots, VectorRef vecSrc, VectorRef vecDirShooting, VectorRef vecSpread, float flDistance, int iBulletType, int iTracerFreq, int iDamage, entvars_t* pevAttacker)
 {
 	static int tracerCount;
 	int tracer;
@@ -1031,8 +1031,7 @@ void CBaseEntity::__API_HOOK(FireBullets)(ULONG cShots, VectorRef vecSrc, Vector
 			x = RANDOM_FLOAT(-0.5, 0.5) + RANDOM_FLOAT(-0.5, 0.5);
 			y = RANDOM_FLOAT(-0.5, 0.5) + RANDOM_FLOAT(-0.5, 0.5);
 			z = x * x + y * y;
-		}
-		while (z > 1);
+		} while (z > 1);
 
 		Vector vecDir, vecEnd;
 
@@ -1061,20 +1060,20 @@ void CBaseEntity::__API_HOOK(FireBullets)(ULONG cShots, VectorRef vecSrc, Vector
 				tracer = 1;
 
 			MESSAGE_BEGIN(MSG_PAS, SVC_TEMPENTITY, vecTracerSrc);
-				WRITE_BYTE(TE_TRACER);
-				WRITE_COORD(vecTracerSrc.x);
-				WRITE_COORD(vecTracerSrc.y);
-				WRITE_COORD(vecTracerSrc.z);
-				WRITE_COORD(tr.vecEndPos.x);
-				WRITE_COORD(tr.vecEndPos.y);
-				WRITE_COORD(tr.vecEndPos.z);
+			WRITE_BYTE(TE_TRACER);
+			WRITE_COORD(vecTracerSrc.x);
+			WRITE_COORD(vecTracerSrc.y);
+			WRITE_COORD(vecTracerSrc.z);
+			WRITE_COORD(tr.vecEndPos.x);
+			WRITE_COORD(tr.vecEndPos.y);
+			WRITE_COORD(tr.vecEndPos.z);
 			MESSAGE_END();
 		}
 
 		// do damage, paint decals
 		if (tr.flFraction != 1.0f)
 		{
-			CBaseEntity *pEntity = CBaseEntity::Instance(tr.pHit);
+			CBaseEntity* pEntity = CBaseEntity::Instance(tr.pHit);
 
 			if (iDamage)
 			{
@@ -1142,104 +1141,103 @@ void CBaseEntity::__API_HOOK(FireBullets)(ULONG cShots, VectorRef vecSrc, Vector
 	ApplyMultiDamage(pev, pevAttacker);
 }
 
-LINK_HOOK_CLASS_VOID_CHAIN(CBaseEntity, FireBuckshots, (ULONG cShots, VectorRef vecSrc, VectorRef vecDirShooting, VectorRef vecSpread, float flDistance, int iTracerFreq, int iDamage, entvars_t *pevAttacker), cShots, vecSrc, vecDirShooting, vecSpread, flDistance, iTracerFreq, iDamage, pevAttacker)
+LINK_HOOK_CLASS_VOID_CHAIN(CBaseEntity, FireBuckshots, (ULONG cShots, VectorRef vecSrc, VectorRef vecDirShooting, VectorRef vecSpread, float flDistance, int iTracerFreq, int iDamage, entvars_t* pevAttacker), cShots, vecSrc, vecDirShooting, vecSpread, flDistance, iTracerFreq, iDamage, pevAttacker)
 
-void CBaseEntity::__API_HOOK(FireBuckshots)(ULONG cShots, VectorRef vecSrc, VectorRef vecDirShooting, VectorRef vecSpread, float flDistance, int iTracerFreq, int iDamage, entvars_t *pevAttacker)
+void CBaseEntity::__API_HOOK(FireBuckshots)(ULONG cShots, VectorRef vecSrc, VectorRef vecDirShooting, VectorRef vecSpread, float flDistance, int iTracerFreq, int iDamage, entvars_t* pevAttacker)
 {
-    static int tracerCount;
-    int tracer;
+	static int tracerCount;
+	int tracer;
 
-    TraceResult tr;
-    Vector vecRight, vecUp;
+	TraceResult tr;
+	Vector vecRight, vecUp;
 
-    vecRight = gpGlobals->v_right;
-    vecUp = gpGlobals->v_up;
+	vecRight = gpGlobals->v_right;
+	vecUp = gpGlobals->v_up;
 
-    if (!pevAttacker)
-    {
-        // the default attacker is ourselves
-        pevAttacker = pev;
-    }
+	if (!pevAttacker)
+	{
+		// the default attacker is ourselves
+		pevAttacker = pev;
+	}
 
-    ClearMultiDamage();
-    gMultiDamage.type = (DMG_BULLET | DMG_NEVERGIB);
+	ClearMultiDamage();
+	gMultiDamage.type = (DMG_BULLET | DMG_NEVERGIB);
 
-    for (ULONG iShot = 1; iShot <= cShots; iShot++)
-    {
-        // get circular gaussian spread
-        float x, y, z;
+	for (ULONG iShot = 1; iShot <= cShots; iShot++)
+	{
+		// get circular gaussian spread
+		float x, y, z;
 
-        do
-        {
-            x = RANDOM_FLOAT(-0.5, 0.5) + RANDOM_FLOAT(-0.5, 0.5);
-            y = RANDOM_FLOAT(-0.5, 0.5) + RANDOM_FLOAT(-0.5, 0.5);
-            z = x * x + y * y;
-        }
-        while (z > 1);
+		do
+		{
+			x = RANDOM_FLOAT(-0.5, 0.5) + RANDOM_FLOAT(-0.5, 0.5);
+			y = RANDOM_FLOAT(-0.5, 0.5) + RANDOM_FLOAT(-0.5, 0.5);
+			z = x * x + y * y;
+		} while (z > 1);
 
-        Vector vecDir, vecEnd;
+		Vector vecDir, vecEnd;
 
-        vecDir = vecDirShooting + x * vecSpread.x * vecRight + y * vecSpread.y * vecUp;
-        vecEnd = vecSrc + vecDir * flDistance;
+		vecDir = vecDirShooting + x * vecSpread.x * vecRight + y * vecSpread.y * vecUp;
+		vecEnd = vecSrc + vecDir * flDistance;
 
-        UTIL_TraceLine(vecSrc, vecEnd, dont_ignore_monsters, ENT(pev), &tr);
-        tracer = 0;
+		UTIL_TraceLine(vecSrc, vecEnd, dont_ignore_monsters, ENT(pev), &tr);
+		tracer = 0;
 
-        if (iTracerFreq != 0 && !(tracerCount++ % iTracerFreq))
-        {
-            Vector vecTracerSrc;
+		if (iTracerFreq != 0 && !(tracerCount++ % iTracerFreq))
+		{
+			Vector vecTracerSrc;
 
-            if (IsPlayer())
-            {
-                // adjust tracer position for player
-                vecTracerSrc = vecSrc + Vector(0, 0, -4) + gpGlobals->v_right * 2 + gpGlobals->v_forward * 16;
-            }
-            else
-            {
-                vecTracerSrc = vecSrc;
-            }
+			if (IsPlayer())
+			{
+				// adjust tracer position for player
+				vecTracerSrc = vecSrc + Vector(0, 0, -4) + gpGlobals->v_right * 2 + gpGlobals->v_forward * 16;
+			}
+			else
+			{
+				vecTracerSrc = vecSrc;
+			}
 
-            // guns that always trace also always decal
-            if (iTracerFreq != 1)
-                tracer = 1;
+			// guns that always trace also always decal
+			if (iTracerFreq != 1)
+				tracer = 1;
 
-            MESSAGE_BEGIN(MSG_PAS, SVC_TEMPENTITY, vecTracerSrc);
-                WRITE_BYTE(TE_TRACER);
-                WRITE_COORD(vecTracerSrc.x);
-                WRITE_COORD(vecTracerSrc.y);
-                WRITE_COORD(vecTracerSrc.z);
-                WRITE_COORD(tr.vecEndPos.x);
-                WRITE_COORD(tr.vecEndPos.y);
-                WRITE_COORD(tr.vecEndPos.z);
-            MESSAGE_END();
-        }
+			MESSAGE_BEGIN(MSG_PAS, SVC_TEMPENTITY, vecTracerSrc);
+			WRITE_BYTE(TE_TRACER);
+			WRITE_COORD(vecTracerSrc.x);
+			WRITE_COORD(vecTracerSrc.y);
+			WRITE_COORD(vecTracerSrc.z);
+			WRITE_COORD(tr.vecEndPos.x);
+			WRITE_COORD(tr.vecEndPos.y);
+			WRITE_COORD(tr.vecEndPos.z);
+			MESSAGE_END();
+		}
 
-        // do damage, paint decals
-        if (tr.flFraction != 1.0f)
-        {
-            CBaseEntity *pEntity = CBaseEntity::Instance(tr.pHit);
-            float flDamage = ((1 - tr.flFraction) * iDamage);
-            pEntity->TraceAttack(pevAttacker, int(flDamage), vecDir, &tr, DMG_BULLET);
-        }
+		// do damage, paint decals
+		if (tr.flFraction != 1.0f)
+		{
+			CBaseEntity* pEntity = CBaseEntity::Instance(tr.pHit);
+			float flDamage = ((1 - tr.flFraction) * iDamage);
+			pEntity->TraceAttack(pevAttacker, int(flDamage), vecDir, &tr, DMG_BULLET);
+		}
 
-        // make bullet trails
-        UTIL_BubbleTrail(vecSrc, tr.vecEndPos, int((flDistance * tr.flFraction) / 64));
-    }
+		// make bullet trails
+		UTIL_BubbleTrail(vecSrc, tr.vecEndPos, int((flDistance * tr.flFraction) / 64));
+	}
 
-    ApplyMultiDamage(pev, pevAttacker);
+	ApplyMultiDamage(pev, pevAttacker);
 }
 
-bool EXT_FUNC IsPenetrableEntity_default(Vector &vecSrc, Vector &vecEnd, entvars_t *pevAttacker, edict_t *pHit)
+bool EXT_FUNC IsPenetrableEntity_default(Vector& vecSrc, Vector& vecEnd, entvars_t* pevAttacker, edict_t* pHit)
 {
 	return true;
 }
 
 
-LINK_HOOK_CLASS_CHAIN(VectorRef, CBaseEntity, FireBullets3, (VectorRef vecSrc, VectorRef vecDirShooting, float vecSpread, float flDistance, int iPenetration, int iBulletType, int iDamage, float flRangeModifier, entvars_t *pevAttacker, bool bPistol, int shared_rand), vecSrc, vecDirShooting, vecSpread, flDistance, iPenetration, iBulletType, iDamage, flRangeModifier, pevAttacker, bPistol, shared_rand)
-	
+LINK_HOOK_CLASS_CHAIN(VectorRef, CBaseEntity, FireBullets3, (VectorRef vecSrc, VectorRef vecDirShooting, float vecSpread, float flDistance, int iPenetration, int iBulletType, int iDamage, float flRangeModifier, entvars_t* pevAttacker, bool bPistol, int shared_rand), vecSrc, vecDirShooting, vecSpread, flDistance, iPenetration, iBulletType, iDamage, flRangeModifier, pevAttacker, bPistol, shared_rand)
+
 // Go to the trouble of combining multiple pellets into a single damage call.
 // This version is used by Players, uses the random seed generator to sync client and server side shots.
-VectorRef CBaseEntity::__API_HOOK(FireBullets3)(VectorRef vecSrc, VectorRef vecDirShooting, float vecSpread, float flDistance, int iPenetration, int iBulletType, int iDamage, float flRangeModifier, entvars_t *pevAttacker, bool bPistol, int shared_rand)
+VectorRef CBaseEntity::__API_HOOK(FireBullets3)(VectorRef vecSrc, VectorRef vecDirShooting, float vecSpread, float flDistance, int iPenetration, int iBulletType, int iDamage, float flRangeModifier, entvars_t* pevAttacker, bool bPistol, int shared_rand)
 {
 	static Vector vecRet;
 
@@ -1322,8 +1320,7 @@ VectorRef CBaseEntity::__API_HOOK(FireBullets3)(VectorRef vecSrc, VectorRef vecD
 			x = RANDOM_FLOAT(-0.5, 0.5) + RANDOM_FLOAT(-0.5, 0.5);
 			y = RANDOM_FLOAT(-0.5, 0.5) + RANDOM_FLOAT(-0.5, 0.5);
 			z = x * x + y * y;
-		}
-		while (z > 1);
+		} while (z > 1);
 	}
 
 	Vector vecDir, vecEnd;
@@ -1341,7 +1338,7 @@ VectorRef CBaseEntity::__API_HOOK(FireBullets3)(VectorRef vecSrc, VectorRef vecD
 
 		if (TheBots && tr.flFraction != 1.0f)
 		{
-			TheBots->OnEvent(EVENT_BULLET_IMPACT, this, (CBaseEntity *)&tr.vecEndPos);
+			TheBots->OnEvent(EVENT_BULLET_IMPACT, this, (CBaseEntity*)&tr.vecEndPos);
 		}
 
 		char cTextureType = UTIL_TextureHit(&tr, vecSrc, vecEnd);
@@ -1392,7 +1389,7 @@ VectorRef CBaseEntity::__API_HOOK(FireBullets3)(VectorRef vecSrc, VectorRef vecD
 		}
 		if (tr.flFraction != 1.0f)
 		{
-			CBaseEntity *pEntity = CBaseEntity::Instance(tr.pHit);
+			CBaseEntity* pEntity = CBaseEntity::Instance(tr.pHit);
 			iPenetration--;
 
 			flCurrentDistance = tr.flFraction * flDistance;
@@ -1465,7 +1462,7 @@ VectorRef CBaseEntity::__API_HOOK(FireBullets3)(VectorRef vecSrc, VectorRef vecD
 	return vecRet;
 }
 
-void CBaseEntity::TraceBleed(float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType)
+void CBaseEntity::TraceBleed(float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType)
 {
 	if (BloodColor() == DONT_BLEED)
 		return;
@@ -1554,9 +1551,9 @@ void OnGameShutdown()
 	FileSystem_Shutdown();
 }
 
-void OnFreeEntPrivateData(edict_t *pEnt)
+void OnFreeEntPrivateData(edict_t* pEnt)
 {
-	CBaseEntity *pEntity = GET_PRIVATE<CBaseEntity>(pEnt);
+	CBaseEntity* pEntity = GET_PRIVATE<CBaseEntity>(pEnt);
 	if (!pEntity)
 		return;
 

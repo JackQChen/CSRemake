@@ -29,7 +29,7 @@
 #include "precompiled.h"
 
 // Used to update view angles to stay on a ladder
-float StayOnLadderLine(CCSBot *me, const CNavLadder *ladder)
+float StayOnLadderLine(CCSBot* me, const CNavLadder* ladder)
 {
 	// determine our facing
 	NavDirType faceDir = AngleToDirection(me->pev->v_angle.y);
@@ -220,14 +220,14 @@ void CCSBot::UpdateLookAngles()
 }
 
 // Return true if we can see the point
-bool CCSBot::IsVisible(const Vector *pos, bool testFOV) const
+bool CCSBot::IsVisible(const Vector* pos, bool testFOV) const
 {
 	// we can't see anything if we're blind
 	if (IsBlind())
 		return false;
 
 	// is it in my general viewcone?
-	if (testFOV && !(const_cast<CCSBot *>(this)->FInViewCone(pos)))
+	if (testFOV && !(const_cast<CCSBot*>(this)->FInViewCone(pos)))
 		return false;
 
 	// check line of sight against smoke
@@ -247,13 +247,13 @@ bool CCSBot::IsVisible(const Vector *pos, bool testFOV) const
 
 // Return true if we can see any part of the player
 // Check parts in order of importance. Return the first part seen in "visParts" if it is non-NULL.
-bool CCSBot::IsVisible(CBasePlayer *pPlayer, bool testFOV, unsigned char *visParts) const
+bool CCSBot::IsVisible(CBasePlayer* pPlayer, bool testFOV, unsigned char* visParts) const
 {
 #ifdef REGAMEDLL_ADD // REGAMEDLL_FIXES ?
 	if ((pPlayer->pev->flags & FL_NOTARGET) || (pPlayer->pev->effects & EF_NODRAW))
 		return false;
 #endif
-	
+
 	Vector spot = pPlayer->pev->origin;
 	unsigned char testVisParts = NONE;
 
@@ -324,7 +324,7 @@ void CCSBot::UpdateLookAt()
 }
 
 // Look at the given point in space for the given duration (-1 means forever)
-void CCSBot::SetLookAt(const char *desc, const Vector *pos, PriorityType pri, float duration, bool clearIfClose, float angleTolerance)
+void CCSBot::SetLookAt(const char* desc, const Vector* pos, PriorityType pri, float duration, bool clearIfClose, float angleTolerance)
 {
 	if (!pos)
 		return;
@@ -376,9 +376,9 @@ void CCSBot::UpdatePeripheralVision()
 	{
 		// check LOS to all spots in case we see them with our "peripheral vision"
 		Vector pos;
-		for (auto &spotOrder : m_spotEncounter->spotList)
+		for (auto& spotOrder : m_spotEncounter->spotList)
 		{
-			const Vector *spotPos = spotOrder.spot->GetPosition();
+			const Vector* spotPos = spotOrder.spot->GetPosition();
 
 			pos.x = spotPos->x;
 			pos.y = spotPos->y;
@@ -537,13 +537,13 @@ void CCSBot::UpdateLookAround(bool updateNow)
 
 			// collect the unchecked spots so far
 			const int MAX_DANGER_SPOTS = 8;
-			HidingSpot *dangerSpot[MAX_DANGER_SPOTS];
+			HidingSpot* dangerSpot[MAX_DANGER_SPOTS];
 			int dangerSpotCount = 0;
 			int dangerIndex = 0;
 
 			const float checkTime = 10.0f;
 
-			for (auto &spotOrder : m_spotEncounter->spotList)
+			for (auto& spotOrder : m_spotEncounter->spotList)
 			{
 				// if we have seen this spot recently, we don't need to look at it
 				if (gpGlobals->time - GetHidingSpotCheckTimestamp(spotOrder.spot) <= checkTime)
@@ -565,7 +565,7 @@ void CCSBot::UpdateLookAround(bool updateNow)
 				// pick one of the spots at random
 				int which = RANDOM_LONG(0, dangerSpotCount - 1);
 
-				const Vector *checkSpot = dangerSpot[which]->GetPosition();
+				const Vector* checkSpot = dangerSpot[which]->GetPosition();
 
 				Vector pos = *checkSpot;
 				pos.z += HalfHumanHeight;
@@ -582,7 +582,7 @@ void CCSBot::UpdateLookAround(bool updateNow)
 }
 
 // "Bend" our line of sight around corners until we can "see" the point.
-bool CCSBot::BendLineOfSight(const Vector *eye, const Vector *point, Vector *bend) const
+bool CCSBot::BendLineOfSight(const Vector* eye, const Vector* point, Vector* bend) const
 {
 	// if we can directly see the point, use it
 	TraceResult result;
@@ -661,7 +661,7 @@ bool CCSBot::BendLineOfSight(const Vector *eye, const Vector *point, Vector *ben
 	return false;
 }
 
-CBasePlayer *CCSBot::FindMostDangerousThreat()
+CBasePlayer* CCSBot::FindMostDangerousThreat()
 {
 	// maximum number of simulataneously attendable threats
 #ifdef REGAMEDLL_FIXES
@@ -672,7 +672,7 @@ CBasePlayer *CCSBot::FindMostDangerousThreat()
 
 	struct CloseInfo
 	{
-		CBasePlayer *enemy;
+		CBasePlayer* enemy;
 		float range;
 	};
 
@@ -684,7 +684,7 @@ CBasePlayer *CCSBot::FindMostDangerousThreat()
 	if (prevIndex < 0)
 		prevIndex = MAX_ENEMY_QUEUE - 1;
 
-	CBasePlayer *currentThreat = m_enemyQueue[prevIndex].player;
+	CBasePlayer* currentThreat = m_enemyQueue[prevIndex].player;
 #endif
 
 	m_bomber = nullptr;
@@ -699,7 +699,7 @@ CBasePlayer *CCSBot::FindMostDangerousThreat()
 	{
 		for (i = 1; i <= gpGlobals->maxClients; i++)
 		{
-			CBasePlayer *pPlayer = UTIL_PlayerByIndex(i);
+			CBasePlayer* pPlayer = UTIL_PlayerByIndex(i);
 
 			if (!pPlayer)
 				continue;
@@ -866,8 +866,8 @@ CBasePlayer *CCSBot::FindMostDangerousThreat()
 		for (i = 0; i < threatCount; i++)
 		{
 			// find the area the player/bot is standing on
-			CNavArea *area;
-			CCSBot *pBot = static_cast<CCSBot *>(threat[i].enemy);
+			CNavArea* area;
+			CCSBot* pBot = static_cast<CCSBot*>(threat[i].enemy);
 
 			if (pBot->IsBot())
 			{
@@ -971,7 +971,7 @@ void CCSBot::UpdateReactionQueue()
 		return;
 
 	// find biggest threat at this instant
-	CBasePlayer *threat = FindMostDangerousThreat();
+	CBasePlayer* threat = FindMostDangerousThreat();
 
 	int now = m_enemyQueueIndex;
 
@@ -1018,7 +1018,7 @@ void CCSBot::UpdateReactionQueue()
 }
 
 // Return the most dangerous threat we are "conscious" of
-CBasePlayer *CCSBot::GetRecognizedEnemy()
+CBasePlayer* CCSBot::GetRecognizedEnemy()
 {
 	if (m_enemyQueueAttendIndex >= m_enemyQueueCount)
 		return nullptr;
@@ -1047,7 +1047,7 @@ bool CCSBot::IsRecognizedEnemyProtectedByShield()
 // Return distance to closest enemy we are "conscious" of
 float CCSBot::GetRangeToNearestRecognizedEnemy()
 {
-	const CBasePlayer *pEnemy = GetRecognizedEnemy();
+	const CBasePlayer* pEnemy = GetRecognizedEnemy();
 
 	if (pEnemy)
 	{
@@ -1081,7 +1081,7 @@ void CCSBot::Blind(float duration, float holdTime, float fadeTime, int alpha)
 }
 
 #ifdef REGAMEDLL_ADD
-bool CCSBot::IsNoticable(const CBasePlayer *pPlayer, unsigned char visibleParts) const
+bool CCSBot::IsNoticable(const CBasePlayer* pPlayer, unsigned char visibleParts) const
 {
 	float deltaT = m_attentionInterval.GetElapsedTime();
 
@@ -1189,7 +1189,7 @@ bool CCSBot::IsNoticable(const CBasePlayer *pPlayer, unsigned char visibleParts)
 	float dispositionChance = closeChance + (farChance - closeChance) * rangeModifier;
 
 	// determine actual chance of noticing player
-	float noticeChance = dispositionChance * coverRatio/100.0f;
+	float noticeChance = dispositionChance * coverRatio / 100.0f;
 
 	// scale by skill level
 	noticeChance *= (0.5f + 0.5f * GetProfile()->GetSkill());

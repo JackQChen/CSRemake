@@ -47,7 +47,7 @@
 #define BIT(n) (1<<(n))
 
 #ifdef HAVE_STRONG_TYPEDEF
-enum class string_t: unsigned int {};
+enum class string_t : unsigned int {};
 #else
 typedef unsigned int string_t;
 #endif
@@ -59,11 +59,11 @@ typedef unsigned short word;
 #define _DEF_BYTE_
 
 #ifndef __cplusplus
-	#undef true
-	#undef false
-	typedef enum {false, true} qboolean;
+#undef true
+#undef false
+typedef enum { false, true } qboolean;
 #else
-	typedef int qboolean;
+typedef int qboolean;
 #endif // #ifndef __cplusplus
 
 // From engine/server.h

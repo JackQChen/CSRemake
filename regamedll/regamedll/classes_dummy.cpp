@@ -28,7 +28,7 @@
 
 #include "precompiled.h"
 
-class CDummyWeaponClass:
+class CDummyWeaponClass :
 	public CAK47, public CAUG, public CAWP, public CC4,
 	public CDEAGLE, public CELITE, public CFamas, public CFiveSeven,
 	public CFlashbang, public CG3SG1, public CGalil, public CGLOCK18,
@@ -40,10 +40,10 @@ class CDummyWeaponClass:
 {
 public:
 	virtual void Precache() {};
-	virtual int Save(CSave &save) { return 0; };
-	virtual int Restore(CRestore &restore) { return 0; };
-	virtual int AddToPlayer(CBasePlayer *pPlayer) { return 0; };
-	virtual int AddDuplicate(CBasePlayerItem *pItem) { return 0; };
+	virtual int Save(CSave& save) { return 0; };
+	virtual int Restore(CRestore& restore) { return 0; };
+	virtual int AddToPlayer(CBasePlayer* pPlayer) { return 0; };
+	virtual int AddDuplicate(CBasePlayerItem* pItem) { return 0; };
 	virtual BOOL CanDeploy() { return FALSE; };
 	virtual BOOL IsWeapon() { return TRUE; }
 	virtual void Holster(int skiplocal = 0) {};
@@ -51,10 +51,10 @@ public:
 	virtual void ItemPostFrame() {};
 	virtual int PrimaryAmmoIndex() { return 0; };
 	virtual int SecondaryAmmoIndex() { return 0; };
-	virtual int UpdateClientData(CBasePlayer *pPlayer) { return 0; };
-	virtual CBasePlayerItem *GetWeaponPtr() { return nullptr; }
-	virtual int ExtractAmmo(CBasePlayerWeapon *pWeapon) { return 0; };
-	virtual int ExtractClipAmmo(CBasePlayerWeapon *pWeapon) { return 0; };
+	virtual int UpdateClientData(CBasePlayer* pPlayer) { return 0; };
+	virtual CBasePlayerItem* GetWeaponPtr() { return nullptr; }
+	virtual int ExtractAmmo(CBasePlayerWeapon* pWeapon) { return 0; };
+	virtual int ExtractClipAmmo(CBasePlayerWeapon* pWeapon) { return 0; };
 	virtual int AddWeapon() { return 0; }
 	virtual BOOL PlayEmptySound() { return FALSE; };
 	virtual void ResetEmptySound() {};
@@ -69,15 +69,15 @@ public:
 	virtual BOOL UseDecrement() { return FALSE; }
 };
 
-class CDummyWeaponClassExtra:
+class CDummyWeaponClassExtra :
 	public CDummyWeaponClass
 {
 public:
 	virtual void Precache() {};
-	virtual int Save(CSave &save) { return 0; };
-	virtual int Restore(CRestore &restore) { return 0; };
-	virtual int AddToPlayer(CBasePlayer *pPlayer) { return 0; };
-	virtual int AddDuplicate(CBasePlayerItem *pItem) { return 0; };
+	virtual int Save(CSave& save) { return 0; };
+	virtual int Restore(CRestore& restore) { return 0; };
+	virtual int AddToPlayer(CBasePlayer* pPlayer) { return 0; };
+	virtual int AddDuplicate(CBasePlayerItem* pItem) { return 0; };
 	virtual BOOL CanDeploy() { return FALSE; };
 	virtual BOOL IsWeapon() { return TRUE; }
 	virtual void Holster(int skiplocal = 0) {};
@@ -85,10 +85,10 @@ public:
 	virtual void ItemPostFrame() {};
 	virtual int PrimaryAmmoIndex() { return 0; };
 	virtual int SecondaryAmmoIndex() { return 0; };
-	virtual int UpdateClientData(CBasePlayer *pPlayer) { return 0; };
-	virtual CBasePlayerItem *GetWeaponPtr() { return nullptr; }
-	virtual int ExtractAmmo(CBasePlayerWeapon *pWeapon) { return 0; };
-	virtual int ExtractClipAmmo(CBasePlayerWeapon *pWeapon) { return 0; };
+	virtual int UpdateClientData(CBasePlayer* pPlayer) { return 0; };
+	virtual CBasePlayerItem* GetWeaponPtr() { return nullptr; }
+	virtual int ExtractAmmo(CBasePlayerWeapon* pWeapon) { return 0; };
+	virtual int ExtractClipAmmo(CBasePlayerWeapon* pWeapon) { return 0; };
 	virtual int AddWeapon() { return 0; }
 	virtual BOOL PlayEmptySound() { return FALSE; };
 	virtual void ResetEmptySound() {};
@@ -103,5 +103,5 @@ public:
 	virtual BOOL UseDecrement() { return FALSE; }
 };
 
-volatile CDummyWeaponClass *g_pDummyWeaponClass = &CDummyWeaponClass();
-volatile CDummyWeaponClassExtra *g_pCDummyWeaponClassExtra = &CDummyWeaponClassExtra();
+volatile CDummyWeaponClass* g_pDummyWeaponClass = &CDummyWeaponClass();
+volatile CDummyWeaponClassExtra* g_pCDummyWeaponClassExtra = &CDummyWeaponClassExtra();

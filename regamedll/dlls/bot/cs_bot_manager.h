@@ -30,34 +30,34 @@
 
 #include "cs_bot_init.h"
 
-extern CBotManager *TheBots;
+extern CBotManager* TheBots;
 
 // The manager for Counter-Strike specific bots
-class CCSBotManager: public CBotManager
+class CCSBotManager : public CBotManager
 {
 public:
 	CCSBotManager();
 
-	virtual void ClientDisconnect(CBasePlayer *pPlayer);
-	virtual BOOL ClientCommand(CBasePlayer *pPlayer, const char *pcmd);
+	virtual void ClientDisconnect(CBasePlayer* pPlayer);
+	virtual BOOL ClientCommand(CBasePlayer* pPlayer, const char* pcmd);
 
 	virtual void ServerActivate();
 	virtual void ServerDeactivate();
 
-	virtual void ServerCommand(const char *pcmd);
-	virtual void AddServerCommand(const char *cmd);
+	virtual void ServerCommand(const char* pcmd);
+	virtual void AddServerCommand(const char* cmd);
 	virtual void AddServerCommands();
 
 	virtual void RestartRound();											// (EXTEND) invoked when a new round begins
 	virtual void StartFrame();												// (EXTEND) called each frame
 
-	virtual void OnEvent(GameEventType event, CBaseEntity *pEntity = nullptr, CBaseEntity *pOther = nullptr);
-	virtual unsigned int GetPlayerPriority(CBasePlayer *pPlayer) const;		// return priority of pPlayer (0 = max pri)
-	virtual bool IsImportantPlayer(CBasePlayer *pPlayer) const;				// return true if pPlayer is important to scenario (VIP, bomb carrier, etc)
+	virtual void OnEvent(GameEventType event, CBaseEntity* pEntity = nullptr, CBaseEntity* pOther = nullptr);
+	virtual unsigned int GetPlayerPriority(CBasePlayer* pPlayer) const;		// return priority of pPlayer (0 = max pri)
+	virtual bool IsImportantPlayer(CBasePlayer* pPlayer) const;				// return true if pPlayer is important to scenario (VIP, bomb carrier, etc)
 
 public:
 	void ValidateMapData();
-	void OnFreeEntPrivateData(CBaseEntity *pEntity);
+	void OnFreeEntPrivateData(CBaseEntity* pEntity);
 	bool IsLearningMap() const { return m_isLearningMap; }
 	void SetLearningMapFlag() { m_isLearningMap = true; }
 	bool IsAnalysisRequested() const { return m_isAnalysisRequested; }
@@ -105,8 +105,8 @@ public:
 	enum { MAX_ZONE_NAV_AREAS = 16 };			// max # of nav areas in a zone
 	struct Zone
 	{
-		CBaseEntity *m_entity;					// the map entity
-		CNavArea *m_area[MAX_ZONE_NAV_AREAS];	// nav areas that overlap this zone
+		CBaseEntity* m_entity;					// the map entity
+		CNavArea* m_area[MAX_ZONE_NAV_AREAS];	// nav areas that overlap this zone
 		int m_areaCount;
 		Vector m_center;
 		bool m_isLegacy;						// if true, use pev->origin and 256 unit radius as zone
@@ -114,20 +114,20 @@ public:
 		Extent m_extent;
 	};
 
-	const Zone *GetZone(int i) const { return &m_zone[i]; }
-	const Zone *GetZone(const Vector *pos) const;										// return the zone that contains the given position
-	const Zone *GetClosestZone(const Vector *pos) const;								// return the closest zone to the given position
-	const Zone *GetClosestZone(const CBaseEntity *pEntity) const { return GetClosestZone(&pEntity->pev->origin); }		// return the closest zone to the given entity
+	const Zone* GetZone(int i) const { return &m_zone[i]; }
+	const Zone* GetZone(const Vector* pos) const;										// return the zone that contains the given position
+	const Zone* GetClosestZone(const Vector* pos) const;								// return the closest zone to the given position
+	const Zone* GetClosestZone(const CBaseEntity* pEntity) const { return GetClosestZone(&pEntity->pev->origin); }		// return the closest zone to the given entity
 	int GetZoneCount() const { return m_zoneCount; }
 
-	const Vector *GetRandomPositionInZone(const Zone *zone) const;
-	CNavArea *GetRandomAreaInZone(const Zone *zone) const;
+	const Vector* GetRandomPositionInZone(const Zone* zone) const;
+	CNavArea* GetRandomAreaInZone(const Zone* zone) const;
 
 	// Return the zone closest to the given position, using the given cost heuristic
 	template<typename CostFunctor>
-	const Zone *GetClosestZone(CNavArea *startArea, CostFunctor costFunc, float *travelDistance = nullptr) const
+	const Zone* GetClosestZone(CNavArea* startArea, CostFunctor costFunc, float* travelDistance = nullptr) const
 	{
-		const Zone *closeZone = nullptr;
+		const Zone* closeZone = nullptr;
 		float closeDist = 99999999.9f;
 
 		if (startArea == nullptr)
@@ -155,7 +155,7 @@ public:
 	}
 
 	// pick a zone at random and return it
-	const Zone *GetRandomZone() const
+	const Zone* GetRandomZone() const
 	{
 		if (!m_zoneCount)
 			return nullptr;
@@ -166,11 +166,11 @@ public:
 	bool IsBombPlanted() const { return m_isBombPlanted; }											// returns true if bomb has been planted
 	float GetBombPlantTimestamp() const { return m_bombPlantTimestamp; }							// return time bomb was planted
 	bool IsTimeToPlantBomb() const { return (gpGlobals->time >= m_earliestBombPlantTimestamp); }	// return true if it's ok to try to plant bomb
-	CBasePlayer *GetBombDefuser() const { return m_bombDefuser; }									// return the player currently defusing the bomb, or NULL
+	CBasePlayer* GetBombDefuser() const { return m_bombDefuser; }									// return the player currently defusing the bomb, or NULL
 	float GetBombTimeLeft() const;																	// get the time remaining before the planted bomb explodes
-	CBaseEntity *GetLooseBomb() { return m_looseBomb; }												// return the bomb if it is loose on the ground
-	CNavArea *GetLooseBombArea() const { return m_looseBombArea; }									// return area that bomb is in/near
-	void SetLooseBomb(CBaseEntity *bomb);
+	CBaseEntity* GetLooseBomb() { return m_looseBomb; }												// return the bomb if it is loose on the ground
+	CNavArea* GetLooseBombArea() const { return m_looseBombArea; }									// return area that bomb is in/near
+	void SetLooseBomb(CBaseEntity* bomb);
 
 	float GetRadioMessageTimestamp(GameEventType event, int teamID) const;							// return the last time the given radio message was sent for given team
 	float GetRadioMessageInterval(GameEventType event, int teamID) const;							// return the interval since the last time this message was sent
@@ -194,12 +194,12 @@ public:
 	bool AllowTacticalShield()     const { return cv_bot_allow_shield.value != 0.0f; }
 	bool AllowFriendlyFireDamage() const { return friendlyfire.value != 0.0f; }
 
-	bool IsWeaponUseable(CBasePlayerItem *item) const;						// return true if the bot can use this weapon
+	bool IsWeaponUseable(CBasePlayerItem* item) const;						// return true if the bot can use this weapon
 	bool IsWeaponUseable(ArmouryItemPack item) const;
 
 	bool IsDefenseRushing() const { return m_isDefenseRushing; }			// returns true if defense team has "decided" to rush this round
-	bool IsOnDefense(CBasePlayer *pPlayer) const;							// return true if this player is on "defense"
-	bool IsOnOffense(CBasePlayer *pPlayer) const;							// return true if this player is on "offense"
+	bool IsOnDefense(CBasePlayer* pPlayer) const;							// return true if this player is on "defense"
+	bool IsOnOffense(CBasePlayer* pPlayer) const;							// return true if this player is on "offense"
 
 	bool IsRoundOver() const { return m_isRoundOver; }						// return true if the round has ended
 
@@ -207,13 +207,13 @@ public:
 	void SetNavPlace(unsigned int place) { m_navPlace = place; }
 
 	enum SkillType { LOW, AVERAGE, HIGH, RANDOM };
-	const char *GetRandomBotName(SkillType skill);
+	const char* GetRandomBotName(SkillType skill);
 
 	void MonitorBotCVars();
 	void MaintainBotQuota();
-	bool AddBot(const BotProfile *profile, BotProfileTeamType team);
+	bool AddBot(const BotProfile* profile, BotProfileTeamType team);
 
-	#define FROM_CONSOLE true
+#define FROM_CONSOLE true
 	bool BotAddCommand(BotProfileTeamType team, bool isFromConsole = false);	// process the "bot_add" console command
 
 private:
@@ -230,9 +230,9 @@ private:
 	bool m_isBombPlanted;						// true if bomb has been planted
 	float m_bombPlantTimestamp;					// time bomb was planted
 	float m_earliestBombPlantTimestamp;			// don't allow planting until after this time has elapsed
-	CBasePlayer *m_bombDefuser;					// the player currently defusing a bomb
+	CBasePlayer* m_bombDefuser;					// the player currently defusing a bomb
 	EHANDLE m_looseBomb;						// will be non-NULL if bomb is loose on the ground
-	CNavArea *m_looseBombArea;					// area that bomb is is/near
+	CNavArea* m_looseBombArea;					// area that bomb is is/near
 
 	bool m_isRoundOver;							// true if the round has ended
 
@@ -256,9 +256,9 @@ inline int OtherTeam(int team)
 	return (team == TERRORIST) ? CT : TERRORIST;
 }
 
-inline CCSBotManager *TheCSBots()
+inline CCSBotManager* TheCSBots()
 {
-	return reinterpret_cast<CCSBotManager *>(TheBots);
+	return reinterpret_cast<CCSBotManager*>(TheBots);
 }
 
 // Determine whether bots can be used or not

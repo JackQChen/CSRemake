@@ -28,31 +28,31 @@
 
 #pragma once
 
-class CHealthKit: public CItem
+class CHealthKit : public CItem
 {
 public:
 	virtual void Spawn();
 	virtual void Precache();
-	virtual BOOL MyTouch(CBasePlayer *pPlayer);
+	virtual BOOL MyTouch(CBasePlayer* pPlayer);
 };
 
 const float AMOUNT_CHARGE_HEALTH = 1.0f;
 
-class CWallHealth: public CBaseToggle
+class CWallHealth : public CBaseToggle
 {
 public:
 	virtual void Spawn();
 	virtual void Precache();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
 
 #ifdef REGAMEDLL_FIXES
 	virtual void Restart();
 #endif
 
 	virtual int ObjectCaps() { return (CBaseToggle::ObjectCaps() | FCAP_CONTINUOUS_USE) & ~FCAP_ACROSS_TRANSITION; }
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 public:
 	void EXPORT Off();

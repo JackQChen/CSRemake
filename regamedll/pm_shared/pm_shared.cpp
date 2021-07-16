@@ -9,13 +9,13 @@ int pm_gcTextures = 0;
 char pm_grgszTextureName[MAX_TEXTURES][MAX_TEXTURENAME_LENGHT];
 char pm_grgchTextureType[MAX_TEXTURES];
 
-playermove_t *pmove = nullptr;
+playermove_t* pmove = nullptr;
 BOOL g_onladder = FALSE;
 
 #ifdef CLIENT_DLL
-	int iJumpSpectator;
-	float vJumpOrigin[3];
-	float vJumpAngles[3];
+int iJumpSpectator;
+float vJumpOrigin[3];
+float vJumpAngles[3];
 #endif
 
 void PM_SwapTextures(int i, int j)
@@ -65,7 +65,7 @@ void PM_InitTextureTypes()
 {
 	char buffer[512];
 	int i, j;
-	byte *pMemFile;
+	byte* pMemFile;
 	int fileSize, filePos = 0;
 	static bool bTextureTypeInit = false;
 
@@ -129,7 +129,7 @@ void PM_InitTextureTypes()
 	bTextureTypeInit = true;
 }
 
-char EXT_FUNC PM_FindTextureType(char *name)
+char EXT_FUNC PM_FindTextureType(char* name)
 {
 	int left, right, pivot;
 	int val;
@@ -189,10 +189,10 @@ void PM_PlayStepSound(int step, float fvol)
 	case STEP_CONCRETE:
 		switch (irand)
 		{
-		// right foot
+			// right foot
 		case 0: pmove->PM_PlaySound(CHAN_BODY, "player/pl_step1.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
 		case 1: pmove->PM_PlaySound(CHAN_BODY, "player/pl_step3.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
-		// left foot
+			// left foot
 		case 2: pmove->PM_PlaySound(CHAN_BODY, "player/pl_step2.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
 		case 3: pmove->PM_PlaySound(CHAN_BODY, "player/pl_step4.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
 		}
@@ -200,10 +200,10 @@ void PM_PlayStepSound(int step, float fvol)
 	case STEP_METAL:
 		switch (irand)
 		{
-		// right foot
+			// right foot
 		case 0: pmove->PM_PlaySound(CHAN_BODY, "player/pl_metal1.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
 		case 1: pmove->PM_PlaySound(CHAN_BODY, "player/pl_metal3.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
-		// left foot
+			// left foot
 		case 2: pmove->PM_PlaySound(CHAN_BODY, "player/pl_metal2.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
 		case 3: pmove->PM_PlaySound(CHAN_BODY, "player/pl_metal4.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
 		}
@@ -211,10 +211,10 @@ void PM_PlayStepSound(int step, float fvol)
 	case STEP_DIRT:
 		switch (irand)
 		{
-		// right foot
+			// right foot
 		case 0: pmove->PM_PlaySound(CHAN_BODY, "player/pl_dirt1.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
 		case 1: pmove->PM_PlaySound(CHAN_BODY, "player/pl_dirt3.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
-		// left foot
+			// left foot
 		case 2: pmove->PM_PlaySound(CHAN_BODY, "player/pl_dirt2.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
 		case 3: pmove->PM_PlaySound(CHAN_BODY, "player/pl_dirt4.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
 		}
@@ -222,10 +222,10 @@ void PM_PlayStepSound(int step, float fvol)
 	case STEP_VENT:
 		switch (irand)
 		{
-		// right foot
+			// right foot
 		case 0: pmove->PM_PlaySound(CHAN_BODY, "player/pl_duct1.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
 		case 1: pmove->PM_PlaySound(CHAN_BODY, "player/pl_duct3.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
-		// left foot
+			// left foot
 		case 2: pmove->PM_PlaySound(CHAN_BODY, "player/pl_duct2.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
 		case 3: pmove->PM_PlaySound(CHAN_BODY, "player/pl_duct4.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
 		}
@@ -233,10 +233,10 @@ void PM_PlayStepSound(int step, float fvol)
 	case STEP_GRATE:
 		switch (irand)
 		{
-		// right foot
+			// right foot
 		case 0: pmove->PM_PlaySound(CHAN_BODY, "player/pl_grate1.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
 		case 1: pmove->PM_PlaySound(CHAN_BODY, "player/pl_grate3.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
-		// left foot
+			// left foot
 		case 2: pmove->PM_PlaySound(CHAN_BODY, "player/pl_grate2.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
 		case 3: pmove->PM_PlaySound(CHAN_BODY, "player/pl_grate4.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
 		}
@@ -247,10 +247,10 @@ void PM_PlayStepSound(int step, float fvol)
 
 		switch (irand)
 		{
-		// right foot
+			// right foot
 		case 0: pmove->PM_PlaySound(CHAN_BODY, "player/pl_tile1.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
 		case 1: pmove->PM_PlaySound(CHAN_BODY, "player/pl_tile3.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
-		// left foot
+			// left foot
 		case 2: pmove->PM_PlaySound(CHAN_BODY, "player/pl_tile2.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
 		case 3: pmove->PM_PlaySound(CHAN_BODY, "player/pl_tile4.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
 		case 4: pmove->PM_PlaySound(CHAN_BODY, "player/pl_tile5.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
@@ -259,10 +259,10 @@ void PM_PlayStepSound(int step, float fvol)
 	case STEP_SLOSH:
 		switch (irand)
 		{
-		// right foot
+			// right foot
 		case 0: pmove->PM_PlaySound(CHAN_BODY, "player/pl_slosh1.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
 		case 1: pmove->PM_PlaySound(CHAN_BODY, "player/pl_slosh3.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
-		// left foot
+			// left foot
 		case 2: pmove->PM_PlaySound(CHAN_BODY, "player/pl_slosh2.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
 		case 3: pmove->PM_PlaySound(CHAN_BODY, "player/pl_slosh4.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
 		}
@@ -281,10 +281,10 @@ void PM_PlayStepSound(int step, float fvol)
 
 		switch (irand)
 		{
-		// right foot
+			// right foot
 		case 0: pmove->PM_PlaySound(CHAN_BODY, "player/pl_wade1.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
 		case 1: pmove->PM_PlaySound(CHAN_BODY, "player/pl_wade2.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
-		// left foot
+			// left foot
 		case 2: pmove->PM_PlaySound(CHAN_BODY, "player/pl_wade3.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
 		case 3: pmove->PM_PlaySound(CHAN_BODY, "player/pl_wade4.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
 		}
@@ -293,10 +293,10 @@ void PM_PlayStepSound(int step, float fvol)
 	case STEP_LADDER:
 		switch (irand)
 		{
-		// right foot
+			// right foot
 		case 0: pmove->PM_PlaySound(CHAN_BODY, "player/pl_ladder1.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
 		case 1: pmove->PM_PlaySound(CHAN_BODY, "player/pl_ladder3.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
-		// left foot
+			// left foot
 		case 2: pmove->PM_PlaySound(CHAN_BODY, "player/pl_ladder2.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
 		case 3: pmove->PM_PlaySound(CHAN_BODY, "player/pl_ladder4.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
 		}
@@ -304,10 +304,10 @@ void PM_PlayStepSound(int step, float fvol)
 	case STEP_SNOW:
 		switch (irand)
 		{
-		// right foot
+			// right foot
 		case 0: pmove->PM_PlaySound(CHAN_BODY, "player/pl_snow1.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
 		case 1: pmove->PM_PlaySound(CHAN_BODY, "player/pl_snow3.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
-		// left foot
+			// left foot
 		case 2: pmove->PM_PlaySound(CHAN_BODY, "player/pl_snow2.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
 		case 3: pmove->PM_PlaySound(CHAN_BODY, "player/pl_snow4.wav", fvol, ATTN_NORM, 0, PITCH_NORM); break;
 		}
@@ -334,7 +334,7 @@ int PM_MapTextureTypeStepType(char chTextureType)
 void PM_CatagorizeTextureType()
 {
 	vec3_t start, end;
-	const char *pTextureName;
+	const char* pTextureName;
 
 	VectorCopy(pmove->origin, start);
 	VectorCopy(pmove->origin, end);
@@ -490,7 +490,7 @@ void EXT_FUNC __API_HOOK(PM_UpdateStepSound)()
 }
 
 // Add's the trace result to touch list, if contact is not already in list.
-qboolean PM_AddToTouched(pmtrace_t tr, vec_t *impactvelocity)
+qboolean PM_AddToTouched(pmtrace_t tr, vec_t* impactvelocity)
 {
 	int i;
 	for (i = 0; i < pmove->numtouch; i++)
@@ -554,7 +554,7 @@ void PM_CheckVelocity()
 // returns the blocked flags:
 // 0x01 == floor
 // 0x02 == step / wall
-int PM_ClipVelocity(vec_t *in, vec_t *normal, vec_t *out, float overbounce)
+int PM_ClipVelocity(vec_t* in, vec_t* normal, vec_t* out, float overbounce)
 {
 	float change;
 	real_t angle;
@@ -815,7 +815,7 @@ int PM_FlyMove()
 	return blocked;
 }
 
-void PM_Accelerate(vec_t *wishdir, real_t wishspeed, float accel)
+void PM_Accelerate(vec_t* wishdir, real_t wishspeed, float accel)
 {
 	int i;
 	float addspeed;
@@ -1032,7 +1032,7 @@ void PM_WalkMove()
 
 	if (downdist > updist)
 	{
-usedown:
+	usedown:
 		VectorCopy(down, pmove->origin);
 		VectorCopy(downvel, pmove->velocity);
 	}
@@ -1046,7 +1046,7 @@ usedown:
 // Handles both ground friction and water friction
 void PM_Friction()
 {
-	float *vel;
+	float* vel;
 	float speed;
 	real_t newspeed, control, friction, drop;
 	vec3_t newvel;
@@ -1127,7 +1127,7 @@ void PM_Friction()
 	VectorCopy(newvel, pmove->velocity);
 }
 
-void PM_AirAccelerate(vec_t *wishdir, float wishspeed, float accel)
+void PM_AirAccelerate(vec_t* wishdir, float wishspeed, float accel)
 {
 	int i;
 	float addspeed;
@@ -1310,14 +1310,14 @@ void PM_AirMove_internal()
 	// Zero out z part of velocity
 	wishvel[2] = 0;
 
-	 // Determine maginitude of speed of move
+	// Determine maginitude of speed of move
 	VectorCopy(wishvel, wishdir);
 	wishspeed = VectorNormalize(wishdir);
 
 	// Clamp to server defined max speed
 	if (wishspeed > pmove->maxspeed)
 	{
-		VectorScale(wishvel, pmove->maxspeed/wishspeed, wishvel);
+		VectorScale(wishvel, pmove->maxspeed / wishspeed, wishvel);
 		wishspeed = pmove->maxspeed;
 	}
 
@@ -1477,7 +1477,7 @@ void PM_CategorizePosition()
 
 // When a player is stuck, it's costly to try and unstick them
 // Grab a test offset for the player based on a passed in index
-int PM_GetRandomStuckOffsets(int nIndex, int server, vec_t *offset)
+int PM_GetRandomStuckOffsets(int nIndex, int server, vec_t* offset)
 {
 	// Last time we did a full
 	int idx = rgStuckLast[nIndex][server]++;
@@ -1538,8 +1538,7 @@ qboolean PM_CheckStuck()
 				}
 
 				nReps++;
-			}
-			while (nReps < ARRAYSIZE(rgv3tStuckTable));
+			} while (nReps < ARRAYSIZE(rgv3tStuckTable));
 		}
 	}
 
@@ -1640,7 +1639,7 @@ void PM_SpectatorMove()
 		}
 #endif
 		// Move around in normal spectator method
-		speed = Length (pmove->velocity);
+		speed = Length(pmove->velocity);
 
 		if (speed >= 1.0)
 		{
@@ -1866,7 +1865,7 @@ void PM_UnDuck()
 void PM_Duck()
 {
 	int buttonsChanged = (pmove->oldbuttons ^ pmove->cmd.buttons);	// These buttons have changed this frame
-	int nButtonPressed =  buttonsChanged & pmove->cmd.buttons;		// The changed ones still down are "pressed"
+	int nButtonPressed = buttonsChanged & pmove->cmd.buttons;		// The changed ones still down are "pressed"
 
 	int duckchange = buttonsChanged & IN_DUCK ? 1 : 0;
 	int duckpressed = nButtonPressed & IN_DUCK ? 1 : 0;
@@ -1967,7 +1966,7 @@ void PM_Duck()
 	}
 }
 
-void PM_LadderMove(physent_t *pLadder)
+void PM_LadderMove(physent_t* pLadder)
 {
 	vec3_t ladderCenter;
 	trace_t trace;
@@ -2084,11 +2083,11 @@ void PM_LadderMove(physent_t *pLadder)
 	}
 }
 
-physent_t *PM_Ladder()
+physent_t* PM_Ladder()
 {
 	int i;
-	physent_t *pe;
-	hull_t *hull;
+	physent_t* pe;
+	hull_t* hull;
 	int num;
 	vec3_t test;
 
@@ -2098,7 +2097,7 @@ physent_t *PM_Ladder()
 
 		if (pe->model && (modtype_t)pmove->PM_GetModelType(pe->model) == mod_brush && pe->skin == CONTENTS_LADDER)
 		{
-			hull = (hull_t *)pmove->PM_HullForBsp(pe, test);
+			hull = (hull_t*)pmove->PM_HullForBsp(pe, test);
 			num = hull->firstclipnode;
 
 			// Offset the test point appropriately for this hull.
@@ -2158,7 +2157,7 @@ void PM_AddGravity()
 }
 
 // Does not change the entities velocity at all
-pmtrace_t PM_PushEntity(vec_t *push)
+pmtrace_t PM_PushEntity(vec_t* push)
 {
 	pmtrace_t trace;
 	vec3_t end;
@@ -2410,7 +2409,7 @@ void PM_Jump()
 
 	// No more effect
 	// in air, so no effect
- 	if (pmove->onground == -1)
+	if (pmove->onground == -1)
 	{
 		// Flag that we jumped.
 		// don't jump again until released
@@ -2458,7 +2457,7 @@ void PM_Jump()
 		{
 			pmove->punchangle[0] = -5.0f;
 
-			for (int i  = 0; i < 2; i++)
+			for (int i = 0; i < 2; i++)
 			{
 				pmove->velocity[i] = pmove->forward[i] * PLAYER_LONGJUMP_SPEED * 1.6f;
 			}
@@ -2640,7 +2639,7 @@ void PM_PlayWaterSounds()
 	}
 }
 
-float PM_CalcRoll(vec_t *angles, vec_t *velocity, float rollangle, float rollspeed)
+float PM_CalcRoll(vec_t* angles, vec_t* velocity, float rollangle, float rollspeed)
 {
 	float sign;
 	real_t side;
@@ -2667,7 +2666,7 @@ float PM_CalcRoll(vec_t *angles, vec_t *velocity, float rollangle, float rollspe
 	return side * sign;
 }
 
-void PM_DropPunchAngle(vec_t *punchangle)
+void PM_DropPunchAngle(vec_t* punchangle)
 {
 	real_t len;
 
@@ -2804,7 +2803,7 @@ qboolean PM_ShouldDoSpectMode()
 // were contacted during the move.
 void PM_PlayerMove(qboolean server)
 {
-	physent_t *pLadder = nullptr;
+	physent_t* pLadder = nullptr;
 
 	// Are we running server code?
 	pmove->server = server;
@@ -3187,13 +3186,13 @@ void PM_CreateStuckTable()
 	}
 }
 
-LINK_HOOK_VOID_CHAIN(PM_Move, (struct playermove_s *ppmove, int server), ppmove, server);
+LINK_HOOK_VOID_CHAIN(PM_Move, (struct playermove_s* ppmove, int server), ppmove, server);
 
 // This module implements the shared player physics code between any particular game and
 // the engine. The same PM_Move routine is built into the game .dll and the client .dll and is
 // invoked by each side as appropriate. There should be no distinction, internally, between server
 // and client. This will ensure that prediction behaves appropriately.
-void EXT_FUNC __API_HOOK(PM_Move)(struct playermove_s *ppmove, int server)
+void EXT_FUNC __API_HOOK(PM_Move)(struct playermove_s* ppmove, int server)
 {
 	assert(pm_shared_initialized);
 
@@ -3232,9 +3231,9 @@ NOXREF int PM_GetPhysEntInfo(int ent)
 	return -1;
 }
 
-LINK_HOOK_VOID_CHAIN(PM_Init, (struct playermove_s *ppmove), ppmove);
+LINK_HOOK_VOID_CHAIN(PM_Init, (struct playermove_s* ppmove), ppmove);
 
-void EXT_FUNC __API_HOOK(PM_Init)(struct playermove_s *ppmove)
+void EXT_FUNC __API_HOOK(PM_Init)(struct playermove_s* ppmove)
 {
 	assert(!pm_shared_initialized);
 

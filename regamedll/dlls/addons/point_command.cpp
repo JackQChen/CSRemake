@@ -18,7 +18,7 @@
 
 #include "precompiled.h"
 
-void CPointBaseCommand::KeyValue(KeyValueData *pkvd)
+void CPointBaseCommand::KeyValue(KeyValueData* pkvd)
 {
 	// add this field to the command list
 	if (m_vecCommands.Count() < MAX_POINT_CMDS)
@@ -42,9 +42,9 @@ void CPointBaseCommand::KeyValue(KeyValueData *pkvd)
 
 LINK_ENTITY_TO_CLASS(point_clientcommand, CPointClientCommand, CCSPointClientCommand)
 
-void CPointClientCommand::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void CPointClientCommand::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
-	edict_t *pClient = nullptr;
+	edict_t* pClient = nullptr;
 	if (gpGlobals->maxClients == 1)
 	{
 		pClient = INDEXENT(1);
@@ -60,13 +60,13 @@ void CPointClientCommand::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE
 
 	if (pClient)
 	{
-		for (auto &cmd : m_vecCommands) {
+		for (auto& cmd : m_vecCommands) {
 			Execute(pClient, "%s \"%s\"\n", cmd.name, cmd.value);
 		}
 	}
 }
 
-void CPointClientCommand::Execute(edict_t *pEdict, const char *pszFmt, ...)
+void CPointClientCommand::Execute(edict_t* pEdict, const char* pszFmt, ...)
 {
 	va_list argptr;
 	char command[128];
@@ -80,7 +80,7 @@ void CPointClientCommand::Execute(edict_t *pEdict, const char *pszFmt, ...)
 
 LINK_ENTITY_TO_CLASS(point_servercommand, CPointServerCommand, CCSPointServerCommand)
 
-void CPointServerCommand::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void CPointServerCommand::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 #ifdef REGAMEDLL_ADD
 	if (!allow_point_servercommand.value) {
@@ -89,9 +89,9 @@ void CPointServerCommand::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE
 	}
 #endif
 
-	for (auto &cmd : m_vecCommands)
+	for (auto& cmd : m_vecCommands)
 	{
-		cvar_t *pCVar = CVAR_GET_POINTER(cmd.name);
+		cvar_t* pCVar = CVAR_GET_POINTER(cmd.name);
 		if (pCVar &&
 			pCVar->string &&
 			pCVar->string[0] != '\0' &&
@@ -110,7 +110,7 @@ void CPointServerCommand::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE
 	}
 }
 
-void CPointServerCommand::Execute(edict_t *pEdict, const char *pszFmt, ...)
+void CPointServerCommand::Execute(edict_t* pEdict, const char* pszFmt, ...)
 {
 	va_list argptr;
 	char command[128];
@@ -135,7 +135,7 @@ void CPointBaseCommand::OnDestroy()
 	if (!(pev->spawnflags & SF_POINT_CMD_NORESET))
 	{
 		bool bAtLeastOneCmdReset = false;
-		for (auto &cmd : m_vecCommands)
+		for (auto& cmd : m_vecCommands)
 		{
 			if (cmd.valueInitial[0] != '\0')
 			{

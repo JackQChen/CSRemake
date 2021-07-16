@@ -48,13 +48,13 @@ public:
 	void AddPlace(Place place);					// add the place to the directory if not already known
 	Place EntryToPlace(EntryType entry) const;	// given an entry, return the Place
 	void Save(int fd);							// store the directory
-	void Load(SteamFile *file);					// load the directory
+	void Load(SteamFile* file);					// load the directory
 
 private:
 	std::vector<Place> m_directory;
 };
 
-bool SaveNavigationMap(const char *filename);
-void LoadLocationFile(const char *filename);
-void SanityCheckNavigationMap(const char *mapName);	// Performs a lightweight sanity-check of the specified map's nav mesh
+bool SaveNavigationMap(const char* filename);
+void LoadLocationFile(const char* filename);
+void SanityCheckNavigationMap(const char* mapName);	// Performs a lightweight sanity-check of the specified map's nav mesh
 NavErrorType LoadNavigationMap();

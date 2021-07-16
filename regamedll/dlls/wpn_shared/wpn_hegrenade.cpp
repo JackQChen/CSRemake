@@ -36,7 +36,7 @@ void CHEGrenade::Precache()
 	m_usCreateExplosion = PRECACHE_EVENT(1, "events/createexplo.sc");
 }
 
-int CHEGrenade::GetItemInfo(ItemInfo *p)
+int CHEGrenade::GetItemInfo(ItemInfo* p)
 {
 	auto info = GetWeaponInfo(WEAPON_HEGRENADE);
 

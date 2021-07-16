@@ -20,7 +20,7 @@
 
 LINK_ENTITY_TO_CLASS(trigger_setorigin, CTriggerSetOrigin, CCSTriggerSetOrigin)
 
-void CTriggerSetOrigin::KeyValue(KeyValueData *pkvd)
+void CTriggerSetOrigin::KeyValue(KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "triggerstate"))
 	{
@@ -80,7 +80,7 @@ void CTriggerSetOrigin::KeyValue(KeyValueData *pkvd)
 	}
 }
 
-void CTriggerSetOrigin::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void CTriggerSetOrigin::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	if (!(pev->spawnflags & SF_SETORIGIN_CONST_UPDATE))
 	{
@@ -136,7 +136,7 @@ void CTriggerSetOrigin::SetupEntities()
 		m_hCopyPointer = hPrevEnt;
 	}
 
-	CBaseEntity *pEntity = nullptr;
+	CBaseEntity* pEntity = nullptr;
 	while ((pEntity = UTIL_FindEntityByTargetname(pEntity, pev->target)))
 	{
 		if (m_entityNum > MAX_SETORIGIN_ENTITIES)
@@ -151,8 +151,8 @@ void CTriggerSetOrigin::SetupEntities()
 			if (!(pev->spawnflags & SF_SETORIGIN_COPY_ANGLE_X) &&
 				!(pev->spawnflags & SF_SETORIGIN_COPY_ANGLE_Y) &&
 				!(pev->spawnflags & SF_SETORIGIN_COPY_ANGLE_Z) &&
-				!(pev->spawnflags & SF_SETORIGIN_COPY_AXIS_X)  &&
-				!(pev->spawnflags & SF_SETORIGIN_COPY_AXIS_Y)  &&
+				!(pev->spawnflags & SF_SETORIGIN_COPY_AXIS_X) &&
+				!(pev->spawnflags & SF_SETORIGIN_COPY_AXIS_Y) &&
 				!(pev->spawnflags & SF_SETORIGIN_COPY_AXIS_Z))
 			{
 				bForceCopy = true;
@@ -201,7 +201,7 @@ void CTriggerSetOrigin::SetupEntities()
 				UTIL_SetOrigin(pEntity->pev, pEntity->pev->origin);
 			}
 
-			m_hEntities  [m_entityNum] = pEntity;
+			m_hEntities[m_entityNum] = pEntity;
 			m_vecEntities[m_entityNum] = pEntity->pev->origin - m_hCopyPointer->pev->origin;
 
 			Vector vecForward, vecRight, vecUp;
@@ -228,7 +228,7 @@ void CTriggerSetOrigin::UpdateKnownEntities()
 	bool bUpdated = false;
 	for (int i = 0; i < MAX_SETORIGIN_ENTITIES; i++)
 	{
-		auto &pEntity = m_hEntities[i];
+		auto& pEntity = m_hEntities[i];
 		if (!pEntity.IsValid())
 		{
 			pEntity = nullptr;
@@ -245,8 +245,8 @@ void CTriggerSetOrigin::UpdateKnownEntities()
 		if (!(pev->spawnflags & SF_SETORIGIN_COPY_ANGLE_X) &&
 			!(pev->spawnflags & SF_SETORIGIN_COPY_ANGLE_Y) &&
 			!(pev->spawnflags & SF_SETORIGIN_COPY_ANGLE_Z) &&
-			!(pev->spawnflags & SF_SETORIGIN_COPY_AXIS_X)  &&
-			!(pev->spawnflags & SF_SETORIGIN_COPY_AXIS_Y)  &&
+			!(pev->spawnflags & SF_SETORIGIN_COPY_AXIS_X) &&
+			!(pev->spawnflags & SF_SETORIGIN_COPY_AXIS_Y) &&
 			!(pev->spawnflags & SF_SETORIGIN_COPY_AXIS_Z))
 		{
 			bForceCopy = true;
@@ -344,7 +344,7 @@ void CTriggerSetOrigin::OnDestroy()
 	CTriggerSetOriginManager::getInstance()->Remove(this);
 }
 
-void CTriggerSetOriginManager::Add(CTriggerSetOrigin *pInstance)
+void CTriggerSetOriginManager::Add(CTriggerSetOrigin* pInstance)
 {
 	if (!pInstance)
 		return;
@@ -352,7 +352,7 @@ void CTriggerSetOriginManager::Add(CTriggerSetOrigin *pInstance)
 	m_Entities.AddToTail(pInstance);
 }
 
-void CTriggerSetOriginManager::Remove(CTriggerSetOrigin *pInstance)
+void CTriggerSetOriginManager::Remove(CTriggerSetOrigin* pInstance)
 {
 	if (!pInstance)
 		return;

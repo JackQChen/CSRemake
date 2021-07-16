@@ -28,7 +28,7 @@
 
 #include "precompiled.h"
 
-void HostageEscapeToCoverState::OnEnter(CHostageImprov *improv)
+void HostageEscapeToCoverState::OnEnter(CHostageImprov* improv)
 {
 	CNavPath path;
 	HostagePathCost pathCost;
@@ -50,7 +50,7 @@ void HostageEscapeToCoverState::OnEnter(CHostageImprov *improv)
 
 	Vector pathPos = path[idx]->pos;
 	const float hidingRange = 450.0f;
-	const Vector *spot = FindNearbyHidingSpot(improv->GetEntity(), &pathPos, TheNavAreaGrid.GetNearestNavArea(&pathPos), hidingRange);
+	const Vector* spot = FindNearbyHidingSpot(improv->GetEntity(), &pathPos, TheNavAreaGrid.GetNearestNavArea(&pathPos), hidingRange);
 	if (!spot)
 	{
 		spot = &pathPos;
@@ -64,7 +64,7 @@ void HostageEscapeToCoverState::OnEnter(CHostageImprov *improv)
 	m_canEscape = true;
 }
 
-void HostageEscapeToCoverState::OnUpdate(CHostageImprov *improv)
+void HostageEscapeToCoverState::OnUpdate(CHostageImprov* improv)
 {
 	if (!m_canEscape)
 	{
@@ -75,11 +75,11 @@ void HostageEscapeToCoverState::OnUpdate(CHostageImprov *improv)
 	if (IsSpotOccupied(improv->GetEntity(), &m_spot))
 	{
 		const float emergencyHidingRange = 300.0f;
-		const Vector *spot = FindNearbyHidingSpot(improv->GetEntity(), &improv->GetFeet(), improv->GetLastKnownArea(), emergencyHidingRange);
+		const Vector* spot = FindNearbyHidingSpot(improv->GetEntity(), &improv->GetFeet(), improv->GetLastKnownArea(), emergencyHidingRange);
 
 		if (!spot)
 		{
-			HostageEscapeState *escape = static_cast<HostageEscapeState *>(GetParent());
+			HostageEscapeState* escape = static_cast<HostageEscapeState*>(GetParent());
 			escape->LookAround();
 			return;
 		}
@@ -90,24 +90,24 @@ void HostageEscapeToCoverState::OnUpdate(CHostageImprov *improv)
 
 	if (improv->IsAtMoveGoal())
 	{
-		HostageEscapeState *escape = static_cast<HostageEscapeState *>(GetParent());
+		HostageEscapeState* escape = static_cast<HostageEscapeState*>(GetParent());
 		escape->LookAround();
 		return;
 	}
 }
 
-void HostageEscapeToCoverState::OnExit(CHostageImprov *improv)
+void HostageEscapeToCoverState::OnExit(CHostageImprov* improv)
 {
 	;
 }
 
-void HostageEscapeToCoverState::OnMoveToFailure(const Vector &goal, MoveToFailureType reason)
+void HostageEscapeToCoverState::OnMoveToFailure(const Vector& goal, MoveToFailureType reason)
 {
-	HostageEscapeState *escape = static_cast<HostageEscapeState *>(GetParent());
+	HostageEscapeState* escape = static_cast<HostageEscapeState*>(GetParent());
 	escape->LookAround();
 }
 
-void HostageEscapeLookAroundState::OnEnter(CHostageImprov *improv)
+void HostageEscapeLookAroundState::OnEnter(CHostageImprov* improv)
 {
 	m_timer.Start(RANDOM_FLOAT(5, 10));
 
@@ -115,25 +115,25 @@ void HostageEscapeLookAroundState::OnEnter(CHostageImprov *improv)
 	improv->FaceOutwards();
 }
 
-void HostageEscapeLookAroundState::OnUpdate(CHostageImprov *improv)
+void HostageEscapeLookAroundState::OnUpdate(CHostageImprov* improv)
 {
 	improv->UpdateIdleActivity(ACT_IDLE_SNEAKY, ACT_IDLE_SNEAKY_FIDGET);
 
 	if (m_timer.IsElapsed())
 	{
-		HostageEscapeState *escape = static_cast<HostageEscapeState *>(GetParent());
+		HostageEscapeState* escape = static_cast<HostageEscapeState*>(GetParent());
 		escape->ToCover();
 	}
 }
 
-void HostageEscapeLookAroundState::OnExit(CHostageImprov *improv)
+void HostageEscapeLookAroundState::OnExit(CHostageImprov* improv)
 {
 	improv->ClearFaceTo();
 }
 
-void HostageEscapeState::OnEnter(CHostageImprov *improv)
+void HostageEscapeState::OnEnter(CHostageImprov* improv)
 {
-	const CCSBotManager::Zone *zone = TheCSBots()->GetRandomZone();
+	const CCSBotManager::Zone* zone = TheCSBots()->GetRandomZone();
 	if (zone)
 	{
 		m_toCoverState.SetRescueGoal(zone->m_center);
@@ -145,7 +145,7 @@ void HostageEscapeState::OnEnter(CHostageImprov *improv)
 	m_canEscape = true;
 }
 
-void HostageEscapeState::OnUpdate(CHostageImprov *improv)
+void HostageEscapeState::OnUpdate(CHostageImprov* improv)
 {
 	if (!m_canEscape || (improv->IsScared() && improv->GetScareIntensity() == CHostageImprov::TERRIFIED))
 	{
@@ -159,7 +159,7 @@ void HostageEscapeState::OnUpdate(CHostageImprov *improv)
 	else
 		improv->Run();
 
-	CBasePlayer *pPlayer = improv->GetClosestVisiblePlayer(UNASSIGNED);
+	CBasePlayer* pPlayer = improv->GetClosestVisiblePlayer(UNASSIGNED);
 	if (pPlayer)
 	{
 		if (pPlayer->m_iTeam != TERRORIST)
@@ -191,7 +191,7 @@ void HostageEscapeState::OnUpdate(CHostageImprov *improv)
 	}
 }
 
-void HostageEscapeState::OnExit(CHostageImprov *improv)
+void HostageEscapeState::OnExit(CHostageImprov* improv)
 {
 	improv->Run();
 }

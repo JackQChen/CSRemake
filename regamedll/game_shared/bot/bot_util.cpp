@@ -5,11 +5,11 @@ short s_iBeamSprite = 0;
 constexpr int COS_TABLE_SIZE = 256;
 float cosTable[COS_TABLE_SIZE];
 
-bool UTIL_IsNameTaken(const char *name, bool ignoreHumans)
+bool UTIL_IsNameTaken(const char* name, bool ignoreHumans)
 {
 	for (int i = 1; i <= gpGlobals->maxClients; i++)
 	{
-		CBasePlayer *pPlayer = UTIL_PlayerByIndex(i);
+		CBasePlayer* pPlayer = UTIL_PlayerByIndex(i);
 
 		if (!pPlayer)
 			continue;
@@ -24,7 +24,7 @@ bool UTIL_IsNameTaken(const char *name, bool ignoreHumans)
 		{
 			// bots can have prefixes so we need to check the name
 			// against the profile name instead.
-			CBot *bot = static_cast<CBot *>(pPlayer);
+			CBot* bot = static_cast<CBot*>(pPlayer);
 			if (FStrEq(name, bot->GetProfile()->GetName()))
 			{
 				return true;
@@ -48,7 +48,7 @@ int UTIL_ClientsInGame()
 	int iCount = 0;
 	for (int iIndex = 1; iIndex <= gpGlobals->maxClients; iIndex++)
 	{
-		CBaseEntity *pPlayer = UTIL_PlayerByIndex(iIndex);
+		CBaseEntity* pPlayer = UTIL_PlayerByIndex(iIndex);
 
 		if (!pPlayer)
 			continue;
@@ -70,7 +70,7 @@ int UTIL_ActivePlayersInGame()
 	int iCount = 0;
 	for (int iIndex = 1; iIndex <= gpGlobals->maxClients; iIndex++)
 	{
-		CBasePlayer *pPlayer = UTIL_PlayerByIndex(iIndex);
+		CBasePlayer* pPlayer = UTIL_PlayerByIndex(iIndex);
 
 		if (!pPlayer)
 			continue;
@@ -100,7 +100,7 @@ int UTIL_HumansInGame(bool ignoreSpectators)
 
 	for (int iIndex = 1; iIndex <= gpGlobals->maxClients; iIndex++)
 	{
-		CBasePlayer *pPlayer = UTIL_PlayerByIndex(iIndex);
+		CBasePlayer* pPlayer = UTIL_PlayerByIndex(iIndex);
 
 		if (!pPlayer)
 			continue;
@@ -136,7 +136,7 @@ int UTIL_HumansOnTeam(int teamID, bool isAlive)
 	int iCount = 0;
 	for (int iIndex = 1; iIndex <= gpGlobals->maxClients; iIndex++)
 	{
-		CBasePlayer *pPlayer = UTIL_PlayerByIndex(iIndex);
+		CBasePlayer* pPlayer = UTIL_PlayerByIndex(iIndex);
 
 		if (!pPlayer)
 			continue;
@@ -168,7 +168,7 @@ int UTIL_BotsInGame()
 
 	for (int iIndex = 1; iIndex <= gpGlobals->maxClients; iIndex++)
 	{
-		CBasePlayer *pPlayer = UTIL_PlayerByIndex(iIndex);
+		CBasePlayer* pPlayer = UTIL_PlayerByIndex(iIndex);
 
 		if (!pPlayer)
 			continue;
@@ -195,7 +195,7 @@ bool UTIL_KickBotFromTeam(TeamName kickTeam)
 	// try to kick a dead bot first
 	for (i = 1; i <= gpGlobals->maxClients; i++)
 	{
-		CBasePlayer *pPlayer = UTIL_PlayerByIndex(i);
+		CBasePlayer* pPlayer = UTIL_PlayerByIndex(i);
 
 		if (!pPlayer)
 			continue;
@@ -203,7 +203,7 @@ bool UTIL_KickBotFromTeam(TeamName kickTeam)
 		if (FNullEnt(pPlayer->pev))
 			continue;
 
-		const char *name = STRING(pPlayer->pev->netname);
+		const char* name = STRING(pPlayer->pev->netname);
 		if (FStrEq(name, ""))
 			continue;
 
@@ -221,7 +221,7 @@ bool UTIL_KickBotFromTeam(TeamName kickTeam)
 	// no dead bots, kick any bot on the given team
 	for (i = 1; i <= gpGlobals->maxClients; i++)
 	{
-		CBasePlayer *pPlayer = UTIL_PlayerByIndex(i);
+		CBasePlayer* pPlayer = UTIL_PlayerByIndex(i);
 
 		if (!pPlayer)
 			continue;
@@ -229,7 +229,7 @@ bool UTIL_KickBotFromTeam(TeamName kickTeam)
 		if (FNullEnt(pPlayer->pev))
 			continue;
 
-		const char *name = STRING(pPlayer->pev->netname);
+		const char* name = STRING(pPlayer->pev->netname);
 		if (FStrEq(name, ""))
 			continue;
 
@@ -252,7 +252,7 @@ bool UTIL_IsTeamAllBots(int team)
 	int botCount = 0;
 	for (int i = 1; i <= gpGlobals->maxClients; i++)
 	{
-		CBasePlayer *pPlayer = UTIL_PlayerByIndex(i);
+		CBasePlayer* pPlayer = UTIL_PlayerByIndex(i);
 
 		if (!pPlayer)
 			continue;
@@ -277,14 +277,14 @@ bool UTIL_IsTeamAllBots(int team)
 
 // Return the closest active player to the given position.
 // If 'distance' is non-NULL, the distance to the closest player is returned in it.
-extern CBasePlayer *UTIL_GetClosestPlayer(const Vector *pos, float *distance)
+extern CBasePlayer* UTIL_GetClosestPlayer(const Vector* pos, float* distance)
 {
-	CBasePlayer *closePlayer = nullptr;
+	CBasePlayer* closePlayer = nullptr;
 	float closeDistSq = 1.0e12f;	// 999999999999.9f
 
 	for (int i = 1; i <= gpGlobals->maxClients; i++)
 	{
-		CBasePlayer *pPlayer = UTIL_PlayerByIndex(i);
+		CBasePlayer* pPlayer = UTIL_PlayerByIndex(i);
 
 		if (!IsEntityValid(pPlayer))
 			continue;
@@ -308,14 +308,14 @@ extern CBasePlayer *UTIL_GetClosestPlayer(const Vector *pos, float *distance)
 
 // Return the closest active player on the given team to the given position.
 // If 'distance' is non-NULL, the distance to the closest player is returned in it.
-extern CBasePlayer *UTIL_GetClosestPlayer(const Vector *pos, int team, float *distance)
+extern CBasePlayer* UTIL_GetClosestPlayer(const Vector* pos, int team, float* distance)
 {
-	CBasePlayer *closePlayer = nullptr;
+	CBasePlayer* closePlayer = nullptr;
 	float closeDistSq = 1.0e12f;	// 999999999999.9f
 
 	for (int i = 1; i <= gpGlobals->maxClients; i++)
 	{
-		CBasePlayer *pPlayer = UTIL_PlayerByIndex(i);
+		CBasePlayer* pPlayer = UTIL_PlayerByIndex(i);
 
 		if (!IsEntityValid(pPlayer))
 			continue;
@@ -340,12 +340,12 @@ extern CBasePlayer *UTIL_GetClosestPlayer(const Vector *pos, int team, float *di
 	return closePlayer;
 }
 
-const char *UTIL_GetBotPrefix()
+const char* UTIL_GetBotPrefix()
 {
 	return cv_bot_prefix.string;
 }
 
-void UTIL_ConstructBotNetName(char *name, int nameLength, const BotProfile *profile)
+void UTIL_ConstructBotNetName(char* name, int nameLength, const BotProfile* profile)
 {
 	if (!profile)
 	{
@@ -364,11 +364,11 @@ void UTIL_ConstructBotNetName(char *name, int nameLength, const BotProfile *prof
 	Q_snprintf(name, nameLength, "%s %s", UTIL_GetBotPrefix(), profile->GetName());
 }
 
-bool UTIL_IsVisibleToTeam(const Vector &spot, int team, float maxRange)
+bool UTIL_IsVisibleToTeam(const Vector& spot, int team, float maxRange)
 {
 	for (int i = 1; i <= gpGlobals->maxClients; i++)
 	{
-		CBasePlayer *pPlayer = UTIL_PlayerByIndex(i);
+		CBasePlayer* pPlayer = UTIL_PlayerByIndex(i);
 
 		if (!pPlayer)
 			continue;
@@ -399,7 +399,7 @@ bool UTIL_IsVisibleToTeam(const Vector &spot, int team, float maxRange)
 }
 
 // Return the local player
-CBasePlayer *UTIL_GetLocalPlayer()
+CBasePlayer* UTIL_GetLocalPlayer()
 {
 	// no "local player" if this is a dedicated server or a single player game
 	if (IS_DEDICATED_SERVER())
@@ -408,7 +408,7 @@ CBasePlayer *UTIL_GetLocalPlayer()
 		// just try to find any player
 		for (int iIndex = 1; iIndex <= gpGlobals->maxClients; iIndex++)
 		{
-			CBasePlayer *pPlayer = UTIL_PlayerByIndex(iIndex);
+			CBasePlayer* pPlayer = UTIL_PlayerByIndex(iIndex);
 
 			if (!pPlayer)
 				continue;
@@ -438,7 +438,7 @@ CBasePlayer *UTIL_GetLocalPlayer()
 	return UTIL_PlayerByIndex(1);
 }
 
-NOXREF Vector UTIL_ComputeOrigin(entvars_t *pevVars)
+NOXREF Vector UTIL_ComputeOrigin(entvars_t* pevVars)
 {
 	if (pevVars->origin.x == 0.0f && pevVars->origin.y == 0.0f && pevVars->origin.z == 0.0f)
 		return (pevVars->absmax + pevVars->absmin) * 0.5f;
@@ -446,12 +446,12 @@ NOXREF Vector UTIL_ComputeOrigin(entvars_t *pevVars)
 		return pevVars->origin;
 }
 
-NOXREF Vector UTIL_ComputeOrigin(CBaseEntity *pEntity)
+NOXREF Vector UTIL_ComputeOrigin(CBaseEntity* pEntity)
 {
 	return UTIL_ComputeOrigin(pEntity->pev);
 }
 
-NOXREF Vector UTIL_ComputeOrigin(edict_t *pentEdict)
+NOXREF Vector UTIL_ComputeOrigin(edict_t* pentEdict)
 {
 	return UTIL_ComputeOrigin(VARS(pentEdict));
 }
@@ -459,50 +459,50 @@ NOXREF Vector UTIL_ComputeOrigin(edict_t *pentEdict)
 NOXREF void UTIL_DrawBeamFromEnt(int iIndex, Vector vecEnd, int iLifetime, byte bRed, byte bGreen, byte bBlue)
 {
 	MESSAGE_BEGIN(MSG_PVS, SVC_TEMPENTITY, vecEnd);
-		WRITE_BYTE(TE_BEAMENTPOINT);
-		WRITE_SHORT(iIndex);
-		WRITE_COORD(vecEnd.x);
-		WRITE_COORD(vecEnd.y);
-		WRITE_COORD(vecEnd.z);
-		WRITE_SHORT(s_iBeamSprite);
-		WRITE_BYTE(0);
-		WRITE_BYTE(0);
-		WRITE_BYTE(iLifetime);
-		WRITE_BYTE(10);
-		WRITE_BYTE(0);
-		WRITE_BYTE(bRed);
-		WRITE_BYTE(bGreen);
-		WRITE_BYTE(bBlue);
-		WRITE_BYTE(255);
-		WRITE_BYTE(0);
+	WRITE_BYTE(TE_BEAMENTPOINT);
+	WRITE_SHORT(iIndex);
+	WRITE_COORD(vecEnd.x);
+	WRITE_COORD(vecEnd.y);
+	WRITE_COORD(vecEnd.z);
+	WRITE_SHORT(s_iBeamSprite);
+	WRITE_BYTE(0);
+	WRITE_BYTE(0);
+	WRITE_BYTE(iLifetime);
+	WRITE_BYTE(10);
+	WRITE_BYTE(0);
+	WRITE_BYTE(bRed);
+	WRITE_BYTE(bGreen);
+	WRITE_BYTE(bBlue);
+	WRITE_BYTE(255);
+	WRITE_BYTE(0);
 	MESSAGE_END();
 }
 
 void UTIL_DrawBeamPoints(Vector vecStart, Vector vecEnd, int iLifetime, byte bRed, byte bGreen, byte bBlue)
 {
 	MESSAGE_BEGIN(MSG_PVS, SVC_TEMPENTITY, vecStart);
-		WRITE_BYTE(TE_BEAMPOINTS);
-		WRITE_COORD(vecStart.x);
-		WRITE_COORD(vecStart.y);
-		WRITE_COORD(vecStart.z);
-		WRITE_COORD(vecEnd.x);
-		WRITE_COORD(vecEnd.y);
-		WRITE_COORD(vecEnd.z);
-		WRITE_SHORT(s_iBeamSprite);
-		WRITE_BYTE(0);
-		WRITE_BYTE(0);
-		WRITE_BYTE(iLifetime);
-		WRITE_BYTE(10);
-		WRITE_BYTE(0);
-		WRITE_BYTE(bRed);
-		WRITE_BYTE(bGreen);
-		WRITE_BYTE(bBlue);
-		WRITE_BYTE(255);
-		WRITE_BYTE(0);
+	WRITE_BYTE(TE_BEAMPOINTS);
+	WRITE_COORD(vecStart.x);
+	WRITE_COORD(vecStart.y);
+	WRITE_COORD(vecStart.z);
+	WRITE_COORD(vecEnd.x);
+	WRITE_COORD(vecEnd.y);
+	WRITE_COORD(vecEnd.z);
+	WRITE_SHORT(s_iBeamSprite);
+	WRITE_BYTE(0);
+	WRITE_BYTE(0);
+	WRITE_BYTE(iLifetime);
+	WRITE_BYTE(10);
+	WRITE_BYTE(0);
+	WRITE_BYTE(bRed);
+	WRITE_BYTE(bGreen);
+	WRITE_BYTE(bBlue);
+	WRITE_BYTE(255);
+	WRITE_BYTE(0);
 	MESSAGE_END();
 }
 
-void UTIL_DrawBox(Extent *extent, int lifetime, int red, int green, int blue)
+void UTIL_DrawBox(Extent* extent, int lifetime, int red, int green, int blue)
 {
 	Vector v[8];
 	v[0].x = extent->lo.x; v[0].y = extent->lo.y; v[0].z = extent->lo.z;
@@ -553,7 +553,7 @@ void UTIL_DrawBox(Extent *extent, int lifetime, int red, int green, int blue)
 	}
 }
 
-void CONSOLE_ECHO(const char *pszMsg, ...)
+void CONSOLE_ECHO(const char* pszMsg, ...)
 {
 	va_list argptr;
 	static char szStr[1024];
@@ -565,7 +565,7 @@ void CONSOLE_ECHO(const char *pszMsg, ...)
 	SERVER_PRINT(szStr);
 }
 
-void CONSOLE_ECHO_LOGGED(const char *pszMsg, ...)
+void CONSOLE_ECHO_LOGGED(const char* pszMsg, ...)
 {
 	va_list argptr;
 	static char szStr[1024];
@@ -620,9 +620,9 @@ float BotSIN(float angle)
 }
 
 // Determine if this event is audible, and if so, return its audible range and priority
-bool IsGameEventAudible(GameEventType event, CBaseEntity *pEntity, CBaseEntity *pOther, float *range, PriorityType *priority, bool *isHostile)
+bool IsGameEventAudible(GameEventType event, CBaseEntity* pEntity, CBaseEntity* pOther, float* range, PriorityType* priority, bool* isHostile)
 {
-	CBasePlayer *pPlayer = static_cast<CBasePlayer *>(pEntity);
+	CBasePlayer* pPlayer = static_cast<CBasePlayer*>(pEntity);
 
 	if (!pEntity || !pPlayer->IsPlayer())
 		pPlayer = nullptr;
@@ -632,8 +632,8 @@ bool IsGameEventAudible(GameEventType event, CBaseEntity *pEntity, CBaseEntity *
 
 	switch (event)
 	{
-	// TODO: Check weapon type (knives are pretty quiet)
-	// TODO: Use actual volume, account for silencers, etc.
+		// TODO: Check weapon type (knives are pretty quiet)
+		// TODO: Use actual volume, account for silencers, etc.
 	case EVENT_WEAPON_FIRED:
 	{
 		if (!pPlayer->m_pActiveItem)
@@ -641,22 +641,22 @@ bool IsGameEventAudible(GameEventType event, CBaseEntity *pEntity, CBaseEntity *
 
 		switch (pPlayer->m_pActiveItem->m_iId)
 		{
-		// silent "firing"
+			// silent "firing"
 		case WEAPON_HEGRENADE:
 		case WEAPON_SMOKEGRENADE:
 		case WEAPON_FLASHBANG:
 		case WEAPON_SHIELDGUN:
 		case WEAPON_C4:
 			return false;
-		// quiet
+			// quiet
 		case WEAPON_KNIFE:
 		case WEAPON_TMP:
 			*range = ShortRange;
 			break;
-		// M4A1 - check for silencer
+			// M4A1 - check for silencer
 		case WEAPON_M4A1:
 		{
-			CBasePlayerWeapon *pWeapon = static_cast<CBasePlayerWeapon *>(pPlayer->m_pActiveItem);
+			CBasePlayerWeapon* pWeapon = static_cast<CBasePlayerWeapon*>(pPlayer->m_pActiveItem);
 			if (pWeapon->m_iWeaponState & WPNSTATE_M4A1_SILENCED)
 				*range = ShortRange;
 			else
@@ -666,7 +666,7 @@ bool IsGameEventAudible(GameEventType event, CBaseEntity *pEntity, CBaseEntity *
 		// USP - check for silencer
 		case WEAPON_USP:
 		{
-			CBasePlayerWeapon *pWeapon = static_cast<CBasePlayerWeapon *>(pPlayer->m_pActiveItem);
+			CBasePlayerWeapon* pWeapon = static_cast<CBasePlayerWeapon*>(pPlayer->m_pActiveItem);
 			if (pWeapon->m_iWeaponState & WPNSTATE_USP_SILENCED)
 				*range = ShortRange;
 			else
@@ -677,7 +677,7 @@ bool IsGameEventAudible(GameEventType event, CBaseEntity *pEntity, CBaseEntity *
 		case WEAPON_AWP:
 			*range = 99999.0f;
 			break;
-		// normal
+			// normal
 		default:
 			*range = NormalRange;
 			break;
@@ -748,7 +748,7 @@ bool IsGameEventAudible(GameEventType event, CBaseEntity *pEntity, CBaseEntity *
 	return false;
 }
 
-void HintMessageToAllPlayers(const char *message)
+void HintMessageToAllPlayers(const char* message)
 {
 	hudtextparms_t textParms;
 

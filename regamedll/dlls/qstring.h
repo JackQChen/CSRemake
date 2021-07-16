@@ -30,7 +30,7 @@
 
 #define QSTRING_DEFINE
 
-constexpr unsigned int iStringNull = {0};
+constexpr unsigned int iStringNull = { 0 };
 
 // Quake string (helper class)
 class QString final
@@ -38,22 +38,22 @@ class QString final
 public:
 	using qstring_t = unsigned int;
 
-	QString(): m_string(iStringNull) {};
-	QString(qstring_t string): m_string(string) {};
+	QString() : m_string(iStringNull) {};
+	QString(qstring_t string) : m_string(string) {};
 
 	bool IsNull() const;
 	bool IsNullOrEmpty() const;
 
 	// Copy the array
-	QString &operator=(const QString &other);
+	QString& operator=(const QString& other);
 
 	bool operator==(qstring_t string) const;
-	bool operator==(const QString &s) const;
-	bool operator==(const char *pszString) const;
+	bool operator==(const QString& s) const;
+	bool operator==(const char* pszString) const;
 
-	operator const char *() const;
+	operator const char* () const;
 	operator unsigned int() const;
-	const char *str() const;
+	const char* str() const;
 
 private:
 	qstring_t m_string;
@@ -68,7 +68,7 @@ private:
 #include "eiface.h"
 #include "enginecallback.h"
 
-extern globalvars_t *gpGlobals;
+extern globalvars_t* gpGlobals;
 
 #define STRING(offset)   ((const char *)(gpGlobals->pStringBase + (unsigned int)(offset)))
 #define MAKE_STRING(str) ((unsigned int)(str) - (unsigned int)(STRING(0)))
@@ -84,7 +84,7 @@ inline bool QString::IsNullOrEmpty() const
 	return IsNull() || (&gpGlobals->pStringBase[m_string])[0] == '\0';
 }
 
-inline QString &QString::operator=(const QString &other)
+inline QString& QString::operator=(const QString& other)
 {
 	m_string = other.m_string;
 	return (*this);
@@ -95,22 +95,22 @@ inline bool QString::operator==(qstring_t string) const
 	return m_string == string;
 }
 
-inline bool QString::operator==(const QString &s) const
+inline bool QString::operator==(const QString& s) const
 {
 	return m_string == s.m_string;
 }
 
-inline bool QString::operator==(const char *pszString) const
+inline bool QString::operator==(const char* pszString) const
 {
 	return Q_strcmp(&gpGlobals->pStringBase[m_string], pszString) == 0;
 }
 
-inline const char *QString::str() const
+inline const char* QString::str() const
 {
 	return &gpGlobals->pStringBase[m_string];
 }
 
-inline QString::operator const char *() const
+inline QString::operator const char* () const
 {
 	return str();
 }

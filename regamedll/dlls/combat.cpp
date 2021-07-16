@@ -1,6 +1,6 @@
 #include "precompiled.h"
 
-void PlayerBlind(CBasePlayer *pPlayer, entvars_t *pevInflictor, entvars_t *pevAttacker, float fadeTime, float fadeHold, int alpha, Vector &color)
+void PlayerBlind(CBasePlayer* pPlayer, entvars_t* pevInflictor, entvars_t* pevAttacker, float fadeTime, float fadeHold, int alpha, Vector& color)
 {
 	UTIL_ScreenFade(pPlayer, color, fadeTime, fadeHold, alpha, 0);
 
@@ -8,7 +8,7 @@ void PlayerBlind(CBasePlayer *pPlayer, entvars_t *pevInflictor, entvars_t *pevAt
 	{
 		for (int i = 1; i <= gpGlobals->maxClients; i++)
 		{
-			CBasePlayer *pObserver = UTIL_PlayerByIndex(i);
+			CBasePlayer* pObserver = UTIL_PlayerByIndex(i);
 			if (pObserver && pObserver->IsObservingPlayer(pPlayer))
 			{
 				UTIL_ScreenFade(pObserver, color, fadeTime, fadeHold, alpha, 0);
@@ -24,14 +24,14 @@ void PlayerBlind(CBasePlayer *pPlayer, entvars_t *pevInflictor, entvars_t *pevAt
 	}
 }
 
-void RadiusFlash_TraceLine_hook(CBasePlayer *pPlayer, entvars_t *pevInflictor, entvars_t *pevAttacker, Vector &vecSrc, Vector &vecSpot, TraceResult *tr)
+void RadiusFlash_TraceLine_hook(CBasePlayer* pPlayer, entvars_t* pevInflictor, entvars_t* pevAttacker, Vector& vecSrc, Vector& vecSpot, TraceResult* tr)
 {
 	UTIL_TraceLine(vecSrc, vecSpot, dont_ignore_monsters, ENT(pevInflictor), tr);
 }
 
-void RadiusFlash(Vector vecSrc, entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int iClassIgnore, int bitsDamageType)
+void RadiusFlash(Vector vecSrc, entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int iClassIgnore, int bitsDamageType)
 {
-	CBaseEntity *pEntity = nullptr;
+	CBaseEntity* pEntity = nullptr;
 	TraceResult tr;
 	float flAdjustedDamage, falloff;
 	Vector vecSpot;
@@ -54,13 +54,13 @@ void RadiusFlash(Vector vecSrc, entvars_t *pevInflictor, entvars_t *pevAttacker,
 		float fadeTime;
 		float fadeHold;
 		int alpha;
-		CBasePlayer *pPlayer;
+		CBasePlayer* pPlayer;
 		float currentHoldTime;
 
 		if (!pEntity->IsPlayer())
 			continue;
 
-		pPlayer = (CBasePlayer *)pEntity;
+		pPlayer = (CBasePlayer*)pEntity;
 
 		if (pPlayer->pev->takedamage == DAMAGE_NO || pPlayer->pev->deadflag != DEAD_NO)
 			continue;
@@ -138,7 +138,7 @@ void RadiusFlash(Vector vecSrc, entvars_t *pevInflictor, entvars_t *pevAttacker,
 	}
 }
 
-float GetAmountOfPlayerVisible(Vector vecSrc, CBaseEntity *pEntity)
+float GetAmountOfPlayerVisible(Vector vecSrc, CBaseEntity* pEntity)
 {
 	float retval = 0.0f;
 	TraceResult tr;
@@ -210,9 +210,9 @@ float GetAmountOfPlayerVisible(Vector vecSrc, CBaseEntity *pEntity)
 	return retval;
 }
 
-void RadiusDamage(Vector vecSrc, entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, float flRadius, int iClassIgnore, int bitsDamageType)
+void RadiusDamage(Vector vecSrc, entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, float flRadius, int iClassIgnore, int bitsDamageType)
 {
-	CBaseEntity *pEntity = nullptr;
+	CBaseEntity* pEntity = nullptr;
 	TraceResult tr;
 	float flAdjustedDamage, falloff;
 	Vector vecSpot;
@@ -304,9 +304,9 @@ void RadiusDamage(Vector vecSrc, entvars_t *pevInflictor, entvars_t *pevAttacker
 	}
 }
 
-void RadiusDamage2(Vector vecSrc, entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, float flRadius, int iClassIgnore, int bitsDamageType)
+void RadiusDamage2(Vector vecSrc, entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, float flRadius, int iClassIgnore, int bitsDamageType)
 {
-	CBaseEntity *pEntity = nullptr;
+	CBaseEntity* pEntity = nullptr;
 	TraceResult tr;
 	float flAdjustedDamage, falloff;
 	Vector vecSpot;

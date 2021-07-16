@@ -32,7 +32,7 @@ void PM_ShowClipBox()
 	PM_ViewEntity();
 
 	// Show our BBOX in particles.
- 	//PM_DrawBBox(pmove->player_mins[pmove->usehull], pmove->player_maxs[pmove->usehull], pmove->origin, 132, 0.1);
+	//PM_DrawBBox(pmove->player_mins[pmove->usehull], pmove->player_maxs[pmove->usehull], pmove->origin, 132, 0.1);
 /*
 	{
 		int i;
@@ -40,7 +40,7 @@ void PM_ShowClipBox()
 		{
 			if (pmove->physents[i].info >= 1 && pmove->physents[i].info <= 4)
 			{
-			 	PM_DrawBBox(pmove->player_mins[pmove->usehull], pmove->player_maxs[pmove->usehull], pmove->physents[i].origin, 132, 0.1);
+				PM_DrawBBox(pmove->player_mins[pmove->usehull], pmove->player_maxs[pmove->usehull], pmove->physents[i].origin, 132, 0.1);
 			}
 		}
 	}
@@ -83,7 +83,7 @@ void PM_DrawRectangle(vec3_t tl, vec3_t bl, vec3_t tr, vec3_t br, int pcolor, fl
 
 void PM_DrawPhysEntBBox(int num, int pcolor, float life)
 {
-	physent_t *pe;
+	physent_t* pe;
 	vec3_t org;
 	int j;
 	vec3_t tmp;

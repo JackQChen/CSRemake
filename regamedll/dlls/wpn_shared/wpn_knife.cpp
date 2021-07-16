@@ -52,7 +52,7 @@ void CKnife::Precache()
 	m_flSwingDistance = KNIFE_SWING_DISTANCE;
 }
 
-int CKnife::GetItemInfo(ItemInfo *p)
+int CKnife::GetItemInfo(ItemInfo* p)
 {
 	p->pszName = STRING(pev->classname);
 	p->pszAmmo1 = nullptr;
@@ -103,17 +103,17 @@ NOXREF void CKnife::WeaponAnimation(int iAnimation)
 #endif
 
 	PLAYBACK_EVENT_FULL(flag, m_pPlayer->edict(), m_usKnife,
-		0.0, (float *)&g_vecZero, (float *)&g_vecZero,
+		0.0, (float*)&g_vecZero, (float*)&g_vecZero,
 		0.0,
 		0.0,
 		iAnimation, 2, 3, 4);
 }
 
-void FindHullIntersection(const Vector &vecSrc, TraceResult &tr, float *mins, float *maxs, edict_t *pEntity)
+void FindHullIntersection(const Vector& vecSrc, TraceResult& tr, float* mins, float* maxs, edict_t* pEntity)
 {
 	int i, j, k;
 	float distance;
-	float *minmaxs[2] = { mins, maxs };
+	float* minmaxs[2] = { mins, maxs };
 	TraceResult tmpTrace;
 	Vector vecHullEnd = tr.vecEndPos;
 	Vector vecEnd;
@@ -283,7 +283,7 @@ BOOL CKnife::Swing(BOOL fFirst)
 		{
 			// Calculate the point of intersection of the line (or hull) and the object we hit
 			// This is and approximation of the "best" intersection
-			CBaseEntity *pHit = CBaseEntity::Instance(tr.pHit);
+			CBaseEntity* pHit = CBaseEntity::Instance(tr.pHit);
 
 			if (!pHit || pHit->IsBSPModel())
 			{
@@ -361,7 +361,7 @@ BOOL CKnife::Swing(BOOL fFirst)
 		float flVol = 1.0f;
 		int fHitWorld = TRUE;
 
-		CBaseEntity *pEntity = CBaseEntity::Instance(tr.pHit);
+		CBaseEntity* pEntity = CBaseEntity::Instance(tr.pHit);
 		SetPlayerShieldAnim();
 
 		// player "shoot" animation
@@ -461,7 +461,7 @@ BOOL CKnife::Stab(BOOL fFirst)
 		{
 			// Calculate the point of intersection of the line (or hull) and the object we hit
 			// This is and approximation of the "best" intersection
-			CBaseEntity *pHit = CBaseEntity::Instance(tr.pHit);
+			CBaseEntity* pHit = CBaseEntity::Instance(tr.pHit);
 
 			if (!pHit || pHit->IsBSPModel())
 			{
@@ -512,7 +512,7 @@ BOOL CKnife::Stab(BOOL fFirst)
 		float flVol = 1.0f;
 		int fHitWorld = TRUE;
 
-		CBaseEntity *pEntity = CBaseEntity::Instance(tr.pHit);
+		CBaseEntity* pEntity = CBaseEntity::Instance(tr.pHit);
 
 		// player "shoot" animation
 		m_pPlayer->SetAnimation(PLAYER_ATTACK1);

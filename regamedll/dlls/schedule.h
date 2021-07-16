@@ -270,14 +270,14 @@ struct Task_t
 
 struct Schedule_t
 {
-	Task_t *pTasklist;
+	Task_t* pTasklist;
 	int cTasks;
 	int iInterruptMask; // a bit mask of conditions that can interrupt this schedule
 
 	// a more specific mask that indicates which TYPES of sounds will interrupt the schedule in the
 	// event that the schedule is broken by COND_HEAR_SOUND
 	int iSoundMask;
-	const char *pName;
+	const char* pName;
 };
 
 // an array of waypoints makes up the monster's route.

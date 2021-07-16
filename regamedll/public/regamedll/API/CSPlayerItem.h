@@ -29,7 +29,7 @@
 #pragma once
 
 class CBasePlayerItem;
-class CCSPlayerItem: public CCSAnimating
+class CCSPlayerItem : public CCSAnimating
 {
 public:
 	CCSPlayerItem()
@@ -37,17 +37,17 @@ public:
 		Q_memset(&m_ItemInfo, 0, sizeof(m_ItemInfo));
 	}
 
-	virtual void SetItemInfo(ItemInfo *pInfo);
-	virtual int GetItemInfo(ItemInfo *pInfo);
+	virtual void SetItemInfo(ItemInfo* pInfo);
+	virtual int GetItemInfo(ItemInfo* pInfo);
 
-	CBasePlayerItem *BasePlayerItem() const;
+	CBasePlayerItem* BasePlayerItem() const;
 
 public:
 	ItemInfo m_ItemInfo;
 };
 
 // Inlines
-inline CBasePlayerItem *CCSPlayerItem::BasePlayerItem() const
+inline CBasePlayerItem* CCSPlayerItem::BasePlayerItem() const
 {
-	return reinterpret_cast<CBasePlayerItem *>(this->m_pContainingEntity);
+	return reinterpret_cast<CBasePlayerItem*>(this->m_pContainingEntity);
 }

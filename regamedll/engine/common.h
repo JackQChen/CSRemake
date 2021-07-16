@@ -44,9 +44,9 @@
 
 typedef struct sizebuf_s
 {
-	const char *buffername;
+	const char* buffername;
 	uint16 flags;
-	byte *data;
+	byte* data;
 	int maxsize;
 	int cursize;
 } sizebuf_t;

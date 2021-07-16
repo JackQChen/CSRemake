@@ -67,11 +67,11 @@ void CMemoryPool::AddNewBlob()
 		DebugBreak();
 #endif // _WIN32
 
-	void **newBlob = (void **)_headOfFreeList;
+	void** newBlob = (void**)_headOfFreeList;
 	for (int j = 0; j < nElements - 1; j++)
 	{
-		newBlob[0] = (char *)newBlob + _blockSize;
-		newBlob = (void **)newBlob[0];
+		newBlob[0] = (char*)newBlob + _blockSize;
+		newBlob = (void**)newBlob[0];
 	}
 
 	newBlob[0] = nullptr;
@@ -86,9 +86,9 @@ void CMemoryPool::AddNewBlob()
 
 }
 
-void *CMemoryPool::Alloc(unsigned int amount)
+void* CMemoryPool::Alloc(unsigned int amount)
 {
-	void *returnBlock;
+	void* returnBlock;
 	if (amount > (unsigned int)_blockSize)
 		return nullptr;
 
@@ -104,11 +104,11 @@ void *CMemoryPool::Alloc(unsigned int amount)
 #endif // _WIN32
 
 	returnBlock = _headOfFreeList;
-	_headOfFreeList = *((void **)_headOfFreeList);
+	_headOfFreeList = *((void**)_headOfFreeList);
 	return returnBlock;
 }
 
-void CMemoryPool::Free(void *memblock)
+void CMemoryPool::Free(void* memblock)
 {
 	if (!memblock)
 		return;
@@ -118,6 +118,6 @@ void CMemoryPool::Free(void *memblock)
 #endif // _DEBUG
 
 	--_blocksAllocated;
-	*((void **)memblock) = _headOfFreeList;
+	*((void**)memblock) = _headOfFreeList;
 	_headOfFreeList = memblock;
 }

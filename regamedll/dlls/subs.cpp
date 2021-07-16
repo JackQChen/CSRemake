@@ -23,7 +23,7 @@ LINK_ENTITY_TO_CLASS(info_target, CPointEntity, CCSPointEntity)
 LINK_ENTITY_TO_CLASS(info_hostage_rescue, CPointEntity, CCSPointEntity)
 LINK_ENTITY_TO_CLASS(info_bomb_target, CPointEntity, CCSPointEntity)
 
-void CBaseDMStart::KeyValue(KeyValueData *pkvd)
+void CBaseDMStart::KeyValue(KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "master"))
 	{
@@ -36,7 +36,7 @@ void CBaseDMStart::KeyValue(KeyValueData *pkvd)
 	}
 }
 
-BOOL CBaseDMStart::IsTriggered(CBaseEntity *pEntity)
+BOOL CBaseDMStart::IsTriggered(CBaseEntity* pEntity)
 {
 	return UTIL_IsMasterTriggered(pev->netname, pEntity);
 }
@@ -82,7 +82,7 @@ TYPEDESCRIPTION CBaseDelay::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE(CBaseDelay, CBaseEntity)
 
-void CBaseDelay::KeyValue(KeyValueData *pkvd)
+void CBaseDelay::KeyValue(KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "delay"))
 	{
@@ -108,7 +108,7 @@ void CBaseDelay::KeyValue(KeyValueData *pkvd)
 //
 // Search for (string)targetname in all entities that
 // match (string)self.target and call their .use function (if they have one)
-NOINLINE void CBaseEntity::SUB_UseTargets(CBaseEntity *pActivator, USE_TYPE useType, float value)
+NOINLINE void CBaseEntity::SUB_UseTargets(CBaseEntity* pActivator, USE_TYPE useType, float value)
 {
 	// fire targets
 	if (!FStringNull(pev->target))
@@ -119,9 +119,9 @@ NOINLINE void CBaseEntity::SUB_UseTargets(CBaseEntity *pActivator, USE_TYPE useT
 
 int g_iTargetRecursionLevel = 0;
 
-void FireTargets(const char *targetName, CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void FireTargets(const char* targetName, CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
-	edict_t *pentTarget = nullptr;
+	edict_t* pentTarget = nullptr;
 	if (!targetName)
 		return;
 
@@ -155,7 +155,7 @@ void FireTargets(const char *targetName, CBaseEntity *pActivator, CBaseEntity *p
 		if (FNullEnt(pentTarget))
 			break;
 
-		CBaseEntity *pTarget = CBaseEntity::Instance(pentTarget);
+		CBaseEntity* pTarget = CBaseEntity::Instance(pentTarget);
 
 		// Don't use dying ents
 		if (pTarget && !(pTarget->pev->flags & FL_KILLME))
@@ -169,7 +169,7 @@ void FireTargets(const char *targetName, CBaseEntity *pActivator, CBaseEntity *p
 
 LINK_ENTITY_TO_CLASS(DelayedUse, CBaseDelay, CCSDelay)
 
-void CBaseDelay::SUB_UseTargets(CBaseEntity *pActivator, USE_TYPE useType, float value)
+void CBaseDelay::SUB_UseTargets(CBaseEntity* pActivator, USE_TYPE useType, float value)
 {
 	// exit immediatly if we don't have a target or kill target
 	if (FStringNull(pev->target) && !m_iszKillTarget)
@@ -179,7 +179,7 @@ void CBaseDelay::SUB_UseTargets(CBaseEntity *pActivator, USE_TYPE useType, float
 	if (m_flDelay != 0)
 	{
 		// create a temp object to fire at a later time
-		CBaseDelay *pTemp = GetClassPtr<CCSDelay>((CBaseDelay *)nullptr);
+		CBaseDelay* pTemp = GetClassPtr<CCSDelay>((CBaseDelay*)nullptr);
 
 		MAKE_STRING_CLASS("DelayedUse", pTemp->pev);
 
@@ -215,7 +215,7 @@ void CBaseDelay::SUB_UseTargets(CBaseEntity *pActivator, USE_TYPE useType, float
 	// kill the killtargets
 	if (m_iszKillTarget)
 	{
-		edict_t *pentKillTarget = nullptr;
+		edict_t* pentKillTarget = nullptr;
 
 		ALERT(at_aiconsole, "KillTarget: %s\n", STRING(m_iszKillTarget));
 		pentKillTarget = FIND_ENTITY_BY_TARGETNAME(nullptr, STRING(m_iszKillTarget));
@@ -238,7 +238,7 @@ void CBaseDelay::SUB_UseTargets(CBaseEntity *pActivator, USE_TYPE useType, float
 
 // QuakeEd only writes a single float for angles (bad idea), so up and down are
 // just constant angles.
-void SetMovedir(entvars_t *pev)
+void SetMovedir(entvars_t* pev)
 {
 	if (pev->angles == Vector(0, -1, 0))
 	{
@@ -259,7 +259,7 @@ void SetMovedir(entvars_t *pev)
 
 void CBaseDelay::DelayThink()
 {
-	CBaseEntity *pActivator = nullptr;
+	CBaseEntity* pActivator = nullptr;
 
 	// A player activated this on delay
 	if (pev->owner)
@@ -298,7 +298,7 @@ TYPEDESCRIPTION CBaseToggle::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE(CBaseToggle, CBaseAnimating)
 
-void CBaseToggle::KeyValue(KeyValueData *pkvd)
+void CBaseToggle::KeyValue(KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "lip"))
 	{
@@ -421,7 +421,7 @@ void CBaseToggle::AngularMoveDone()
 	}
 }
 
-NOXREF float CBaseToggle::AxisValue(int flags, const Vector &angles)
+NOXREF float CBaseToggle::AxisValue(int flags, const Vector& angles)
 {
 	if (flags & SF_DOOR_ROTATE_Z)
 		return angles.z;
@@ -432,7 +432,7 @@ NOXREF float CBaseToggle::AxisValue(int flags, const Vector &angles)
 	return angles.y;
 }
 
-void CBaseToggle::AxisDir(entvars_t *pev)
+void CBaseToggle::AxisDir(entvars_t* pev)
 {
 	if (pev->spawnflags & SF_DOOR_ROTATE_Z)
 	{
@@ -451,7 +451,7 @@ void CBaseToggle::AxisDir(entvars_t *pev)
 	}
 }
 
-float CBaseToggle::AxisDelta(int flags, const Vector &angle1, const Vector &angle2)
+float CBaseToggle::AxisDelta(int flags, const Vector& angle1, const Vector& angle2)
 {
 	if (flags & SF_DOOR_ROTATE_Z)
 		return angle1.z - angle2.z;
@@ -463,7 +463,7 @@ float CBaseToggle::AxisDelta(int flags, const Vector &angle1, const Vector &angl
 }
 
 // returns TRUE if the passed entity is visible to caller, even if not infront ()
-NOXREF BOOL FEntIsVisible(entvars_t *pev, entvars_t *pevTarget)
+NOXREF BOOL FEntIsVisible(entvars_t* pev, entvars_t* pevTarget)
 {
 	Vector vecSpot1 = pev->origin + pev->view_ofs;
 	Vector vecSpot2 = pevTarget->origin + pevTarget->view_ofs;

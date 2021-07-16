@@ -34,24 +34,24 @@
 #define noiseRunning noise3
 
 // This is just a solid wall if not inhibited
-class CFuncWall: public CBaseEntity
+class CFuncWall : public CBaseEntity
 {
 public:
 	virtual void Spawn();
 
 	// Bmodels don't go across transitions
 	virtual int ObjectCaps() { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 };
 
 #define SF_WALL_TOOGLE_START_OFF BIT(0)
 #define SF_WALL_TOOGLE_NOTSOLID  BIT(3)
 
-class CFuncWallToggle: public CFuncWall
+class CFuncWallToggle : public CFuncWall
 {
 public:
 	virtual void Spawn();
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 #ifdef REGAMEDLL_FIXES
 	virtual void Restart();
@@ -67,26 +67,26 @@ public:
 #define SF_CONVEYOR_VISUAL   BIT(0)
 #define SF_CONVEYOR_NOTSOLID BIT(1)
 
-class CFuncConveyor: public CFuncWall
+class CFuncConveyor : public CFuncWall
 {
 public:
 	virtual void Spawn();
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 public:
 	void UpdateSpeed(float speed);
 };
 
 // A simple entity that looks solid but lets you walk through it.
-class CFuncIllusionary: public CBaseToggle
+class CFuncIllusionary : public CBaseToggle
 {
 public:
 	virtual void Spawn();
-	virtual void KeyValue(KeyValueData *pkvd);
+	virtual void KeyValue(KeyValueData* pkvd);
 	virtual int ObjectCaps() { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
 public:
-	void EXPORT SloshTouch(CBaseEntity *pOther);
+	void EXPORT SloshTouch(CBaseEntity* pOther);
 };
 
 // Monster only clip brush
@@ -96,13 +96,13 @@ public:
 //
 // otherwise it will be invisible and not solid.  This can be used to keep
 // specific monsters out of certain areas
-class CFuncMonsterClip: public CFuncWall
+class CFuncMonsterClip : public CFuncWall
 {
 public:
 	virtual void Spawn();
 
 	// Clear out func_wall's use function
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value) {}
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) {}
 };
 
 #define SF_BRUSH_ROTATE_START_ON        BIT(0)
@@ -119,17 +119,17 @@ public:
 const int MAX_FANPITCH = 100;
 const int MIN_FANPITCH = 30;
 
-class CFuncRotating: public CBaseEntity
+class CFuncRotating : public CBaseEntity
 {
 public:
 	// basic functions
 	virtual void Spawn();
 	virtual void Precache();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
 	virtual int ObjectCaps() { return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_MUST_RESET; }
-	virtual void Blocked(CBaseEntity *pOther);
+	virtual void Blocked(CBaseEntity* pOther);
 
 #ifdef REGAMEDLL_FIXES
 	virtual void Restart();
@@ -138,8 +138,8 @@ public:
 public:
 	void EXPORT SpinUp();
 	void EXPORT SpinDown();
-	void EXPORT HurtTouch(CBaseEntity *pOther);
-	void EXPORT RotatingUse(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	void EXPORT HurtTouch(CBaseEntity* pOther);
+	void EXPORT RotatingUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 	void EXPORT Rotate();
 	void RampPitchVol(BOOL fUp);
 
@@ -163,24 +163,24 @@ public:
 #define SF_PENDULUM_PASSABLE    BIT(3)
 #define SF_PENDULUM_AUTO_RETURN BIT(4)
 
-class CPendulum: public CBaseEntity
+class CPendulum : public CBaseEntity
 {
 public:
 	virtual void Spawn();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
 	virtual int ObjectCaps() { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
-	virtual void Touch(CBaseEntity *pOther);
-	virtual void Blocked(CBaseEntity *pOther);
+	virtual void Touch(CBaseEntity* pOther);
+	virtual void Blocked(CBaseEntity* pOther);
 
 public:
 	void EXPORT Swing();
-	void EXPORT PendulumUse(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	void EXPORT PendulumUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 	void EXPORT Stop();
 
 	// this touch func makes the pendulum a rope
-	void EXPORT RopeTouch(CBaseEntity *pOther);
+	void EXPORT RopeTouch(CBaseEntity* pOther);
 
 public:
 	static TYPEDESCRIPTION m_SaveData[];
@@ -196,4 +196,4 @@ public:
 	Vector m_start;
 };
 
-Vector VecBModelOrigin(entvars_t *pevBModel);
+Vector VecBModelOrigin(entvars_t* pevBModel);

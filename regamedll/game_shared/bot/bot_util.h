@@ -43,9 +43,9 @@ enum PriorityType
 class IntervalTimer
 {
 public:
-	IntervalTimer()   { m_timestamp = -1.0f; }
-	void Reset()      { m_timestamp = gpGlobals->time; }
-	void Start()      { m_timestamp = gpGlobals->time; }
+	IntervalTimer() { m_timestamp = -1.0f; }
+	void Reset() { m_timestamp = gpGlobals->time; }
+	void Start() { m_timestamp = gpGlobals->time; }
 	void Invalidate() { m_timestamp = -1.0f; }
 
 	bool HasStarted() const { return (m_timestamp > 0.0f); }
@@ -78,7 +78,7 @@ private:
 };
 
 // Return true if the given entity is valid
-inline bool IsEntityValid(CBaseEntity *pEntity)
+inline bool IsEntityValid(CBaseEntity* pEntity)
 {
 	if (!pEntity)
 		return false;
@@ -98,7 +98,7 @@ inline bool IsEntityValid(CBaseEntity *pEntity)
 // Given two line segments: startA to endA, and startB to endB, return true if they intesect
 // and put the intersection point in "result".
 // Note that this computes the intersection of the 2D (x,y) projection of the line segments.
-inline bool IsIntersecting2D(const Vector &startA, const Vector &endA, const Vector &startB, const Vector &endB, Vector *result = nullptr)
+inline bool IsIntersecting2D(const Vector& startA, const Vector& endA, const Vector& startB, const Vector& endB, Vector* result = nullptr)
 {
 	float denom = (endA.x - startA.x) * (endB.y - startB.y) - (endA.y - startA.y) * (endB.x - startB.x);
 	if (denom == 0.0f)
@@ -141,11 +141,11 @@ inline bool IsIntersecting2D(const Vector &startA, const Vector &endA, const Vec
 // Iterate over all active players in the game, invoking functor on each.
 // If functor returns false, stop iteration and return false.
 template <typename Functor>
-bool ForEachPlayer(Functor &func)
+bool ForEachPlayer(Functor& func)
 {
 	for (int i = 1; i <= gpGlobals->maxClients; i++)
 	{
-		CBasePlayer *pPlayer = UTIL_PlayerByIndex(i);
+		CBasePlayer* pPlayer = UTIL_PlayerByIndex(i);
 		if (!IsEntityValid(pPlayer))
 			continue;
 
@@ -165,33 +165,33 @@ int UTIL_HumansOnTeam(int teamID, bool isAlive = false);
 #define IGNORE_SPECTATORS true
 int UTIL_HumansInGame(bool ignoreSpectators = false);
 
-bool UTIL_IsNameTaken(const char *name, bool ignoreHumans = false);
+bool UTIL_IsNameTaken(const char* name, bool ignoreHumans = false);
 int UTIL_ClientsInGame();
 int UTIL_ActivePlayersInGame();
 int UTIL_BotsInGame();
 bool UTIL_KickBotFromTeam(TeamName kickTeam);
 bool UTIL_IsTeamAllBots(int team);
-CBasePlayer *UTIL_GetClosestPlayer(const Vector *pos, float *distance = nullptr);
-CBasePlayer *UTIL_GetClosestPlayer(const Vector *pos, int team, float *distance = nullptr);
-const char *UTIL_GetBotPrefix();
-void UTIL_ConstructBotNetName(char *name, int nameLength, const BotProfile *profile);
-bool UTIL_IsVisibleToTeam(const Vector &spot, int team, float maxRange = -1.0f);
-CBasePlayer *UTIL_GetLocalPlayer();
-Vector UTIL_ComputeOrigin(entvars_t *pevVars);
-Vector UTIL_ComputeOrigin(CBaseEntity *pEntity);
-Vector UTIL_ComputeOrigin(edict_t *pentEdict);
+CBasePlayer* UTIL_GetClosestPlayer(const Vector* pos, float* distance = nullptr);
+CBasePlayer* UTIL_GetClosestPlayer(const Vector* pos, int team, float* distance = nullptr);
+const char* UTIL_GetBotPrefix();
+void UTIL_ConstructBotNetName(char* name, int nameLength, const BotProfile* profile);
+bool UTIL_IsVisibleToTeam(const Vector& spot, int team, float maxRange = -1.0f);
+CBasePlayer* UTIL_GetLocalPlayer();
+Vector UTIL_ComputeOrigin(entvars_t* pevVars);
+Vector UTIL_ComputeOrigin(CBaseEntity* pEntity);
+Vector UTIL_ComputeOrigin(edict_t* pentEdict);
 void UTIL_DrawBeamFromEnt(int iIndex, Vector vecEnd, int iLifetime, byte bRed, byte bGreen, byte bBlue);
 void UTIL_DrawBeamPoints(Vector vecStart, Vector vecEnd, int iLifetime, byte bRed, byte bGreen, byte bBlue);
-void UTIL_DrawBox(struct Extent *extent, int lifetime, int red, int green, int blue);
+void UTIL_DrawBox(struct Extent* extent, int lifetime, int red, int green, int blue);
 
 // Echos text to the console, and prints it on the client's screen.  This is NOT tied to the developer cvar.
 // If you are adding debugging output in cstrike, use UTIL_DPrintf() (debug.h) instead.
-void CONSOLE_ECHO(const char *pszMsg, ...);
-void CONSOLE_ECHO_LOGGED(const char *pszMsg, ...);
+void CONSOLE_ECHO(const char* pszMsg, ...);
+void CONSOLE_ECHO_LOGGED(const char* pszMsg, ...);
 
 void BotPrecache();
 void InitBotTrig();
 float BotCOS(float angle);
 float BotSIN(float angle);
-bool IsGameEventAudible(enum GameEventType event, CBaseEntity *pEntity, CBaseEntity *pOther, float *range, PriorityType *priority, bool *isHostile);
-void HintMessageToAllPlayers(const char *message);
+bool IsGameEventAudible(enum GameEventType event, CBaseEntity* pEntity, CBaseEntity* pOther, float* range, PriorityType* priority, bool* isHostile);
+void HintMessageToAllPlayers(const char* message);

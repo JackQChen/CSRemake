@@ -1,18 +1,18 @@
 #include "precompiled.h"
 
-CCareerTaskManager *TheCareerTasks = nullptr;
+CCareerTaskManager* TheCareerTasks = nullptr;
 
-CCareerTask *CPreventDefuseTask::NewTask(const char *taskName, GameEventType event, const char *weaponName, int n, bool mustLive, bool crossRounds, int id, bool isComplete)
+CCareerTask* CPreventDefuseTask::NewTask(const char* taskName, GameEventType event, const char* weaponName, int n, bool mustLive, bool crossRounds, int id, bool isComplete)
 {
-	CPreventDefuseTask *pNewTask = new CPreventDefuseTask(taskName, event, weaponName, n, mustLive, crossRounds, id, isComplete);
+	CPreventDefuseTask* pNewTask = new CPreventDefuseTask(taskName, event, weaponName, n, mustLive, crossRounds, id, isComplete);
 
 	pNewTask->m_bombPlantedThisRound = false;
 	pNewTask->m_defuseStartedThisRound = false;
 
-	return reinterpret_cast<CCareerTask *>(pNewTask);
+	return reinterpret_cast<CCareerTask*>(pNewTask);
 }
 
-CPreventDefuseTask::CPreventDefuseTask(const char *taskName, GameEventType event, const char *weaponName, int n, bool mustLive, bool crossRounds, int id, bool isComplete) :
+CPreventDefuseTask::CPreventDefuseTask(const char* taskName, GameEventType event, const char* weaponName, int n, bool mustLive, bool crossRounds, int id, bool isComplete) :
 	CCareerTask(taskName, event, weaponName, n, mustLive, crossRounds, id, isComplete)
 {
 	m_bombPlantedThisRound = false;
@@ -27,7 +27,7 @@ void CPreventDefuseTask::Reset()
 	CCareerTask::Reset();
 }
 
-void CPreventDefuseTask::OnEvent(GameEventType event, CBasePlayer *pAttacker, CBasePlayer *pVictim)
+void CPreventDefuseTask::OnEvent(GameEventType event, CBasePlayer* pAttacker, CBasePlayer* pVictim)
 {
 	if (IsComplete())
 		return;
@@ -50,13 +50,13 @@ void CPreventDefuseTask::OnEvent(GameEventType event, CBasePlayer *pAttacker, CB
 	}
 }
 
-CCareerTask *CCareerTask::NewTask(const char *taskName, GameEventType event, const char *weaponName, int n, bool mustLive, bool crossRounds, int id, bool isComplete)
+CCareerTask* CCareerTask::NewTask(const char* taskName, GameEventType event, const char* weaponName, int n, bool mustLive, bool crossRounds, int id, bool isComplete)
 {
-	CCareerTask *pTask = new CCareerTask(taskName, event, weaponName, n, mustLive, crossRounds, id, isComplete);
+	CCareerTask* pTask = new CCareerTask(taskName, event, weaponName, n, mustLive, crossRounds, id, isComplete);
 	return pTask;
 }
 
-CCareerTask::CCareerTask(const char *taskName, GameEventType event, const char *weaponName, int n, bool mustLive, bool crossRounds, int id, bool isComplete)
+CCareerTask::CCareerTask(const char* taskName, GameEventType event, const char* weaponName, int n, bool mustLive, bool crossRounds, int id, bool isComplete)
 {
 	m_isComplete = isComplete;
 	m_event = event;
@@ -84,8 +84,8 @@ CCareerTask::CCareerTask(const char *taskName, GameEventType event, const char *
 	if (m_isComplete)
 	{
 		MESSAGE_BEGIN(MSG_ALL, gmsgCZCareer);
-			WRITE_STRING("TASKDONE");
-			WRITE_BYTE(m_id);
+		WRITE_STRING("TASKDONE");
+		WRITE_BYTE(m_id);
 		MESSAGE_END();
 	}
 }
@@ -96,29 +96,29 @@ void CCareerTask::Reset()
 	m_isComplete = false;
 
 	MESSAGE_BEGIN(MSG_ALL, gmsgCZCareer);
-		WRITE_STRING("TASKUNDONE");
-		WRITE_BYTE(m_id);
+	WRITE_STRING("TASKUNDONE");
+	WRITE_BYTE(m_id);
 	MESSAGE_END();
 
 	MESSAGE_BEGIN(MSG_ALL, gmsgCZCareer);
-		WRITE_STRING("TASKPART");
-		WRITE_BYTE(m_id);
-		WRITE_SHORT(m_eventsSeen);
+	WRITE_STRING("TASKPART");
+	WRITE_BYTE(m_id);
+	WRITE_SHORT(m_eventsSeen);
 	MESSAGE_END();
 }
 
 void CCareerTask::SendPartialNotification()
 {
 	MESSAGE_BEGIN(MSG_ALL, gmsgCZCareer);
-		WRITE_STRING("TASKPART");
-		WRITE_BYTE(m_id);
-		WRITE_SHORT(m_eventsSeen);
+	WRITE_STRING("TASKPART");
+	WRITE_BYTE(m_id);
+	WRITE_SHORT(m_eventsSeen);
 	MESSAGE_END();
 
 	UTIL_LogPrintf("Career Task Partial %d %d\n", m_id, m_eventsSeen);
 }
 
-void CCareerTask::OnWeaponKill(int weaponId, int weaponClassId, bool headshot, bool killerHasShield, CBasePlayer *pAttacker, CBasePlayer *pVictim)
+void CCareerTask::OnWeaponKill(int weaponId, int weaponClassId, bool headshot, bool killerHasShield, CBasePlayer* pAttacker, CBasePlayer* pVictim)
 {
 	if (m_isComplete || (m_event != EVENT_KILL && (m_event != EVENT_HEADSHOT || !headshot)))
 		return;
@@ -129,7 +129,7 @@ void CCareerTask::OnWeaponKill(int weaponId, int weaponClassId, bool headshot, b
 	if (m_rescuer)
 	{
 		int hostagesCount = 0;
-		CHostage *pHostage = nullptr;
+		CHostage* pHostage = nullptr;
 
 		while ((pHostage = UTIL_FindEntityByClassname(pHostage, "hostage_entity")))
 		{
@@ -167,7 +167,7 @@ void CCareerTask::OnWeaponKill(int weaponId, int weaponClassId, bool headshot, b
 	SendPartialNotification();
 }
 
-void CCareerTask::OnWeaponInjury(int weaponId, int weaponClassId, bool attackerHasShield, CBasePlayer *pAttacker)
+void CCareerTask::OnWeaponInjury(int weaponId, int weaponClassId, bool attackerHasShield, CBasePlayer* pAttacker)
 {
 	if (m_isComplete || m_event != EVENT_PLAYER_TOOK_DAMAGE)
 		return;
@@ -192,7 +192,7 @@ void CCareerTask::OnWeaponInjury(int weaponId, int weaponClassId, bool attackerH
 	SendPartialNotification();
 }
 
-void CCareerTask::OnEvent(GameEventType event, CBasePlayer *pVictim, CBasePlayer *pAttacker)
+void CCareerTask::OnEvent(GameEventType event, CBasePlayer* pVictim, CBasePlayer* pAttacker)
 {
 	if (m_isComplete)
 		return;
@@ -205,7 +205,7 @@ void CCareerTask::OnEvent(GameEventType event, CBasePlayer *pVictim, CBasePlayer
 		if (m_rescuer)
 		{
 			int hostagesCount = 0;
-			CHostage *pHostage = nullptr;
+			CHostage* pHostage = nullptr;
 
 			while ((pHostage = UTIL_FindEntityByClassname(pHostage, "hostage_entity")))
 			{
@@ -232,7 +232,7 @@ void CCareerTask::OnEvent(GameEventType event, CBasePlayer *pVictim, CBasePlayer
 				if (!Q_strcmp(m_name, "defendhostages"))
 				{
 					int hostagesCount = 0;
-					CHostage *pHostage = nullptr;
+					CHostage* pHostage = nullptr;
 
 					while ((pHostage = UTIL_FindEntityByClassname(pHostage, "hostage_entity")))
 					{
@@ -249,7 +249,7 @@ void CCareerTask::OnEvent(GameEventType event, CBasePlayer *pVictim, CBasePlayer
 				else if (!Q_strcmp(m_name, "hostagessurvive"))
 				{
 					int hostagesCount = 0;
-					CHostage *pHostage = nullptr;
+					CHostage* pHostage = nullptr;
 
 					while ((pHostage = UTIL_FindEntityByClassname(pHostage, "hostage_entity")))
 					{
@@ -285,15 +285,15 @@ void CCareerTask::OnEvent(GameEventType event, CBasePlayer *pVictim, CBasePlayer
 		}
 	}
 
-	CBasePlayer *pLocalPlayer = UTIL_GetLocalPlayer();
+	CBasePlayer* pLocalPlayer = UTIL_GetLocalPlayer();
 	if (event == m_event && !m_mustLive && m_eventsSeen >= m_eventsNeeded && IsTaskCompletableThisRound())
 	{
 		EMIT_SOUND(ENT(pLocalPlayer->pev), CHAN_VOICE, "events/task_complete.wav", VOL_NORM, ATTN_NORM);
 
 		m_isComplete = true;
 		MESSAGE_BEGIN(MSG_ALL, gmsgCZCareer);
-			WRITE_STRING("TASKDONE");
-			WRITE_BYTE(m_id);
+		WRITE_STRING("TASKDONE");
+		WRITE_BYTE(m_id);
 		MESSAGE_END();
 
 		if (TheTutor)
@@ -328,8 +328,8 @@ void CCareerTask::OnEvent(GameEventType event, CBasePlayer *pVictim, CBasePlayer
 
 				m_isComplete = true;
 				MESSAGE_BEGIN(MSG_ALL, gmsgCZCareer);
-					WRITE_STRING("TASKDONE");
-					WRITE_BYTE(m_id);
+				WRITE_STRING("TASKDONE");
+				WRITE_BYTE(m_id);
 				MESSAGE_END();
 
 				UTIL_LogPrintf("Career Task Done %d\n", m_id);
@@ -390,7 +390,7 @@ void CCareerTaskManager::Reset(bool deleteTasks)
 			task->Reset();
 	}
 
-	m_finishedTaskTime  = 0;
+	m_finishedTaskTime = 0;
 	m_finishedTaskRound = 0;
 	m_shouldLatchRoundEndMessage = false;
 
@@ -428,17 +428,17 @@ const TaskInfo CCareerTaskManager::m_taskInfo[] =
 	{ nullptr,              EVENT_INVALID,              &CCareerTask::NewTask        },
 };
 
-void CCareerTaskManager::AddTask(const char *taskName, const char *weaponName, int eventCount, bool mustLive, bool crossRounds, bool isComplete)
+void CCareerTaskManager::AddTask(const char* taskName, const char* weaponName, int eventCount, bool mustLive, bool crossRounds, bool isComplete)
 {
 	m_nextId++;
 
-	for (auto &taskInfo : m_taskInfo)
+	for (auto& taskInfo : m_taskInfo)
 	{
 		if (taskInfo.taskName)
 		{
 			if (!Q_stricmp(taskInfo.taskName, taskName))
 			{
-				CCareerTask *newTask = taskInfo.factory
+				CCareerTask* newTask = taskInfo.factory
 				(
 					taskInfo.taskName,
 					taskInfo.event,
@@ -468,12 +468,12 @@ void CCareerTaskManager::AddTask(const char *taskName, const char *weaponName, i
 	}
 
 	MESSAGE_BEGIN(MSG_ALL, gmsgCZCareer);
-		WRITE_STRING("TASKDONE");
-		WRITE_BYTE(m_nextId);
+	WRITE_STRING("TASKDONE");
+	WRITE_BYTE(m_nextId);
 	MESSAGE_END();
 }
 
-void CCareerTaskManager::HandleEvent(GameEventType event, CBasePlayer *pAttacker, CBasePlayer *pVictim)
+void CCareerTaskManager::HandleEvent(GameEventType event, CBasePlayer* pAttacker, CBasePlayer* pVictim)
 {
 	if (event == EVENT_ROUND_START)
 	{
@@ -492,14 +492,14 @@ void CCareerTaskManager::HandleEvent(GameEventType event, CBasePlayer *pAttacker
 	}
 }
 
-void CCareerTaskManager::HandleWeaponKill(int weaponId, int weaponClassId, bool headshot, bool killerHasShield, CBasePlayer *pAttacker, CBasePlayer *pVictim)
+void CCareerTaskManager::HandleWeaponKill(int weaponId, int weaponClassId, bool headshot, bool killerHasShield, CBasePlayer* pAttacker, CBasePlayer* pVictim)
 {
 	for (auto task : m_tasks) {
 		task->OnWeaponKill(weaponId, weaponClassId, headshot, killerHasShield, pAttacker, pVictim);
 	}
 }
 
-void CCareerTaskManager::HandleEnemyKill(bool wasBlind, const char *weaponName, bool headshot, bool killerHasShield, CBasePlayer *pAttacker, CBasePlayer *pVictim)
+void CCareerTaskManager::HandleEnemyKill(bool wasBlind, const char* weaponName, bool headshot, bool killerHasShield, CBasePlayer* pAttacker, CBasePlayer* pVictim)
 {
 	HandleWeaponKill(AliasToWeaponID(weaponName), AliasToWeaponClass(weaponName), headshot, killerHasShield, pAttacker, pVictim);
 	HandleEvent(EVENT_KILL, pAttacker, pVictim);
@@ -514,20 +514,20 @@ void CCareerTaskManager::HandleEnemyKill(bool wasBlind, const char *weaponName, 
 	}
 }
 
-void CCareerTaskManager::HandleWeaponInjury(int weaponId, int weaponClassId, bool attackerHasShield, CBasePlayer *pAttacker)
+void CCareerTaskManager::HandleWeaponInjury(int weaponId, int weaponClassId, bool attackerHasShield, CBasePlayer* pAttacker)
 {
 	for (auto task : m_tasks) {
 		task->OnWeaponInjury(weaponId, weaponClassId, attackerHasShield, pAttacker);
 	}
 }
 
-void CCareerTaskManager::HandleEnemyInjury(const char *weaponName, bool attackerHasShield, CBasePlayer *pAttacker)
+void CCareerTaskManager::HandleEnemyInjury(const char* weaponName, bool attackerHasShield, CBasePlayer* pAttacker)
 {
 	HandleWeaponInjury(AliasToWeaponID(weaponName), AliasToWeaponClass(weaponName), attackerHasShield, pAttacker);
 	HandleEvent(EVENT_PLAYER_TOOK_DAMAGE);
 }
 
-void CCareerTaskManager::HandleDeath(int team, CBasePlayer *pAttacker)
+void CCareerTaskManager::HandleDeath(int team, CBasePlayer* pAttacker)
 {
 	int enemyTeam = (Q_strcmp(humans_join_team.string, "CT") != 0) ? CT : TERRORIST;
 	int numEnemies = 0;
@@ -537,7 +537,7 @@ void CCareerTaskManager::HandleDeath(int team, CBasePlayer *pAttacker)
 
 	for (int i = 1; i <= gpGlobals->maxClients; i++)
 	{
-		CBasePlayer *pPlayer = UTIL_PlayerByIndex(i);
+		CBasePlayer* pPlayer = UTIL_PlayerByIndex(i);
 		if (pPlayer && pPlayer->m_iTeam == enemyTeam && pPlayer->IsAlive())
 			numEnemies++;
 	}

@@ -33,7 +33,7 @@ const float updateTimesliceDuration = 0.5f;
 int _navAreaCount = 0;
 int _currentIndex = 0;
 
-inline CNavNode *LadderEndSearch(CBaseEntity *pEntity, const Vector *pos, NavDirType mountDir)
+inline CNavNode* LadderEndSearch(CBaseEntity* pEntity, const Vector* pos, NavDirType mountDir)
 {
 	Vector center = *pos;
 	AddDirectionVector(&center, mountDir, HalfHumanWidth);
@@ -66,7 +66,7 @@ inline CNavNode *LadderEndSearch(CBaseEntity *pEntity, const Vector *pos, NavDir
 #ifdef REGAMEDLL_FIXES
 			|| result.fStartSolid
 #endif
-		)
+			)
 			continue;
 
 		// if no node exists here, create one and continue the search
@@ -79,10 +79,10 @@ inline CNavNode *LadderEndSearch(CBaseEntity *pEntity, const Vector *pos, NavDir
 	return nullptr;
 }
 
-CNavNode *CCSBot::AddNode(const Vector *destPos, const Vector *normal, NavDirType dir, CNavNode *source)
+CNavNode* CCSBot::AddNode(const Vector* destPos, const Vector* normal, NavDirType dir, CNavNode* source)
 {
 	// check if a node exists at this location
-	CNavNode *node = const_cast<CNavNode *>(CNavNode::GetNode(destPos));
+	CNavNode* node = const_cast<CNavNode*>(CNavNode::GetNode(destPos));
 
 	// if no node exists, create one
 	bool useNew = false;
@@ -143,27 +143,27 @@ CNavNode *CCSBot::AddNode(const Vector *destPos, const Vector *normal, NavDirTyp
 	return node;
 }
 
-void drawProgressMeter(float progress, char *title)
+void drawProgressMeter(float progress, char* title)
 {
 	MESSAGE_BEGIN(MSG_ALL, gmsgBotProgress);
-		WRITE_BYTE(BOT_PROGGRESS_DRAW);
-		WRITE_BYTE(int(progress * 100.0f));
-		WRITE_STRING(title);
+	WRITE_BYTE(BOT_PROGGRESS_DRAW);
+	WRITE_BYTE(int(progress * 100.0f));
+	WRITE_STRING(title);
 	MESSAGE_END();
 }
 
-void startProgressMeter(const char *title)
+void startProgressMeter(const char* title)
 {
 	MESSAGE_BEGIN(MSG_ALL, gmsgBotProgress);
-		WRITE_BYTE(BOT_PROGGRESS_START);
-		WRITE_STRING(title);
+	WRITE_BYTE(BOT_PROGGRESS_START);
+	WRITE_STRING(title);
 	MESSAGE_END();
 }
 
 void hideProgressMeter()
 {
 	MESSAGE_BEGIN(MSG_ALL, gmsgBotProgress);
-		WRITE_BYTE(BOT_PROGGRESS_HIDE);
+	WRITE_BYTE(BOT_PROGGRESS_HIDE);
 	MESSAGE_END();
 }
 
@@ -348,7 +348,7 @@ bool CCSBot::LearnStep()
 				}
 #ifdef REGAMEDLL_FIXES
 				// if we're incrementally generating, don't overlap existing nav areas
-				CNavArea *overlap = TheNavAreaGrid.GetNavArea(&to, HumanHeight);
+				CNavArea* overlap = TheNavAreaGrid.GetNavArea(&to, HumanHeight);
 				if (overlap)
 				{
 					walkable = false;
@@ -358,7 +358,7 @@ bool CCSBot::LearnStep()
 				{
 					// we can move here
 					// create a new navigation node, and update current node pointer
-					CNavNode *newNode = AddNode(&to, &toNormal, m_generationDir, m_currentNode);
+					CNavNode* newNode = AddNode(&to, &toNormal, m_generationDir, m_currentNode);
 				}
 
 				return true;
@@ -404,7 +404,7 @@ bool CCSBot::AnalyzeAlphaStep()
 	if (m_analyzeIter == TheNavAreaList.end())
 		return false;
 
-	CNavArea *area = (*m_analyzeIter);
+	CNavArea* area = (*m_analyzeIter);
 	area->ComputeHidingSpots();
 	area->ComputeApproachAreas();
 	m_analyzeIter++;
@@ -445,7 +445,7 @@ bool CCSBot::AnalyzeBetaStep()
 	if (m_analyzeIter == TheNavAreaList.end())
 		return false;
 
-	CNavArea *area = (*m_analyzeIter);
+	CNavArea* area = (*m_analyzeIter);
 	area->ComputeSpotEncounters();
 	area->ComputeSniperSpots();
 	m_analyzeIter++;

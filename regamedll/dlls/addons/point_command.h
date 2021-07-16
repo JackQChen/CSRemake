@@ -24,19 +24,19 @@ const int MAX_POINT_CMDS = 16; // maximum number of commands a single point_[ser
 
 #define SF_POINT_CMD_NORESET BIT(0) // it is not allowed to be resetting to initial value on remove an entity or change level
 
-class CPointBaseCommand: public CPointEntity {
+class CPointBaseCommand : public CPointEntity {
 public:
 	virtual void OnDestroy();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value) = 0;
-	virtual void Execute(edict_t *pEdict, const char *pszFmt, ...) = 0;
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) = 0;
+	virtual void Execute(edict_t* pEdict, const char* pszFmt, ...) = 0;
 
 protected:
 
 	template <size_t SIZE>
 	struct command_t
 	{
-		command_t(const char *_name, const char *_value = nullptr)
+		command_t(const char* _name, const char* _value = nullptr)
 		{
 			value[0] = '\0';
 			valueInitial[0] = '\0';
@@ -56,19 +56,19 @@ protected:
 };
 
 // It issues commands to the client console
-class CPointClientCommand: public CPointBaseCommand {
+class CPointClientCommand : public CPointBaseCommand {
 public:
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 private:
-	void Execute(edict_t *pEdict, const char *pszFmt, ...);
+	void Execute(edict_t* pEdict, const char* pszFmt, ...);
 };
 
 // It issues commands to the server console
-class CPointServerCommand: public CPointBaseCommand {
+class CPointServerCommand : public CPointBaseCommand {
 public:
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 private:
-	void Execute(edict_t *pEdict, const char *pszFmt, ...);
+	void Execute(edict_t* pEdict, const char* pszFmt, ...);
 };

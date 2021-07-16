@@ -163,7 +163,7 @@ bool CCSBot::DiscontinuityJump(float ground, bool onlyJumpDown, bool mustJump)
 }
 
 // Find "simple" ground height, treating current nav area as part of the floor
-bool CCSBot::GetSimpleGroundHeightWithFloor(const Vector *pos, float *height, Vector *normal)
+bool CCSBot::GetSimpleGroundHeightWithFloor(const Vector* pos, float* height, Vector* normal)
 {
 	if (GetSimpleGroundHeight(pos, height, normal))
 	{
@@ -189,7 +189,7 @@ Place CCSBot::GetPlace() const
 	return UNDEFINED_PLACE;
 }
 
-void CCSBot::MoveTowardsPosition(const Vector *pos)
+void CCSBot::MoveTowardsPosition(const Vector* pos)
 {
 	// Jump up on ledges
 	// Because we may not be able to get to our goal position and enter the next
@@ -283,7 +283,7 @@ void CCSBot::MoveTowardsPosition(const Vector *pos)
 }
 
 // Move away from position, independant of view angle
-NOXREF void CCSBot::MoveAwayFromPosition(const Vector *pos)
+NOXREF void CCSBot::MoveAwayFromPosition(const Vector* pos)
 {
 	// compute our current forward and lateral vectors
 	float angle = pev->v_angle[YAW];
@@ -312,7 +312,7 @@ NOXREF void CCSBot::MoveAwayFromPosition(const Vector *pos)
 }
 
 // Strafe (sidestep) away from position, independant of view angle
-void CCSBot::StrafeAwayFromPosition(const Vector *pos)
+void CCSBot::StrafeAwayFromPosition(const Vector* pos)
 {
 	// compute our current forward and lateral vectors
 	float angle = pev->v_angle[YAW];
@@ -406,7 +406,7 @@ void CCSBot::ComputeApproachPoints()
 	float halfWidth;
 	for (int i = 0; i < m_lastKnownArea->GetApproachInfoCount() && m_approachPointCount < MAX_APPROACH_POINTS; i++)
 	{
-		const CNavArea::ApproachInfo *info = m_lastKnownArea->GetApproachInfo(i);
+		const CNavArea::ApproachInfo* info = m_lastKnownArea->GetApproachInfo(i);
 		if (!info->here.area || !info->prev.area)
 		{
 			continue;
@@ -442,7 +442,7 @@ void CCSBot::DrawApproachPoints()
 }
 
 // Find the approach point that is nearest to our current path, ahead of us
-NOXREF bool CCSBot::FindApproachPointNearestPath(Vector *pos)
+NOXREF bool CCSBot::FindApproachPointNearestPath(Vector* pos)
 {
 	if (!HasPath())
 		return false;

@@ -29,15 +29,15 @@
 #pragma once
 
 #define SF_PLAT_TOGGLE BIT(0) // The lift is no more automatically called from top and activated by stepping on it.
-                              // It required trigger to do so.
+// It required trigger to do so.
 
-class CBasePlatTrain: public CBaseToggle
+class CBasePlatTrain : public CBaseToggle
 {
 public:
 	virtual void Precache();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
 	virtual int ObjectCaps() { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
 	// This is done to fix spawn flag collisions between this class and a derived class
@@ -51,12 +51,12 @@ public:
 	float m_volume;
 };
 
-class CFuncPlat: public CBasePlatTrain
+class CFuncPlat : public CBasePlatTrain
 {
 public:
 	virtual void Spawn();
 	virtual void Precache();
-	virtual void Blocked(CBaseEntity *pOther);
+	virtual void Blocked(CBaseEntity* pOther);
 	virtual void GoUp();
 	virtual void GoDown();
 	virtual void HitTop();
@@ -64,30 +64,30 @@ public:
 
 public:
 	void Setup();
-	void EXPORT PlatUse(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	void EXPORT PlatUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 	void EXPORT CallGoDown();
 	void EXPORT CallHitTop();
 	void EXPORT CallHitBottom();
 };
 
-class CPlatTrigger: public CBaseEntity
+class CPlatTrigger : public CBaseEntity
 {
 public:
 	virtual int ObjectCaps() { return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_DONT_SAVE; }
-	virtual void Touch(CBaseEntity *pOther);
+	virtual void Touch(CBaseEntity* pOther);
 
 public:
-	void SpawnInsideTrigger(CFuncPlat *pPlatform);
+	void SpawnInsideTrigger(CFuncPlat* pPlatform);
 
-	CFuncPlat *m_pPlatform;
+	CFuncPlat* m_pPlatform;
 };
 
-class CFuncPlatRot: public CFuncPlat
+class CFuncPlatRot : public CFuncPlat
 {
 public:
 	virtual void Spawn();
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
 
 	virtual void GoUp();
 	virtual void GoDown();
@@ -96,7 +96,7 @@ public:
 
 public:
 	void SetupRotation();
-	void RotMove(Vector &destAngle, float time);
+	void RotMove(Vector& destAngle, float time);
 
 public:
 	static TYPEDESCRIPTION m_SaveData[];
@@ -109,19 +109,19 @@ public:
 #define SF_TRAIN_START_ON       BIT(2) // Train is initially moving
 #define SF_TRAIN_PASSABLE       BIT(3) // Train is not solid -- used to make water trains
 
-class CFuncTrain: public CBasePlatTrain
+class CFuncTrain : public CBasePlatTrain
 {
 public:
 	virtual void Spawn();
 	virtual void Precache();
 	virtual void Restart();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
 	virtual void Activate();
 	virtual void OverrideReset();
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
-	virtual void Blocked(CBaseEntity *pOther);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
+	virtual void Blocked(CBaseEntity* pOther);
 
 public:
 	void EXPORT Wait();
@@ -131,14 +131,14 @@ public:
 	static TYPEDESCRIPTION m_SaveData[];
 
 	Vector m_vStartPosition;
-	entvars_t *m_pevFirstTarget;
-	entvars_t *m_pevCurrentTarget;
+	entvars_t* m_pevFirstTarget;
+	entvars_t* m_pevCurrentTarget;
 	int m_sounds;
 	BOOL m_activated;
 };
 
 // This class defines the volume of space that the player must stand in to control the train
-class CFuncTrainControls: public CBaseEntity
+class CFuncTrainControls : public CBaseEntity
 {
 public:
 	virtual void Spawn();
@@ -159,17 +159,17 @@ enum TRAIN_CODE { TRAIN_SAFE, TRAIN_BLOCKING, TRAIN_FOLLOWING };
 // This entity is a rotating/moving platform that will carry a train to a new track.
 // It must be larger in X-Y planar area than the train, since it must contain the
 // train within these dimensions in order to operate when the train is near it.
-class CFuncTrackChange: public CFuncPlatRot
+class CFuncTrackChange : public CFuncPlatRot
 {
 public:
 	virtual void Spawn();
 	virtual void Precache();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
 	virtual void OverrideReset();
-	virtual void Touch(CBaseEntity *pOther);
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void Touch(CBaseEntity* pOther);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 	virtual BOOL IsTogglePlat() { return TRUE; };
 
 	virtual void EXPORT GoUp();
@@ -181,8 +181,8 @@ public:
 
 public:
 	void EXPORT Find();
-	TRAIN_CODE EvaluateTrain(CPathTrack *pcurrent);
-	void UpdateTrain(Vector &dest);
+	TRAIN_CODE EvaluateTrain(CPathTrack* pcurrent);
+	void UpdateTrain(Vector& dest);
 
 	void DisableUse() { m_use = 0; }
 	void EnableUse() { m_use = 1; }
@@ -192,9 +192,9 @@ public:
 public:
 	static TYPEDESCRIPTION m_SaveData[];
 
-	CPathTrack *m_trackTop;
-	CPathTrack *m_trackBottom;
-	CFuncTrackTrain *m_train;
+	CPathTrack* m_trackTop;
+	CPathTrack* m_trackBottom;
+	CFuncTrackTrain* m_train;
 
 	int m_trackTopName;
 	int m_trackBottomName;
@@ -205,10 +205,10 @@ public:
 	int m_use;
 };
 
-class CFuncTrackAuto: public CFuncTrackChange
+class CFuncTrackAuto : public CFuncTrackChange
 {
 public:
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 	virtual void UpdateAutoTargets(int toggleState);
 };
 
@@ -218,19 +218,19 @@ public:
 
 #define SF_GUNTARGET_START_ON BIT(0)
 
-class CGunTarget: public CBaseMonster
+class CGunTarget : public CBaseMonster
 {
 public:
 	virtual void Spawn();
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
 	virtual int ObjectCaps() { return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
 	virtual void Activate();
 	virtual int Classify() { return CLASS_MACHINE; }
-	virtual BOOL TakeDamage(entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType);
+	virtual BOOL TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType);
 	virtual int BloodColor() { return DONT_BLEED; }
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
-	virtual Vector BodyTarget(const Vector &posSrc) { return pev->origin; }
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
+	virtual Vector BodyTarget(const Vector& posSrc) { return pev->origin; }
 
 public:
 	void EXPORT Next();

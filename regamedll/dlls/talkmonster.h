@@ -28,7 +28,7 @@
 
 #pragma once
 
-class CTalkMonster: public CBaseMonster
+class CTalkMonster : public CBaseMonster
 {
 public:
 	static float g_talkWaitTime;

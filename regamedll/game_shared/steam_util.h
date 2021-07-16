@@ -31,23 +31,23 @@
 class SteamFile
 {
 public:
-	SteamFile(const char *filename);
+	SteamFile(const char* filename);
 	~SteamFile();
 
 	bool IsValid() const { return (m_fileData) ? true : false; }
-	bool Read(void *data, int length);
+	bool Read(void* data, int length);
 
 private:
-	byte *m_fileData;
+	byte* m_fileData;
 	int m_fileDataLength;
 
-	byte *m_cursor;
+	byte* m_cursor;
 	int m_bytesLeft;
 };
 
-inline SteamFile::SteamFile(const char *filename)
+inline SteamFile::SteamFile(const char* filename)
 {
-	m_fileData = (byte *)LOAD_FILE_FOR_ME(const_cast<char *>(filename), &m_fileDataLength);
+	m_fileData = (byte*)LOAD_FILE_FOR_ME(const_cast<char*>(filename), &m_fileDataLength);
 	m_cursor = m_fileData;
 	m_bytesLeft = m_fileDataLength;
 }
@@ -61,12 +61,12 @@ inline SteamFile::~SteamFile()
 	}
 }
 
-inline bool SteamFile::Read(void *data, int length)
+inline bool SteamFile::Read(void* data, int length)
 {
 	if (length > m_bytesLeft || !m_cursor || m_bytesLeft <= 0)
 		return false;
 
-	byte *readCursor = static_cast<byte *>(data);
+	byte* readCursor = static_cast<byte*>(data);
 	for (int i = 0; i < length; i++)
 	{
 		*readCursor++ = *m_cursor++;

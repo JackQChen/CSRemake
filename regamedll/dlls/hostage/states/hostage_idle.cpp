@@ -28,14 +28,14 @@
 
 #include "precompiled.h"
 
-void HostageIdleState::OnEnter(CHostageImprov *improv)
+void HostageIdleState::OnEnter(CHostageImprov* improv)
 {
 	m_moveState = MoveDone;
 	m_fleeTimer.Invalidate();
 	m_mustFlee = false;
 }
 
-void HostageIdleState::OnUpdate(CHostageImprov *improv)
+void HostageIdleState::OnUpdate(CHostageImprov* improv)
 {
 	if (!UTIL_ActivePlayersInGame())
 		return;
@@ -59,7 +59,7 @@ void HostageIdleState::OnUpdate(CHostageImprov *improv)
 			{
 				m_mustFlee = false;
 
-				const Vector *spot = FindNearbyRetreatSpot(nullptr, &improv->GetFeet(), improv->GetLastKnownArea(), 500.0, TERRORIST, false);
+				const Vector* spot = FindNearbyRetreatSpot(nullptr, &improv->GetFeet(), improv->GetLastKnownArea(), 500.0, TERRORIST, false);
 				if (spot)
 				{
 					improv->MoveTo(*spot);
@@ -107,8 +107,8 @@ void HostageIdleState::OnUpdate(CHostageImprov *improv)
 		return;
 	}
 
-	CBasePlayer *pRescuer = improv->GetClosestVisiblePlayer(CT);
-	CBasePlayer *pCaptor = improv->GetClosestVisiblePlayer(TERRORIST);
+	CBasePlayer* pRescuer = improv->GetClosestVisiblePlayer(CT);
+	CBasePlayer* pCaptor = improv->GetClosestVisiblePlayer(TERRORIST);
 
 	if (pRescuer)
 	{
@@ -163,7 +163,7 @@ void HostageIdleState::OnUpdate(CHostageImprov *improv)
 
 		if (m_waveTimer.IsElapsed())
 		{
-			CHostage *hostage = improv->GetEntity();
+			CHostage* hostage = improv->GetEntity();
 
 			const float waveRange = 250.0f;
 			if ((pRescuer->pev->origin - hostage->pev->origin).IsLengthGreaterThan(waveRange))
@@ -255,13 +255,13 @@ void HostageIdleState::OnUpdate(CHostageImprov *improv)
 	}
 }
 
-void HostageIdleState::OnExit(CHostageImprov *improv)
+void HostageIdleState::OnExit(CHostageImprov* improv)
 {
 	improv->StandUp();
 	improv->ClearFaceTo();
 }
 
-void HostageIdleState::UpdateStationaryAnimation(CHostageImprov *improv)
+void HostageIdleState::UpdateStationaryAnimation(CHostageImprov* improv)
 {
 	if (improv->IsScared())
 	{

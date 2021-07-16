@@ -40,7 +40,7 @@ void CP228::Precache()
 	m_usFireP228 = PRECACHE_EVENT(1, "events/p228.sc");
 }
 
-int CP228::GetItemInfo(ItemInfo *p)
+int CP228::GetItemInfo(ItemInfo* p)
 {
 	p->pszName = STRING(pev->classname);
 	p->pszAmmo1 = "357SIG";
@@ -165,7 +165,7 @@ void CP228::P228Fire(float flSpread, float flCycleTime, BOOL fUseSemi)
 	flag = 0;
 #endif
 
-	PLAYBACK_EVENT_FULL(flag, m_pPlayer->edict(), m_usFireP228, 0, (float *)&g_vecZero, (float *)&g_vecZero, vecDir.x, vecDir.y,
+	PLAYBACK_EVENT_FULL(flag, m_pPlayer->edict(), m_usFireP228, 0, (float*)&g_vecZero, (float*)&g_vecZero, vecDir.x, vecDir.y,
 		int(m_pPlayer->pev->punchangle.x * 100), int(m_pPlayer->pev->punchangle.y * 100), m_iClip == 0, FALSE);
 
 	m_flNextPrimaryAttack = m_flNextSecondaryAttack = GetNextAttackDelay(flCycleTime);

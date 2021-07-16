@@ -64,7 +64,7 @@ void CTriggerRandom::Spawn()
 	}
 }
 
-void CTriggerRandom::KeyValue(KeyValueData *pkvd)
+void CTriggerRandom::KeyValue(KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "target_count"))
 	{
@@ -103,7 +103,7 @@ void CTriggerRandom::KeyValue(KeyValueData *pkvd)
 	{
 		if (FStrnEq(pkvd->szKeyName, "target", sizeof("target") - 1))
 		{
-			char *pszTargetName = nullptr;
+			char* pszTargetName = nullptr;
 			int iTargetsCount = strtoul(&pkvd->szKeyName[sizeof("target") - 1], &pszTargetName, 10);
 			if (iTargetsCount < MAX_TR_TARGETS && pszTargetName && pszTargetName[0] == '\0')
 			{
@@ -117,7 +117,7 @@ void CTriggerRandom::KeyValue(KeyValueData *pkvd)
 	}
 }
 
-void CTriggerRandom::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void CTriggerRandom::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	if (pev->spawnflags & SF_RANDOM_TIMED)
 	{
@@ -159,7 +159,7 @@ void CTriggerRandom::InitUnique()
 	Q_memset(m_bActiveTargets, 0, MAX_TR_TARGETS);
 }
 
-void CTriggerRandom::Fire(CBaseEntity *pActivator)
+void CTriggerRandom::Fire(CBaseEntity* pActivator)
 {
 	string_t iszSelectTarget = iStringNull;
 	if (pev->spawnflags & SF_RANDOM_UNIQUE)

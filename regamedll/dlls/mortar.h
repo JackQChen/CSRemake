@@ -28,20 +28,20 @@
 
 #pragma once
 
-class CFuncMortarField: public CBaseToggle
+class CFuncMortarField : public CBaseToggle
 {
 public:
 	virtual void Spawn();
 	virtual void Precache();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
 
 	// Bmodels don't go across transitions
 	virtual int ObjectCaps() { return CBaseToggle::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
 
 public:
-	void EXPORT FieldUse(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	void EXPORT FieldUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 public:
 	static TYPEDESCRIPTION m_SaveData[];
@@ -54,7 +54,7 @@ public:
 	int m_fControl;
 };
 
-class CMortar: public CGrenade
+class CMortar : public CGrenade
 {
 public:
 	virtual void Spawn();

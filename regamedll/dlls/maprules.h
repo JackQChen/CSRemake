@@ -28,13 +28,13 @@
 
 #pragma once
 
-class CRuleEntity: public CBaseEntity
+class CRuleEntity : public CBaseEntity
 {
 public:
 	virtual void Spawn();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
 
 public:
 	static TYPEDESCRIPTION m_SaveData[];
@@ -42,14 +42,14 @@ public:
 	void SetMaster(string_t iszMaster) { m_iszMaster = iszMaster; }
 
 protected:
-	bool CanFireForActivator(CBaseEntity *pActivator);
+	bool CanFireForActivator(CBaseEntity* pActivator);
 
 private:
 	string_t m_iszMaster;
 };
 
 // Base class for all rule "point" entities (not brushes)
-class CRulePointEntity: public CRuleEntity
+class CRulePointEntity : public CRuleEntity
 {
 public:
 	virtual void Spawn();
@@ -57,7 +57,7 @@ public:
 
 // Base class for all rule "brush" entities (not brushes)
 // Default behavior is to set up like a trigger, invisible, but keep the model for volume testing
-class CRuleBrushEntity: public CRuleEntity
+class CRuleBrushEntity : public CRuleEntity
 {
 public:
 	virtual void Spawn();
@@ -68,12 +68,12 @@ public:
 
 // Award points to player / team
 // Points +/- total
-class CGameScore: public CRulePointEntity
+class CGameScore : public CRulePointEntity
 {
 public:
 	virtual void Spawn();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 public:
 	int Points() const { return int(pev->frags); }
@@ -84,28 +84,28 @@ public:
 };
 
 // Ends the game in Multiplayer
-class CGameEnd: public CRulePointEntity
+class CGameEnd : public CRulePointEntity
 {
 public:
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 };
 
 #define SF_ENVTEXT_ALLPLAYERS BIT(0) // Message will be displayed to all players instead of just the activator.
 
 // NON-Localized HUD Message (use env_message to display a titles.txt message)
-class CGameText: public CRulePointEntity
+class CGameText : public CRulePointEntity
 {
 public:
 	virtual void Spawn();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 public:
 	bool MessageToAll() const { return (pev->spawnflags & SF_ENVTEXT_ALLPLAYERS) == SF_ENVTEXT_ALLPLAYERS; }
-	void MessageSet(const char *pMessage) { pev->message = ALLOC_STRING(pMessage); }
-	const char *MessageGet() const { return STRING(pev->message); }
+	void MessageSet(const char* pMessage) { pev->message = ALLOC_STRING(pMessage); }
+	const char* MessageGet() const { return STRING(pev->message); }
 
 public:
 	static TYPEDESCRIPTION m_SaveData[];
@@ -121,21 +121,21 @@ private:
 // Only allows mastered entity to fire if the team matches my team
 //
 // team index (pulled from server team list "mp_teamlist"
-class CGameTeamMaster: public CRulePointEntity
+class CGameTeamMaster : public CRulePointEntity
 {
 public:
-	virtual void KeyValue(KeyValueData *pkvd);
+	virtual void KeyValue(KeyValueData* pkvd);
 	virtual int ObjectCaps() { return (CRulePointEntity::ObjectCaps() | FCAP_MASTER); }
-	virtual BOOL IsTriggered(CBaseEntity *pActivator);
-	virtual const char *TeamID();
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual BOOL IsTriggered(CBaseEntity* pActivator);
+	virtual const char* TeamID();
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 public:
 	bool RemoveOnFire() const { return (pev->spawnflags & SF_TEAMMASTER_FIREONCE) == SF_TEAMMASTER_FIREONCE; }
 	bool AnyTeam() const { return (pev->spawnflags & SF_TEAMMASTER_ANYTEAM) == SF_TEAMMASTER_ANYTEAM; }
 
 private:
-	bool TeamMatch(CBaseEntity *pActivator);
+	bool TeamMatch(CBaseEntity* pActivator);
 
 public:
 	int m_teamIndex;
@@ -146,10 +146,10 @@ public:
 #define SF_TEAMSET_CLEARTEAM BIT(1) // Clear team -- Sets the team to "NONE" instead of activator
 
 // Changes the team of the entity it targets to the activator's team
-class CGameTeamSet: public CRulePointEntity
+class CGameTeamSet : public CRulePointEntity
 {
 public:
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 public:
 	bool RemoveOnFire() const { return (pev->spawnflags & SF_TEAMSET_FIREONCE) == SF_TEAMSET_FIREONCE; }
@@ -160,13 +160,13 @@ public:
 
 // Players in the zone fire my target when I'm fired
 // Needs master?
-class CGamePlayerZone: public CRuleBrushEntity
+class CGamePlayerZone : public CRuleBrushEntity
 {
 public:
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 public:
 	static TYPEDESCRIPTION m_SaveData[];
@@ -184,10 +184,10 @@ private:
 #define SF_PKILL_FIREONCE BIT(0) // Remove entity after firing.
 
 // Damages the player who fires it
-class CGamePlayerHurt: public CRulePointEntity
+class CGamePlayerHurt : public CRulePointEntity
 {
 public:
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 public:
 	bool RemoveOnFire() const { return (pev->spawnflags & SF_PKILL_FIREONCE) == SF_PKILL_FIREONCE; }
@@ -198,11 +198,11 @@ public:
 #define SF_GAMECOUNT_OVER_LIMIT BIT(2) // Fire a target when initial value is higher than limit value.
 
 // Counts events and fires target
-class CGameCounter: public CRulePointEntity
+class CGameCounter : public CRulePointEntity
 {
 public:
 	virtual void Spawn();
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 public:
 	bool RemoveOnFire() const { return (pev->spawnflags & SF_GAMECOUNT_FIREONCE) == SF_GAMECOUNT_FIREONCE; }
@@ -233,10 +233,10 @@ private:
 #define SF_GAMECOUNTSET_FIREONCE BIT(0) // Remove entity after firing.
 
 // Sets the counter's value
-class CGameCounterSet: public CRulePointEntity
+class CGameCounterSet : public CRulePointEntity
 {
 public:
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 public:
 	bool RemoveOnFire() const { return (pev->spawnflags & SF_GAMECOUNTSET_FIREONCE) == SF_GAMECOUNTSET_FIREONCE; }
@@ -244,22 +244,22 @@ public:
 
 #define MAX_EQUIP 32
 #define SF_PLAYEREQUIP_USEONLY BIT(0) // If set, the game_player_equip entity will not equip respawning players,
-                                      // but only react to direct triggering, equipping its activator. This makes its master obsolete.
+// but only react to direct triggering, equipping its activator. This makes its master obsolete.
 #define SF_PLAYEREQUIP_REMOVEWEAPONS BIT(1) // Remove all weapons before give.
 
 // Sets the default player equipment
-class CGamePlayerEquip: public CRulePointEntity
+class CGamePlayerEquip : public CRulePointEntity
 {
 public:
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual void Touch(CBaseEntity *pOther);
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual void Touch(CBaseEntity* pOther);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 public:
 	bool UseOnly() const { return (pev->spawnflags & SF_PLAYEREQUIP_USEONLY) == SF_PLAYEREQUIP_USEONLY; }
 	bool RemoveWeapons() const { return (pev->spawnflags & SF_PLAYEREQUIP_REMOVEWEAPONS) == SF_PLAYEREQUIP_REMOVEWEAPONS; }
-	
-	bool CanEquipOverTouch(CBaseEntity *pOther)
+
+	bool CanEquipOverTouch(CBaseEntity* pOther)
 	{
 		if (!CanFireForActivator(pOther))
 			return false;
@@ -271,7 +271,7 @@ public:
 	}
 
 private:
-	void EquipPlayer(CBaseEntity *pPlayer);
+	void EquipPlayer(CBaseEntity* pPlayer);
 
 	string_t m_weaponNames[MAX_EQUIP];
 	int m_weaponCount[MAX_EQUIP];
@@ -282,15 +282,15 @@ private:
 #define SF_PTEAM_GIB      BIT(2) // Gib Player.
 
 // Changes the team of the player who fired it
-class CGamePlayerTeam: public CRulePointEntity
+class CGamePlayerTeam : public CRulePointEntity
 {
 public:
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 private:
 	bool RemoveOnFire() const { return (pev->spawnflags & SF_PTEAM_FIREONCE) == SF_PTEAM_FIREONCE; }
 	bool ShouldKillPlayer() const { return (pev->spawnflags & SF_PTEAM_KILL) == SF_PTEAM_KILL; }
 	bool ShouldGibPlayer() const { return (pev->spawnflags & SF_PTEAM_GIB) == SF_PTEAM_GIB; }
 
-	const char *TargetTeamName(const char *pszTargetName);
+	const char* TargetTeamName(const char* pszTargetName);
 };

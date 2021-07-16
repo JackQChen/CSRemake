@@ -44,7 +44,7 @@ ItemInfo itemInfo[] = {
 
 LINK_ENTITY_TO_CLASS(world_items, CWorldItem, CCSWorldItem)
 
-void CWorldItem::KeyValue(KeyValueData *pkvd)
+void CWorldItem::KeyValue(KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "type"))
 	{
@@ -59,7 +59,7 @@ void CWorldItem::KeyValue(KeyValueData *pkvd)
 
 void CWorldItem::Spawn()
 {
-	CBaseEntity *pEntity = nullptr;
+	CBaseEntity* pEntity = nullptr;
 
 	switch (m_iType)
 	{
@@ -106,12 +106,12 @@ void CItem::Spawn()
 	}
 }
 
-void CItem::ItemTouch(CBaseEntity *pOther)
+void CItem::ItemTouch(CBaseEntity* pOther)
 {
 	if (!pOther->IsPlayer() || pOther->pev->deadflag != DEAD_NO)
 		return;
 
-	CBasePlayer *pPlayer = static_cast<CBasePlayer *>(pOther);
+	CBasePlayer* pPlayer = static_cast<CBasePlayer*>(pOther);
 
 	if (!g_pGameRules->CanHaveItem(pPlayer, this))
 		return;
@@ -129,7 +129,7 @@ void CItem::ItemTouch(CBaseEntity *pOther)
 	}
 }
 
-CBaseEntity *CItem::Respawn()
+CBaseEntity* CItem::Respawn()
 {
 	SetTouch(nullptr);
 
@@ -171,7 +171,7 @@ void CItemSuit::Precache()
 	PRECACHE_SOUND("items/tr_kevlar.wav");
 }
 
-BOOL CItemSuit::MyTouch(CBasePlayer *pPlayer)
+BOOL CItemSuit::MyTouch(CBasePlayer* pPlayer)
 {
 	if (pPlayer->pev->weapons & (1 << WEAPON_SUIT))
 		return FALSE;
@@ -199,7 +199,7 @@ void CItemBattery::Precache()
 	PRECACHE_SOUND("items/gunpickup2.wav");
 }
 
-BOOL CItemBattery::MyTouch(CBasePlayer *pPlayer)
+BOOL CItemBattery::MyTouch(CBasePlayer* pPlayer)
 {
 #ifdef REGAMEDLL_ADD
 	if (pPlayer->HasRestrictItem(ITEM_BATTERY, ITEM_TYPE_TOUCHED))
@@ -225,7 +225,7 @@ BOOL CItemBattery::MyTouch(CBasePlayer *pPlayer)
 		EMIT_SOUND(pPlayer->edict(), CHAN_ITEM, "items/gunpickup2.wav", VOL_NORM, ATTN_NORM);
 
 		MESSAGE_BEGIN(MSG_ONE, gmsgItemPickup, nullptr, pPlayer->pev);
-			WRITE_STRING(STRING(pev->classname));
+		WRITE_STRING(STRING(pev->classname));
 		MESSAGE_END();
 
 		// Suit reports new power level
@@ -260,7 +260,7 @@ void CItemAntidote::Precache()
 	PRECACHE_MODEL("models/w_antidote.mdl");
 }
 
-BOOL CItemAntidote::MyTouch(CBasePlayer *pPlayer)
+BOOL CItemAntidote::MyTouch(CBasePlayer* pPlayer)
 {
 #ifdef REGAMEDLL_ADD
 	if (pPlayer->HasRestrictItem(ITEM_ANTIDOTE, ITEM_TYPE_TOUCHED))
@@ -306,7 +306,7 @@ void CItemSecurity::Precache()
 	PRECACHE_MODEL(pev->model);
 }
 
-BOOL CItemSecurity::MyTouch(CBasePlayer *pPlayer)
+BOOL CItemSecurity::MyTouch(CBasePlayer* pPlayer)
 {
 	pPlayer->m_rgItems[ITEM_ID_SECURITY] += 1;
 	return TRUE;
@@ -326,7 +326,7 @@ void CItemLongJump::Precache()
 	PRECACHE_MODEL("models/w_longjump.mdl");
 }
 
-BOOL CItemLongJump::MyTouch(CBasePlayer *pPlayer)
+BOOL CItemLongJump::MyTouch(CBasePlayer* pPlayer)
 {
 #ifdef REGAMEDLL_ADD
 	if (pPlayer->HasRestrictItem(ITEM_LONGJUMP, ITEM_TYPE_TOUCHED))
@@ -343,7 +343,7 @@ BOOL CItemLongJump::MyTouch(CBasePlayer *pPlayer)
 		SET_PHYSICS_KEY_VALUE(pPlayer->edict(), "slj", "1");
 
 		MESSAGE_BEGIN(MSG_ONE, gmsgItemPickup, nullptr, pPlayer->pev);
-			WRITE_STRING(STRING(pev->classname));
+		WRITE_STRING(STRING(pev->classname));
 		MESSAGE_END();
 
 		// Play the longjump sound UNDONE: Kelly? correct sound?
@@ -368,7 +368,7 @@ void CItemKevlar::Precache()
 	PRECACHE_MODEL("models/w_kevlar.mdl");
 }
 
-BOOL CItemKevlar::MyTouch(CBasePlayer *pPlayer)
+BOOL CItemKevlar::MyTouch(CBasePlayer* pPlayer)
 {
 #ifdef REGAMEDLL_ADD
 	if (!g_bItemCreatedByBuying && pPlayer->HasRestrictItem(ITEM_KEVLAR, ITEM_TYPE_TOUCHED))
@@ -389,14 +389,14 @@ BOOL CItemKevlar::MyTouch(CBasePlayer *pPlayer)
 	EMIT_SOUND(pPlayer->edict(), CHAN_ITEM, "items/ammopickup2.wav", VOL_NORM, ATTN_NORM);
 
 	MESSAGE_BEGIN(MSG_ONE, gmsgItemPickup, nullptr, pPlayer->pev);
-		WRITE_STRING(STRING(pev->classname));
+	WRITE_STRING(STRING(pev->classname));
 	MESSAGE_END();
 
 	MESSAGE_BEGIN(MSG_ONE, gmsgArmorType, nullptr, pPlayer->pev);
 #ifdef REGAMEDLL_FIXES
-		WRITE_BYTE(pPlayer->m_iKevlar == ARMOR_KEVLAR ? 0 : 1); // 0 = ARMOR_KEVLAR, 1 = ARMOR_VESTHELM
+	WRITE_BYTE(pPlayer->m_iKevlar == ARMOR_KEVLAR ? 0 : 1); // 0 = ARMOR_KEVLAR, 1 = ARMOR_VESTHELM
 #else
-		WRITE_BYTE(0);
+	WRITE_BYTE(0);
 #endif
 	MESSAGE_END();
 
@@ -422,7 +422,7 @@ void CItemAssaultSuit::Precache()
 	PRECACHE_MODEL("models/w_assault.mdl");
 }
 
-BOOL CItemAssaultSuit::MyTouch(CBasePlayer *pPlayer)
+BOOL CItemAssaultSuit::MyTouch(CBasePlayer* pPlayer)
 {
 #ifdef REGAMEDLL_ADD
 	if (!g_bItemCreatedByBuying && pPlayer->HasRestrictItem(ITEM_ASSAULT, ITEM_TYPE_TOUCHED))
@@ -442,11 +442,11 @@ BOOL CItemAssaultSuit::MyTouch(CBasePlayer *pPlayer)
 	EMIT_SOUND(pPlayer->edict(), CHAN_ITEM, "items/ammopickup2.wav", VOL_NORM, ATTN_NORM);
 
 	MESSAGE_BEGIN(MSG_ONE, gmsgItemPickup, nullptr, pPlayer->pev);
-		WRITE_STRING(STRING(pev->classname));
+	WRITE_STRING(STRING(pev->classname));
 	MESSAGE_END();
 
 	MESSAGE_BEGIN(MSG_ONE, gmsgArmorType, nullptr, pPlayer->pev);
-		WRITE_BYTE(1); // 0 = ARMOR_KEVLAR, 1 = ARMOR_VESTHELM
+	WRITE_BYTE(1); // 0 = ARMOR_KEVLAR, 1 = ARMOR_VESTHELM
 	MESSAGE_END();
 
 	if (TheTutor)
@@ -471,7 +471,7 @@ void CItemThighPack::Precache()
 	PRECACHE_MODEL("models/w_thighpack.mdl");
 }
 
-BOOL CItemThighPack::MyTouch(CBasePlayer *pPlayer)
+BOOL CItemThighPack::MyTouch(CBasePlayer* pPlayer)
 {
 	if (pPlayer->m_iTeam != CT || pPlayer->m_bHasDefuser)
 		return FALSE;
@@ -487,11 +487,11 @@ BOOL CItemThighPack::MyTouch(CBasePlayer *pPlayer)
 	ClientPrint(pPlayer->pev, HUD_PRINTCENTER, "#Got_defuser");
 
 	MESSAGE_BEGIN(MSG_ONE, gmsgStatusIcon, nullptr, pPlayer->pev);
-		WRITE_BYTE(STATUSICON_SHOW);
-		WRITE_STRING("defuser");
-		WRITE_BYTE(0);
-		WRITE_BYTE(160);
-		WRITE_BYTE(0);
+	WRITE_BYTE(STATUSICON_SHOW);
+	WRITE_STRING("defuser");
+	WRITE_BYTE(0);
+	WRITE_BYTE(160);
+	WRITE_BYTE(0);
 	MESSAGE_END();
 
 	pPlayer->SendItemStatus();
@@ -507,7 +507,7 @@ BOOL CItemThighPack::MyTouch(CBasePlayer *pPlayer)
 
 LINK_ENTITY_TO_CLASS(item_thighpack, CItemThighPack, CCSItemThighPack)
 
-ItemID GetItemIdByName(const char *pszName)
+ItemID GetItemIdByName(const char* pszName)
 {
 	for (auto& item : itemInfo) {
 		if (item.pszName[0] != '\0' && FStrEq(item.pszName, pszName))

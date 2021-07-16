@@ -30,17 +30,17 @@
 
 #include "utlmap.h"
 
-class CFrictionModifier: public CBaseEntity
+class CFrictionModifier : public CBaseEntity
 {
 public:
 	virtual void Spawn();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
 	virtual int ObjectCaps() { return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
 
 public:
-	void EXPORT ChangeFriction(CBaseEntity *pOther);
+	void EXPORT ChangeFriction(CBaseEntity* pOther);
 	static TYPEDESCRIPTION m_SaveData[];
 
 	float m_frictionFraction;
@@ -51,14 +51,14 @@ public:
 
 // This trigger will fire when the level spawns (or respawns if not fire once)
 // It will check a global state before firing. It supports delay and killtargets
-class CAutoTrigger: public CBaseDelay
+class CAutoTrigger : public CBaseDelay
 {
 public:
 	virtual void Spawn();
 	virtual void Precache();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
 	virtual int ObjectCaps() { return (CBaseDelay::ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
 	virtual void Think();
 
@@ -75,15 +75,15 @@ public:
 
 #define SF_RELAY_FIREONCE BIT(0)
 
-class CTriggerRelay: public CBaseDelay
+class CTriggerRelay : public CBaseDelay
 {
 public:
 	virtual void Spawn();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
 	virtual int ObjectCaps() { return (CBaseDelay::ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 public:
 	static TYPEDESCRIPTION m_SaveData[];
@@ -100,20 +100,20 @@ const int MAX_MM_TARGETS = 16; // maximum number of targets a single multi_manag
 // at specified times.
 // FLAG:		THREAD (create clones when triggered)
 // FLAG:		CLONE (this is a clone for a threaded execution)
-class CMultiManager: public CBaseToggle
+class CMultiManager : public CBaseToggle
 {
 public:
 	virtual void Spawn();
 	virtual void Restart();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
 	virtual int ObjectCaps() { return (CBaseToggle::ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
 	virtual BOOL HasTarget(string_t targetname);
 
 public:
 	void EXPORT ManagerThink();
-	void EXPORT ManagerUse(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	void EXPORT ManagerUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 private:
 	BOOL IsClone()
@@ -139,7 +139,7 @@ private:
 
 		return FALSE;
 	}
-	CMultiManager *Clone();
+	CMultiManager* Clone();
 
 public:
 	static TYPEDESCRIPTION m_SaveData[];
@@ -160,11 +160,11 @@ public:
 // Render parameters trigger
 // This entity will copy its render parameters (renderfx, rendermode, rendercolor, renderamt)
 // to its targets when triggered.
-class CRenderFxManager: public CBaseEntity
+class CRenderFxManager : public CBaseEntity
 {
 public:
 	virtual void Spawn();
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 #ifdef REGAMEDLL_FIXES
 	virtual void Restart();
@@ -188,21 +188,21 @@ public:
 #define SF_TRIGGER_PUSHABLES     BIT(2) // only pushables can fire this trigger
 #define SF_TRIGGER_NORESET       BIT(6) // it is not allowed to be resetting on a new round
 
-class CBaseTrigger: public CBaseToggle
+class CBaseTrigger : public CBaseToggle
 {
 public:
-	virtual void KeyValue(KeyValueData *pkvd);
+	virtual void KeyValue(KeyValueData* pkvd);
 	virtual int ObjectCaps() { return (CBaseToggle::ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
 
 public:
-	void EXPORT TeleportTouch(CBaseEntity *pOther);
-	void EXPORT MultiTouch(CBaseEntity *pOther);
-	void EXPORT HurtTouch(CBaseEntity *pOther);
-	void EXPORT CDAudioTouch(CBaseEntity *pOther);
-	void ActivateMultiTrigger(CBaseEntity *pActivator);
+	void EXPORT TeleportTouch(CBaseEntity* pOther);
+	void EXPORT MultiTouch(CBaseEntity* pOther);
+	void EXPORT HurtTouch(CBaseEntity* pOther);
+	void EXPORT CDAudioTouch(CBaseEntity* pOther);
+	void ActivateMultiTrigger(CBaseEntity* pActivator);
 	void EXPORT MultiWaitOver();
-	void EXPORT CounterUse(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
-	void EXPORT ToggleUse(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	void EXPORT CounterUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
+	void EXPORT ToggleUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 	void InitTrigger();
 };
 
@@ -214,7 +214,7 @@ public:
 
 // Hurts anything that touches it.
 // If the trigger has a targetname, firing it will toggle state
-class CTriggerHurt: public CBaseTrigger
+class CTriggerHurt : public CBaseTrigger
 {
 public:
 	virtual void Spawn();
@@ -226,37 +226,37 @@ public:
 	void EXPORT RadiationThink();
 };
 
-class CTriggerMonsterJump: public CBaseTrigger
+class CTriggerMonsterJump : public CBaseTrigger
 {
 public:
 	virtual void Spawn();
 	virtual void Think();
-	virtual void Touch(CBaseEntity *pOther);
+	virtual void Touch(CBaseEntity* pOther);
 };
 
 // Starts/stops cd audio tracks
-class CTriggerCDAudio: public CBaseTrigger
+class CTriggerCDAudio : public CBaseTrigger
 {
 public:
 	virtual void Spawn();
-	virtual void Touch(CBaseEntity *pOther);
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void Touch(CBaseEntity* pOther);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 public:
-	void PlayTrack(edict_t *pEdict);
+	void PlayTrack(edict_t* pEdict);
 };
 
 // This plays a CD track when fired or when the player enters it's radius
-class CTargetCDAudio: public CPointEntity
+class CTargetCDAudio : public CPointEntity
 {
 public:
 	virtual void Spawn();
-	virtual void KeyValue(KeyValueData *pkvd);
+	virtual void KeyValue(KeyValueData* pkvd);
 	virtual void Think();
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 public:
-	void Play(edict_t *pEdict);
+	void Play(edict_t* pEdict);
 };
 
 #define SF_TRIGGER_MULTIPLE_NOTOUCH BIT(0)
@@ -274,7 +274,7 @@ public:
 // 4)
 // NEW
 // if a trigger has a NETNAME, that NETNAME will become the TARGET of the triggered object.
-class CTriggerMultiple: public CBaseTrigger
+class CTriggerMultiple : public CBaseTrigger
 {
 public:
 	virtual void Spawn();
@@ -290,7 +290,7 @@ public:
 // 2)	beep beep
 // 3)	large switch
 // 4)
-class CTriggerOnce: public CTriggerMultiple
+class CTriggerOnce : public CTriggerMultiple
 {
 public:
 	virtual void Spawn();
@@ -306,21 +306,21 @@ public:
 // If nomessage is not set, it will print "1 more.. " etc when triggered and
 // "sequence complete" when finished. After the counter has been triggered "cTriggersLeft"
 // times (default 2), it will fire all of it's targets and remove itself.
-class CTriggerCounter: public CBaseTrigger
+class CTriggerCounter : public CBaseTrigger
 {
 public:
 	virtual void Spawn();
 };
 
 // Derive from point entity so this doesn't move across levels
-class CTriggerVolume: public CPointEntity
+class CTriggerVolume : public CPointEntity
 {
 public:
 	virtual void Spawn();
 };
 
 // Fires a target after level transition and then dies
-class CFireAndDie: public CBaseDelay
+class CFireAndDie : public CBaseDelay
 {
 public:
 	virtual void Spawn();
@@ -333,25 +333,25 @@ public:
 
 // When the player touches this, he gets sent to the map listed in the "map" variable.
 // Unless the NO_INTERMISSION flag is set, the view will go to the info_intermission spot and display stats.
-class CChangeLevel: public CBaseTrigger
+class CChangeLevel : public CBaseTrigger
 {
 public:
 	virtual void Spawn();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
 
 public:
-	void EXPORT UseChangeLevel(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	void EXPORT UseChangeLevel(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 	void EXPORT TriggerChangeLevel();
 	void EXPORT ExecuteChangeLevel();
-	void EXPORT TouchChangeLevel(CBaseEntity *pOther);
-	void ChangeLevelNow(CBaseEntity *pActivator);
+	void EXPORT TouchChangeLevel(CBaseEntity* pOther);
+	void ChangeLevelNow(CBaseEntity* pActivator);
 
-	static edict_t *FindLandmark(const char *pLandmarkName);
-	static int ChangeList(LEVELLIST *pLevelList, int maxList);
-	static int AddTransitionToList(LEVELLIST *pLevelList, int listCount, const char *pMapName, const char *pLandmarkName, edict_t *pentLandmark);
-	static int InTransitionVolume(CBaseEntity *pEntity, char *pVolumeName);
+	static edict_t* FindLandmark(const char* pLandmarkName);
+	static int ChangeList(LEVELLIST* pLevelList, int maxList);
+	static int AddTransitionToList(LEVELLIST* pLevelList, int listCount, const char* pMapName, const char* pLandmarkName, edict_t* pentLandmark);
+	static int InTransitionVolume(CBaseEntity* pEntity, char* pVolumeName);
 
 public:
 	static TYPEDESCRIPTION m_SaveData[];
@@ -366,53 +366,53 @@ public:
 #endif
 };
 
-class CLadder: public CBaseTrigger
+class CLadder : public CBaseTrigger
 {
 public:
 	virtual void Spawn();
 	virtual void Precache();
-	virtual void KeyValue(KeyValueData *pkvd);
+	virtual void KeyValue(KeyValueData* pkvd);
 };
 
 #define SF_TRIGGER_PUSH_ONCE      BIT(0)
 #define SF_TRIGGER_PUSH_START_OFF BIT(1) // spawnflag that makes trigger_push spawn turned OFF
 
-class CTriggerPush: public CBaseTrigger
+class CTriggerPush : public CBaseTrigger
 {
 public:
 	virtual void Spawn();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual void Touch(CBaseEntity *pOther);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual void Touch(CBaseEntity* pOther);
 
 #ifdef REGAMEDLL_FIXES
 	virtual void Restart();
 #endif
 };
 
-class CTriggerTeleport: public CBaseTrigger
+class CTriggerTeleport : public CBaseTrigger
 {
 public:
 	virtual void Spawn();
 };
 
-class CBuyZone: public CBaseTrigger
+class CBuyZone : public CBaseTrigger
 {
 public:
 	virtual void Spawn();
 
-	void EXPORT BuyTouch(CBaseEntity *pOther);
+	void EXPORT BuyTouch(CBaseEntity* pOther);
 };
 
-class CBombTarget: public CBaseTrigger
+class CBombTarget : public CBaseTrigger
 {
 private:
-	bool IsPlayerInBombSite(CBasePlayer *pPlayer);
+	bool IsPlayerInBombSite(CBasePlayer* pPlayer);
 public:
 	virtual void Spawn();
-	virtual void KeyValue(KeyValueData *pkvd);
+	virtual void KeyValue(KeyValueData* pkvd);
 
-	void EXPORT BombTargetTouch(CBaseEntity *pOther);
-	void EXPORT BombTargetUse(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	void EXPORT BombTargetTouch(CBaseEntity* pOther);
+	void EXPORT BombTargetUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 #ifdef REGAMEDLL_ADD
 public:
@@ -420,70 +420,70 @@ public:
 #endif
 };
 
-class CHostageRescue: public CBaseTrigger
+class CHostageRescue : public CBaseTrigger
 {
 public:
 	virtual void Spawn();
 
 public:
-	void EXPORT HostageRescueTouch(CBaseEntity *pOther);
+	void EXPORT HostageRescueTouch(CBaseEntity* pOther);
 };
 
-class CEscapeZone: public CBaseTrigger
+class CEscapeZone : public CBaseTrigger
 {
 public:
 	virtual void Spawn();
 
-	void EXPORT EscapeTouch(CBaseEntity *pOther);
+	void EXPORT EscapeTouch(CBaseEntity* pOther);
 };
 
-class CVIP_SafetyZone: public CBaseTrigger
+class CVIP_SafetyZone : public CBaseTrigger
 {
 public:
 	virtual void Spawn();
 
-	void EXPORT VIP_SafetyTouch(CBaseEntity *pOther);
+	void EXPORT VIP_SafetyTouch(CBaseEntity* pOther);
 };
 
-class CTriggerSave: public CBaseTrigger
+class CTriggerSave : public CBaseTrigger
 {
 public:
 	virtual void Spawn();
 
-	void EXPORT SaveTouch(CBaseEntity *pOther);
+	void EXPORT SaveTouch(CBaseEntity* pOther);
 };
 
 #define SF_ENDSECTION_USEONLY BIT(0)
 
-class CTriggerEndSection: public CBaseTrigger
+class CTriggerEndSection : public CBaseTrigger
 {
 public:
 	virtual void Spawn();
-	virtual void KeyValue(KeyValueData *pkvd);
+	virtual void KeyValue(KeyValueData* pkvd);
 
 public:
-	void EXPORT EndSectionTouch(CBaseEntity *pOther);
-	void EXPORT EndSectionUse(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	void EXPORT EndSectionTouch(CBaseEntity* pOther);
+	void EXPORT EndSectionUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 };
 
-class CTriggerGravity: public CBaseTrigger
+class CTriggerGravity : public CBaseTrigger
 {
 public:
 	virtual void Spawn();
 
-	void EXPORT GravityTouch(CBaseEntity *pOther);
+	void EXPORT GravityTouch(CBaseEntity* pOther);
 };
 
 // this is a really bad idea.
-class CTriggerChangeTarget: public CBaseDelay
+class CTriggerChangeTarget : public CBaseDelay
 {
 public:
 	virtual void Spawn();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
 	virtual int ObjectCaps() { return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 public:
 	static TYPEDESCRIPTION m_SaveData[];
@@ -496,15 +496,15 @@ private:
 #define SF_CAMERA_PLAYER_TARGET      BIT(1)
 #define SF_CAMERA_PLAYER_TAKECONTROL BIT(2)
 
-class CTriggerCamera: public CBaseDelay
+class CTriggerCamera : public CBaseDelay
 {
 public:
 	virtual void Spawn();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
 	virtual int ObjectCaps() { return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 public:
 	void EXPORT FollowTarget();
@@ -514,7 +514,7 @@ public:
 
 	EntityHandle<CBasePlayer> m_hPlayer;
 	EntityHandle<CBaseEntity> m_hTarget;
-	CBaseEntity *m_pentPath;
+	CBaseEntity* m_pentPath;
 	int m_sPath;
 	float m_flWait;
 	float m_flReturnTime;
@@ -527,17 +527,17 @@ public:
 	int m_state;
 };
 
-class CWeather: public CBaseTrigger
+class CWeather : public CBaseTrigger
 {
 public:
 	virtual void Spawn();
 };
 
-class CClientFog: public CBaseEntity
+class CClientFog : public CBaseEntity
 {
 public:
 	virtual void Spawn();
-	virtual void KeyValue(KeyValueData *pkvd);
+	virtual void KeyValue(KeyValueData* pkvd);
 
 public:
 	int m_iStartDist;
@@ -545,6 +545,6 @@ public:
 	float m_fDensity;
 };
 
-void PlayCDTrack(edict_t *pClient, int iTrack);
-int BuildChangeList(LEVELLIST *pLevelList, int maxList);
+void PlayCDTrack(edict_t* pClient, int iTrack);
+int BuildChangeList(LEVELLIST* pLevelList, int maxList);
 void NextLevel();

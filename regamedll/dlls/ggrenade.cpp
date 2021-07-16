@@ -28,10 +28,10 @@ void CGrenade::Explode(Vector vecSrc, Vector vecAim)
 	Explode(&tr, DMG_BLAST);
 }
 
-LINK_HOOK_CLASS_VOID_CUSTOM2_CHAIN(CGrenade, ExplodeFlashbang, Explode, (TraceResult *pTrace, int bitsDamageType), pTrace, bitsDamageType)
+LINK_HOOK_CLASS_VOID_CUSTOM2_CHAIN(CGrenade, ExplodeFlashbang, Explode, (TraceResult* pTrace, int bitsDamageType), pTrace, bitsDamageType)
 
 // UNDONE: temporary scorching for PreAlpha - find a less sleazy permenant solution.
-void CGrenade::__API_HOOK(Explode)(TraceResult *pTrace, int bitsDamageType)
+void CGrenade::__API_HOOK(Explode)(TraceResult* pTrace, int bitsDamageType)
 {
 	float flRndSound; // sound randomizer
 
@@ -50,11 +50,11 @@ void CGrenade::__API_HOOK(Explode)(TraceResult *pTrace, int bitsDamageType)
 #ifndef REGAMEDLL_FIXES
 	CSoundEnt::InsertSound(bits_SOUND_COMBAT, pev->origin, NORMAL_EXPLOSION_VOLUME, 3);
 #endif
-	entvars_t *pevOwner = VARS(pev->owner);
+	entvars_t* pevOwner = VARS(pev->owner);
 
 	if (TheBots)
 	{
-		TheBots->OnEvent(EVENT_FLASHBANG_GRENADE_EXPLODED, CBaseEntity::Instance(pev->owner), (CBaseEntity *)&pev->origin);
+		TheBots->OnEvent(EVENT_FLASHBANG_GRENADE_EXPLODED, CBaseEntity::Instance(pev->owner), (CBaseEntity*)&pev->origin);
 	}
 
 	// can't traceline attack owner if this is set
@@ -92,9 +92,9 @@ void CGrenade::__API_HOOK(Explode)(TraceResult *pTrace, int bitsDamageType)
 	}
 }
 
-LINK_HOOK_CLASS_VOID_CUSTOM2_CHAIN(CGrenade, ExplodeBomb, Explode2, (TraceResult *pTrace, int bitsDamageType), pTrace, bitsDamageType)
+LINK_HOOK_CLASS_VOID_CUSTOM2_CHAIN(CGrenade, ExplodeBomb, Explode2, (TraceResult* pTrace, int bitsDamageType), pTrace, bitsDamageType)
 
-void CGrenade::__API_HOOK(Explode2)(TraceResult *pTrace, int bitsDamageType)
+void CGrenade::__API_HOOK(Explode2)(TraceResult* pTrace, int bitsDamageType)
 {
 	float flRndSound; // sound randomizer
 
@@ -126,43 +126,43 @@ void CGrenade::__API_HOOK(Explode2)(TraceResult *pTrace, int bitsDamageType)
 	int iContents = UTIL_PointContents(pev->origin);
 
 	MESSAGE_BEGIN(MSG_PAS, SVC_TEMPENTITY, pev->origin);
-		WRITE_BYTE(TE_SPRITE);
-		WRITE_COORD(pev->origin.x);
-		WRITE_COORD(pev->origin.y);
-		WRITE_COORD(pev->origin.z - 10.0f);
-		WRITE_SHORT(g_sModelIndexFireball3);
-		WRITE_BYTE((pev->dmg - 275.0f) * 0.6f);
-		WRITE_BYTE(150);
+	WRITE_BYTE(TE_SPRITE);
+	WRITE_COORD(pev->origin.x);
+	WRITE_COORD(pev->origin.y);
+	WRITE_COORD(pev->origin.z - 10.0f);
+	WRITE_SHORT(g_sModelIndexFireball3);
+	WRITE_BYTE((pev->dmg - 275.0f) * 0.6f);
+	WRITE_BYTE(150);
 	MESSAGE_END();
 
 	MESSAGE_BEGIN(MSG_PAS, SVC_TEMPENTITY, pev->origin);
-		WRITE_BYTE(TE_SPRITE);
-		WRITE_COORD(pev->origin.x + RANDOM_FLOAT(-512, 512));
-		WRITE_COORD(pev->origin.y + RANDOM_FLOAT(-512, 512));
-		WRITE_COORD(pev->origin.z + RANDOM_FLOAT(-10, 10));
-		WRITE_SHORT(g_sModelIndexFireball2);
-		WRITE_BYTE((pev->dmg - 275.0f) * 0.6f);
-		WRITE_BYTE(150);
+	WRITE_BYTE(TE_SPRITE);
+	WRITE_COORD(pev->origin.x + RANDOM_FLOAT(-512, 512));
+	WRITE_COORD(pev->origin.y + RANDOM_FLOAT(-512, 512));
+	WRITE_COORD(pev->origin.z + RANDOM_FLOAT(-10, 10));
+	WRITE_SHORT(g_sModelIndexFireball2);
+	WRITE_BYTE((pev->dmg - 275.0f) * 0.6f);
+	WRITE_BYTE(150);
 	MESSAGE_END();
 
 	MESSAGE_BEGIN(MSG_PAS, SVC_TEMPENTITY, pev->origin);
-		WRITE_BYTE(TE_SPRITE);
-		WRITE_COORD(pev->origin.x + RANDOM_FLOAT(-512, 512));
-		WRITE_COORD(pev->origin.y + RANDOM_FLOAT(-512, 512));
-		WRITE_COORD(pev->origin.z + RANDOM_FLOAT(-10, 10));
-		WRITE_SHORT(g_sModelIndexFireball3);
-		WRITE_BYTE((pev->dmg - 275.0f) * 0.6f);
-		WRITE_BYTE(150);
+	WRITE_BYTE(TE_SPRITE);
+	WRITE_COORD(pev->origin.x + RANDOM_FLOAT(-512, 512));
+	WRITE_COORD(pev->origin.y + RANDOM_FLOAT(-512, 512));
+	WRITE_COORD(pev->origin.z + RANDOM_FLOAT(-10, 10));
+	WRITE_SHORT(g_sModelIndexFireball3);
+	WRITE_BYTE((pev->dmg - 275.0f) * 0.6f);
+	WRITE_BYTE(150);
 	MESSAGE_END();
 
 	MESSAGE_BEGIN(MSG_PAS, SVC_TEMPENTITY, pev->origin);
-		WRITE_BYTE(TE_SPRITE);
-		WRITE_COORD(pev->origin.x + RANDOM_FLOAT(-512, 512));
-		WRITE_COORD(pev->origin.y + RANDOM_FLOAT(-512, 512));
-		WRITE_COORD(pev->origin.z + RANDOM_FLOAT(-10, 10));
-		WRITE_SHORT(g_sModelIndexFireball);
-		WRITE_BYTE((pev->dmg - 275.0f) * 0.6f);
-		WRITE_BYTE(17);
+	WRITE_BYTE(TE_SPRITE);
+	WRITE_COORD(pev->origin.x + RANDOM_FLOAT(-512, 512));
+	WRITE_COORD(pev->origin.y + RANDOM_FLOAT(-512, 512));
+	WRITE_COORD(pev->origin.z + RANDOM_FLOAT(-10, 10));
+	WRITE_SHORT(g_sModelIndexFireball);
+	WRITE_BYTE((pev->dmg - 275.0f) * 0.6f);
+	WRITE_BYTE(17);
 	MESSAGE_END();
 
 	// Sound! for everyone
@@ -171,7 +171,7 @@ void CGrenade::__API_HOOK(Explode2)(TraceResult *pTrace, int bitsDamageType)
 #ifndef REGAMEDLL_FIXES
 	CSoundEnt::InsertSound(bits_SOUND_COMBAT, pev->origin, NORMAL_EXPLOSION_VOLUME, 3);
 #endif
-	entvars_t *pevOwner = VARS(pev->owner);
+	entvars_t* pevOwner = VARS(pev->owner);
 
 	pev->owner = nullptr;
 	RadiusDamage(pev, pevOwner, CSGameRules()->m_flBombRadius, CLASS_NONE, bitsDamageType);
@@ -187,11 +187,11 @@ void CGrenade::__API_HOOK(Explode2)(TraceResult *pTrace, int bitsDamageType)
 	// tell director about it
 	// send director message, that something important happed here
 	MESSAGE_BEGIN(MSG_SPEC, SVC_DIRECTOR);
-		WRITE_BYTE(9);		// command length in bytes
-		WRITE_BYTE(DRC_CMD_EVENT);	// bomb explode
-		WRITE_SHORT(ENTINDEX(edict()));	// index number of primary entity
-		WRITE_SHORT(0);		// index number of secondary entity
-		WRITE_LONG(15 | DRC_FLAG_FINAL);	// eventflags (priority and flags)
+	WRITE_BYTE(9);		// command length in bytes
+	WRITE_BYTE(DRC_CMD_EVENT);	// bomb explode
+	WRITE_SHORT(ENTINDEX(edict()));	// index number of primary entity
+	WRITE_SHORT(0);		// index number of secondary entity
+	WRITE_LONG(15 | DRC_FLAG_FINAL);	// eventflags (priority and flags)
 	MESSAGE_END();
 
 	// Decal!
@@ -238,9 +238,9 @@ void CGrenade::__API_HOOK(Explode2)(TraceResult *pTrace, int bitsDamageType)
 
 }
 
-LINK_HOOK_CLASS_VOID_CUSTOM2_CHAIN(CGrenade, ExplodeHeGrenade, Explode3, (TraceResult *pTrace, int bitsDamageType), pTrace, bitsDamageType)
+LINK_HOOK_CLASS_VOID_CUSTOM2_CHAIN(CGrenade, ExplodeHeGrenade, Explode3, (TraceResult* pTrace, int bitsDamageType), pTrace, bitsDamageType)
 
-void CGrenade::__API_HOOK(Explode3)(TraceResult *pTrace, int bitsDamageType)
+void CGrenade::__API_HOOK(Explode3)(TraceResult* pTrace, int bitsDamageType)
 {
 	float flRndSound; // sound randomizer
 
@@ -254,31 +254,31 @@ void CGrenade::__API_HOOK(Explode3)(TraceResult *pTrace, int bitsDamageType)
 	}
 
 	MESSAGE_BEGIN(MSG_PAS, SVC_TEMPENTITY, pev->origin);
-		WRITE_BYTE(TE_EXPLOSION);	// This makes a dynamic light and the explosion sprites/sound
-		WRITE_COORD(pev->origin.x);		// Send to PAS because of the sound
-		WRITE_COORD(pev->origin.y);
-		WRITE_COORD(pev->origin.z + 20.0f);
-		WRITE_SHORT(g_sModelIndexFireball3);
-		WRITE_BYTE(25);			// scale * 10
-		WRITE_BYTE(30);		// framerate
-		WRITE_BYTE(TE_EXPLFLAG_NONE);	// flags
+	WRITE_BYTE(TE_EXPLOSION);	// This makes a dynamic light and the explosion sprites/sound
+	WRITE_COORD(pev->origin.x);		// Send to PAS because of the sound
+	WRITE_COORD(pev->origin.y);
+	WRITE_COORD(pev->origin.z + 20.0f);
+	WRITE_SHORT(g_sModelIndexFireball3);
+	WRITE_BYTE(25);			// scale * 10
+	WRITE_BYTE(30);		// framerate
+	WRITE_BYTE(TE_EXPLFLAG_NONE);	// flags
 	MESSAGE_END();
 
 	MESSAGE_BEGIN(MSG_PAS, SVC_TEMPENTITY, pev->origin);
-		WRITE_BYTE(TE_EXPLOSION);	// This makes a dynamic light and the explosion sprites/sound
-		WRITE_COORD(pev->origin.x + RANDOM_FLOAT(-64, 64));	// Send to PAS because of the sound
-		WRITE_COORD(pev->origin.y + RANDOM_FLOAT(-64, 64));
-		WRITE_COORD(pev->origin.z + RANDOM_FLOAT(30, 35));
-		WRITE_SHORT(g_sModelIndexFireball2);
-		WRITE_BYTE(30);			// scale * 10
-		WRITE_BYTE(30);		// framerate
-		WRITE_BYTE(TE_EXPLFLAG_NONE);	// flags
+	WRITE_BYTE(TE_EXPLOSION);	// This makes a dynamic light and the explosion sprites/sound
+	WRITE_COORD(pev->origin.x + RANDOM_FLOAT(-64, 64));	// Send to PAS because of the sound
+	WRITE_COORD(pev->origin.y + RANDOM_FLOAT(-64, 64));
+	WRITE_COORD(pev->origin.z + RANDOM_FLOAT(30, 35));
+	WRITE_SHORT(g_sModelIndexFireball2);
+	WRITE_BYTE(30);			// scale * 10
+	WRITE_BYTE(30);		// framerate
+	WRITE_BYTE(TE_EXPLFLAG_NONE);	// flags
 	MESSAGE_END();
 
 #ifndef REGAMEDLL_FIXES
 	CSoundEnt::InsertSound(bits_SOUND_COMBAT, pev->origin, NORMAL_EXPLOSION_VOLUME, 3);
 #endif
-	entvars_t *pevOwner = VARS(pev->owner);
+	entvars_t* pevOwner = VARS(pev->owner);
 
 	if (TheBots)
 	{
@@ -315,7 +315,7 @@ void CGrenade::__API_HOOK(Explode3)(TraceResult *pTrace, int bitsDamageType)
 	}
 }
 
-NOXREF void CGrenade::SG_Explode(TraceResult *pTrace, int bitsDamageType)
+NOXREF void CGrenade::SG_Explode(TraceResult* pTrace, int bitsDamageType)
 {
 	float flRndSound; // sound randomizer
 
@@ -377,13 +377,13 @@ void CGrenade::Smoke3_C()
 	else
 	{
 		MESSAGE_BEGIN(MSG_PVS, SVC_TEMPENTITY, pev->origin);
-			WRITE_BYTE(TE_SMOKE);
-			WRITE_COORD(pev->origin.x);
-			WRITE_COORD(pev->origin.y);
-			WRITE_COORD(pev->origin.z - 5.0f);
-			WRITE_SHORT(g_sModelIndexSmoke);
-			WRITE_BYTE(35 + RANDOM_FLOAT(0, 10)); // scale * 10
-			WRITE_BYTE(5); // framerate
+		WRITE_BYTE(TE_SMOKE);
+		WRITE_COORD(pev->origin.x);
+		WRITE_COORD(pev->origin.y);
+		WRITE_COORD(pev->origin.z - 5.0f);
+		WRITE_SHORT(g_sModelIndexSmoke);
+		WRITE_BYTE(35 + RANDOM_FLOAT(0, 10)); // scale * 10
+		WRITE_BYTE(5); // framerate
 		MESSAGE_END();
 	}
 
@@ -399,13 +399,13 @@ void CGrenade::Smoke3_B()
 	else
 	{
 		MESSAGE_BEGIN(MSG_PVS, SVC_TEMPENTITY, pev->origin);
-			WRITE_BYTE(TE_SMOKE);
-			WRITE_COORD(pev->origin.x + RANDOM_FLOAT(-128, 128));
-			WRITE_COORD(pev->origin.y + RANDOM_FLOAT(-128, 128));
-			WRITE_COORD(pev->origin.z + RANDOM_FLOAT(-10, 10));
-			WRITE_SHORT(g_sModelIndexSmoke);
-			WRITE_BYTE(15 + RANDOM_FLOAT(0, 10)); // scale * 10
-			WRITE_BYTE(10); // framerate
+		WRITE_BYTE(TE_SMOKE);
+		WRITE_COORD(pev->origin.x + RANDOM_FLOAT(-128, 128));
+		WRITE_COORD(pev->origin.y + RANDOM_FLOAT(-128, 128));
+		WRITE_COORD(pev->origin.z + RANDOM_FLOAT(-10, 10));
+		WRITE_SHORT(g_sModelIndexSmoke);
+		WRITE_BYTE(15 + RANDOM_FLOAT(0, 10)); // scale * 10
+		WRITE_BYTE(10); // framerate
 		MESSAGE_END();
 	}
 
@@ -422,13 +422,13 @@ void CGrenade::Smoke3_A()
 	else
 	{
 		MESSAGE_BEGIN(MSG_PVS, SVC_TEMPENTITY, pev->origin);
-			WRITE_BYTE(TE_SMOKE);
-			WRITE_COORD(pev->origin.x + RANDOM_FLOAT(-128, 128));
-			WRITE_COORD(pev->origin.y + RANDOM_FLOAT(-128, 128));
-			WRITE_COORD(pev->origin.z + RANDOM_FLOAT(-10, 10));
-			WRITE_SHORT(g_sModelIndexSmoke);
-			WRITE_BYTE(15 + RANDOM_FLOAT(0, 10)); // scale * 10
-			WRITE_BYTE(12); // framerate
+		WRITE_BYTE(TE_SMOKE);
+		WRITE_COORD(pev->origin.x + RANDOM_FLOAT(-128, 128));
+		WRITE_COORD(pev->origin.y + RANDOM_FLOAT(-128, 128));
+		WRITE_COORD(pev->origin.z + RANDOM_FLOAT(-10, 10));
+		WRITE_SHORT(g_sModelIndexSmoke);
+		WRITE_BYTE(15 + RANDOM_FLOAT(0, 10)); // scale * 10
+		WRITE_BYTE(12); // framerate
 		MESSAGE_END();
 	}
 }
@@ -442,13 +442,13 @@ void CGrenade::Smoke2()
 	else
 	{
 		MESSAGE_BEGIN(MSG_PVS, SVC_TEMPENTITY, pev->origin);
-			WRITE_BYTE(TE_SMOKE);
-			WRITE_COORD(pev->origin.x);
-			WRITE_COORD(pev->origin.y);
-			WRITE_COORD(pev->origin.z);
-			WRITE_SHORT(g_sModelIndexSmoke);
-			WRITE_BYTE(150); // scale * 10
-			WRITE_BYTE(8); // framerate
+		WRITE_BYTE(TE_SMOKE);
+		WRITE_COORD(pev->origin.x);
+		WRITE_COORD(pev->origin.y);
+		WRITE_COORD(pev->origin.z);
+		WRITE_SHORT(g_sModelIndexSmoke);
+		WRITE_BYTE(150); // scale * 10
+		WRITE_BYTE(8); // framerate
 		MESSAGE_END();
 	}
 
@@ -464,13 +464,13 @@ void CGrenade::Smoke()
 	else
 	{
 		MESSAGE_BEGIN(MSG_PVS, SVC_TEMPENTITY, pev->origin);
-			WRITE_BYTE(TE_SMOKE);
-			WRITE_COORD(pev->origin.x);
-			WRITE_COORD(pev->origin.y);
-			WRITE_COORD(pev->origin.z);
-			WRITE_SHORT(g_sModelIndexSmoke);
-			WRITE_BYTE(25); // scale * 10
-			WRITE_BYTE(6);  // framerate
+		WRITE_BYTE(TE_SMOKE);
+		WRITE_COORD(pev->origin.x);
+		WRITE_COORD(pev->origin.y);
+		WRITE_COORD(pev->origin.z);
+		WRITE_SHORT(g_sModelIndexSmoke);
+		WRITE_BYTE(25); // scale * 10
+		WRITE_BYTE(6);  // framerate
 		MESSAGE_END();
 	}
 
@@ -528,13 +528,13 @@ void CGrenade::SG_Smoke()
 	}
 }
 
-void CGrenade::Killed(entvars_t *pevAttacker, int iGib)
+void CGrenade::Killed(entvars_t* pevAttacker, int iGib)
 {
 	Detonate();
 }
 
 // Timed grenade, this think is called when time runs out.
-void CGrenade::DetonateUse(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void CGrenade::DetonateUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	SetThink(&CGrenade::Detonate);
 	pev->nextthink = gpGlobals->time;
@@ -566,7 +566,7 @@ void CGrenade::__API_HOOK(SG_Detonate)()
 {
 	TraceResult tr;
 	Vector vecSpot;
-	edict_t *pentFind = nullptr;
+	edict_t* pentFind = nullptr;
 
 	vecSpot = pev->origin + Vector(0, 0, 8);
 
@@ -585,7 +585,7 @@ void CGrenade::__API_HOOK(SG_Detonate)()
 		if (FNullEnt(pentFind))
 			break;
 
-		CBaseEntity *pEnt = CBaseEntity::Instance(pentFind);
+		CBaseEntity* pEnt = CBaseEntity::Instance(pentFind);
 		if (pEnt)
 		{
 			float fDistance = (pEnt->pev->origin - pev->origin).Length();
@@ -600,7 +600,7 @@ void CGrenade::__API_HOOK(SG_Detonate)()
 	}
 
 	m_bDetonated = true;
-	PLAYBACK_EVENT_FULL(0, nullptr, m_usEvent, 0, pev->origin, (float *)&g_vecZero, 0, 0, 0, 1, m_bLightSmoke, FALSE);
+	PLAYBACK_EVENT_FULL(0, nullptr, m_usEvent, 0, pev->origin, (float*)&g_vecZero, 0, 0, 0, 1, m_bLightSmoke, FALSE);
 	m_vSmokeDetonate = pev->origin;
 
 	pev->velocity.x = RANDOM_FLOAT(-175, 175);
@@ -633,7 +633,7 @@ void CGrenade::Detonate3()
 }
 
 // Contact grenade, explode when it touches something
-void CGrenade::ExplodeTouch(CBaseEntity *pOther)
+void CGrenade::ExplodeTouch(CBaseEntity* pOther)
 {
 	TraceResult tr;
 	Vector vecSpot; // trace starts here!
@@ -664,7 +664,7 @@ void CGrenade::DangerSoundThink()
 	}
 }
 
-void CGrenade::BounceTouch(CBaseEntity *pOther)
+void CGrenade::BounceTouch(CBaseEntity* pOther)
 {
 	// don't hit the guy that launched this grenade
 	if (pOther->edict() == pev->owner)
@@ -731,7 +731,7 @@ void CGrenade::BounceTouch(CBaseEntity *pOther)
 	}
 }
 
-void CGrenade::SlideTouch(CBaseEntity *pOther)
+void CGrenade::SlideTouch(CBaseEntity* pOther)
 {
 	// don't hit the guy that launched this grenade
 	if (pOther->edict() == pev->owner)
@@ -856,9 +856,9 @@ void CGrenade::Spawn()
 	m_fRegisteredSound = FALSE;
 }
 
-NOXREF CGrenade *CGrenade::ShootContact(entvars_t *pevOwner, Vector vecStart, Vector vecVelocity)
+NOXREF CGrenade* CGrenade::ShootContact(entvars_t* pevOwner, Vector vecStart, Vector vecVelocity)
 {
-	CGrenade *pGrenade = GetClassPtr<CCSGrenade>((CGrenade *)nullptr);
+	CGrenade* pGrenade = GetClassPtr<CCSGrenade>((CGrenade*)nullptr);
 	pGrenade->Spawn();
 
 	// contact grenades arc lower
@@ -884,11 +884,11 @@ NOXREF CGrenade *CGrenade::ShootContact(entvars_t *pevOwner, Vector vecStart, Ve
 	return pGrenade;
 }
 
-LINK_HOOK_CUSTOM2_CHAIN(CGrenade *, ThrowHeGrenade, CGrenade::ShootTimed2, (entvars_t *pevOwner, Vector vecStart, Vector vecVelocity, float time, int iTeam, unsigned short usEvent), pevOwner, vecStart, vecVelocity, time, iTeam, usEvent)
+LINK_HOOK_CUSTOM2_CHAIN(CGrenade*, ThrowHeGrenade, CGrenade::ShootTimed2, (entvars_t* pevOwner, Vector vecStart, Vector vecVelocity, float time, int iTeam, unsigned short usEvent), pevOwner, vecStart, vecVelocity, time, iTeam, usEvent)
 
-CGrenade *CGrenade::__API_HOOK(ShootTimed2)(entvars_t *pevOwner, VectorRef vecStart, VectorRef vecVelocity, float time, int iTeam, unsigned short usEvent)
+CGrenade* CGrenade::__API_HOOK(ShootTimed2)(entvars_t* pevOwner, VectorRef vecStart, VectorRef vecVelocity, float time, int iTeam, unsigned short usEvent)
 {
-	CGrenade *pGrenade = GetClassPtr<CCSGrenade>((CGrenade *)nullptr);
+	CGrenade* pGrenade = GetClassPtr<CCSGrenade>((CGrenade*)nullptr);
 	pGrenade->Spawn();
 
 	UTIL_SetOrigin(pGrenade->pev, vecStart);
@@ -920,11 +920,11 @@ CGrenade *CGrenade::__API_HOOK(ShootTimed2)(entvars_t *pevOwner, VectorRef vecSt
 	return pGrenade;
 }
 
-LINK_HOOK_CUSTOM2_CHAIN(CGrenade *, ThrowFlashbang, CGrenade::ShootTimed, (entvars_t *pevOwner, Vector vecStart, Vector vecVelocity, float time), pevOwner, vecStart, vecVelocity, time)
+LINK_HOOK_CUSTOM2_CHAIN(CGrenade*, ThrowFlashbang, CGrenade::ShootTimed, (entvars_t* pevOwner, Vector vecStart, Vector vecVelocity, float time), pevOwner, vecStart, vecVelocity, time)
 
-CGrenade *CGrenade::__API_HOOK(ShootTimed)(entvars_t *pevOwner, VectorRef vecStart, VectorRef vecVelocity, float time)
+CGrenade* CGrenade::__API_HOOK(ShootTimed)(entvars_t* pevOwner, VectorRef vecStart, VectorRef vecVelocity, float time)
 {
-	CGrenade *pGrenade = GetClassPtr<CCSGrenade>((CGrenade *)nullptr);
+	CGrenade* pGrenade = GetClassPtr<CCSGrenade>((CGrenade*)nullptr);
 	pGrenade->Spawn();
 
 	UTIL_SetOrigin(pGrenade->pev, vecStart);
@@ -965,9 +965,9 @@ CGrenade *CGrenade::__API_HOOK(ShootTimed)(entvars_t *pevOwner, VectorRef vecSta
 
 constexpr float NEXT_DEFUSE_TIME = 0.5f;
 
-LINK_HOOK_CLASS_VOID_CHAIN(CGrenade, DefuseBombStart, (CBasePlayer *pPlayer), pPlayer)
+LINK_HOOK_CLASS_VOID_CHAIN(CGrenade, DefuseBombStart, (CBasePlayer* pPlayer), pPlayer)
 
-void CGrenade::__API_HOOK(DefuseBombStart)(CBasePlayer *pPlayer)
+void CGrenade::__API_HOOK(DefuseBombStart)(CBasePlayer* pPlayer)
 {
 	// freeze the player in place while defusing
 	SET_CLIENT_MAXSPEED(pPlayer->edict(), 1);
@@ -1025,9 +1025,9 @@ void CGrenade::__API_HOOK(DefuseBombStart)(CBasePlayer *pPlayer)
 #endif
 }
 
-LINK_HOOK_CLASS_VOID_CHAIN(CGrenade, DefuseBombEnd, (CBasePlayer *pPlayer, bool bDefused), pPlayer, bDefused)
+LINK_HOOK_CLASS_VOID_CHAIN(CGrenade, DefuseBombEnd, (CBasePlayer* pPlayer, bool bDefused), pPlayer, bDefused)
 
-void CGrenade::__API_HOOK(DefuseBombEnd)(CBasePlayer *pPlayer, bool bDefused)
+void CGrenade::__API_HOOK(DefuseBombEnd)(CBasePlayer* pPlayer, bool bDefused)
 {
 	if (bDefused)
 	{
@@ -1043,15 +1043,15 @@ void CGrenade::__API_HOOK(DefuseBombEnd)(CBasePlayer *pPlayer, bool bDefused)
 
 			if (TheBots)
 			{
-				TheBots->OnEvent(EVENT_BOMB_DEFUSED, (CBaseEntity *)m_pBombDefuser);
+				TheBots->OnEvent(EVENT_BOMB_DEFUSED, (CBaseEntity*)m_pBombDefuser);
 			}
 
 			MESSAGE_BEGIN(MSG_SPEC, SVC_DIRECTOR);
-				WRITE_BYTE(9);
-				WRITE_BYTE(DRC_CMD_EVENT);
-				WRITE_SHORT(ENTINDEX(m_pBombDefuser->edict()));
-				WRITE_SHORT(0);
-				WRITE_LONG(15 | DRC_FLAG_FINAL | DRC_FLAG_FACEPLAYER | DRC_FLAG_DRAMATIC);
+			WRITE_BYTE(9);
+			WRITE_BYTE(DRC_CMD_EVENT);
+			WRITE_SHORT(ENTINDEX(m_pBombDefuser->edict()));
+			WRITE_SHORT(0);
+			WRITE_LONG(15 | DRC_FLAG_FINAL | DRC_FLAG_FACEPLAYER | DRC_FLAG_DRAMATIC);
 			MESSAGE_END();
 
 			UTIL_LogPrintf("\"%s<%i><%s><CT>\" triggered \"Defused_The_Bomb\"\n",
@@ -1070,7 +1070,7 @@ void CGrenade::__API_HOOK(DefuseBombEnd)(CBasePlayer *pPlayer, bool bDefused)
 			pPlayer->m_bIsDefusing = false;
 
 			MESSAGE_BEGIN(MSG_ALL, gmsgScenarioIcon);
-				WRITE_BYTE(0);
+			WRITE_BYTE(0);
 			MESSAGE_END();
 
 			if (CSGameRules()->IsCareer() && !pPlayer->IsBot())
@@ -1141,13 +1141,13 @@ void CGrenade::__API_HOOK(DefuseBombEnd)(CBasePlayer *pPlayer, bool bDefused)
 	}
 }
 
-void CGrenade::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void CGrenade::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	if (!m_bIsC4)
 		return;
 
 	// TODO: We must be sure that the activator is a player.
-	CBasePlayer *pPlayer = GetClassPtr<CCSPlayer>((CBasePlayer *)pActivator->pev);
+	CBasePlayer* pPlayer = GetClassPtr<CCSPlayer>((CBasePlayer*)pActivator->pev);
 
 #ifdef REGAMEDLL_FIXES
 	if (!pPlayer->IsPlayer())
@@ -1182,11 +1182,11 @@ void CGrenade::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useTy
 	DefuseBombStart(pPlayer);
 }
 
-LINK_HOOK_CUSTOM2_CHAIN(CGrenade *, PlantBomb, CGrenade::ShootSatchelCharge, (entvars_t *pevOwner, Vector vecStart, Vector vecAngles), pevOwner, vecStart, vecAngles)
+LINK_HOOK_CUSTOM2_CHAIN(CGrenade*, PlantBomb, CGrenade::ShootSatchelCharge, (entvars_t* pevOwner, Vector vecStart, Vector vecAngles), pevOwner, vecStart, vecAngles)
 
-CGrenade *CGrenade::__API_HOOK(ShootSatchelCharge)(entvars_t *pevOwner, VectorRef vecStart, VectorRef vecAngles)
+CGrenade* CGrenade::__API_HOOK(ShootSatchelCharge)(entvars_t* pevOwner, VectorRef vecStart, VectorRef vecAngles)
 {
-	CGrenade *pGrenade = GetClassPtr<CCSGrenade>((CGrenade *)nullptr);
+	CGrenade* pGrenade = GetClassPtr<CCSGrenade>((CGrenade*)nullptr);
 	pGrenade->pev->movetype = MOVETYPE_TOSS;
 
 	MAKE_STRING_CLASS("grenade", pGrenade->pev);
@@ -1215,7 +1215,7 @@ CGrenade *CGrenade::__API_HOOK(ShootSatchelCharge)(entvars_t *pevOwner, VectorRe
 
 #ifdef REGAMEDLL_FIXES
 	TraceResult tr;
-	UTIL_TraceLine(vecStart,  vecStart + Vector(0, 0, -8192), ignore_monsters, pGrenade->pev->owner, &tr);
+	UTIL_TraceLine(vecStart, vecStart + Vector(0, 0, -8192), ignore_monsters, pGrenade->pev->owner, &tr);
 	pGrenade->pev->oldorigin = (tr.flFraction == 1.0) ? vecStart : tr.vecEndPos;
 
 	pGrenade->pev->nextthink = gpGlobals->time + 0.01f;
@@ -1239,10 +1239,10 @@ CGrenade *CGrenade::__API_HOOK(ShootSatchelCharge)(entvars_t *pevOwner, VectorRe
 	pGrenade->pev->friction = 0.9f;
 	pGrenade->m_bJustBlew = false;
 
-	edict_t *pEntCurBombTarget = nullptr;
+	edict_t* pEntCurBombTarget = nullptr;
 	if (pevOwner)
 	{
-		CBasePlayer *pOwner = CBasePlayer::Instance(pevOwner);
+		CBasePlayer* pOwner = CBasePlayer::Instance(pevOwner);
 		if (pOwner && pOwner->IsPlayer())
 			pEntCurBombTarget = pOwner->m_pentCurBombTarget;
 	}
@@ -1252,11 +1252,11 @@ CGrenade *CGrenade::__API_HOOK(ShootSatchelCharge)(entvars_t *pevOwner, VectorRe
 	return pGrenade;
 }
 
-LINK_HOOK_CUSTOM2_CHAIN(CGrenade *, ThrowSmokeGrenade, CGrenade::ShootSmokeGrenade, (entvars_t *pevOwner, Vector vecStart, Vector vecVelocity, float time, unsigned short usEvent), pevOwner, vecStart, vecVelocity, time, usEvent)
+LINK_HOOK_CUSTOM2_CHAIN(CGrenade*, ThrowSmokeGrenade, CGrenade::ShootSmokeGrenade, (entvars_t* pevOwner, Vector vecStart, Vector vecVelocity, float time, unsigned short usEvent), pevOwner, vecStart, vecVelocity, time, usEvent)
 
-CGrenade *CGrenade::__API_HOOK(ShootSmokeGrenade)(entvars_t *pevOwner, VectorRef vecStart, VectorRef vecVelocity, float time, unsigned short usEvent)
+CGrenade* CGrenade::__API_HOOK(ShootSmokeGrenade)(entvars_t* pevOwner, VectorRef vecStart, VectorRef vecVelocity, float time, unsigned short usEvent)
 {
-	CGrenade *pGrenade = GetClassPtr<CCSGrenade>((CGrenade *)nullptr);
+	CGrenade* pGrenade = GetClassPtr<CCSGrenade>((CGrenade*)nullptr);
 	pGrenade->Spawn();
 
 	UTIL_SetOrigin(pGrenade->pev, vecStart);
@@ -1302,11 +1302,11 @@ void AnnounceFlashInterval(float interval, float offset)
 	}
 
 	MESSAGE_BEGIN(MSG_ALL, gmsgScenarioIcon);
-		WRITE_BYTE(1);
-		WRITE_STRING("bombticking");
-		WRITE_BYTE(255);
-		WRITE_SHORT(int(interval));	// interval
-		WRITE_SHORT(int(offset));
+	WRITE_BYTE(1);
+	WRITE_STRING("bombticking");
+	WRITE_BYTE(255);
+	WRITE_SHORT(int(interval));	// interval
+	WRITE_SHORT(int(offset));
 	MESSAGE_END();
 }
 
@@ -1393,14 +1393,14 @@ void CGrenade::C4Think()
 		m_flNextBlink = gpGlobals->time + 2.0f;
 
 		MESSAGE_BEGIN(MSG_PVS, SVC_TEMPENTITY, pev->origin);
-			WRITE_BYTE(TE_GLOWSPRITE);
-			WRITE_COORD(pev->origin.x);
-			WRITE_COORD(pev->origin.y);
-			WRITE_COORD(pev->origin.z + 5.0f);
-			WRITE_SHORT(g_sModelIndexC4Glow);
-			WRITE_BYTE(1);
-			WRITE_BYTE(3);
-			WRITE_BYTE(255);
+		WRITE_BYTE(TE_GLOWSPRITE);
+		WRITE_COORD(pev->origin.x);
+		WRITE_COORD(pev->origin.y);
+		WRITE_COORD(pev->origin.z + 5.0f);
+		WRITE_SHORT(g_sModelIndexC4Glow);
+		WRITE_BYTE(1);
+		WRITE_BYTE(3);
+		WRITE_BYTE(255);
 		MESSAGE_END();
 	}
 
@@ -1417,7 +1417,7 @@ void CGrenade::C4Think()
 		}
 
 		MESSAGE_BEGIN(MSG_ALL, gmsgScenarioIcon);
-			WRITE_BYTE(0);
+		WRITE_BYTE(0);
 		MESSAGE_END();
 
 #ifndef REGAMEDLL_FIXES
@@ -1432,7 +1432,7 @@ void CGrenade::C4Think()
 		}
 #endif // #ifndef REGAMEDLL_FIXES
 
-		CBasePlayer *pBombOwner = CBasePlayer::Instance(pev->owner);
+		CBasePlayer* pBombOwner = CBasePlayer::Instance(pev->owner);
 		if (pBombOwner)
 		{
 			pBombOwner->pev->frags += 3.0f;
@@ -1456,7 +1456,7 @@ void CGrenade::C4Think()
 	// if the defusing process has started
 	if (m_bStartDefuse && m_pBombDefuser)
 	{
-		CBasePlayer *pPlayer = m_pBombDefuser;
+		CBasePlayer* pPlayer = m_pBombDefuser;
 
 		// if the defusing process has not ended yet
 		if (gpGlobals->time < m_flDefuseCountDown)
@@ -1476,25 +1476,25 @@ void CGrenade::C4Think()
 	}
 }
 
-void CGrenade::C4Touch(CBaseEntity *pOther)
+void CGrenade::C4Touch(CBaseEntity* pOther)
 {
 	;
 }
 
-NOXREF void CGrenade::UseSatchelCharges(entvars_t *pevOwner, SATCHELCODE code)
+NOXREF void CGrenade::UseSatchelCharges(entvars_t* pevOwner, SATCHELCODE code)
 {
 	if (!pevOwner)
 		return;
 
-	edict_t *pentFind = nullptr;
-	CBaseEntity *pOwner = CBaseEntity::Instance(pevOwner);
+	edict_t* pentFind = nullptr;
+	CBaseEntity* pOwner = CBaseEntity::Instance(pevOwner);
 
 	while ((pentFind = FIND_ENTITY_BY_CLASSNAME(pentFind, "grenade")))
 	{
 		if (FNullEnt(pentFind))
 			break;
 
-		CBaseEntity *pEnt = Instance(pentFind);
+		CBaseEntity* pEnt = Instance(pentFind);
 		if (pEnt)
 		{
 			if ((pEnt->pev->spawnflags & SF_DETONATE) && pEnt->pev->owner == pOwner->edict())

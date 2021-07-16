@@ -28,8 +28,8 @@
 
 #include "precompiled.h"
 
-IFileSystem *g_pFileSystem = nullptr;
-CSysModule *g_pFileSystemModule = nullptr;
+IFileSystem* g_pFileSystem = nullptr;
+CSysModule* g_pFileSystemModule = nullptr;
 
 bool FileSystem_Init()
 {
@@ -46,7 +46,7 @@ bool FileSystem_Init()
 		Sys_Error("Unable to get filesystem factory.");
 	}
 
-	g_pFileSystem = (IFileSystem *)filesystemFactoryFn(FILESYSTEM_INTERFACE_VERSION, nullptr);
+	g_pFileSystem = (IFileSystem*)filesystemFactoryFn(FILESYSTEM_INTERFACE_VERSION, nullptr);
 	if (!g_pFileSystem)
 	{
 		Sys_Error("Can not retrive filesystem interface version '" FILESYSTEM_INTERFACE_VERSION "'.");

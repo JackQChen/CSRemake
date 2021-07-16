@@ -28,7 +28,7 @@
 
 #include "precompiled.h"
 
-void HostageFollowState::OnEnter(CHostageImprov *improv)
+void HostageFollowState::OnEnter(CHostageImprov* improv)
 {
 	improv->Chatter(HOSTAGE_CHATTER_START_FOLLOW);
 	improv->Agree();
@@ -49,7 +49,7 @@ void HostageFollowState::OnEnter(CHostageImprov *improv)
 	}
 }
 
-void HostageFollowState::OnUpdate(CHostageImprov *improv)
+void HostageFollowState::OnUpdate(CHostageImprov* improv)
 {
 	// if we lost our leader, give up
 	if (!m_leader)
@@ -163,7 +163,7 @@ void HostageFollowState::OnUpdate(CHostageImprov *improv)
 		bool makeWay = false;
 		const float cosTolerance = 0.99f;
 
-		if (improv->IsPlayerLookingAtMe((CBasePlayer *)m_leader, cosTolerance))
+		if (improv->IsPlayerLookingAtMe((CBasePlayer*)m_leader, cosTolerance))
 		{
 			if (!m_makeWayTimer.HasStarted())
 			{
@@ -212,7 +212,7 @@ void HostageFollowState::OnUpdate(CHostageImprov *improv)
 
 	improv->Stop();
 
-	CBasePlayer *pTerrorist = improv->GetClosestVisiblePlayer(TERRORIST);
+	CBasePlayer* pTerrorist = improv->GetClosestVisiblePlayer(TERRORIST);
 	if (pTerrorist)
 	{
 		improv->LookAt(pTerrorist->EyePosition());
@@ -223,12 +223,12 @@ void HostageFollowState::OnUpdate(CHostageImprov *improv)
 	}
 }
 
-void HostageFollowState::OnExit(CHostageImprov *improv)
+void HostageFollowState::OnExit(CHostageImprov* improv)
 {
 	improv->Stop();
 }
 
-void HostageFollowState::UpdateStationaryAnimation(CHostageImprov *improv)
+void HostageFollowState::UpdateStationaryAnimation(CHostageImprov* improv)
 {
 	if (improv->IsScared())
 		improv->UpdateIdleActivity(ACT_FOLLOW_IDLE_SCARED, ACT_RESET);

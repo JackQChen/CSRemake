@@ -33,7 +33,7 @@ void CFlashbang::Precache()
 	PRECACHE_SOUND("weapons/pinpull.wav");
 }
 
-int CFlashbang::GetItemInfo(ItemInfo *p)
+int CFlashbang::GetItemInfo(ItemInfo* p)
 {
 	auto info = GetWeaponInfo(WEAPON_FLASHBANG);
 
@@ -250,12 +250,12 @@ void CFlashbang::WeaponIdle()
 			}
 			else
 			{
-			#ifdef REGAMEDLL_FIXES
+#ifdef REGAMEDLL_FIXES
 				iAnim = FLASHBANG_IDLE;
-			#else
+#else
 				// TODO: This is a bug?
-				iAnim = *(int *)&flRand;
-			#endif
+				iAnim = *(int*)&flRand;
+#endif
 				m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 75.0f / 30.0f;
 			}
 

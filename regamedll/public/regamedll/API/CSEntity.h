@@ -38,32 +38,32 @@ public:
 	}
 
 	virtual ~CCSEntity() {}
-	virtual void FireBullets(int iShots, Vector &vecSrc, Vector &vecDirShooting, Vector &vecSpread, float flDistance, int iBulletType, int iTracerFreq, int iDamage, entvars_t *pevAttacker);
-	virtual Vector FireBullets3(Vector &vecSrc, Vector &vecDirShooting, float vecSpread, float flDistance, int iPenetration, int iBulletType, int iDamage, float flRangeModifier, entvars_t *pevAttacker, bool bPistol, int shared_rand);
+	virtual void FireBullets(int iShots, Vector& vecSrc, Vector& vecDirShooting, Vector& vecSpread, float flDistance, int iBulletType, int iTracerFreq, int iDamage, entvars_t* pevAttacker);
+	virtual Vector FireBullets3(Vector& vecSrc, Vector& vecDirShooting, float vecSpread, float flDistance, int iPenetration, int iBulletType, int iDamage, float flRangeModifier, entvars_t* pevAttacker, bool bPistol, int shared_rand);
 
 public:
-	CBaseEntity *m_pContainingEntity;
+	CBaseEntity* m_pContainingEntity;
 };
 
-class CCSDelay: public CCSEntity
+class CCSDelay : public CCSEntity
 {
 public:
 
 };
 
-class CCSAnimating: public CCSDelay
+class CCSAnimating : public CCSDelay
 {
 public:
 
 };
 
-class CCSToggle: public CCSAnimating
+class CCSToggle : public CCSAnimating
 {
 public:
 
 };
 
-class CCSMonster: public CCSToggle
+class CCSMonster : public CCSToggle
 {
 public:
 

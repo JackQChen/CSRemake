@@ -28,19 +28,19 @@
 
 #pragma once
 
-class CNullEntity: public CBaseEntity
+class CNullEntity : public CBaseEntity
 {
 public:
 	virtual void Spawn();
 };
 
-class CBaseDMStart: public CPointEntity
+class CBaseDMStart : public CPointEntity
 {
 public:
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual BOOL IsTriggered(CBaseEntity *pEntity);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual BOOL IsTriggered(CBaseEntity* pEntity);
 };
 
-void FireTargets(const char *targetName, CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
-void SetMovedir(entvars_t *pev);
-BOOL FEntIsVisible(entvars_t *pev, entvars_t *pevTarget);
+void FireTargets(const char* targetName, CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
+void SetMovedir(entvars_t* pev);
+BOOL FEntIsVisible(entvars_t* pev, entvars_t* pevTarget);

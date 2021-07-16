@@ -35,17 +35,17 @@ class CHostage;
 enum HostageChatterType;
 
 // A Counter-Strike Hostage improved
-class CHostageImprov: public CImprov
+class CHostageImprov : public CImprov
 {
 public:
-	CHostageImprov(CBaseEntity *pEntity = nullptr);
+	CHostageImprov(CBaseEntity* pEntity = nullptr);
 	~CHostageImprov() {};
 
 	// invoked when an improv reaches its MoveTo goal
-	virtual void OnMoveToSuccess(const Vector &goal) { m_behavior.OnMoveToSuccess(goal); }
+	virtual void OnMoveToSuccess(const Vector& goal) { m_behavior.OnMoveToSuccess(goal); }
 
 	// invoked when an improv fails to reach a MoveTo goal
-	virtual void OnMoveToFailure(const Vector &goal, MoveToFailureType reason);
+	virtual void OnMoveToFailure(const Vector& goal, MoveToFailureType reason);
 	virtual void OnInjury(float amount)
 	{
 		m_behavior.OnInjury(amount);
@@ -53,39 +53,39 @@ public:
 		Frighten(TERRIFIED);
 	}
 	virtual bool IsAlive() const;
-	virtual void MoveTo(const Vector &goal);
-	virtual void LookAt(const Vector &target);
+	virtual void MoveTo(const Vector& goal);
+	virtual void LookAt(const Vector& target);
 	virtual void ClearLookAt();
-	virtual void FaceTo(const Vector &goal);
+	virtual void FaceTo(const Vector& goal);
 	virtual void ClearFaceTo();
 	virtual bool IsAtMoveGoal(float error = 20.0f) const;
 	virtual bool HasLookAt() const { return m_isLookingAt; }
 	virtual bool HasFaceTo() const { return m_isFacingTo; }
 	virtual bool IsAtFaceGoal() const;
-	virtual bool IsFriendInTheWay(const Vector &goalPos) const;
-	virtual bool IsFriendInTheWay(CBaseEntity *myFriend, const Vector &goalPos) const;
+	virtual bool IsFriendInTheWay(const Vector& goalPos) const;
+	virtual bool IsFriendInTheWay(CBaseEntity* myFriend, const Vector& goalPos) const;
 	virtual void MoveForward() { m_moveFlags |= IN_FORWARD; }
 	virtual void MoveBackward() { m_moveFlags |= IN_BACK; }
 	virtual void StrafeLeft() { m_moveFlags |= IN_MOVELEFT; }
 	virtual void StrafeRight() { m_moveFlags |= IN_MOVERIGHT; }
 
-	#define HOSTAGE_MUST_JUMP true
+#define HOSTAGE_MUST_JUMP true
 	virtual bool Jump();
 
 	virtual void Crouch();
 	virtual void StandUp();
-	virtual void TrackPath(const Vector &pathGoal, float deltaT);												// move along path by following "pathGoal"
-	virtual void StartLadder(const CNavLadder *ladder, NavTraverseType how, const Vector *approachPos, const Vector *departPos);
-	virtual bool TraverseLadder(const CNavLadder *ladder, NavTraverseType how, const Vector *approachPos, const Vector *departPos, float deltaT);
-	virtual bool GetSimpleGroundHeightWithFloor(const Vector *pos, float *height, Vector *normal = nullptr);
+	virtual void TrackPath(const Vector& pathGoal, float deltaT);												// move along path by following "pathGoal"
+	virtual void StartLadder(const CNavLadder* ladder, NavTraverseType how, const Vector* approachPos, const Vector* departPos);
+	virtual bool TraverseLadder(const CNavLadder* ladder, NavTraverseType how, const Vector* approachPos, const Vector* departPos, float deltaT);
+	virtual bool GetSimpleGroundHeightWithFloor(const Vector* pos, float* height, Vector* normal = nullptr);
 	virtual void Run();
 	virtual void Walk();
 	virtual void Stop();
 	virtual float GetMoveAngle() const { return m_moveAngle; }
 	virtual float GetFaceAngle() const { return m_moveAngle; }
-	virtual const Vector &GetFeet() const;
-	virtual const Vector &GetCentroid() const;
-	virtual const Vector &GetEyes() const;
+	virtual const Vector& GetFeet() const;
+	virtual const Vector& GetCentroid() const;
+	virtual const Vector& GetEyes() const;
 	virtual bool IsRunning() const { return (m_moveType == Running); }
 	virtual bool IsWalking() const { return (m_moveType == Walking); }
 	virtual bool IsStopped() const { return (m_moveType == Stopped); }
@@ -97,16 +97,16 @@ public:
 	virtual bool CanRun() const { return true; }
 	virtual bool CanCrouch() const { return true; }
 	virtual bool CanJump() const { return true; }
-	virtual bool IsVisible(const Vector &pos, bool testFOV = false) const;						// return true if hostage can see position
-	virtual bool IsPlayerLookingAtMe(CBasePlayer *pOther, float cosTolerance = 0.95f) const;
-	virtual CBasePlayer *IsAnyPlayerLookingAtMe(int team = 0, float cosTolerance = 0.95f) const;
-	virtual CBasePlayer *GetClosestPlayerByTravelDistance(int team = 0, float *range = nullptr) const;
-	virtual CNavArea *GetLastKnownArea() const { return m_lastKnownArea; }
+	virtual bool IsVisible(const Vector& pos, bool testFOV = false) const;						// return true if hostage can see position
+	virtual bool IsPlayerLookingAtMe(CBasePlayer* pOther, float cosTolerance = 0.95f) const;
+	virtual CBasePlayer* IsAnyPlayerLookingAtMe(int team = 0, float cosTolerance = 0.95f) const;
+	virtual CBasePlayer* GetClosestPlayerByTravelDistance(int team = 0, float* range = nullptr) const;
+	virtual CNavArea* GetLastKnownArea() const { return m_lastKnownArea; }
 	virtual void OnUpdate(float deltaT);
 	virtual void OnUpkeep(float deltaT);
 	virtual void OnReset();
-	virtual void OnGameEvent(GameEventType event, CBaseEntity *pEntity = nullptr, CBaseEntity *pOther = nullptr);
-	virtual void OnTouch(CBaseEntity *pOther);									// in contact with "other"
+	virtual void OnGameEvent(GameEventType event, CBaseEntity* pEntity = nullptr, CBaseEntity* pOther = nullptr);
+	virtual void OnTouch(CBaseEntity* pOther);									// in contact with "other"
 
 #ifdef PLAY_GAMEDLL
 	void ApplyForce2(real_t x, real_t y);
@@ -118,16 +118,16 @@ public:
 
 	void FaceOutwards();
 	bool IsFriendInTheWay() const;
-	void SetKnownGoodPosition(const Vector &pos);
-	const Vector &GetKnownGoodPosition() const { return m_knownGoodPos; }
+	void SetKnownGoodPosition(const Vector& pos);
+	const Vector& GetKnownGoodPosition() const { return m_knownGoodPos; }
 	void ResetToKnownGoodPosition();
 	void ResetJump();
 	void ApplyForce(Vector force);					// apply a force to the hostage
 	const Vector GetActualVelocity() const { return m_actualVel; }
 	void SetMoveLimit(MoveType limit) { m_moveLimit = limit; }
 	MoveType GetMoveLimit() const { return m_moveLimit; }
-	CNavPath *GetPath() { return &m_path; }
-	CNavPathFollower *GetPathFollower();
+	CNavPath* GetPath() { return &m_path; }
+	CNavPathFollower* GetPathFollower();
 
 	// hostage states
 	// stand idle
@@ -135,8 +135,8 @@ public:
 	bool IsIdle() const { return m_behavior.IsState(&m_idleState); }
 
 	// begin following "leader"
-	void Follow(CBasePlayer *leader) { m_followState.SetLeader(leader); m_behavior.SetState(&m_followState); }
-	bool IsFollowing(const CBaseEntity *pLeader = nullptr) const
+	void Follow(CBasePlayer* leader) { m_followState.SetLeader(leader); m_behavior.SetState(&m_followState); }
+	bool IsFollowing(const CBaseEntity* pLeader = nullptr) const
 	{
 		if (!m_behavior.IsState(&m_followState))
 			return false;
@@ -157,8 +157,8 @@ public:
 
 	bool IsAtHome() const;
 	bool CanSeeRescueZone() const;
-	CBasePlayer *GetFollowLeader() const { return m_followState.GetLeader(); }
-	CBasePlayer *GetClosestVisiblePlayer(int team);
+	CBasePlayer* GetFollowLeader() const { return m_followState.GetLeader(); }
+	CBasePlayer* GetClosestVisiblePlayer(int team);
 	float GetTimeSinceLastSawPlayer(int team);
 	float GetTimeSinceLastInjury();
 	float GetTimeSinceLastNoise();
@@ -181,17 +181,17 @@ public:
 	void Flinch(Activity activity);
 	void UpdateIdleActivity(Activity activity, Activity fidget);
 	void UpdateStationaryAnimation();
-	CHostage *GetEntity() const { return m_hostage; }
+	CHostage* GetEntity() const { return m_hostage; }
 	void CheckForNearbyTerrorists();
 	void UpdatePosition(float deltaT);
-	void MoveTowards(const Vector &pos, float deltaT);
-	bool FaceTowards(const Vector &target, float deltaT);	// rotate body to face towards "target"
+	void MoveTowards(const Vector& pos, float deltaT);
+	bool FaceTowards(const Vector& target, float deltaT);	// rotate body to face towards "target"
 	float GetSpeed();
 	void SetMoveAngle(float angle) { m_moveAngle = angle; }
 	void Wiggle();											// attempt to wiggle-out of begin stuck
 	void ClearPath();
 
-	#define HOSTAGE_ONLY_JUMP_DOWN true
+#define HOSTAGE_ONLY_JUMP_DOWN true
 	bool DiscontinuityJump(float ground, bool onlyJumpDown = false, bool mustJump = false);
 	void UpdateVision();
 
@@ -200,8 +200,8 @@ public:
 	CountdownTimer m_grenadeTimer;
 
 private:
-	CHostage *m_hostage;
-	CNavArea *m_lastKnownArea;	// last area we were in
+	CHostage* m_hostage;
+	CNavArea* m_lastKnownArea;	// last area we were in
 	mutable Vector m_centroid;
 	mutable Vector m_eye;
 	HostageStateMachine m_behavior;
@@ -274,15 +274,15 @@ private:
 class CheckWayFunctor
 {
 public:
-	CheckWayFunctor(const CHostageImprov *me, const Vector &goalPos)
+	CheckWayFunctor(const CHostageImprov* me, const Vector& goalPos)
 	{
 		m_me = me;
 		m_goalPos = goalPos;
 		m_blocker = nullptr;
 	}
-	bool operator()(CHostage *them)
+	bool operator()(CHostage* them)
 	{
-		if (((CBaseMonster *)them)->IsAlive() && m_me->IsFriendInTheWay((CBaseEntity *)them, m_goalPos))
+		if (((CBaseMonster*)them)->IsAlive() && m_me->IsFriendInTheWay((CBaseEntity*)them, m_goalPos))
 		{
 			m_blocker = them;
 			return false;
@@ -291,9 +291,9 @@ public:
 		return true;
 	}
 
-	const CHostageImprov *m_me;
+	const CHostageImprov* m_me;
 	Vector m_goalPos;
-	CHostage *m_blocker;
+	CHostage* m_blocker;
 };
 
 // Functor used with NavAreaBuildPath() for building Hostage paths.
@@ -301,7 +301,7 @@ public:
 class HostagePathCost
 {
 public:
-	float operator()(CNavArea *area, CNavArea *fromArea, const CNavLadder *ladder)
+	float operator()(CNavArea* area, CNavArea* fromArea, const CNavLadder* ladder)
 	{
 		if (fromArea == nullptr)
 		{
@@ -347,19 +347,19 @@ public:
 class KeepPersonalSpace
 {
 public:
-	KeepPersonalSpace(CHostageImprov *improv)
+	KeepPersonalSpace(CHostageImprov* improv)
 	{
 		m_improv = improv;
 		m_velDir = improv->GetActualVelocity();
 		m_speed = m_velDir.NormalizeInPlace();
 	}
-	bool operator()(CBaseEntity *pEntity)
+	bool operator()(CBaseEntity* pEntity)
 	{
 		const float space = 1.0f;
 		Vector to;
 		float range;
 
-		if (pEntity == reinterpret_cast<CBaseEntity *>(m_improv->GetEntity()))
+		if (pEntity == reinterpret_cast<CBaseEntity*>(m_improv->GetEntity()))
 			return true;
 
 		if (pEntity->IsPlayer() && !pEntity->IsAlive())
@@ -374,7 +374,7 @@ public:
 		range = to.NormalizeInPlace();
 #endif
 
-		CBasePlayer *pPlayer = static_cast<CBasePlayer *>(pEntity);
+		CBasePlayer* pPlayer = static_cast<CBasePlayer*>(pEntity);
 
 		const float spring = 50.0f;
 		const float damper = 1.0f;
@@ -403,7 +403,7 @@ public:
 	}
 
 private:
-	CHostageImprov *m_improv;
+	CHostageImprov* m_improv;
 	Vector m_velDir;
 	float m_speed;
 };
@@ -411,20 +411,20 @@ private:
 class CheckAhead
 {
 public:
-	CheckAhead(const CHostageImprov *me)
+	CheckAhead(const CHostageImprov* me)
 	{
 		m_me = me;
 		m_dir = Vector(BotCOS(me->GetMoveAngle()), BotSIN(me->GetMoveAngle()), 0.0f);
 		m_isBlocked = false;
 	}
-	bool operator()(CBaseEntity *pEntity)
+	bool operator()(CBaseEntity* pEntity)
 	{
 		Vector to;
 		real_t range;
 		const float closeRange = 60.0f;
 		const float aheadTolerance = 0.95f;
 
-		if (pEntity != reinterpret_cast<CBaseEntity *>(m_me->GetEntity()))
+		if (pEntity != reinterpret_cast<CBaseEntity*>(m_me->GetEntity()))
 		{
 			to = (pEntity->Center() - m_me->GetCentroid());
 			range = to.NormalizeInPlace();
@@ -438,7 +438,7 @@ public:
 	bool IsBlocked() const { return m_isBlocked; }
 
 private:
-	const CHostageImprov *m_me;
+	const CHostageImprov* m_me;
 	Vector m_dir;
 	bool m_isBlocked;
 };

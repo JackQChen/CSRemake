@@ -42,19 +42,19 @@
 
 const int MAX_TR_TARGETS = 16; // maximum number of targets a single trigger_random entity may be assigned.
 
-class CTriggerRandom: public CBaseDelay {
+class CTriggerRandom : public CBaseDelay {
 public:
 	void Spawn();
-	void KeyValue(KeyValueData *pkvd);
-	int Save(CSave &save);
-	int Restore(CRestore &restore);
+	void KeyValue(KeyValueData* pkvd);
+	int Save(CSave& save);
+	int Restore(CRestore& restore);
 	int ObjectCaps() { return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
-	void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 protected:
 	void InitUnique();
 	float RandomDelay();
-	void Fire(CBaseEntity *pActivator);
+	void Fire(CBaseEntity* pActivator);
 	void EXPORT RandomThink();
 
 	static TYPEDESCRIPTION m_SaveData[];

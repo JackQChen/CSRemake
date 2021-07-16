@@ -29,7 +29,7 @@
 #include "precompiled.h"
 
 // Follow our leader
-void FollowState::OnEnter(CCSBot *me)
+void FollowState::OnEnter(CCSBot* me)
 {
 	me->StandUp();
 	me->Run();
@@ -100,7 +100,7 @@ void FollowState::ComputeLeaderMotionState(float leaderSpeed)
 
 // Follow our leader
 // TODO: Clean up this nasty mess
-void FollowState::OnUpdate(CCSBot *me)
+void FollowState::OnUpdate(CCSBot* me)
 {
 	// if we lost our leader, give up
 	if (!m_leader || !m_leader->IsAlive())
@@ -238,7 +238,7 @@ void FollowState::OnUpdate(CCSBot *me)
 		// move to one of the collected areas
 		if (collector.m_targetAreaCount)
 		{
-			CNavArea *target = nullptr;
+			CNavArea* target = nullptr;
 			Vector targetPos;
 
 			// if we are idle, pick a random area
@@ -253,7 +253,7 @@ void FollowState::OnUpdate(CCSBot *me)
 				me->PrintIfWatched("%4.1f: Repathing to stay with leader.\n", gpGlobals->time);
 
 				// find closest area to where we are
-				CNavArea *area;
+				CNavArea* area;
 				float closeRangeSq = 9999999999.9f;
 				Vector close;
 
@@ -284,7 +284,7 @@ void FollowState::OnUpdate(CCSBot *me)
 	}
 }
 
-void FollowState::OnExit(CCSBot *me)
+void FollowState::OnExit(CCSBot* me)
 {
 	;
 }

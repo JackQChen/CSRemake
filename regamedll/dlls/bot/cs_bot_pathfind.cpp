@@ -41,8 +41,8 @@ bool CCSBot::ComputePathPositions()
 
 	for (int i = 1; i < m_pathLength; i++)
 	{
-		const ConnectInfo *from = &m_path[i - 1];
-		ConnectInfo *to = &m_path[i];
+		const ConnectInfo* from = &m_path[i - 1];
+		ConnectInfo* to = &m_path[i];
 
 		// walk along the floor to the next area
 		if (to->how <= GO_WEST)
@@ -98,11 +98,11 @@ bool CCSBot::ComputePathPositions()
 		else if (to->how == GO_LADDER_UP)
 		{
 			// find our ladder
-			const NavLadderList *list = from->area->GetLadderList(LADDER_UP);
+			const NavLadderList* list = from->area->GetLadderList(LADDER_UP);
 			NavLadderList::const_iterator iter;
 			for (iter = list->begin(); iter != list->end(); iter++)
 			{
-				CNavLadder *ladder = (*iter);
+				CNavLadder* ladder = (*iter);
 
 				// can't use "behind" area when ascending...
 				if (ladder->m_topForwardArea == to->area || ladder->m_topLeftArea == to->area || ladder->m_topRightArea == to->area)
@@ -124,11 +124,11 @@ bool CCSBot::ComputePathPositions()
 		else if (to->how == GO_LADDER_DOWN)
 		{
 			// find our ladder
-			const NavLadderList *list = from->area->GetLadderList(LADDER_DOWN);
+			const NavLadderList* list = from->area->GetLadderList(LADDER_DOWN);
 			NavLadderList::const_iterator iter;
 			for (iter = list->begin(); iter != list->end(); iter++)
 			{
-				CNavLadder *ladder = (*iter);
+				CNavLadder* ladder = (*iter);
 
 				if (ladder->m_bottomArea == to->area)
 				{
@@ -156,7 +156,7 @@ void CCSBot::SetupLadderMovement()
 	if (m_pathIndex < 1 || m_pathLength == 0)
 		return;
 
-	const ConnectInfo *to = &m_path[m_pathIndex];
+	const ConnectInfo* to = &m_path[m_pathIndex];
 
 	if (to->ladder)
 	{
@@ -606,14 +606,14 @@ bool CCSBot::UpdateLadderMovement()
 
 // Compute closest point on path to given point
 // NOTE: This does not do line-of-sight tests, so closest point may be thru the floor, etc
-bool CCSBot::FindClosestPointOnPath(const Vector *worldPos, int startIndex, int endIndex, Vector *close) const
+bool CCSBot::FindClosestPointOnPath(const Vector* worldPos, int startIndex, int endIndex, Vector* close) const
 {
 	if (!HasPath() || !close)
 		return false;
 
 	Vector along, toWorldPos;
 	Vector pos;
-	const Vector *from, *to;
+	const Vector* from, * to;
 	float length;
 	float closeLength;
 	float closeDistSq = 9999999999.9f;
@@ -659,7 +659,7 @@ bool CCSBot::FindClosestPointOnPath(const Vector *worldPos, int startIndex, int 
 
 // Return the closest point to our current position on our current path
 // If "local" is true, only check the portion of the path surrounding m_pathIndex.
-int CCSBot::FindOurPositionOnPath(Vector *close, bool local) const
+int CCSBot::FindOurPositionOnPath(Vector* close, bool local) const
 {
 	if (!HasPath())
 		return -1;
@@ -668,7 +668,7 @@ int CCSBot::FindOurPositionOnPath(Vector *close, bool local) const
 	Vector feet(pev->origin.x, pev->origin.y, GetFeetZ());
 	Vector eyes = feet + Vector(0, 0, HalfHumanHeight); // in case we're crouching
 	Vector pos;
-	const Vector *from, *to;
+	const Vector* from, * to;
 	real_t length;
 	float closeLength;
 	float closeDistSq = 9999999999.9;
@@ -744,10 +744,10 @@ int CCSBot::FindOurPositionOnPath(Vector *close, bool local) const
 }
 
 // Test for un-jumpable height change, or unrecoverable fall
-bool CCSBot::IsStraightLinePathWalkable(const Vector *goal) const
+bool CCSBot::IsStraightLinePathWalkable(const Vector* goal) const
 {
-// this is causing hang-up problems when crawling thru ducts/windows that drop off into rooms (they fail the "falling" check)
-return true;
+	// this is causing hang-up problems when crawling thru ducts/windows that drop off into rooms (they fail the "falling" check)
+	return true;
 
 	const float inc = GenerationStepSize;
 
@@ -800,7 +800,7 @@ return true;
 
 // Compute a point a fixed distance ahead along our path.
 // Returns path index just after point.
-int CCSBot::FindPathPoint(float aheadRange, Vector *point, int *prevIndex)
+int CCSBot::FindPathPoint(float aheadRange, Vector* point, int* prevIndex)
 {
 	// find path index just past aheadRange
 	int afterIndex;
@@ -968,8 +968,8 @@ int CCSBot::FindPathPoint(float aheadRange, Vector *point, int *prevIndex)
 	else
 	{
 		// interpolate point along path segment
-		const Vector *afterPoint = &m_path[afterIndex].pos;
-		const Vector *beforePoint = &m_path[afterIndex - 1].pos;
+		const Vector* afterPoint = &m_path[afterIndex].pos;
+		const Vector* beforePoint = &m_path[afterIndex - 1].pos;
 
 		Vector to = *afterPoint - *beforePoint;
 		float length = to.Length2D();
@@ -1094,7 +1094,7 @@ float CCSBot::GetApproximateFallDamage(float height) const
 }
 
 // Return true if a friend is between us and the given position
-bool CCSBot::IsFriendInTheWay(const Vector *goalPos) const
+bool CCSBot::IsFriendInTheWay(const Vector* goalPos) const
 {
 	// do this check less often to ease CPU burden
 	if (!m_avoidFriendTimer.IsElapsed())
@@ -1116,7 +1116,7 @@ bool CCSBot::IsFriendInTheWay(const Vector *goalPos) const
 	// check if any friends are overlapping this linear path
 	for (int i = 1; i <= gpGlobals->maxClients; i++)
 	{
-		CBasePlayer *pPlayer = UTIL_PlayerByIndex(i);
+		CBasePlayer* pPlayer = UTIL_PlayerByIndex(i);
 
 		if (!pPlayer)
 			continue;
@@ -1170,7 +1170,7 @@ bool CCSBot::IsFriendInTheWay(const Vector *goalPos) const
 }
 
 // Do reflex avoidance movements if our "feelers" are touched
-void CCSBot::FeelerReflexAdjustment(Vector *goalPosition)
+void CCSBot::FeelerReflexAdjustment(Vector* goalPosition)
 {
 	// if we are in a "precise" area, do not do feeler adjustments
 	if (m_lastKnownArea && (m_lastKnownArea->GetAttributes() & NAV_PRECISE))
@@ -1239,14 +1239,14 @@ void CCSBot::FeelerReflexAdjustment(Vector *goalPosition)
 
 	bool rightClear = IsWalkableTraceLineClear(from, to, WALK_THRU_EVERYTHING);
 
-/*
-	// avoid ledges, too
-	if (GetSimpleGroundHeightWithFloor(&from, &ground))
-	{
-		if (GetFeetZ() - ground > JumpHeight)
-			rightClear = false;
-	}
-*/
+	/*
+		// avoid ledges, too
+		if (GetSimpleGroundHeightWithFloor(&from, &ground))
+		{
+			if (GetFeetZ() - ground > JumpHeight)
+				rightClear = false;
+		}
+	*/
 
 	if ((cv_bot_traceview.value == 1.0f && IsLocalPlayerWatchingMe()) || cv_bot_traceview.value == 10.0f)
 	{
@@ -1366,7 +1366,7 @@ CCSBot::PathResult CCSBot::UpdatePathMovement(bool allowSpeedChange)
 		bool didCrouch = false;
 		for (int i = prevIndex; i < m_pathLength; i++)
 		{
-			const CNavArea *to = m_path[i].area;
+			const CNavArea* to = m_path[i].area;
 
 			// if there is a jump area on the way to the crouch area, don't crouch as it messes up the jump
 			// unless we are already higher than the jump area - we must've jumped already but not moved into next area
@@ -1477,7 +1477,7 @@ CCSBot::PathResult CCSBot::UpdatePathMovement(bool allowSpeedChange)
 	{
 		DrawPath();
 
-		const Vector *pos = &m_path[m_pathIndex].pos;
+		const Vector* pos = &m_path[m_pathIndex].pos;
 		UTIL_DrawBeamPoints(*pos, *pos + Vector(0, 0, 50), 1, 255, 255, 0);
 		UTIL_DrawBeamPoints(adjustedGoal, adjustedGoal + Vector(0, 0, 50), 1, 255, 0, 255);
 		UTIL_DrawBeamPoints(pev->origin, adjustedGoal + Vector(0, 0, 50), 1, 255, 0, 255);
@@ -1582,7 +1582,7 @@ CCSBot::PathResult CCSBot::UpdatePathMovement(bool allowSpeedChange)
 }
 
 // Build trivial path to goal, assuming we are already in the same area
-void CCSBot::BuildTrivialPath(const Vector *goal)
+void CCSBot::BuildTrivialPath(const Vector* goal)
 {
 	m_pathIndex = 1;
 	m_pathLength = 2;
@@ -1608,7 +1608,7 @@ void CCSBot::BuildTrivialPath(const Vector *goal)
 
 // Compute shortest path to goal position via A* algorithm
 // If 'goalArea' is NULL, path will get as close as it can.
-bool CCSBot::ComputePath(CNavArea *goalArea, const Vector *goal, RouteType route)
+bool CCSBot::ComputePath(CNavArea* goalArea, const Vector* goal, RouteType route)
 {
 	// Throttle re-pathing
 	if (!m_repathTimer.IsElapsed())
@@ -1619,7 +1619,7 @@ bool CCSBot::ComputePath(CNavArea *goalArea, const Vector *goal, RouteType route
 
 	DestroyPath();
 
-	CNavArea *startArea = m_lastKnownArea;
+	CNavArea* startArea = m_lastKnownArea;
 	if (!startArea)
 		return false;
 
@@ -1648,16 +1648,16 @@ bool CCSBot::ComputePath(CNavArea *goalArea, const Vector *goal, RouteType route
 	}
 
 	// Compute shortest path to goal
-	CNavArea *closestArea = nullptr;
+	CNavArea* closestArea = nullptr;
 	PathCost pathCost(this, route);
 	bool pathToGoalExists = NavAreaBuildPath(startArea, goalArea, goal, pathCost, &closestArea);
 
-	CNavArea *effectiveGoalArea = (pathToGoalExists) ? goalArea : closestArea;
+	CNavArea* effectiveGoalArea = (pathToGoalExists) ? goalArea : closestArea;
 
 	// Build path by following parent links
 	// get count
 	int count = 0;
-	CNavArea *area;
+	CNavArea* area;
 	for (area = effectiveGoalArea; area; area = area->GetParent())
 	{
 		count++;
@@ -1743,7 +1743,7 @@ float CCSBot::GetPathDistanceRemaining() const
 	int idx = (m_pathIndex < m_pathLength) ? m_pathIndex : m_pathLength - 1;
 
 	float dist = 0.0f;
-	const Vector *prevCenter = m_path[m_pathIndex].area->GetCenter();
+	const Vector* prevCenter = m_path[m_pathIndex].area->GetCenter();
 
 	for (int i = idx + 1; i < m_pathLength; i++)
 	{

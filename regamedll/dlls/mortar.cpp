@@ -13,7 +13,7 @@ TYPEDESCRIPTION CFuncMortarField::m_SaveData[] =
 LINK_ENTITY_TO_CLASS(func_mortar_field, CFuncMortarField, CCSFuncMortarField)
 IMPLEMENT_SAVERESTORE(CFuncMortarField, CBaseToggle)
 
-void CFuncMortarField::KeyValue(KeyValueData *pkvd)
+void CFuncMortarField::KeyValue(KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "m_iszXController"))
 	{
@@ -64,7 +64,7 @@ void CFuncMortarField::Precache()
 }
 
 // If connected to a table, then use the table controllers, else hit where the trigger is.
-void CFuncMortarField::FieldUse(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void CFuncMortarField::FieldUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	Vector vecStart;
 
@@ -74,10 +74,10 @@ void CFuncMortarField::FieldUse(CBaseEntity *pActivator, CBaseEntity *pCaller, U
 
 	switch (m_fControl)
 	{
-	// random
+		// random
 	case 0:
 		break;
-	// Trigger Activator
+		// Trigger Activator
 	case 1:
 	{
 		if (pActivator)
@@ -90,7 +90,7 @@ void CFuncMortarField::FieldUse(CBaseEntity *pActivator, CBaseEntity *pCaller, U
 	// table
 	case 2:
 	{
-		CBaseEntity *pController;
+		CBaseEntity* pController;
 
 		if (!FStringNull(m_iszXController))
 		{
@@ -128,13 +128,13 @@ void CFuncMortarField::FieldUse(CBaseEntity *pActivator, CBaseEntity *pCaller, U
 		TraceResult tr;
 		UTIL_TraceLine(vecSpot, vecSpot + Vector(0, 0, -1) * 4096, ignore_monsters, ENT(pev), &tr);
 
-		edict_t *pentOwner = nullptr;
+		edict_t* pentOwner = nullptr;
 		if (pActivator)
 		{
 			pentOwner = pActivator->edict();
 		}
 
-		CBaseEntity *pMortar = Create("monster_mortar", tr.vecEndPos, Vector(0, 0, 0), pentOwner);
+		CBaseEntity* pMortar = Create("monster_mortar", tr.vecEndPos, Vector(0, 0, 0), pentOwner);
 		pMortar->pev->nextthink = gpGlobals->time + t;
 		t += RANDOM_FLOAT(0.2, 0.5);
 #ifndef REGAMEDLL_FIXES
@@ -168,24 +168,24 @@ void CMortar::MortarExplode()
 {
 	// mortar beam
 	MESSAGE_BEGIN(MSG_BROADCAST, SVC_TEMPENTITY);
-		WRITE_BYTE(TE_BEAMPOINTS);
-		WRITE_COORD(pev->origin.x);
-		WRITE_COORD(pev->origin.y);
-		WRITE_COORD(pev->origin.z);
-		WRITE_COORD(pev->origin.x);
-		WRITE_COORD(pev->origin.y);
-		WRITE_COORD(pev->origin.z + 1024);
-		WRITE_SHORT(m_spriteTexture);
-		WRITE_BYTE(0);		// framerate
-		WRITE_BYTE(0);		// framerate
-		WRITE_BYTE(1);		// life
-		WRITE_BYTE(40);		// width
-		WRITE_BYTE(0);		// noise
-		WRITE_BYTE(255);	// r, g, b
-		WRITE_BYTE(160);	// r, g, b
-		WRITE_BYTE(100);	// r, g, b
-		WRITE_BYTE(128);	// brightness
-		WRITE_BYTE(0);		// speed
+	WRITE_BYTE(TE_BEAMPOINTS);
+	WRITE_COORD(pev->origin.x);
+	WRITE_COORD(pev->origin.y);
+	WRITE_COORD(pev->origin.z);
+	WRITE_COORD(pev->origin.x);
+	WRITE_COORD(pev->origin.y);
+	WRITE_COORD(pev->origin.z + 1024);
+	WRITE_SHORT(m_spriteTexture);
+	WRITE_BYTE(0);		// framerate
+	WRITE_BYTE(0);		// framerate
+	WRITE_BYTE(1);		// life
+	WRITE_BYTE(40);		// width
+	WRITE_BYTE(0);		// noise
+	WRITE_BYTE(255);	// r, g, b
+	WRITE_BYTE(160);	// r, g, b
+	WRITE_BYTE(100);	// r, g, b
+	WRITE_BYTE(128);	// brightness
+	WRITE_BYTE(0);		// speed
 	MESSAGE_END();
 
 	TraceResult tr;

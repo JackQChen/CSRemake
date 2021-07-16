@@ -1,8 +1,8 @@
 #include "precompiled.h"
 
-LINK_HOOK_CHAIN(int, GetForceCamera, (CBasePlayer *pObserver), pObserver)
+LINK_HOOK_CHAIN(int, GetForceCamera, (CBasePlayer* pObserver), pObserver)
 
-int __API_HOOK(GetForceCamera)(CBasePlayer *pObserver)
+int __API_HOOK(GetForceCamera)(CBasePlayer* pObserver)
 {
 	int retVal;
 
@@ -19,14 +19,14 @@ int __API_HOOK(GetForceCamera)(CBasePlayer *pObserver)
 	return retVal;
 }
 
-LINK_HOOK_CLASS_CHAIN(CBasePlayer *, CBasePlayer, Observer_IsValidTarget, (int iPlayerIndex, bool bSameTeam), iPlayerIndex, bSameTeam)
+LINK_HOOK_CLASS_CHAIN(CBasePlayer*, CBasePlayer, Observer_IsValidTarget, (int iPlayerIndex, bool bSameTeam), iPlayerIndex, bSameTeam)
 
-CBasePlayer *CBasePlayer::__API_HOOK(Observer_IsValidTarget)(int iPlayerIndex, bool bSameTeam)
+CBasePlayer* CBasePlayer::__API_HOOK(Observer_IsValidTarget)(int iPlayerIndex, bool bSameTeam)
 {
 	if (iPlayerIndex > gpGlobals->maxClients || iPlayerIndex < 1)
 		return nullptr;
 
-	CBasePlayer *pPlayer = UTIL_PlayerByIndex(iPlayerIndex);
+	CBasePlayer* pPlayer = UTIL_PlayerByIndex(iPlayerIndex);
 
 	// Don't spec observers or players who haven't picked a class yet
 	if (!pPlayer || pPlayer == this)
@@ -47,7 +47,7 @@ CBasePlayer *CBasePlayer::__API_HOOK(Observer_IsValidTarget)(int iPlayerIndex, b
 	return pPlayer;
 }
 
-void UpdateClientEffects(CBasePlayer *pObserver, int oldMode)
+void UpdateClientEffects(CBasePlayer* pObserver, int oldMode)
 {
 	bool clearProgress = false;
 	bool clearBlindness = false;
@@ -62,7 +62,7 @@ void UpdateClientEffects(CBasePlayer *pObserver, int oldMode)
 
 		if (pObserver->m_hObserverTarget->IsPlayer())
 		{
-			CBasePlayer *pPlayer = UTIL_PlayerByIndex(pObserver->m_hObserverTarget->entindex());
+			CBasePlayer* pPlayer = UTIL_PlayerByIndex(pObserver->m_hObserverTarget->entindex());
 
 			if (pPlayer)
 			{
@@ -106,7 +106,7 @@ void UpdateClientEffects(CBasePlayer *pObserver, int oldMode)
 				if (pPlayer->m_bNightVisionOn != pObserver->m_bNightVisionOn)
 				{
 					MESSAGE_BEGIN(MSG_ONE, gmsgNVGToggle, nullptr, pObserver->pev);
-						WRITE_BYTE(pPlayer->m_bNightVisionOn ? STATUS_NIGHTVISION_ON : STATUS_NIGHTVISION_OFF);
+					WRITE_BYTE(pPlayer->m_bNightVisionOn ? STATUS_NIGHTVISION_ON : STATUS_NIGHTVISION_OFF);
 					MESSAGE_END();
 
 					pObserver->m_bNightVisionOn = pPlayer->m_bNightVisionOn;
@@ -130,7 +130,7 @@ void UpdateClientEffects(CBasePlayer *pObserver, int oldMode)
 	if (clearNightvision)
 	{
 		MESSAGE_BEGIN(MSG_ONE, gmsgNVGToggle, nullptr, pObserver->pev);
-			WRITE_BYTE(STATUS_NIGHTVISION_OFF);
+		WRITE_BYTE(STATUS_NIGHTVISION_OFF);
 		MESSAGE_END();
 
 		pObserver->m_bNightVisionOn = false;
@@ -138,7 +138,7 @@ void UpdateClientEffects(CBasePlayer *pObserver, int oldMode)
 }
 
 // Find the next client in the game for this player to spectate
-void CBasePlayer::Observer_FindNextPlayer(bool bReverse, const char *name)
+void CBasePlayer::Observer_FindNextPlayer(bool bReverse, const char* name)
 {
 	int iStart;
 	int iCurrent;
@@ -177,12 +177,11 @@ void CBasePlayer::Observer_FindNextPlayer(bool bReverse, const char *name)
 			if (!name)
 				break;
 
-			CBasePlayer *pPlayer = UTIL_PlayerByIndex(m_hObserverTarget->entindex());
+			CBasePlayer* pPlayer = UTIL_PlayerByIndex(m_hObserverTarget->entindex());
 			if (!Q_strcmp(name, STRING(pPlayer->pev->netname)))
 				break;
 		}
-	}
-	while (iCurrent != iStart);
+	} while (iCurrent != iStart);
 
 	// Did we find a target?
 	if (m_hObserverTarget)
@@ -194,8 +193,8 @@ void CBasePlayer::Observer_FindNextPlayer(bool bReverse, const char *name)
 			m_hObserverTarget->pev->health = 0.0f;
 
 		MESSAGE_BEGIN(MSG_ONE, gmsgSpecHealth2, nullptr, pev);
-			WRITE_BYTE(int(m_hObserverTarget->pev->health));
-			WRITE_BYTE(ENTINDEX(m_hObserverTarget->edict()));
+		WRITE_BYTE(int(m_hObserverTarget->pev->health));
+		WRITE_BYTE(ENTINDEX(m_hObserverTarget->edict()));
 		MESSAGE_END();
 
 		// Store the target in pev so the physics DLL can get to it
@@ -278,7 +277,7 @@ void CBasePlayer::Observer_CheckTarget()
 
 		if (m_hObserverTarget)
 		{
-			CBasePlayer *target = UTIL_PlayerByIndex(m_hObserverTarget->entindex());
+			CBasePlayer* target = UTIL_PlayerByIndex(m_hObserverTarget->entindex());
 
 			// check taget
 			if (!target || target->pev->deadflag == DEAD_RESPAWNABLE)
@@ -323,7 +322,7 @@ void CBasePlayer::Observer_CheckProperties()
 	// try to find a traget if we have no current one
 	if (pev->iuser1 == OBS_IN_EYE && m_hObserverTarget)
 	{
-		CBasePlayer *target = UTIL_PlayerByIndex(m_hObserverTarget->entindex());
+		CBasePlayer* target = UTIL_PlayerByIndex(m_hObserverTarget->entindex());
 
 		if (!target)
 			return;
@@ -338,16 +337,16 @@ void CBasePlayer::Observer_CheckProperties()
 
 			// write fov before wepon data, so zoomed crosshair is set correctly
 			MESSAGE_BEGIN(MSG_ONE, gmsgSetFOV, nullptr, pev);
-				WRITE_BYTE(m_iFOV);
+			WRITE_BYTE(m_iFOV);
 			MESSAGE_END();
 
 			m_iObserverWeapon = weapon;
 
 			//send weapon update
 			MESSAGE_BEGIN(MSG_ONE, gmsgCurWeapon, nullptr, pev);
-				WRITE_BYTE(1);	// 1 = current weapon, not on target
-				WRITE_BYTE(m_iObserverWeapon);
-				WRITE_BYTE(0);	// clip
+			WRITE_BYTE(1);	// 1 = current weapon, not on target
+			WRITE_BYTE(m_iObserverWeapon);
+			WRITE_BYTE(0);	// clip
 			MESSAGE_END();
 		}
 
@@ -366,18 +365,18 @@ void CBasePlayer::Observer_CheckProperties()
 			if (targetBombState)
 			{
 				MESSAGE_BEGIN(MSG_ONE, gmsgStatusIcon, nullptr, pev);
-					WRITE_BYTE(m_iObserverC4State);
-					WRITE_STRING("c4");
-					WRITE_BYTE(0);
-					WRITE_BYTE(160);
-					WRITE_BYTE(0);
+				WRITE_BYTE(m_iObserverC4State);
+				WRITE_STRING("c4");
+				WRITE_BYTE(0);
+				WRITE_BYTE(160);
+				WRITE_BYTE(0);
 				MESSAGE_END();
 			}
 			else
 			{
 				MESSAGE_BEGIN(MSG_ONE, gmsgStatusIcon, nullptr, pev);
-					WRITE_BYTE(STATUSICON_HIDE);
-					WRITE_STRING("c4");
+				WRITE_BYTE(STATUSICON_HIDE);
+				WRITE_STRING("c4");
 				MESSAGE_END();
 			}
 		}
@@ -389,18 +388,18 @@ void CBasePlayer::Observer_CheckProperties()
 			if (target->m_bHasDefuser)
 			{
 				MESSAGE_BEGIN(MSG_ONE, gmsgStatusIcon, nullptr, pev);
-					WRITE_BYTE(STATUSICON_SHOW);
-					WRITE_STRING("defuser");
-					WRITE_BYTE(0);
-					WRITE_BYTE(160);
-					WRITE_BYTE(0);
+				WRITE_BYTE(STATUSICON_SHOW);
+				WRITE_STRING("defuser");
+				WRITE_BYTE(0);
+				WRITE_BYTE(160);
+				WRITE_BYTE(0);
 				MESSAGE_END();
 			}
 			else
 			{
 				MESSAGE_BEGIN(MSG_ONE, gmsgStatusIcon, nullptr, pev);
-					WRITE_BYTE(STATUSICON_HIDE);
-					WRITE_STRING("defuser");
+				WRITE_BYTE(STATUSICON_HIDE);
+				WRITE_STRING("defuser");
 				MESSAGE_END();
 			}
 		}
@@ -414,9 +413,9 @@ void CBasePlayer::Observer_CheckProperties()
 			m_iObserverWeapon = 0;
 
 			MESSAGE_BEGIN(MSG_ONE, gmsgCurWeapon, nullptr, pev);
-				WRITE_BYTE(1);	// 1 = current weapon
-				WRITE_BYTE(m_iObserverWeapon);
-				WRITE_BYTE(0);	// clip
+			WRITE_BYTE(1);	// 1 = current weapon
+			WRITE_BYTE(m_iObserverWeapon);
+			WRITE_BYTE(0);	// clip
 			MESSAGE_END();
 		}
 
@@ -425,8 +424,8 @@ void CBasePlayer::Observer_CheckProperties()
 			m_iObserverC4State = 0;
 
 			MESSAGE_BEGIN(MSG_ONE, gmsgStatusIcon, nullptr, pev);
-				WRITE_BYTE(0);
-				WRITE_STRING("c4");
+			WRITE_BYTE(0);
+			WRITE_STRING("c4");
 			MESSAGE_END();
 		}
 
@@ -435,8 +434,8 @@ void CBasePlayer::Observer_CheckProperties()
 			m_bObserverHasDefuser = false;
 
 			MESSAGE_BEGIN(MSG_ONE, gmsgStatusIcon, nullptr, pev);
-				WRITE_BYTE(0);
-				WRITE_STRING("defuser");
+			WRITE_BYTE(0);
+			WRITE_STRING("defuser");
 			MESSAGE_END();
 		}
 	}
@@ -474,7 +473,7 @@ void CBasePlayer::Observer_SetMode(int iMode)
 	// verify observer target again
 	if (m_hObserverTarget)
 	{
-		CBasePlayer *pTarget = m_hObserverTarget;
+		CBasePlayer* pTarget = m_hObserverTarget;
 
 		if (pTarget == this || !pTarget || pTarget->has_disconnected || pTarget->GetObserverMode() != OBS_NONE || (pTarget->pev->effects & EF_NODRAW) || (forcecamera != CAMERA_MODE_SPEC_ANYONE && pTarget->m_iTeam != m_iTeam))
 			m_hObserverTarget = nullptr;
@@ -512,7 +511,7 @@ void CBasePlayer::Observer_SetMode(int iMode)
 
 #ifndef REGAMEDLL_FIXES
 	MESSAGE_BEGIN(MSG_ONE, gmsgCrosshair, nullptr, pev);
-		WRITE_BYTE((iMode == OBS_ROAMING) != 0);
+	WRITE_BYTE((iMode == OBS_ROAMING) != 0);
 	MESSAGE_END();
 #endif
 

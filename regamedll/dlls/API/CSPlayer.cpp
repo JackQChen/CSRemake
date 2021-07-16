@@ -30,7 +30,7 @@
 
 EXT_FUNC bool CCSPlayer::JoinTeam(TeamName team)
 {
-	CBasePlayer *pPlayer = BasePlayer();
+	CBasePlayer* pPlayer = BasePlayer();
 	switch (team)
 	{
 	case SPECTATOR:
@@ -54,7 +54,7 @@ EXT_FUNC bool CCSPlayer::JoinTeam(TeamName team)
 
 		pPlayer->TeamChangeUpdate();
 
-		edict_t *pentSpawnSpot = g_pGameRules->GetPlayerSpawnSpot(pPlayer);
+		edict_t* pentSpawnSpot = g_pGameRules->GetPlayerSpawnSpot(pPlayer);
 		pPlayer->StartObserver(pentSpawnSpot->v.origin, pentSpawnSpot->v.angles);
 
 		// do we have fadetoblack on? (need to fade their screen back in)
@@ -117,11 +117,11 @@ EXT_FUNC bool CCSPlayer::JoinTeam(TeamName team)
 	}
 
 	MESSAGE_BEGIN(MSG_ALL, gmsgScoreInfo);
-		WRITE_BYTE(ENTINDEX(pPlayer->edict()));
-		WRITE_SHORT(int(pPlayer->pev->frags));
-		WRITE_SHORT(pPlayer->m_iDeaths);
-		WRITE_SHORT(0);
-		WRITE_SHORT(0);
+	WRITE_BYTE(ENTINDEX(pPlayer->edict()));
+	WRITE_SHORT(int(pPlayer->pev->frags));
+	WRITE_SHORT(pPlayer->m_iDeaths);
+	WRITE_SHORT(0);
+	WRITE_SHORT(0);
 	MESSAGE_END();
 
 	// Switch their actual team...
@@ -137,7 +137,7 @@ EXT_FUNC bool CCSPlayer::RemovePlayerItemEx(const char* pszItemName, bool bRemov
 	if (!pszItemName)
 		return false;
 
-	CBasePlayer *pPlayer = BasePlayer();
+	CBasePlayer* pPlayer = BasePlayer();
 
 	// if it item_ ?
 	if (pszItemName[0] == 'i')
@@ -155,8 +155,8 @@ EXT_FUNC bool CCSPlayer::RemovePlayerItemEx(const char* pszItemName, bool bRemov
 			pPlayer->pev->body = 0;
 
 			MESSAGE_BEGIN(MSG_ONE, gmsgStatusIcon, nullptr, pPlayer->pev);
-				WRITE_BYTE(STATUSICON_HIDE);
-				WRITE_STRING("defuser");
+			WRITE_BYTE(STATUSICON_HIDE);
+			WRITE_STRING("defuser");
 			MESSAGE_END();
 
 			pPlayer->SendItemStatus();
@@ -182,7 +182,7 @@ EXT_FUNC bool CCSPlayer::RemovePlayerItemEx(const char* pszItemName, bool bRemov
 			pPlayer->pev->armorvalue = 0;
 
 			MESSAGE_BEGIN(MSG_ONE, gmsgArmorType, nullptr, pPlayer->pev);
-				WRITE_BYTE(0);
+			WRITE_BYTE(0);
 			MESSAGE_END();
 		}
 		// item_kevlar
@@ -219,11 +219,11 @@ EXT_FUNC bool CCSPlayer::RemovePlayerItemEx(const char* pszItemName, bool bRemov
 		if (pItem->IsWeapon())
 		{
 			if (pItem == pPlayer->m_pActiveItem) {
-				((CBasePlayerWeapon *)pItem)->RetireWeapon();
+				((CBasePlayerWeapon*)pItem)->RetireWeapon();
 			}
 
 			if (bRemoveAmmo) {
-				pPlayer->m_rgAmmo[ pItem->PrimaryAmmoIndex() ] = 0;
+				pPlayer->m_rgAmmo[pItem->PrimaryAmmoIndex()] = 0;
 			}
 		}
 
@@ -247,14 +247,14 @@ EXT_FUNC bool CCSPlayer::RemovePlayerItemEx(const char* pszItemName, bool bRemov
 	return false;
 }
 
-EXT_FUNC bool CCSPlayer::RemovePlayerItem(const char *pszItemName)
+EXT_FUNC bool CCSPlayer::RemovePlayerItem(const char* pszItemName)
 {
 	return RemovePlayerItemEx(pszItemName, false);
 }
 
-EXT_FUNC CBaseEntity *CCSPlayer::GiveNamedItemEx(const char *pszName)
+EXT_FUNC CBaseEntity* CCSPlayer::GiveNamedItemEx(const char* pszName)
 {
-	CBasePlayer *pPlayer = BasePlayer();
+	CBasePlayer* pPlayer = BasePlayer();
 
 	if (FStrEq(pszName, "weapon_c4")) {
 		pPlayer->m_bHasC4 = true;
@@ -263,7 +263,8 @@ EXT_FUNC CBaseEntity *CCSPlayer::GiveNamedItemEx(const char *pszName)
 		if (pPlayer->m_iTeam == TERRORIST) {
 			pPlayer->pev->body = 1;
 		}
-	} else if (FStrEq(pszName, "weapon_shield")) {
+	}
+	else if (FStrEq(pszName, "weapon_shield")) {
 		pPlayer->DropPrimary();
 		pPlayer->DropPlayerItem("weapon_elite");
 		pPlayer->GiveShield();
@@ -288,7 +289,7 @@ EXT_FUNC void CCSPlayer::AddAccount(int amount, RewardType type, bool bTrackChan
 	BasePlayer()->AddAccount(amount, type, bTrackChange);
 }
 
-EXT_FUNC CBaseEntity *CCSPlayer::GiveNamedItem(const char *pszName)
+EXT_FUNC CBaseEntity* CCSPlayer::GiveNamedItem(const char* pszName)
 {
 	return BasePlayer()->GiveNamedItem(pszName);
 }
@@ -308,14 +309,14 @@ EXT_FUNC void CCSPlayer::DropShield(bool bDeploy)
 	BasePlayer()->DropShield(bDeploy);
 }
 
-EXT_FUNC void CCSPlayer::DropPlayerItem(const char *pszItemName)
+EXT_FUNC void CCSPlayer::DropPlayerItem(const char* pszItemName)
 {
 	BasePlayer()->DropPlayerItem(pszItemName);
 }
 
 EXT_FUNC bool CCSPlayer::RemoveShield()
 {
-	CBasePlayer *pPlayer = BasePlayer();
+	CBasePlayer* pPlayer = BasePlayer();
 
 	if (!pPlayer->HasShield())
 		return false;
@@ -323,7 +324,7 @@ EXT_FUNC bool CCSPlayer::RemoveShield()
 	bool bIsProtectedShield = pPlayer->IsProtectedByShield();
 	pPlayer->RemoveShield();
 
-	CBasePlayerWeapon *pWeapon = static_cast<CBasePlayerWeapon *>(pPlayer->m_pActiveItem);
+	CBasePlayerWeapon* pWeapon = static_cast<CBasePlayerWeapon*>(pPlayer->m_pActiveItem);
 	if (pWeapon && pWeapon->IsWeapon())
 	{
 		if (!pWeapon->CanHolster())
@@ -364,17 +365,17 @@ EXT_FUNC void CCSPlayer::SetPlayerModel(bool bHasC4)
 	BasePlayer()->SetPlayerModel(bHasC4 ? TRUE : FALSE);
 }
 
-EXT_FUNC void CCSPlayer::SetPlayerModelEx(const char *modelName)
+EXT_FUNC void CCSPlayer::SetPlayerModelEx(const char* modelName)
 {
 	Q_strlcpy(m_szModel, modelName);
 }
 
-EXT_FUNC void CCSPlayer::SetNewPlayerModel(const char *modelName)
+EXT_FUNC void CCSPlayer::SetNewPlayerModel(const char* modelName)
 {
 	BasePlayer()->SetNewPlayerModel(STRING(ALLOC_STRING(modelName)));
 }
 
-EXT_FUNC void CCSPlayer::ClientCommand(const char *cmd, const char *arg1, const char *arg2, const char *arg3)
+EXT_FUNC void CCSPlayer::ClientCommand(const char* cmd, const char* arg1, const char* arg2, const char* arg3)
 {
 	BasePlayer()->ClientCommand(cmd, arg1, arg2, arg3);
 }
@@ -389,7 +390,7 @@ EXT_FUNC void CCSPlayer::SetProgressBarTime2(int time, float timeElapsed)
 	BasePlayer()->SetProgressBarTime2(time, timeElapsed);
 }
 
-EXT_FUNC edict_t *CCSPlayer::EntSelectSpawnPoint()
+EXT_FUNC edict_t* CCSPlayer::EntSelectSpawnPoint()
 {
 	return BasePlayer()->EntSelectSpawnPoint();
 }
@@ -404,12 +405,12 @@ EXT_FUNC void CCSPlayer::SetBombIcon(bool bFlash)
 	BasePlayer()->SetBombIcon(bFlash ? TRUE : FALSE);
 }
 
-EXT_FUNC void CCSPlayer::SetScoreAttrib(CBasePlayer *dest)
+EXT_FUNC void CCSPlayer::SetScoreAttrib(CBasePlayer* dest)
 {
 	BasePlayer()->SetScoreAttrib(dest);
 }
 
-EXT_FUNC void CCSPlayer::ReloadWeapons(CBasePlayerItem *pWeapon, bool bForceReload, bool bForceRefill)
+EXT_FUNC void CCSPlayer::ReloadWeapons(CBasePlayerItem* pWeapon, bool bForceReload, bool bForceRefill)
 {
 	BasePlayer()->ReloadWeapons(pWeapon, bForceReload, bForceRefill);
 }
@@ -419,12 +420,12 @@ EXT_FUNC void CCSPlayer::Observer_SetMode(int iMode)
 	BasePlayer()->Observer_SetMode(iMode);
 }
 
-EXT_FUNC bool CCSPlayer::SelectSpawnSpot(const char *pEntClassName, CBaseEntity *&pSpot)
+EXT_FUNC bool CCSPlayer::SelectSpawnSpot(const char* pEntClassName, CBaseEntity*& pSpot)
 {
 	return BasePlayer()->SelectSpawnSpot(pEntClassName, pSpot);
 }
 
-EXT_FUNC bool CCSPlayer::SwitchWeapon(CBasePlayerItem *pWeapon)
+EXT_FUNC bool CCSPlayer::SwitchWeapon(CBasePlayerItem* pWeapon)
 {
 	return BasePlayer()->SwitchWeapon(pWeapon) != FALSE;
 }
@@ -454,22 +455,22 @@ EXT_FUNC void CCSPlayer::DropPrimary()
 	BasePlayer()->DropPrimary();
 }
 
-EXT_FUNC bool CCSPlayer::HasPlayerItem(CBasePlayerItem *pCheckItem)
+EXT_FUNC bool CCSPlayer::HasPlayerItem(CBasePlayerItem* pCheckItem)
 {
 	return BasePlayer()->HasPlayerItem(pCheckItem);
 }
 
-EXT_FUNC bool CCSPlayer::HasNamedPlayerItem(const char *pszItemName)
+EXT_FUNC bool CCSPlayer::HasNamedPlayerItem(const char* pszItemName)
 {
 	return BasePlayer()->HasNamedPlayerItem(pszItemName);
 }
 
-EXT_FUNC CBasePlayerItem *CCSPlayer::GetItemById(WeaponIdType weaponID)
+EXT_FUNC CBasePlayerItem* CCSPlayer::GetItemById(WeaponIdType weaponID)
 {
 	return BasePlayer()->GetItemById(weaponID);
 }
 
-EXT_FUNC CBasePlayerItem *CCSPlayer::GetItemByName(const char *itemName)
+EXT_FUNC CBasePlayerItem* CCSPlayer::GetItemByName(const char* itemName)
 {
 	return BasePlayer()->GetItemByName(itemName);
 }
@@ -509,7 +510,7 @@ EXT_FUNC void CCSPlayer::RemoveSpawnProtection()
 	BasePlayer()->RemoveSpawnProtection();
 }
 
-EXT_FUNC bool CCSPlayer::HintMessageEx(const char *pMessage, float duration, bool bDisplayIfPlayerDead, bool bOverride)
+EXT_FUNC bool CCSPlayer::HintMessageEx(const char* pMessage, float duration, bool bDisplayIfPlayerDead, bool bOverride)
 {
 	return BasePlayer()->HintMessageEx(pMessage, duration, bDisplayIfPlayerDead, bOverride);
 }

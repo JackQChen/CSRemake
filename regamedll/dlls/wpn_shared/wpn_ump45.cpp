@@ -38,7 +38,7 @@ void CUMP45::Precache()
 	m_usFireUMP45 = PRECACHE_EVENT(1, "events/ump45.sc");
 }
 
-int CUMP45::GetItemInfo(ItemInfo *p)
+int CUMP45::GetItemInfo(ItemInfo* p)
 {
 	p->pszName = STRING(pev->classname);
 #ifdef REGAMEDLL_FIXES
@@ -132,7 +132,7 @@ void CUMP45::UMP45Fire(float flSpread, float flCycleTime, BOOL fUseAutoAim)
 	flag = 0;
 #endif
 
-	PLAYBACK_EVENT_FULL(flag, m_pPlayer->edict(), m_usFireUMP45, 0, (float *)&g_vecZero, (float *)&g_vecZero, vecDir.x, vecDir.y,
+	PLAYBACK_EVENT_FULL(flag, m_pPlayer->edict(), m_usFireUMP45, 0, (float*)&g_vecZero, (float*)&g_vecZero, vecDir.x, vecDir.y,
 		int(m_pPlayer->pev->punchangle.x * 100), int(m_pPlayer->pev->punchangle.y * 100), FALSE, FALSE);
 
 	m_pPlayer->m_iWeaponVolume = NORMAL_GUN_VOLUME;

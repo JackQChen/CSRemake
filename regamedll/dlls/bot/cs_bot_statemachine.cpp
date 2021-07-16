@@ -29,7 +29,7 @@
 #include "precompiled.h"
 
 // This method is the ONLY legal way to change a bot's current state
-void CCSBot::SetState(BotState *state)
+void CCSBot::SetState(BotState* state)
 {
 #ifdef REGAMEDLL_ADD
 	if (cv_bot_freeze.value && state != &m_idleState)
@@ -63,7 +63,7 @@ void CCSBot::EscapeFromBomb()
 	SetState(&m_escapeFromBombState);
 }
 
-void CCSBot::Follow(CBasePlayer *pPlayer)
+void CCSBot::Follow(CBasePlayer* pPlayer)
 {
 	if (!pPlayer)
 		return;
@@ -108,7 +108,7 @@ void CCSBot::RescueHostages()
 }
 
 // Use the entity
-void CCSBot::UseEntity(CBaseEntity *pEntity)
+void CCSBot::UseEntity(CBaseEntity* pEntity)
 {
 	m_useEntityState.SetEntity(pEntity);
 	SetState(&m_useEntityState);
@@ -117,11 +117,11 @@ void CCSBot::UseEntity(CBaseEntity *pEntity)
 // DEPRECATED: Use TryToHide() instead.
 // Move to a hiding place.
 // If 'searchFromArea' is non-NULL, hiding spots are looked for from that area first.
-void CCSBot::Hide(CNavArea *searchFromArea, float duration, float hideRange, bool holdPosition)
+void CCSBot::Hide(CNavArea* searchFromArea, float duration, float hideRange, bool holdPosition)
 {
 	DestroyPath();
 
-	CNavArea *source;
+	CNavArea* source;
 	Vector sourcePos;
 	if (searchFromArea)
 	{
@@ -149,7 +149,7 @@ void CCSBot::Hide(CNavArea *searchFromArea, float duration, float hideRange, boo
 	// search around source area for a good hiding spot
 	Vector useSpot;
 
-	const Vector *pos = FindNearbyHidingSpot(this, &sourcePos, source, hideRange, IsSniper());
+	const Vector* pos = FindNearbyHidingSpot(this, &sourcePos, source, hideRange, IsSniper());
 	if (!pos)
 	{
 		PrintIfWatched("No available hiding spots.\n");
@@ -175,9 +175,9 @@ void CCSBot::Hide(CNavArea *searchFromArea, float duration, float hideRange, boo
 }
 
 // Move to the given hiding place
-void CCSBot::Hide(const Vector *hidingSpot, float duration, bool holdPosition)
+void CCSBot::Hide(const Vector* hidingSpot, float duration, bool holdPosition)
 {
-	CNavArea *hideArea = TheNavAreaGrid.GetNearestNavArea(hidingSpot);
+	CNavArea* hideArea = TheNavAreaGrid.GetNearestNavArea(hidingSpot);
 	if (!hideArea)
 	{
 		PrintIfWatched("Hiding spot off nav mesh\n");
@@ -206,9 +206,9 @@ void CCSBot::Hide(const Vector *hidingSpot, float duration, bool holdPosition)
 
 // Try to hide nearby. Return true if hiding, false if can't hide here.
 // If 'searchFromArea' is non-NULL, hiding spots are looked for from that area first.
-bool CCSBot::TryToHide(CNavArea *searchFromArea, float duration, float hideRange, bool holdPosition, bool useNearest)
+bool CCSBot::TryToHide(CNavArea* searchFromArea, float duration, float hideRange, bool holdPosition, bool useNearest)
 {
-	CNavArea *source;
+	CNavArea* source;
 	Vector sourcePos;
 	if (searchFromArea)
 	{
@@ -233,7 +233,7 @@ bool CCSBot::TryToHide(CNavArea *searchFromArea, float duration, float hideRange
 	m_hideState.SetHoldPosition(holdPosition);
 
 	// search around source area for a good hiding spot
-	const Vector *pos = FindNearbyHidingSpot(this, &sourcePos, source, hideRange, IsSniper(), useNearest);
+	const Vector* pos = FindNearbyHidingSpot(this, &sourcePos, source, hideRange, IsSniper(), useNearest);
 	if (!pos)
 	{
 		PrintIfWatched("No available hiding spots.\n");
@@ -257,7 +257,7 @@ bool CCSBot::TryToHide(CNavArea *searchFromArea, float duration, float hideRange
 bool CCSBot::TryToRetreat()
 {
 	const float maxRange = 1000.0f;
-	const Vector *spot = FindNearbyRetreatSpot(this, maxRange);
+	const Vector* spot = FindNearbyRetreatSpot(this, maxRange);
 
 	if (spot)
 	{
@@ -290,7 +290,7 @@ void CCSBot::Hunt()
 
 // Attack our the given victim
 // NOTE: Attacking does not change our task.
-void CCSBot::Attack(CBasePlayer *victim)
+void CCSBot::Attack(CBasePlayer* victim)
 {
 	if (!victim)
 		return;
@@ -382,7 +382,7 @@ bool CCSBot::IsAttacking() const
 // Return true if we are escaping from the bomb
 bool CCSBot::IsEscapingFromBomb() const
 {
-	if (m_state == static_cast<const BotState *>(&m_escapeFromBombState))
+	if (m_state == static_cast<const BotState*>(&m_escapeFromBombState))
 		return true;
 
 	return false;
@@ -391,7 +391,7 @@ bool CCSBot::IsEscapingFromBomb() const
 // Return true if we are defusing the bomb
 bool CCSBot::IsDefusingBomb() const
 {
-	if (m_state == static_cast<const BotState *>(&m_defuseBombState))
+	if (m_state == static_cast<const BotState*>(&m_defuseBombState))
 		return true;
 
 	return false;
@@ -400,7 +400,7 @@ bool CCSBot::IsDefusingBomb() const
 // Return true if we are hiding
 bool CCSBot::IsHiding() const
 {
-	if (m_state == static_cast<const BotState *>(&m_hideState))
+	if (m_state == static_cast<const BotState*>(&m_hideState))
 		return true;
 
 	return false;
@@ -418,7 +418,7 @@ bool CCSBot::IsAtHidingSpot() const
 // Return true if we are huting
 bool CCSBot::IsHunting() const
 {
-	if (m_state == static_cast<const BotState *>(&m_huntState))
+	if (m_state == static_cast<const BotState*>(&m_huntState))
 		return true;
 
 	return false;
@@ -427,7 +427,7 @@ bool CCSBot::IsHunting() const
 // Return true if we are in the MoveTo state
 bool CCSBot::IsMovingTo() const
 {
-	if (m_state == static_cast<const BotState *>(&m_moveToState))
+	if (m_state == static_cast<const BotState*>(&m_moveToState))
 		return true;
 
 	return false;
@@ -436,14 +436,14 @@ bool CCSBot::IsMovingTo() const
 // Return true if we are buying
 bool CCSBot::IsBuying() const
 {
-	if (m_state == static_cast<const BotState *>(&m_buyState))
+	if (m_state == static_cast<const BotState*>(&m_buyState))
 		return true;
 
 	return false;
 }
 
 // Move to potentially distant position
-void CCSBot::MoveTo(const Vector *pos, RouteType route)
+void CCSBot::MoveTo(const Vector* pos, RouteType route)
 {
 	m_moveToState.SetGoalPosition(*pos);
 	m_moveToState.SetRouteType(route);

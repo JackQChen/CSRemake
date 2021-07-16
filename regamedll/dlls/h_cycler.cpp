@@ -22,7 +22,7 @@ void CCyclerProbe::Spawn()
 }
 
 // Cycler member functions
-void CCycler::GenericCyclerSpawn(const char *szModel, Vector vecMin, Vector vecMax)
+void CCycler::GenericCyclerSpawn(const char* szModel, Vector vecMin, Vector vecMax)
 {
 	if (!szModel || !szModel[0])
 	{
@@ -104,7 +104,7 @@ void CCycler::Think()
 }
 
 // CyclerUse - starts a rotation trend
-void CCycler::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void CCycler::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	m_animate = !m_animate;
 
@@ -115,7 +115,7 @@ void CCycler::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useTyp
 }
 
 // CyclerPain , changes sequences when shot
-BOOL CCycler::TakeDamage(entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType)
+BOOL CCycler::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
 {
 	if (m_animate)
 	{
@@ -204,13 +204,13 @@ void CCyclerSprite::Think()
 	m_lastTime = gpGlobals->time;
 }
 
-void CCyclerSprite::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void CCyclerSprite::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	m_animate = !m_animate;
 	ALERT(at_console, "Sprite: %s\n", STRING(pev->model));
 }
 
-BOOL CCyclerSprite::TakeDamage(entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType)
+BOOL CCyclerSprite::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
 {
 	if (m_maxFrame > 1.0)
 	{
@@ -277,7 +277,7 @@ void CWeaponCycler::SecondaryAttack()
 	pev->sequence = (pev->sequence + 1) % 8;
 
 	pev->modelindex = m_iModel;
-	void *pmodel = GET_MODEL_PTR(ENT(pev));
+	void* pmodel = GET_MODEL_PTR(ENT(pev));
 	GetSequenceInfo(pmodel, pev, &flFrameRate, &flGroundSpeed);
 	pev->modelindex = 0;
 
@@ -350,12 +350,12 @@ void CWreckage::Think()
 	vecSrc.z = RANDOM_FLOAT(pev->absmin.z, pev->absmax.z);
 
 	MESSAGE_BEGIN(MSG_PVS, SVC_TEMPENTITY, vecSrc);
-		WRITE_BYTE(TE_SMOKE);
-		WRITE_COORD(vecSrc.x);
-		WRITE_COORD(vecSrc.y);
-		WRITE_COORD(vecSrc.z);
-		WRITE_SHORT(g_sModelIndexSmoke);
-		WRITE_BYTE(RANDOM_LONG(0, 49) + 50);	// scale * 10
-		WRITE_BYTE(RANDOM_LONG(0, 3) + 8);		// framerate
+	WRITE_BYTE(TE_SMOKE);
+	WRITE_COORD(vecSrc.x);
+	WRITE_COORD(vecSrc.y);
+	WRITE_COORD(vecSrc.z);
+	WRITE_SHORT(g_sModelIndexSmoke);
+	WRITE_BYTE(RANDOM_LONG(0, 49) + 50);	// scale * 10
+	WRITE_BYTE(RANDOM_LONG(0, 3) + 8);		// framerate
 	MESSAGE_END();
 }

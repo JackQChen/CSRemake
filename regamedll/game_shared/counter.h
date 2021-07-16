@@ -29,21 +29,21 @@
 #pragma once
 
 #ifdef _WIN32
-	#define WIN32_LEAN_AND_MEAN // Exclude rarely-used stuff from Windows headers
-	#include <windows.h>
-	#include <io.h>
-	#include <direct.h>
+#define WIN32_LEAN_AND_MEAN // Exclude rarely-used stuff from Windows headers
+#include <windows.h>
+#include <io.h>
+#include <direct.h>
 #else
-	#include <sys/stat.h>
-	#include <sys/types.h>
-	#include <fcntl.h>
-	#include <unistd.h>
-	#ifdef OSX
-		#include <limits.h>
-	#else
-		#include <linux/limits.h>
-	#endif
-	#include <sys/time.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <fcntl.h>
+#include <unistd.h>
+#ifdef OSX
+#include <limits.h>
+#else
+#include <linux/limits.h>
+#endif
+#include <sys/time.h>
 #endif
 
 #include <stdio.h>

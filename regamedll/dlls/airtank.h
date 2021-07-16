@@ -28,19 +28,19 @@
 
 #pragma once
 
-class CAirtank: public CGrenade
+class CAirtank : public CGrenade
 {
 public:
 	virtual void Spawn();
 	virtual void Precache();
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
-	virtual void Killed(entvars_t *pevAttacker, int iGib);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
+	virtual void Killed(entvars_t* pevAttacker, int iGib);
 	virtual int BloodColor() { return DONT_BLEED; }
 
 public:
 	void EXPORT TankThink();
-	void EXPORT TankTouch(CBaseEntity *pOther);
+	void EXPORT TankTouch(CBaseEntity* pOther);
 
 public:
 	static TYPEDESCRIPTION m_SaveData[];

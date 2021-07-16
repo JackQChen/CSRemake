@@ -84,7 +84,7 @@ void PlaceDirectory::Save(int fd)
 	_write(fd, &count, sizeof(EntryType));
 
 	// store entries
-	for (auto &id : m_directory)
+	for (auto& id : m_directory)
 	{
 		auto placeName = TheBotPhrases->IDToName(id);
 
@@ -95,7 +95,7 @@ void PlaceDirectory::Save(int fd)
 	}
 }
 
-void PlaceDirectory::Load(SteamFile *file)
+void PlaceDirectory::Load(SteamFile* file)
 {
 	// read number of entries
 	EntryType count;
@@ -115,14 +115,14 @@ void PlaceDirectory::Load(SteamFile *file)
 	}
 }
 
-char *GetBspFilename()
+char* GetBspFilename()
 {
 	static char bspFilename[256];
 	Q_snprintf(bspFilename, sizeof(bspFilename), "maps\\%s.bsp", STRING(gpGlobals->mapname));
 	return bspFilename;
 }
 
-void CNavArea::Save(FILE *fp) const
+void CNavArea::Save(FILE* fp) const
 {
 	fprintf(fp, "v  %f %f %f\n", m_extent.lo.x, m_extent.lo.y, m_extent.lo.z);
 	fprintf(fp, "v  %f %f %f\n", m_extent.hi.x, m_extent.lo.y, m_neZ);
@@ -131,8 +131,8 @@ void CNavArea::Save(FILE *fp) const
 
 	static int base = 1;
 	fprintf(fp, "\n\ng %04dArea%s%s%s%s\n", m_id,
-			(GetAttributes() & NAV_CROUCH) ? "CROUCH" : "", (GetAttributes() & NAV_JUMP) ? "JUMP" : "",
-			(GetAttributes() & NAV_PRECISE) ? "PRECISE" : "", (GetAttributes() & NAV_NO_JUMP) ? "NO_JUMP" : "");
+		(GetAttributes() & NAV_CROUCH) ? "CROUCH" : "", (GetAttributes() & NAV_JUMP) ? "JUMP" : "",
+		(GetAttributes() & NAV_PRECISE) ? "PRECISE" : "", (GetAttributes() & NAV_NO_JUMP) ? "NO_JUMP" : "");
 
 	fprintf(fp, "f %d %d %d %d\n\n", base, base + 1, base + 2, base + 3);
 	base += 4;
@@ -161,7 +161,7 @@ void CNavArea::Save(int fd, unsigned int version)
 		size_t count = m_connect[d].size();
 		_write(fd, &count, sizeof(size_t));
 
-		for (auto &connect : m_connect[d]) {
+		for (auto& connect : m_connect[d]) {
 			_write(fd, &connect.area->m_id, sizeof(unsigned int));
 		}
 	}
@@ -236,7 +236,7 @@ void CNavArea::Save(int fd, unsigned int version)
 		if (cv_bot_debug.value > 0.0f)
 			CONSOLE_ECHO("  m_spotEncounterList.size() = %d\n", count);
 
-		for (auto &spote : m_spotEncounterList)
+		for (auto& spote : m_spotEncounterList)
 		{
 			if (spote.from.area)
 				_write(fd, &spote.from.area->m_id, sizeof(unsigned int));
@@ -268,7 +268,7 @@ void CNavArea::Save(int fd, unsigned int version)
 			_write(fd, &spotCount, sizeof(unsigned char));
 
 			saveCount = 0;
-			for (auto &order : spote.spotList)
+			for (auto& order : spote.spotList)
 			{
 				// order->spot may be NULL if we've loaded a nav mesh that has been edited but not re-analyzed
 				unsigned int id = (order.spot) ? order.spot->GetID() : 0;
@@ -289,7 +289,7 @@ void CNavArea::Save(int fd, unsigned int version)
 	_write(fd, &entry, sizeof(entry));
 }
 
-void CNavArea::Load(SteamFile *file, unsigned int version)
+void CNavArea::Load(SteamFile* file, unsigned int version)
 {
 	// load ID
 	file->Read(&m_id, sizeof(unsigned int));
@@ -343,7 +343,7 @@ void CNavArea::Load(SteamFile *file, unsigned int version)
 			file->Read(&pos, 3 * sizeof(float));
 
 			// create new hiding spot and put on master list
-			HidingSpot *spot = new HidingSpot(&pos, HidingSpot::IN_COVER);
+			HidingSpot* spot = new HidingSpot(&pos, HidingSpot::IN_COVER);
 
 			m_hidingSpotList.push_back(spot);
 		}
@@ -354,7 +354,7 @@ void CNavArea::Load(SteamFile *file, unsigned int version)
 		for (int h = 0; h < hidingSpotCount; h++)
 		{
 			// create new hiding spot and put on master list
-			HidingSpot *spot = new HidingSpot;
+			HidingSpot* spot = new HidingSpot;
 
 			spot->Load(file, version);
 
@@ -558,13 +558,13 @@ NavErrorType CNavArea::PostLoad()
 }
 
 // Store AI navigation data to a file
-bool SaveNavigationMap(const char *filename)
+bool SaveNavigationMap(const char* filename)
 {
 	if (!filename)
 		return false;
 
 	// Store the NAV file
-	Q_FixSlashes(const_cast<char *>(filename));
+	Q_FixSlashes(const_cast<char*>(filename));
 
 #ifdef WIN32
 	int fd = _open(filename, _O_BINARY | _O_CREAT | _O_WRONLY, _S_IREAD | _S_IWRITE);
@@ -585,7 +585,7 @@ bool SaveNavigationMap(const char *filename)
 
 	// get size of source bsp file and store it in the nav file
 	// so we can test if the bsp changed since the nav file was made
-	char *bspFilename = GetBspFilename();
+	char* bspFilename = GetBspFilename();
 	if (!bspFilename)
 		return false;
 
@@ -623,19 +623,19 @@ bool SaveNavigationMap(const char *filename)
 
 // Load place map
 // This is legacy code - Places are stored directly in the nav file now
-void LoadLocationFile(const char *filename)
+void LoadLocationFile(const char* filename)
 {
 	char locFilename[256];
 	Q_strcpy(locFilename, filename);
 
-	char *dot = Q_strchr(locFilename, '.');
+	char* dot = Q_strchr(locFilename, '.');
 	if (dot)
 	{
 		Q_strcpy(dot, ".loc");
 
 		int locDataLength;
-		char *locDataFile = (char *)LOAD_FILE_FOR_ME(const_cast<char *>(locFilename), &locDataLength);
-		char *locData = locDataFile;
+		char* locDataFile = (char*)LOAD_FILE_FOR_ME(const_cast<char*>(locFilename), &locDataLength);
+		char* locData = locDataFile;
 
 		if (locData)
 		{
@@ -669,7 +669,7 @@ void LoadLocationFile(const char *filename)
 					locData = SharedParse(locData);
 					locDirIndex = Q_atoi(SharedGetToken());
 
-					CNavArea *area = TheNavAreaGrid.GetNavAreaByID(areaID);
+					CNavArea* area = TheNavAreaGrid.GetNavAreaByID(areaID);
 					unsigned int place = (locDirIndex > 0) ? directory[locDirIndex - 1] : UNDEFINED_PLACE;
 
 					if (area)
@@ -683,7 +683,7 @@ void LoadLocationFile(const char *filename)
 }
 
 // Performs a lightweight sanity-check of the specified map's nav mesh
-void SanityCheckNavigationMap(const char *mapName)
+void SanityCheckNavigationMap(const char* mapName)
 {
 	if (!mapName)
 	{
@@ -799,7 +799,7 @@ NavErrorType LoadNavigationMap()
 		navFile.Read(&saveBspSize, sizeof(unsigned int));
 
 		// verify size
-		char *bspFilename = GetBspFilename();
+		char* bspFilename = GetBspFilename();
 		if (!bspFilename)
 			return NAV_INVALID_FILE;
 
@@ -807,7 +807,7 @@ NavErrorType LoadNavigationMap()
 		if (bspSize != saveBspSize)
 		{
 			// this nav file is out of date for this bsp file
-			char *msg = "*** WARNING ***\nThe AI navigation data is from a different version of this map.\nThe CPU players will likely not perform well.\n";
+			char* msg = "*** WARNING ***\nThe AI navigation data is from a different version of this map.\nThe CPU players will likely not perform well.\n";
 			HintMessageToAllPlayers(msg);
 			CONSOLE_ECHO("\n-----------------\n");
 			CONSOLE_ECHO(msg);
@@ -834,11 +834,11 @@ NavErrorType LoadNavigationMap()
 	// load the areas and compute total extent
 	for (unsigned int i = 0; i < count; i++)
 	{
-		CNavArea *area = new CNavArea;
+		CNavArea* area = new CNavArea;
 		area->Load(&navFile, version);
 		TheNavAreaList.push_back(area);
 
-		const Extent *areaExtent = area->GetExtent();
+		const Extent* areaExtent = area->GetExtent();
 
 		// check validity of nav area
 		if (areaExtent->lo.x >= areaExtent->hi.x || areaExtent->lo.y >= areaExtent->hi.y) {

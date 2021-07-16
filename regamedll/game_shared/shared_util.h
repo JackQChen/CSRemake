@@ -33,43 +33,43 @@
 #include <wchar.h>
 #endif
 
-wchar_t *SharedWVarArgs(wchar_t *format, ...);
-char *SharedVarArgs(char *format, ...);
-char *BufPrintf(char *buf, int &len, const char *fmt, ...);
-wchar_t *BufWPrintf(wchar_t *buf, int &len, const wchar_t *fmt, ...);
-const wchar_t *NumAsWString(int val);
-const char *NumAsString(int val);
-char *SharedGetToken();
+wchar_t* SharedWVarArgs(wchar_t* format, ...);
+char* SharedVarArgs(char* format, ...);
+char* BufPrintf(char* buf, int& len, const char* fmt, ...);
+wchar_t* BufWPrintf(wchar_t* buf, int& len, const wchar_t* fmt, ...);
+const wchar_t* NumAsWString(int val);
+const char* NumAsString(int val);
+char* SharedGetToken();
 void SharedSetQuoteChar(char c);
-char *SharedParse(char *data);
-bool SharedTokenWaiting(const char *buffer);
+char* SharedParse(char* data);
+bool SharedTokenWaiting(const char* buffer);
 
 // Simple utility function to allocate memory and duplicate a string
-inline char *CloneString(const char *str)
+inline char* CloneString(const char* str)
 {
 	if (!str)
 	{
-		char *cloneStr = new char[1];
+		char* cloneStr = new char[1];
 		cloneStr[0] = '\0';
 		return cloneStr;
 	}
 
-	char *cloneStr = new char [Q_strlen(str) + 1];
+	char* cloneStr = new char[Q_strlen(str) + 1];
 	Q_strcpy(cloneStr, str);
 	return cloneStr;
 }
 
 // Simple utility function to allocate memory and duplicate a wide string
-inline wchar_t *CloneWString(const wchar_t *str)
+inline wchar_t* CloneWString(const wchar_t* str)
 {
 	if (!str)
 	{
-		wchar_t *cloneStr = new wchar_t[1];
+		wchar_t* cloneStr = new wchar_t[1];
 		cloneStr[0] = L'\0';
 		return cloneStr;
 	}
 
-	wchar_t *cloneStr = new wchar_t [wcslen(str) + 1];
+	wchar_t* cloneStr = new wchar_t[wcslen(str) + 1];
 	wcscpy(cloneStr, str);
 	return cloneStr;
 }

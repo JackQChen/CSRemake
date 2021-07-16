@@ -29,11 +29,11 @@
 #include "precompiled.h"
 #include <algorithm>
 
-BotPhraseManager *TheBotPhrases = nullptr;
+BotPhraseManager* TheBotPhrases = nullptr;
 CountdownTimer BotChatterInterface::m_encourageTimer;
 IntervalTimer BotChatterInterface::m_radioSilenceInterval[2];
 
-const Vector *GetRandomSpotAtPlace(Place place)
+const Vector* GetRandomSpotAtPlace(Place place)
 {
 	int count = 0;
 	int which;
@@ -59,11 +59,11 @@ const Vector *GetRandomSpotAtPlace(Place place)
 }
 
 // Transmit meme to other bots
-void BotMeme::Transmit(CCSBot *pSender) const
+void BotMeme::Transmit(CCSBot* pSender) const
 {
 	for (int i = 1; i <= gpGlobals->maxClients; i++)
 	{
-		CBasePlayer *pPlayer = UTIL_PlayerByIndex(i);
+		CBasePlayer* pPlayer = UTIL_PlayerByIndex(i);
 
 		if (!pPlayer)
 			continue;
@@ -91,19 +91,19 @@ void BotMeme::Transmit(CCSBot *pSender) const
 			continue;
 
 		// allow bot to interpret our meme
-		Interpret(pSender, (CCSBot *)pPlayer);
+		Interpret(pSender, (CCSBot*)pPlayer);
 	}
 }
 
 // A teammate called for help - respond
-void BotHelpMeme::Interpret(CCSBot *pSender, CCSBot *pReceiver) const
+void BotHelpMeme::Interpret(CCSBot* pSender, CCSBot* pReceiver) const
 {
 	const float maxHelpRange = 3000.0f; // 2000
 	pReceiver->RespondToHelpRequest(pSender, m_place, maxHelpRange);
 }
 
 // A teammate reported information about a bombsite
-void BotBombsiteStatusMeme::Interpret(CCSBot *pSender, CCSBot *pReceiver) const
+void BotBombsiteStatusMeme::Interpret(CCSBot* pSender, CCSBot* pReceiver) const
 {
 	// remember this bombsite's status
 	if (m_status == CLEAR)
@@ -123,37 +123,37 @@ void BotBombsiteStatusMeme::Interpret(CCSBot *pSender, CCSBot *pReceiver) const
 }
 
 // A teammate reported information about the bomb
-void BotBombStatusMeme::Interpret(CCSBot *pSender, CCSBot *pReceiver) const
+void BotBombStatusMeme::Interpret(CCSBot* pSender, CCSBot* pReceiver) const
 {
 	// update our gamestate based on teammate's report
 	switch (m_state)
 	{
-		case CSGameState::MOVING:
+	case CSGameState::MOVING:
+	{
+		pReceiver->GetGameState()->UpdateBomber(&m_pos);
+
+		// if we are hunting and see no enemies, respond
+		if (!pReceiver->IsRogue() && pReceiver->IsHunting() && pReceiver->GetNearbyEnemyCount() == 0)
+			pReceiver->RespondToHelpRequest(pSender, TheNavAreaGrid.GetPlace(&m_pos));
+
+		break;
+	}
+	case CSGameState::LOOSE:
+	{
+		pReceiver->GetGameState()->UpdateLooseBomb(&m_pos);
+
+		if (pReceiver->GetTask() == CCSBot::GUARD_BOMB_ZONE)
 		{
-			pReceiver->GetGameState()->UpdateBomber(&m_pos);
-
-			// if we are hunting and see no enemies, respond
-			if (!pReceiver->IsRogue() && pReceiver->IsHunting() && pReceiver->GetNearbyEnemyCount() == 0)
-				pReceiver->RespondToHelpRequest(pSender, TheNavAreaGrid.GetPlace(&m_pos));
-
-			break;
+			pReceiver->Idle();
+			pReceiver->GetChatter()->Affirmative();
 		}
-		case CSGameState::LOOSE:
-		{
-			pReceiver->GetGameState()->UpdateLooseBomb(&m_pos);
-
-			if (pReceiver->GetTask() == CCSBot::GUARD_BOMB_ZONE)
-			{
-				pReceiver->Idle();
-				pReceiver->GetChatter()->Affirmative();
-			}
-			break;
-		}
+		break;
+	}
 	}
 }
 
 // A teammate has asked that we follow him
-void BotFollowMeme::Interpret(CCSBot *pSender, CCSBot *pReceiver) const
+void BotFollowMeme::Interpret(CCSBot* pSender, CCSBot* pReceiver) const
 {
 	if (pReceiver->IsRogue())
 		return;
@@ -179,7 +179,7 @@ void BotFollowMeme::Interpret(CCSBot *pSender, CCSBot *pReceiver) const
 }
 
 // A teammate has asked us to defend a place
-void BotDefendHereMeme::Interpret(CCSBot *pSender, CCSBot *pReceiver) const
+void BotDefendHereMeme::Interpret(CCSBot* pSender, CCSBot* pReceiver) const
 {
 	if (pReceiver->IsRogue())
 		return;
@@ -192,7 +192,7 @@ void BotDefendHereMeme::Interpret(CCSBot *pSender, CCSBot *pReceiver) const
 	if (place != UNDEFINED_PLACE)
 	{
 		// pick a random hiding spot in this place
-		const Vector *spot = FindRandomHidingSpot(pReceiver, place, pReceiver->IsSniper());
+		const Vector* spot = FindRandomHidingSpot(pReceiver, place, pReceiver->IsSniper());
 		if (spot)
 		{
 			pReceiver->SetTask(CCSBot::HOLD_POSITION);
@@ -210,7 +210,7 @@ void BotDefendHereMeme::Interpret(CCSBot *pSender, CCSBot *pReceiver) const
 }
 
 // A teammate has asked where the bomb is planted
-void BotWhereBombMeme::Interpret(CCSBot *pSender, CCSBot *pReceiver) const
+void BotWhereBombMeme::Interpret(CCSBot* pSender, CCSBot* pReceiver) const
 {
 	int zone = pReceiver->GetGameState()->GetPlantedBombsite();
 	if (zone != CSGameState::UNKNOWN)
@@ -220,13 +220,13 @@ void BotWhereBombMeme::Interpret(CCSBot *pSender, CCSBot *pReceiver) const
 }
 
 // A teammate has asked us to report in
-void BotRequestReportMeme::Interpret(CCSBot *pSender, CCSBot *pReceiver) const
+void BotRequestReportMeme::Interpret(CCSBot* pSender, CCSBot* pReceiver) const
 {
 	pReceiver->GetChatter()->ReportingIn();
 }
 
 // A teammate told us all the hostages are gone
-void BotAllHostagesGoneMeme::Interpret(CCSBot *pSender, CCSBot *pReceiver) const
+void BotAllHostagesGoneMeme::Interpret(CCSBot* pSender, CCSBot* pReceiver) const
 {
 	pReceiver->GetGameState()->AllHostagesGone();
 
@@ -235,7 +235,7 @@ void BotAllHostagesGoneMeme::Interpret(CCSBot *pSender, CCSBot *pReceiver) const
 }
 
 // A teammate told us a CT is talking to a hostage
-void BotHostageBeingTakenMeme::Interpret(CCSBot *pSender, CCSBot *pReceiver) const
+void BotHostageBeingTakenMeme::Interpret(CCSBot* pSender, CCSBot* pReceiver) const
 {
 	pReceiver->GetGameState()->HostageWasTaken();
 
@@ -308,7 +308,7 @@ void BotPhrase::InitVoiceBank(int bankIndex)
 }
 
 // Return a random speakable - avoid repeating
-char *BotPhrase::GetSpeakable(int bankIndex, float *duration) const
+char* BotPhrase::GetSpeakable(int bankIndex, float* duration) const
 {
 	if (bankIndex < 0 || bankIndex >= m_numVoiceBanks || m_count[bankIndex] == 0)
 	{
@@ -322,10 +322,10 @@ char *BotPhrase::GetSpeakable(int bankIndex, float *duration) const
 	int start = m_index[bankIndex];
 	while (true)
 	{
-		BotSpeakableVector *speakables = m_voiceBank[bankIndex];
-		int &index = m_index[bankIndex];
+		BotSpeakableVector* speakables = m_voiceBank[bankIndex];
+		int& index = m_index[bankIndex];
 
-		const BotSpeakable *speak = (*speakables)[index++];
+		const BotSpeakable* speak = (*speakables)[index++];
 
 		if (m_index[bankIndex] >= m_count[bankIndex])
 			m_index[bankIndex] = 0;
@@ -400,11 +400,11 @@ void BotPhraseManager::OnRoundRestart()
 }
 
 // Initialize phrase system from database file
-bool BotPhraseManager::Initialize(const char *filename, int bankIndex)
+bool BotPhraseManager::Initialize(const char* filename, int bankIndex)
 {
 	bool isDefault = (bankIndex == 0);
 	int phraseDataLength;
-	char *phraseDataFile = (char *)LOAD_FILE_FOR_ME((char *)filename, &phraseDataLength);
+	char* phraseDataFile = (char*)LOAD_FILE_FOR_ME((char*)filename, &phraseDataLength);
 
 	if (!phraseDataFile)
 	{
@@ -416,8 +416,8 @@ bool BotPhraseManager::Initialize(const char *filename, int bankIndex)
 		return false;
 	}
 
-	char *token;
-	char *phraseData = phraseDataFile;
+	char* token;
+	char* phraseData = phraseDataFile;
 	unsigned int nextID = 1;
 
 	// wav filenames need to be shorter than this to go over the net anyway.
@@ -457,7 +457,7 @@ bool BotPhraseManager::Initialize(const char *filename, int bankIndex)
 			bool isPlace = (Q_stricmp(token, "Place") == 0);
 
 			// encountered a new phrase collection
-			BotPhrase *phrase = nullptr;
+			BotPhrase* phrase = nullptr;
 			if (isDefault)
 			{
 				phrase = new BotPhrase(nextID++, isPlace);
@@ -482,11 +482,11 @@ bool BotPhraseManager::Initialize(const char *filename, int bankIndex)
 			{
 				if (isPlace)
 				{
-					phrase = const_cast<BotPhrase *>(GetPlace(token));
+					phrase = const_cast<BotPhrase*>(GetPlace(token));
 				}
 				else
 				{
-					phrase = const_cast<BotPhrase *>(GetPhrase(token));
+					phrase = const_cast<BotPhrase*>(GetPhrase(token));
 				}
 
 				if (!phrase)
@@ -610,7 +610,7 @@ bool BotPhraseManager::Initialize(const char *filename, int bankIndex)
 #endif
 
 				// found a phrase - add it to the collection
-				BotSpeakable *speak = new BotSpeakable;
+				BotSpeakable* speak = new BotSpeakable;
 				if (baseDir[0])
 				{
 					Q_snprintf(compositeFilename, RadioPathLen, "%s%s", baseDir, token);
@@ -633,7 +633,7 @@ bool BotPhraseManager::Initialize(const char *filename, int bankIndex)
 					speak->m_duration = 1.0f;
 				}
 
-				BotSpeakableVector *speakables = phrase->m_voiceBank[bankIndex];
+				BotSpeakableVector* speakables = phrase->m_voiceBank[bankIndex];
 				speakables->push_back(speak);
 
 				phrase->m_count[bankIndex]++;
@@ -669,7 +669,7 @@ BotPhraseManager::~BotPhraseManager()
 	m_placeList.clear();
 }
 
-Place BotPhraseManager::NameToID(const char *name) const
+Place BotPhraseManager::NameToID(const char* name) const
 {
 	for (auto phrase : m_placeList)
 	{
@@ -686,7 +686,7 @@ Place BotPhraseManager::NameToID(const char *name) const
 	return UNDEFINED_PLACE;
 }
 
-const char *BotPhraseManager::IDToName(Place id) const
+const char* BotPhraseManager::IDToName(Place id) const
 {
 	for (auto phrase : m_placeList)
 	{
@@ -704,7 +704,7 @@ const char *BotPhraseManager::IDToName(Place id) const
 }
 
 // Given a name, return the associated phrase collection
-const BotPhrase *BotPhraseManager::GetPhrase(const char *name) const
+const BotPhrase* BotPhraseManager::GetPhrase(const char* name) const
 {
 	for (auto phrase : m_list)
 	{
@@ -718,7 +718,7 @@ const BotPhrase *BotPhraseManager::GetPhrase(const char *name) const
 
 // Given an id, return the associated phrase collection
 // TODO: Store phrases in a vector to make this fast
-const BotPhrase *BotPhraseManager::GetPhrase(unsigned int id) const
+const BotPhrase* BotPhraseManager::GetPhrase(unsigned int id) const
 {
 	for (auto phrase : m_list)
 	{
@@ -731,7 +731,7 @@ const BotPhrase *BotPhraseManager::GetPhrase(unsigned int id) const
 }
 
 // Given a name, return the associated Place phrase collection
-const BotPhrase *BotPhraseManager::GetPlace(const char *name) const
+const BotPhrase* BotPhraseManager::GetPlace(const char* name) const
 {
 	if (!name)
 		return nullptr;
@@ -746,7 +746,7 @@ const BotPhrase *BotPhraseManager::GetPlace(const char *name) const
 }
 
 // Given a place, return the associated Place phrase collection
-const BotPhrase *BotPhraseManager::GetPlace(PlaceCriteria place) const
+const BotPhrase* BotPhraseManager::GetPlace(PlaceCriteria place) const
 {
 	if (place == UNDEFINED_PLACE)
 		return nullptr;
@@ -760,7 +760,7 @@ const BotPhrase *BotPhraseManager::GetPlace(PlaceCriteria place) const
 	return nullptr;
 }
 
-BotStatement::BotStatement(BotChatterInterface *chatter, BotStatementType type, float expireDuration)
+BotStatement::BotStatement(BotChatterInterface* chatter, BotStatementType type, float expireDuration)
 {
 	m_chatter = chatter;
 
@@ -793,13 +793,13 @@ BotStatement::~BotStatement()
 	}
 }
 
-CCSBot *BotStatement::GetOwner() const
+CCSBot* BotStatement::GetOwner() const
 {
 	return m_chatter->GetOwner();
 }
 
 // Attach a meme to this statement, to be transmitted to other friendly bots when spoken
-void BotStatement::AttachMeme(BotMeme *meme)
+void BotStatement::AttachMeme(BotMeme* meme)
 {
 	m_meme = meme;
 }
@@ -860,13 +860,13 @@ bool BotStatement::IsValid() const
 }
 
 // Return true if this statement is essentially the same as the given one
-bool BotStatement::IsRedundant(const BotStatement *say) const
+bool BotStatement::IsRedundant(const BotStatement* say) const
 {
 	// special cases
 	if (GetType() == REPORT_MY_PLAN ||
-			GetType() == REPORT_REQUEST_HELP ||
-			GetType() == REPORT_CRITICAL_EVENT ||
-			GetType() == REPORT_ACKNOWLEDGE)
+		GetType() == REPORT_REQUEST_HELP ||
+		GetType() == REPORT_CRITICAL_EVENT ||
+		GetType() == REPORT_ACKNOWLEDGE)
 		return false;
 
 	// check if topics are different
@@ -919,11 +919,11 @@ bool BotStatement::IsObsolete() const
 }
 
 // Possibly change what were going to say base on what teammate is saying
-void BotStatement::Convert(const BotStatement *say)
+void BotStatement::Convert(const BotStatement* say)
 {
 	if (GetType() == REPORT_MY_PLAN && say->GetType() == REPORT_MY_PLAN)
 	{
-		static const BotPhrase *meToo = TheBotPhrases->GetPhrase("AgreeWithPlan");
+		static const BotPhrase* meToo = TheBotPhrases->GetPhrase("AgreeWithPlan");
 
 		// don't reconvert
 		if (m_statement[0].phrase == meToo)
@@ -947,7 +947,7 @@ void BotStatement::Convert(const BotStatement *say)
 	}
 }
 
-void BotStatement::AppendPhrase(const BotPhrase *phrase)
+void BotStatement::AppendPhrase(const BotPhrase* phrase)
 {
 	if (!phrase)
 		return;
@@ -975,7 +975,7 @@ void BotStatement::AppendPhrase(ContextType contextPhrase)
 // m_index refers to the phrase currently being spoken, or -1 if we havent started yet
 bool BotStatement::Update()
 {
-	CCSBot *me = GetOwner();
+	CCSBot* me = GetOwner();
 
 	// if all of our teammates are dead, the only non-redundant statements are emotes
 	if (me->GetFriendsRemaining() == 0 && GetType() != REPORT_EMOTE)
@@ -1015,7 +1015,7 @@ bool BotStatement::Update()
 
 		// start next part of statement
 		float duration = 0.0f;
-		const BotPhrase *phrase = nullptr;
+		const BotPhrase* phrase = nullptr;
 
 		if (m_statement[m_index].isPhrase)
 		{
@@ -1027,64 +1027,64 @@ bool BotStatement::Update()
 			// context-dependant phrase
 			switch (m_statement[m_index].context)
 			{
-				case CURRENT_ENEMY_COUNT:
-				{
-					int enemyCount = me->GetNearbyEnemyCount();
+			case CURRENT_ENEMY_COUNT:
+			{
+				int enemyCount = me->GetNearbyEnemyCount();
 
-					// if we are outnumbered, ask for help
-					if (enemyCount - 1 > me->GetNearbyFriendCount())
-					{
-						phrase = TheBotPhrases->GetPhrase("Help");
-						AttachMeme(new BotHelpMeme());
-					}
-					else if (enemyCount > 1)
-					{
-						phrase = TheBotPhrases->GetPhrase("EnemySpotted");
+				// if we are outnumbered, ask for help
+				if (enemyCount - 1 > me->GetNearbyFriendCount())
+				{
+					phrase = TheBotPhrases->GetPhrase("Help");
+					AttachMeme(new BotHelpMeme());
+				}
+				else if (enemyCount > 1)
+				{
+					phrase = TheBotPhrases->GetPhrase("EnemySpotted");
 #ifdef REGAMEDLL_FIXES
-						if (phrase)
+					if (phrase)
 #endif
-						{
-							phrase->SetCountCriteria(enemyCount);
-						}
-					}
-					break;
-				}
-				case REMAINING_ENEMY_COUNT:
-				{
-					static const char *speak[] =
 					{
-						"NoEnemiesLeft", "OneEnemyLeft", "TwoEnemiesLeft", "ThreeEnemiesLeft"
-					};
+						phrase->SetCountCriteria(enemyCount);
+					}
+				}
+				break;
+			}
+			case REMAINING_ENEMY_COUNT:
+			{
+				static const char* speak[] =
+				{
+					"NoEnemiesLeft", "OneEnemyLeft", "TwoEnemiesLeft", "ThreeEnemiesLeft"
+				};
 
-					int enemyCount = me->GetEnemiesRemaining();
+				int enemyCount = me->GetEnemiesRemaining();
 
-					// dont report if there are lots of enemies left
-					if (enemyCount < 0 || enemyCount > 3)
-					{
-						phrase = nullptr;
-					}
-					else
-					{
-						phrase = TheBotPhrases->GetPhrase(speak[enemyCount]);
-					}
-					break;
-				}
-				case SHORT_DELAY:
+				// dont report if there are lots of enemies left
+				if (enemyCount < 0 || enemyCount > 3)
 				{
-					m_nextTime = gpGlobals->time + RANDOM_FLOAT(0.1f, 0.5f);
-					return true;
+					phrase = nullptr;
 				}
-				case LONG_DELAY:
+				else
 				{
-					m_nextTime = gpGlobals->time + RANDOM_FLOAT(1.0f, 2.0f);
-					return true;
+					phrase = TheBotPhrases->GetPhrase(speak[enemyCount]);
 				}
-				case ACCUMULATE_ENEMIES_DELAY:
-				{
-					// wait until test becomes true
-					m_nextTime = 99999999.9f;
-					return true;
-				}
+				break;
+			}
+			case SHORT_DELAY:
+			{
+				m_nextTime = gpGlobals->time + RANDOM_FLOAT(0.1f, 0.5f);
+				return true;
+			}
+			case LONG_DELAY:
+			{
+				m_nextTime = gpGlobals->time + RANDOM_FLOAT(1.0f, 2.0f);
+				return true;
+			}
+			case ACCUMULATE_ENEMIES_DELAY:
+			{
+				// wait until test becomes true
+				m_nextTime = 99999999.9f;
+				return true;
+			}
 			}
 		}
 
@@ -1112,7 +1112,7 @@ bool BotStatement::Update()
 				// set place criteria
 				phrase->SetPlaceCriteria(m_place);
 
-				const char *filename = phrase->GetSpeakable(me->GetProfile()->GetVoiceBank(), &duration);
+				const char* filename = phrase->GetSpeakable(me->GetProfile()->GetVoiceBank(), &duration);
 				// CONSOLE_ECHO("%s: Radio('%s')\n", STRING(me->pev->netname), filename);
 
 				bool sayIt = true;
@@ -1205,7 +1205,7 @@ enum PitchHack { P_HI, P_NORMAL, P_LOW };
 
 static int nextPitch = P_HI;
 
-BotChatterInterface::BotChatterInterface(CCSBot *me)
+BotChatterInterface::BotChatterInterface(CCSBot* me)
 {
 	m_me = me;
 	m_statementList = nullptr;
@@ -1230,8 +1230,8 @@ BotChatterInterface::BotChatterInterface(CCSBot *me)
 BotChatterInterface::~BotChatterInterface()
 {
 	// free pending statements
-	BotStatement *next;
-	for (BotStatement *msg = m_statementList; msg; msg = next)
+	BotStatement* next;
+	for (BotStatement* msg = m_statementList; msg; msg = next)
 	{
 		next = msg->m_next;
 		delete msg;
@@ -1241,7 +1241,7 @@ BotChatterInterface::~BotChatterInterface()
 // Reset to initial state
 void BotChatterInterface::Reset()
 {
-	BotStatement *msg, *nextMsg;
+	BotStatement* msg, * nextMsg;
 
 	// removing pending statements - except for those about the round results
 	for (msg = m_statementList; msg; msg = nextMsg)
@@ -1270,7 +1270,7 @@ void BotChatterInterface::Reset()
 }
 
 // Register a statement for speaking
-void BotChatterInterface::AddStatement(BotStatement *statement, bool mustAdd)
+void BotChatterInterface::AddStatement(BotStatement* statement, bool mustAdd)
 {
 	// don't add statements if bot chatter is shut off
 	if (GetVerbosity() == OFF)
@@ -1301,7 +1301,7 @@ void BotChatterInterface::AddStatement(BotStatement *statement, bool mustAdd)
 	}
 
 	// don't add statements that are redundant with something we're already waiting to say
-	BotStatement *s;
+	BotStatement* s;
 	for (s = m_statementList; s; s = s->m_next)
 	{
 		if (statement->IsRedundant(s))
@@ -1326,7 +1326,7 @@ void BotChatterInterface::AddStatement(BotStatement *statement, bool mustAdd)
 	// list has at least one statement on it
 
 	// insert into list in order
-	BotStatement *earlier = nullptr;
+	BotStatement* earlier = nullptr;
 	for (s = m_statementList; s; s = s->m_next)
 	{
 		if (s->GetStartTime() > statement->GetStartTime())
@@ -1357,7 +1357,7 @@ void BotChatterInterface::AddStatement(BotStatement *statement, bool mustAdd)
 }
 
 // Remove a statement
-void BotChatterInterface::RemoveStatement(BotStatement *statement)
+void BotChatterInterface::RemoveStatement(BotStatement* statement)
 {
 	if (statement->m_next)
 		statement->m_next->m_prev = statement->m_prev;
@@ -1402,7 +1402,7 @@ void BotChatterInterface::ReportEnemies()
 	}
 }
 
-void BotChatterInterface::OnEvent(GameEventType event, CBaseEntity *pEntity, CBaseEntity *pOther)
+void BotChatterInterface::OnEvent(GameEventType event, CBaseEntity* pEntity, CBaseEntity* pOther)
 {
 	;
 }
@@ -1416,7 +1416,7 @@ void BotChatterInterface::OnDeath()
 			|| m_me->GetChatter()->GetVerbosity() == BotChatterInterface::NORMAL)
 		{
 			// we've died mid-sentance - emit a gargle of pain
-			static const BotPhrase *pain = TheBotPhrases->GetPhrase("pain");
+			static const BotPhrase* pain = TheBotPhrases->GetPhrase("pain");
 
 			if (pain)
 			{
@@ -1447,7 +1447,7 @@ void BotChatterInterface::Update()
 	}
 
 	// speak if it is our turn
-	BotStatement *say = GetActiveStatement();
+	BotStatement* say = GetActiveStatement();
 	if (say)
 	{
 		// if our statement is active, speak it
@@ -1464,11 +1464,11 @@ void BotChatterInterface::Update()
 	// Process active statements.
 	// Removed expired statements, re-order statements according to their relavence and importance
 	// Remove redundant statements (ie: our teammates already said them)
-	const BotStatement *friendSay = GetActiveStatement();
+	const BotStatement* friendSay = GetActiveStatement();
 	if (friendSay && friendSay->GetOwner() == m_me)
 		friendSay = nullptr;
 
-	BotStatement *nextSay;
+	BotStatement* nextSay;
 	for (say = m_statementList; say; say = nextSay)
 	{
 		nextSay = say->m_next;
@@ -1510,15 +1510,15 @@ void BotChatterInterface::Update()
 }
 
 // Returns the statement that is being spoken, or is next to be spoken if no-one is speaking now
-BotStatement *BotChatterInterface::GetActiveStatement()
+BotStatement* BotChatterInterface::GetActiveStatement()
 {
 	// keep track of statement waiting longest to be spoken - it is next
-	BotStatement *earliest = nullptr;
+	BotStatement* earliest = nullptr;
 	float earlyTime = 999999999.9f;
 
 	for (int i = 1; i <= gpGlobals->maxClients; i++)
 	{
-		CBasePlayer *pPlayer = UTIL_PlayerByIndex(i);
+		CBasePlayer* pPlayer = UTIL_PlayerByIndex(i);
 
 		if (!pPlayer)
 			continue;
@@ -1542,7 +1542,7 @@ BotStatement *BotChatterInterface::GetActiveStatement()
 		if (!pPlayer->IsBot())
 			continue;
 
-		CCSBot *pBot = static_cast<CCSBot *>(pPlayer);
+		CCSBot* pBot = static_cast<CCSBot*>(pPlayer);
 		auto say = pBot->GetChatter()->m_statementList;
 		while (say)
 		{
@@ -1602,7 +1602,7 @@ void BotChatterInterface::ResetRadioSilenceDuration()
 	m_radioSilenceInterval[m_me->m_iTeam - 1].Reset();
 }
 
-inline void SayWhere(BotStatement *say, Place place)
+inline void SayWhere(BotStatement* say, Place place)
 {
 	say->AppendPhrase(TheBotPhrases->GetPlace(place));
 }
@@ -1613,7 +1613,7 @@ void BotChatterInterface::EnemySpotted()
 	// NOTE: This could be a few seconds out of date (enemy is in an adjacent place)
 	Place place = m_me->GetEnemyPlace();
 
-	BotStatement *say = new BotStatement(this, REPORT_VISIBLE_ENEMIES, 10.0f);
+	BotStatement* say = new BotStatement(this, REPORT_VISIBLE_ENEMIES, 10.0f);
 
 	// where are the enemies
 	say->AppendPhrase(TheBotPhrases->GetPlace(place));
@@ -1628,7 +1628,7 @@ void BotChatterInterface::EnemySpotted()
 
 NOXREF void BotChatterInterface::Clear(Place place)
 {
-	BotStatement *say = new BotStatement(this, REPORT_INFORMATION, 10.0f);
+	BotStatement* say = new BotStatement(this, REPORT_INFORMATION, 10.0f);
 
 	SayWhere(say, place);
 	say->AppendPhrase(TheBotPhrases->GetPhrase("Clear"));
@@ -1638,7 +1638,7 @@ NOXREF void BotChatterInterface::Clear(Place place)
 // Request enemy activity report
 void BotChatterInterface::ReportIn()
 {
-	BotStatement *say = new BotStatement(this, REPORT_REQUEST_INFORMATION, 10.0f);
+	BotStatement* say = new BotStatement(this, REPORT_REQUEST_INFORMATION, 10.0f);
 
 	say->AppendPhrase(TheBotPhrases->GetPhrase("RequestReport"));
 	say->AddCondition(BotStatement::RADIO_SILENCE);
@@ -1649,7 +1649,7 @@ void BotChatterInterface::ReportIn()
 // Report our situtation
 void BotChatterInterface::ReportingIn()
 {
-	BotStatement *say = new BotStatement(this, REPORT_INFORMATION, 10.0f);
+	BotStatement* say = new BotStatement(this, REPORT_INFORMATION, 10.0f);
 
 	// where are we
 	Place place = m_me->GetPlace();
@@ -1658,48 +1658,48 @@ void BotChatterInterface::ReportingIn()
 	// what are we doing
 	switch (m_me->GetTask())
 	{
-		case CCSBot::PLANT_BOMB:
+	case CCSBot::PLANT_BOMB:
+	{
+		m_me->GetChatter()->GoingToPlantTheBomb(UNDEFINED_PLACE);
+		break;
+	}
+	case CCSBot::DEFUSE_BOMB:
+	{
+		m_me->GetChatter()->Say("DefusingBomb");
+		break;
+	}
+	case CCSBot::GUARD_LOOSE_BOMB:
+	{
+		if (TheCSBots()->GetLooseBomb())
 		{
-			m_me->GetChatter()->GoingToPlantTheBomb(UNDEFINED_PLACE);
-			break;
+			say->AppendPhrase(TheBotPhrases->GetPhrase("GuardingLooseBomb"));
+			say->AttachMeme(new BotBombStatusMeme(CSGameState::LOOSE, TheCSBots()->GetLooseBomb()->pev->origin));
 		}
-		case CCSBot::DEFUSE_BOMB:
-		{
-			m_me->GetChatter()->Say("DefusingBomb");
-			break;
-		}
-		case CCSBot::GUARD_LOOSE_BOMB:
-		{
-			if (TheCSBots()->GetLooseBomb())
-			{
-				say->AppendPhrase(TheBotPhrases->GetPhrase("GuardingLooseBomb"));
-				say->AttachMeme(new BotBombStatusMeme(CSGameState::LOOSE, TheCSBots()->GetLooseBomb()->pev->origin));
-			}
-			break;
-		}
-		case CCSBot::GUARD_HOSTAGES:
-		{
-			m_me->GetChatter()->GuardingHostages(UNDEFINED_PLACE, !m_me->IsAtHidingSpot());
-			break;
-		}
-		case CCSBot::GUARD_HOSTAGE_RESCUE_ZONE:
-		{
-			m_me->GetChatter()->GuardingHostageEscapeZone(!m_me->IsAtHidingSpot());
-			break;
-		}
-		case CCSBot::COLLECT_HOSTAGES:
-		{
-			break;
-		}
-		case CCSBot::RESCUE_HOSTAGES:
-		{
-			m_me->GetChatter()->EscortingHostages();
-			break;
-		}
-		case CCSBot::GUARD_VIP_ESCAPE_ZONE:
-		{
-			break;
-		}
+		break;
+	}
+	case CCSBot::GUARD_HOSTAGES:
+	{
+		m_me->GetChatter()->GuardingHostages(UNDEFINED_PLACE, !m_me->IsAtHidingSpot());
+		break;
+	}
+	case CCSBot::GUARD_HOSTAGE_RESCUE_ZONE:
+	{
+		m_me->GetChatter()->GuardingHostageEscapeZone(!m_me->IsAtHidingSpot());
+		break;
+	}
+	case CCSBot::COLLECT_HOSTAGES:
+	{
+		break;
+	}
+	case CCSBot::RESCUE_HOSTAGES:
+	{
+		m_me->GetChatter()->EscortingHostages();
+		break;
+	}
+	case CCSBot::GUARD_VIP_ESCAPE_ZONE:
+	{
+		break;
+	}
 	}
 
 	// what do we see
@@ -1760,7 +1760,7 @@ bool BotChatterInterface::NeedBackup()
 	else
 	{
 		// ask friends for help
-		BotStatement *say = new BotStatement(this, REPORT_REQUEST_HELP, 10.0f);
+		BotStatement* say = new BotStatement(this, REPORT_REQUEST_HELP, 10.0f);
 
 		// where are we
 		Place place = m_me->GetPlace();
@@ -1783,7 +1783,7 @@ void BotChatterInterface::PinnedDown()
 
 	m_needBackupInterval.Reset();
 
-	BotStatement *say = new BotStatement(this, REPORT_REQUEST_HELP, 10.0f);
+	BotStatement* say = new BotStatement(this, REPORT_REQUEST_HELP, 10.0f);
 
 	// where are we
 	Place place = m_me->GetPlace();
@@ -1796,7 +1796,7 @@ void BotChatterInterface::PinnedDown()
 	AddStatement(say);
 }
 
-void BotChatterInterface::HeardNoise(const Vector *pos)
+void BotChatterInterface::HeardNoise(const Vector* pos)
 {
 	if (TheCSBots()->IsRoundOver())
 		return;
@@ -1809,7 +1809,7 @@ void BotChatterInterface::HeardNoise(const Vector *pos)
 		// make rare, since many teammates may try to say this
 		if (RANDOM_FLOAT(0.0f, 100.0f) < 33.0f)
 		{
-			BotStatement *say = new BotStatement(this, REPORT_INFORMATION, 5.0f);
+			BotStatement* say = new BotStatement(this, REPORT_INFORMATION, 5.0f);
 
 			say->AppendPhrase(TheBotPhrases->GetPhrase("HeardNoise"));
 			say->SetPlace(TheNavAreaGrid.GetPlace(pos));
@@ -1825,7 +1825,7 @@ void BotChatterInterface::KilledMyEnemy(int victimID)
 	if (m_me->GetNearbyEnemyCount() <= 1)
 		return;
 
-	BotStatement *say = new BotStatement(this, REPORT_ENEMY_ACTION, 3.0f);
+	BotStatement* say = new BotStatement(this, REPORT_ENEMY_ACTION, 3.0f);
 	say->AppendPhrase(TheBotPhrases->GetPhrase("KilledMyEnemy"));
 	say->SetSubject(victimID);
 	AddStatement(say);
@@ -1837,7 +1837,7 @@ void BotChatterInterface::EnemiesRemaining()
 	if (m_me->GetNearbyEnemyCount() > 1)
 		return;
 
-	BotStatement *say = new BotStatement(this, REPORT_ENEMIES_REMAINING, 5.0f);
+	BotStatement* say = new BotStatement(this, REPORT_ENEMIES_REMAINING, 5.0f);
 	say->AppendPhrase(BotStatement::REMAINING_ENEMY_COUNT);
 	say->SetStartTime(gpGlobals->time + RANDOM_FLOAT(2.0f, 4.0f));
 	AddStatement(say);
@@ -1845,14 +1845,14 @@ void BotChatterInterface::EnemiesRemaining()
 
 void BotChatterInterface::Affirmative()
 {
-	BotStatement *say = new BotStatement(this, REPORT_ACKNOWLEDGE, 3.0f);
+	BotStatement* say = new BotStatement(this, REPORT_ACKNOWLEDGE, 3.0f);
 	say->AppendPhrase(TheBotPhrases->GetPhrase("Affirmative"));
 	AddStatement(say);
 }
 
 void BotChatterInterface::Negative()
 {
-	BotStatement *say = new BotStatement(this, REPORT_ACKNOWLEDGE, 3.0f);
+	BotStatement* say = new BotStatement(this, REPORT_ACKNOWLEDGE, 3.0f);
 	say->AppendPhrase(TheBotPhrases->GetPhrase("Negative"));
 	AddStatement(say);
 }
@@ -1868,7 +1868,7 @@ void BotChatterInterface::GoingToPlantTheBomb(Place place)
 
 	m_planInterval.Reset();
 
-	BotStatement *say = new BotStatement(this, REPORT_CRITICAL_EVENT, 10.0f);
+	BotStatement* say = new BotStatement(this, REPORT_CRITICAL_EVENT, 10.0f);
 	say->AppendPhrase(TheBotPhrases->GetPhrase("GoingToPlantBomb"));
 	say->SetPlace(place);
 	say->AttachMeme(new BotFollowMeme());
@@ -1880,7 +1880,7 @@ void BotChatterInterface::PlantingTheBomb(Place place)
 	if (TheCSBots()->IsRoundOver())
 		return;
 
-	BotStatement *say = new BotStatement(this, REPORT_CRITICAL_EVENT, 10.0f);
+	BotStatement* say = new BotStatement(this, REPORT_CRITICAL_EVENT, 10.0f);
 	say->AppendPhrase(TheBotPhrases->GetPhrase("PlantingBomb"));
 	say->SetPlace(place);
 	say->AttachMeme(new BotDefendHereMeme(m_me->pev->origin));
@@ -1900,18 +1900,18 @@ void BotChatterInterface::TheyPickedUpTheBomb()
 	m_me->GetGameState()->UpdateBomber(&m_me->pev->origin);
 
 	// tell our teammates
-	BotStatement *say = new BotStatement(this, REPORT_INFORMATION, 10.0f);
+	BotStatement* say = new BotStatement(this, REPORT_INFORMATION, 10.0f);
 	say->AppendPhrase(TheBotPhrases->GetPhrase("TheyPickedUpTheBomb"));
 	say->AttachMeme(new BotBombStatusMeme(CSGameState::MOVING, m_me->pev->origin));
 	AddStatement(say);
 }
 
-void BotChatterInterface::SpottedBomber(CBasePlayer *bomber)
+void BotChatterInterface::SpottedBomber(CBasePlayer* bomber)
 {
 	if (m_me->GetGameState()->IsBombMoving())
 	{
 		// if we knew where the bomber was, this is old news
-		const Vector *bomberPos = m_me->GetGameState()->GetBombPosition();
+		const Vector* bomberPos = m_me->GetGameState()->GetBombPosition();
 		const float closeRangeSq = 1000.0f * 1000.0f;
 		if (bomberPos && (bomber->pev->origin - *bomberPos).LengthSquared() < closeRangeSq)
 			return;
@@ -1921,7 +1921,7 @@ void BotChatterInterface::SpottedBomber(CBasePlayer *bomber)
 	m_me->GetGameState()->UpdateBomber(&bomber->pev->origin);
 
 	// tell our teammates
-	BotStatement *say = new BotStatement(this, REPORT_INFORMATION, 10.0f);
+	BotStatement* say = new BotStatement(this, REPORT_INFORMATION, 10.0f);
 
 	// where is the bomber
 	Place place = TheNavAreaGrid.GetPlace(&bomber->pev->origin);
@@ -1935,7 +1935,7 @@ void BotChatterInterface::SpottedBomber(CBasePlayer *bomber)
 	AddStatement(say);
 }
 
-void BotChatterInterface::SpottedLooseBomb(CBaseEntity *bomb)
+void BotChatterInterface::SpottedLooseBomb(CBaseEntity* bomb)
 {
 	if (TheCSBots()->IsRoundOver())
 		return;
@@ -1953,7 +1953,7 @@ void BotChatterInterface::SpottedLooseBomb(CBaseEntity *bomb)
 		m_spottedLooseBombTimer.Start(10.0f);
 
 		// tell our teammates
-		BotStatement *say = new BotStatement(this, REPORT_INFORMATION, 10.0f);
+		BotStatement* say = new BotStatement(this, REPORT_INFORMATION, 10.0f);
 
 		// where is the bomb
 		Place place = TheNavAreaGrid.GetPlace(&bomb->pev->origin);
@@ -1968,7 +1968,7 @@ void BotChatterInterface::SpottedLooseBomb(CBaseEntity *bomb)
 	}
 }
 
-NOXREF void BotChatterInterface::GuardingLooseBomb(CBaseEntity *bomb)
+NOXREF void BotChatterInterface::GuardingLooseBomb(CBaseEntity* bomb)
 {
 	if (TheCSBots()->IsRoundOver() || !bomb)
 		return;
@@ -1985,7 +1985,7 @@ NOXREF void BotChatterInterface::GuardingLooseBomb(CBaseEntity *bomb)
 	m_me->GetGameState()->UpdateLooseBomb(&bomb->pev->origin);
 
 	// tell our teammates
-	BotStatement *say = new BotStatement(this, REPORT_INFORMATION, 10.0f);
+	BotStatement* say = new BotStatement(this, REPORT_INFORMATION, 10.0f);
 
 	// where is the bomb
 	Place place = TheNavAreaGrid.GetPlace(&bomb->pev->origin);
@@ -2008,7 +2008,7 @@ void BotChatterInterface::RequestBombLocation()
 	m_requestedBombLocation = true;
 
 	// tell our teammates
-	BotStatement *say = new BotStatement(this, REPORT_REQUEST_INFORMATION, 10.0f);
+	BotStatement* say = new BotStatement(this, REPORT_REQUEST_INFORMATION, 10.0f);
 	say->AppendPhrase(TheBotPhrases->GetPhrase("WhereIsTheBomb"));
 	say->AttachMeme(new BotWhereBombMeme());
 	AddStatement(say);
@@ -2016,11 +2016,11 @@ void BotChatterInterface::RequestBombLocation()
 
 void BotChatterInterface::BombsiteClear(int zoneIndex)
 {
-	const CCSBotManager::Zone *zone = TheCSBots()->GetZone(zoneIndex);
+	const CCSBotManager::Zone* zone = TheCSBots()->GetZone(zoneIndex);
 	if (!zone)
 		return;
 
-	BotStatement *say = new BotStatement(this, REPORT_INFORMATION, 10.0f);
+	BotStatement* say = new BotStatement(this, REPORT_INFORMATION, 10.0f);
 
 	SayWhere(say, TheNavAreaGrid.GetPlace(&zone->m_center));
 	say->AppendPhrase(TheBotPhrases->GetPhrase("BombsiteClear"));
@@ -2030,11 +2030,11 @@ void BotChatterInterface::BombsiteClear(int zoneIndex)
 
 void BotChatterInterface::FoundPlantedBomb(int zoneIndex)
 {
-	const CCSBotManager::Zone *zone = TheCSBots()->GetZone(zoneIndex);
+	const CCSBotManager::Zone* zone = TheCSBots()->GetZone(zoneIndex);
 	if (!zone)
 		return;
 
-	BotStatement *say = new BotStatement(this, REPORT_INFORMATION, 3.0f);
+	BotStatement* say = new BotStatement(this, REPORT_INFORMATION, 3.0f);
 	say->AppendPhrase(TheBotPhrases->GetPhrase("PlantedBombPlace"));
 	say->SetPlace(TheNavAreaGrid.GetPlace(&zone->m_center));
 	say->AttachMeme(new BotBombsiteStatusMeme(zoneIndex, BotBombsiteStatusMeme::PLANTED));
@@ -2049,7 +2049,7 @@ void BotChatterInterface::Scared()
 
 	m_scaredInterval.Reset();
 
-	BotStatement *say = new BotStatement(this, REPORT_EMOTE, 1.0f);
+	BotStatement* say = new BotStatement(this, REPORT_EMOTE, 1.0f);
 	say->AppendPhrase(TheBotPhrases->GetPhrase("ScaredEmote"));
 	say->AddCondition(BotStatement::IS_IN_COMBAT);
 	AddStatement(say);
@@ -2057,7 +2057,7 @@ void BotChatterInterface::Scared()
 
 void BotChatterInterface::CelebrateWin()
 {
-	BotStatement *say = new BotStatement(this, REPORT_EMOTE, 15.0f);
+	BotStatement* say = new BotStatement(this, REPORT_EMOTE, 15.0f);
 
 	// wait a bit before speaking
 	say->SetStartTime(gpGlobals->time + RANDOM_FLOAT(2.0f, 5.0f));
@@ -2088,12 +2088,12 @@ void BotChatterInterface::CelebrateWin()
 	AddStatement(say);
 }
 
-void BotChatterInterface::AnnouncePlan(const char *phraseName, Place place)
+void BotChatterInterface::AnnouncePlan(const char* phraseName, Place place)
 {
 	if (TheCSBots()->IsRoundOver())
 		return;
 
-	BotStatement *say = new BotStatement(this, REPORT_MY_PLAN, 10.0f);
+	BotStatement* say = new BotStatement(this, REPORT_MY_PLAN, 10.0f);
 	say->AppendPhrase(TheBotPhrases->GetPhrase(phraseName));
 	say->SetPlace(place);
 
@@ -2145,7 +2145,7 @@ void BotChatterInterface::HostagesBeingTaken()
 	if (TheCSBots()->IsRoundOver())
 		return;
 
-	BotStatement *say = new BotStatement(this, REPORT_INFORMATION, 3.0f);
+	BotStatement* say = new BotStatement(this, REPORT_INFORMATION, 3.0f);
 	say->AppendPhrase(TheBotPhrases->GetPhrase("HostagesBeingTaken"));
 	say->AttachMeme(new BotHostageBeingTakenMeme());
 	AddStatement(say);
@@ -2156,7 +2156,7 @@ void BotChatterInterface::HostagesTaken()
 	if (TheCSBots()->IsRoundOver())
 		return;
 
-	BotStatement *say = new BotStatement(this, REPORT_INFORMATION, 3.0f);
+	BotStatement* say = new BotStatement(this, REPORT_INFORMATION, 3.0f);
 	say->AppendPhrase(TheBotPhrases->GetPhrase("HostagesTaken"));
 	AddStatement(say);
 }
@@ -2176,7 +2176,7 @@ void BotChatterInterface::EscortingHostages()
 		// throttle frequency
 		m_escortingHostageTimer.Start(10.0f);
 
-		BotStatement *say = new BotStatement(this, REPORT_MY_PLAN, 5.0f);
+		BotStatement* say = new BotStatement(this, REPORT_MY_PLAN, 5.0f);
 		say->AppendPhrase(TheBotPhrases->GetPhrase("EscortingHostages"));
 		AddStatement(say);
 	}
@@ -2187,12 +2187,12 @@ NOXREF void BotChatterInterface::HostageDown()
 	if (TheCSBots()->IsRoundOver())
 		return;
 
-	BotStatement *say = new BotStatement(this, REPORT_INFORMATION, 3.0f);
+	BotStatement* say = new BotStatement(this, REPORT_INFORMATION, 3.0f);
 	say->AppendPhrase(TheBotPhrases->GetPhrase("HostageDown"));
 	AddStatement(say);
 }
 
-void BotChatterInterface::Encourage(const char *phraseName, float repeatInterval, float lifetime)
+void BotChatterInterface::Encourage(const char* phraseName, float repeatInterval, float lifetime)
 {
 	if (m_encourageTimer.IsElapsed())
 	{
@@ -2203,7 +2203,7 @@ void BotChatterInterface::Encourage(const char *phraseName, float repeatInterval
 
 void BotChatterInterface::KilledFriend()
 {
-	BotStatement *say = new BotStatement(this, REPORT_KILLED_FRIEND, 2.0f);
+	BotStatement* say = new BotStatement(this, REPORT_KILLED_FRIEND, 2.0f);
 	say->AppendPhrase(TheBotPhrases->GetPhrase("KilledFriend"));
 
 	// give them time to react
@@ -2213,7 +2213,7 @@ void BotChatterInterface::KilledFriend()
 
 void BotChatterInterface::FriendlyFire()
 {
-	BotStatement *say = new BotStatement(this, REPORT_FRIENDLY_FIRE, 1.0f);
+	BotStatement* say = new BotStatement(this, REPORT_FRIENDLY_FIRE, 1.0f);
 	say->AppendPhrase(TheBotPhrases->GetPhrase("FriendlyFire"));
 
 	// give them time to react

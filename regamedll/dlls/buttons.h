@@ -30,14 +30,14 @@
 
 #define SF_GLOBAL_SET BIT(0) // Set global state to initial state on spawn
 
-class CEnvGlobal: public CPointEntity
+class CEnvGlobal : public CPointEntity
 {
 public:
 	virtual void Spawn();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 public:
 	static TYPEDESCRIPTION m_SaveData[];
@@ -50,15 +50,15 @@ public:
 #define SF_ROTBUTTON_NOTSOLID  BIT(0)
 #define SF_ROTBUTTON_BACKWARDS BIT(1)
 
-class CRotButton: public CBaseButton
+class CRotButton : public CBaseButton
 {
 public:
 	virtual void Spawn();
 
 #ifdef REGAMEDLL_FIXES
 	virtual void Restart();
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
 
 public:
 	static TYPEDESCRIPTION m_SaveData[];
@@ -73,13 +73,13 @@ public:
 // collision problems with them...
 #define SF_MOMENTARY_DOOR BIT(0)
 
-class CMomentaryRotButton: public CBaseToggle
+class CMomentaryRotButton : public CBaseToggle
 {
 public:
 	virtual void Spawn();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
 	virtual int ObjectCaps()
 	{
 		int flags = CBaseToggle::ObjectCaps() & (~FCAP_ACROSS_TRANSITION);
@@ -91,7 +91,7 @@ public:
 
 		return (flags | FCAP_CONTINUOUS_USE);
 	}
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 public:
 	void EXPORT Off();
@@ -103,7 +103,7 @@ public:
 	void UpdateTarget(float value);
 
 public:
-	static CMomentaryRotButton *Instance(edict_t *pent) { return (CMomentaryRotButton *)GET_PRIVATE(pent); }
+	static CMomentaryRotButton* Instance(edict_t* pent) { return (CMomentaryRotButton*)GET_PRIVATE(pent); }
 	static TYPEDESCRIPTION m_SaveData[];
 
 	int m_lastUsed;
@@ -117,14 +117,14 @@ public:
 #define SF_SPARK_TOOGLE BIT(5)
 #define SF_SPARK_IF_OFF BIT(6)
 
-class CEnvSpark: public CBaseEntity
+class CEnvSpark : public CBaseEntity
 {
 public:
 	virtual void Spawn();
 	virtual void Precache();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
 
 #ifdef REGAMEDLL_FIXES
 	virtual void Restart();
@@ -132,8 +132,8 @@ public:
 
 public:
 	void EXPORT SparkThink();
-	void EXPORT SparkStart(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
-	void EXPORT SparkStop(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	void EXPORT SparkStart(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
+	void EXPORT SparkStop(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 public:
 	static TYPEDESCRIPTION m_SaveData[];
@@ -144,14 +144,14 @@ public:
 #define SF_BTARGET_USE BIT(0)
 #define SF_BTARGET_ON  BIT(1)
 
-class CButtonTarget: public CBaseEntity
+class CButtonTarget : public CBaseEntity
 {
 public:
 	virtual void Spawn();
 	virtual int ObjectCaps();
-	virtual BOOL TakeDamage(entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType);
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual BOOL TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 };
 
-char *ButtonSound(int sound);
-void DoSpark(entvars_t *pev, const Vector &location);
+char* ButtonSound(int sound);
+void DoSpark(entvars_t* pev, const Vector& location);

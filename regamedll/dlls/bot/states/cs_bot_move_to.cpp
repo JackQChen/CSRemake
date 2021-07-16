@@ -29,7 +29,7 @@
 #include "precompiled.h"
 
 // Move to a potentially far away position.
-void MoveToState::OnEnter(CCSBot *me)
+void MoveToState::OnEnter(CCSBot* me)
 {
 	if (me->IsUsingKnife() && me->IsWellPastSafe() && !me->IsHurrying())
 	{
@@ -63,13 +63,13 @@ void MoveToState::OnEnter(CCSBot *me)
 }
 
 // Move to a potentially far away position.
-void MoveToState::OnUpdate(CCSBot *me)
+void MoveToState::OnUpdate(CCSBot* me)
 {
 	// assume that we are paying attention and close enough to know our enemy died
 	if (me->GetTask() == CCSBot::MOVE_TO_LAST_KNOWN_ENEMY_POSITION)
 	{
 		// TODO: Account for reaction time so we take some time to realized the enemy is dead
-		CBaseEntity *pVictim = me->GetTaskEntity();
+		CBaseEntity* pVictim = me->GetTaskEntity();
 		if (!pVictim || !pVictim->IsAlive())
 		{
 			me->PrintIfWatched("The enemy I was chasing was killed - giving up.\n");
@@ -198,7 +198,7 @@ void MoveToState::OnUpdate(CCSBot *me)
 		{
 			// Since CT's have a radar, they can directly look at the actual hostage state
 			// check if someone else collected our hostage, or the hostage died or was rescued
-			CHostage *pHostage = me->GetGoalEntity<CHostage>();
+			CHostage* pHostage = me->GetGoalEntity<CHostage>();
 			if (!pHostage || !pHostage->IsAlive() || pHostage->IsFollowingSomeone())
 			{
 				me->Idle();
@@ -280,7 +280,7 @@ void MoveToState::OnUpdate(CCSBot *me)
 			if (!me->IsActiveWeaponReloading())
 			{
 				// if we are near the bomb, defuse it (if we are reloading, don't try to defuse until we finish)
-				const Vector *bombPos = me->GetGameState()->GetBombPosition();
+				const Vector* bombPos = me->GetGameState()->GetBombPosition();
 				if (bombPos)
 				{
 					const float defuseRange = 100.0f;
@@ -298,7 +298,7 @@ void MoveToState::OnUpdate(CCSBot *me)
 		}
 		case CCSBot::MOVE_TO_LAST_KNOWN_ENEMY_POSITION:
 		{
-			CBaseEntity *pVictim = me->GetTaskEntity();
+			CBaseEntity* pVictim = me->GetTaskEntity();
 			if (pVictim && pVictim->IsAlive())
 			{
 				// if we got here and haven't re-acquired the enemy, we lost him
@@ -314,7 +314,7 @@ void MoveToState::OnUpdate(CCSBot *me)
 	}
 }
 
-void MoveToState::OnExit(CCSBot *me)
+void MoveToState::OnExit(CCSBot* me)
 {
 	// reset to run in case we were walking near our goal position
 	me->Run();

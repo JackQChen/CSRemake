@@ -1,6 +1,6 @@
 #include "precompiled.h"
 
-CGameRules *g_pGameRules = nullptr;
+CGameRules* g_pGameRules = nullptr;
 
 CGameRules::CGameRules()
 {
@@ -19,7 +19,7 @@ CGameRules::~CGameRules()
 }
 
 // this is the game name that gets seen in the server browser
-const char *CGameRules::GetGameDescription()
+const char* CGameRules::GetGameDescription()
 {
 #ifdef REGAMEDLL_ADD
 	return m_GameDesc;
@@ -28,7 +28,7 @@ const char *CGameRules::GetGameDescription()
 #endif
 }
 
-BOOL CGameRules::CanHaveAmmo(CBasePlayer *pPlayer, const char *pszAmmoName, int iMaxCarry)
+BOOL CGameRules::CanHaveAmmo(CBasePlayer* pPlayer, const char* pszAmmoName, int iMaxCarry)
 {
 	if (pszAmmoName)
 	{
@@ -46,10 +46,10 @@ BOOL CGameRules::CanHaveAmmo(CBasePlayer *pPlayer, const char *pszAmmoName, int 
 	return FALSE;
 }
 
-edict_t *CGameRules::GetPlayerSpawnSpot(CBasePlayer *pPlayer)
+edict_t* CGameRules::GetPlayerSpawnSpot(CBasePlayer* pPlayer)
 {
 	// gat valid spawn point
-	edict_t *pentSpawnSpot = pPlayer->EntSelectSpawnPoint();
+	edict_t* pentSpawnSpot = pPlayer->EntSelectSpawnPoint();
 
 	// Move the player to the place it said.
 #ifndef PLAY_GAMEDLL
@@ -69,7 +69,7 @@ edict_t *CGameRules::GetPlayerSpawnSpot(CBasePlayer *pPlayer)
 	return pentSpawnSpot;
 }
 
-BOOL CGameRules::CanHavePlayerItem(CBasePlayer *pPlayer, CBasePlayerItem *pWeapon)
+BOOL CGameRules::CanHavePlayerItem(CBasePlayer* pPlayer, CBasePlayerItem* pWeapon)
 {
 	// only living players can have items
 	if (pPlayer->pev->deadflag != DEAD_NO)
@@ -129,9 +129,9 @@ void CGameRules::RefreshSkillData()
 	gSkillData.healthkitCapacity = 15;
 }
 
-LINK_HOOK_CHAIN2(CGameRules *, InstallGameRules)
+LINK_HOOK_CHAIN2(CGameRules*, InstallGameRules)
 
-CGameRules *EXT_FUNC __API_HOOK(InstallGameRules)()
+CGameRules* EXT_FUNC __API_HOOK(InstallGameRules)()
 {
 	SERVER_COMMAND("exec game.cfg\n");
 	SERVER_EXECUTE();

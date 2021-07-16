@@ -42,7 +42,7 @@ void CELITE::Precache()
 	m_usFireELITE_RIGHT = PRECACHE_EVENT(1, "events/elite_right.sc");
 }
 
-int CELITE::GetItemInfo(ItemInfo *p)
+int CELITE::GetItemInfo(ItemInfo* p)
 {
 	p->pszName = STRING(pev->classname);
 	p->pszAmmo1 = "9mm";
@@ -178,7 +178,7 @@ void CELITE::ELITEFire(float flSpread, float flCycleTime, BOOL fUseSemi)
 		vecDir = m_pPlayer->FireBullets3(vecSrc, vecAiming, flSpread,
 			8192, BULLET_PLAYER_9MM, 1, flBaseDamage, ELITE_RANGE_MODIFER, m_pPlayer->pev, true, m_pPlayer->random_seed);
 
-		PLAYBACK_EVENT_FULL(flag, m_pPlayer->edict(), m_usFireELITE_LEFT, 0, (float *)&g_vecZero, (float *)&g_vecZero, flTimeDiff, vecDir.x,
+		PLAYBACK_EVENT_FULL(flag, m_pPlayer->edict(), m_usFireELITE_LEFT, 0, (float*)&g_vecZero, (float*)&g_vecZero, flTimeDiff, vecDir.x,
 			int(vecDir.y * 100), m_iClip, FALSE, FALSE);
 	}
 	else
@@ -190,7 +190,7 @@ void CELITE::ELITEFire(float flSpread, float flCycleTime, BOOL fUseSemi)
 		vecDir = m_pPlayer->FireBullets3(vecSrc, vecAiming, flSpread,
 			8192, BULLET_PLAYER_9MM, 1, flBaseDamage, ELITE_RANGE_MODIFER, m_pPlayer->pev, true, m_pPlayer->random_seed);
 
-		PLAYBACK_EVENT_FULL(flag, m_pPlayer->edict(), m_usFireELITE_RIGHT, 0, (float *)&g_vecZero, (float *)&g_vecZero, flTimeDiff, vecDir.x,
+		PLAYBACK_EVENT_FULL(flag, m_pPlayer->edict(), m_usFireELITE_RIGHT, 0, (float*)&g_vecZero, (float*)&g_vecZero, flTimeDiff, vecDir.x,
 			int(vecDir.y * 100), m_iClip, FALSE, FALSE);
 	}
 

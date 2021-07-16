@@ -85,7 +85,7 @@ int gmsgAccount = 0;
 int gmsgHealthInfo = 0;
 bool g_bClientPrintEnable = true;
 
-char *sPlayerModelFiles[] =
+char* sPlayerModelFiles[] =
 {
 	"models/player.mdl",
 	"models/player/leet/leet.mdl",
@@ -144,90 +144,90 @@ void LinkUserMessages()
 	if (gmsgCurWeapon)
 		return;
 
-	gmsgCurWeapon     = REG_USER_MSG("CurWeapon", 3);
-	gmsgGeigerRange   = REG_USER_MSG("Geiger", 1);
-	gmsgFlashlight    = REG_USER_MSG("Flashlight", 2);
-	gmsgFlashBattery  = REG_USER_MSG("FlashBat", 1);
-	gmsgHealth        = REG_USER_MSG("Health", 1);
-	gmsgDamage        = REG_USER_MSG("Damage", 12);
-	gmsgBattery       = REG_USER_MSG("Battery", 2);
-	gmsgTrain         = REG_USER_MSG("Train", 1);
-	gmsgHudTextPro    = REG_USER_MSG("HudTextPro", -1);
-	gmsgHudText       = REG_USER_MSG("HudText", -1);
-	gmsgSayText       = REG_USER_MSG("SayText", -1);
-	gmsgTextMsg       = REG_USER_MSG("TextMsg", -1);
-	gmsgWeaponList    = REG_USER_MSG("WeaponList", -1);
-	gmsgResetHUD      = REG_USER_MSG("ResetHUD", 0);
-	gmsgInitHUD       = REG_USER_MSG("InitHUD", 0);
-	gmsgViewMode      = REG_USER_MSG("ViewMode", 0);
+	gmsgCurWeapon = REG_USER_MSG("CurWeapon", 3);
+	gmsgGeigerRange = REG_USER_MSG("Geiger", 1);
+	gmsgFlashlight = REG_USER_MSG("Flashlight", 2);
+	gmsgFlashBattery = REG_USER_MSG("FlashBat", 1);
+	gmsgHealth = REG_USER_MSG("Health", 1);
+	gmsgDamage = REG_USER_MSG("Damage", 12);
+	gmsgBattery = REG_USER_MSG("Battery", 2);
+	gmsgTrain = REG_USER_MSG("Train", 1);
+	gmsgHudTextPro = REG_USER_MSG("HudTextPro", -1);
+	gmsgHudText = REG_USER_MSG("HudText", -1);
+	gmsgSayText = REG_USER_MSG("SayText", -1);
+	gmsgTextMsg = REG_USER_MSG("TextMsg", -1);
+	gmsgWeaponList = REG_USER_MSG("WeaponList", -1);
+	gmsgResetHUD = REG_USER_MSG("ResetHUD", 0);
+	gmsgInitHUD = REG_USER_MSG("InitHUD", 0);
+	gmsgViewMode = REG_USER_MSG("ViewMode", 0);
 	gmsgShowGameTitle = REG_USER_MSG("GameTitle", 1);
-	gmsgDeathMsg      = REG_USER_MSG("DeathMsg", -1);
-	gmsgScoreAttrib   = REG_USER_MSG("ScoreAttrib", 2);
-	gmsgScoreInfo     = REG_USER_MSG("ScoreInfo", 9);
-	gmsgTeamInfo      = REG_USER_MSG("TeamInfo", -1);
-	gmsgTeamScore     = REG_USER_MSG("TeamScore", -1);
-	gmsgGameMode      = REG_USER_MSG("GameMode", 1);
-	gmsgMOTD          = REG_USER_MSG("MOTD", -1);
-	gmsgServerName    = REG_USER_MSG("ServerName", -1);
-	gmsgAmmoPickup    = REG_USER_MSG("AmmoPickup", 2);
-	gmsgWeapPickup    = REG_USER_MSG("WeapPickup", 1);
-	gmsgItemPickup    = REG_USER_MSG("ItemPickup", -1);
-	gmsgHideWeapon    = REG_USER_MSG("HideWeapon", 1);
-	gmsgSetFOV        = REG_USER_MSG("SetFOV", 1);
-	gmsgShowMenu      = REG_USER_MSG("ShowMenu", -1);
-	gmsgShake         = REG_USER_MSG("ScreenShake", 6);
-	gmsgFade          = REG_USER_MSG("ScreenFade", 10);
-	gmsgAmmoX         = REG_USER_MSG("AmmoX", 2);
-	gmsgSendAudio     = REG_USER_MSG("SendAudio", -1);
-	gmsgRoundTime     = REG_USER_MSG("RoundTime", 2);
-	gmsgMoney         = REG_USER_MSG("Money", 5);
-	gmsgArmorType     = REG_USER_MSG("ArmorType", 1);
-	gmsgBlinkAcct     = REG_USER_MSG("BlinkAcct", 1);
-	gmsgStatusValue   = REG_USER_MSG("StatusValue", -1);
-	gmsgStatusText    = REG_USER_MSG("StatusText", -1);
-	gmsgStatusIcon    = REG_USER_MSG("StatusIcon", -1);
-	gmsgBarTime       = REG_USER_MSG("BarTime", 2);
-	gmsgReloadSound   = REG_USER_MSG("ReloadSound", 2);
-	gmsgCrosshair     = REG_USER_MSG("Crosshair", 1);
-	gmsgNVGToggle     = REG_USER_MSG("NVGToggle", 1);
-	gmsgRadar         = REG_USER_MSG("Radar", 7);
-	gmsgSpectator     = REG_USER_MSG("Spectator", 2);
-	gmsgVGUIMenu      = REG_USER_MSG("VGUIMenu", -1);
-	gmsgTutorText     = REG_USER_MSG("TutorText", -1);
-	gmsgTutorLine     = REG_USER_MSG("TutorLine", -1);
-	gmsgTutorState    = REG_USER_MSG("TutorState", -1);
-	gmsgTutorClose    = REG_USER_MSG("TutorClose", -1);
-	gmsgAllowSpec     = REG_USER_MSG("AllowSpec", 1);
-	gmsgBombDrop      = REG_USER_MSG("BombDrop", 7);
-	gmsgBombPickup    = REG_USER_MSG("BombPickup", 0);
-	gmsgSendCorpse    = REG_USER_MSG("ClCorpse", -1);
-	gmsgHostagePos    = REG_USER_MSG("HostagePos", 8);
-	gmsgHostageK      = REG_USER_MSG("HostageK", 1);
-	gmsgHLTV          = REG_USER_MSG("HLTV", 2);
-	gmsgSpecHealth    = REG_USER_MSG("SpecHealth", 1);
-	gmsgForceCam      = REG_USER_MSG("ForceCam", 3);
-	gmsgADStop        = REG_USER_MSG("ADStop", 0);
-	gmsgReceiveW      = REG_USER_MSG("ReceiveW", 1);
-	gmsgCZCareer      = REG_USER_MSG("CZCareer", -1);
-	gmsgCZCareerHUD   = REG_USER_MSG("CZCareerHUD", -1);
-	gmsgShadowIdx     = REG_USER_MSG("ShadowIdx", 4);
-	gmsgTaskTime      = REG_USER_MSG("TaskTime", 4);
-	gmsgScenarioIcon  = REG_USER_MSG("Scenario", -1);
-	gmsgBotVoice      = REG_USER_MSG("BotVoice", 2);
-	gmsgBuyClose      = REG_USER_MSG("BuyClose", 0);
-	gmsgSpecHealth2   = REG_USER_MSG("SpecHealth2", 2);
-	gmsgBarTime2      = REG_USER_MSG("BarTime2", 4);
-	gmsgItemStatus    = REG_USER_MSG("ItemStatus", 1);
-	gmsgLocation      = REG_USER_MSG("Location", -1);
-	gmsgBotProgress   = REG_USER_MSG("BotProgress", -1);
-	gmsgBrass         = REG_USER_MSG("Brass", -1);
-	gmsgFog           = REG_USER_MSG("Fog", 7);
-	gmsgShowTimer     = REG_USER_MSG("ShowTimer", 0);
-	gmsgHudTextArgs   = REG_USER_MSG("HudTextArgs", -1);
+	gmsgDeathMsg = REG_USER_MSG("DeathMsg", -1);
+	gmsgScoreAttrib = REG_USER_MSG("ScoreAttrib", 2);
+	gmsgScoreInfo = REG_USER_MSG("ScoreInfo", 9);
+	gmsgTeamInfo = REG_USER_MSG("TeamInfo", -1);
+	gmsgTeamScore = REG_USER_MSG("TeamScore", -1);
+	gmsgGameMode = REG_USER_MSG("GameMode", 1);
+	gmsgMOTD = REG_USER_MSG("MOTD", -1);
+	gmsgServerName = REG_USER_MSG("ServerName", -1);
+	gmsgAmmoPickup = REG_USER_MSG("AmmoPickup", 2);
+	gmsgWeapPickup = REG_USER_MSG("WeapPickup", 1);
+	gmsgItemPickup = REG_USER_MSG("ItemPickup", -1);
+	gmsgHideWeapon = REG_USER_MSG("HideWeapon", 1);
+	gmsgSetFOV = REG_USER_MSG("SetFOV", 1);
+	gmsgShowMenu = REG_USER_MSG("ShowMenu", -1);
+	gmsgShake = REG_USER_MSG("ScreenShake", 6);
+	gmsgFade = REG_USER_MSG("ScreenFade", 10);
+	gmsgAmmoX = REG_USER_MSG("AmmoX", 2);
+	gmsgSendAudio = REG_USER_MSG("SendAudio", -1);
+	gmsgRoundTime = REG_USER_MSG("RoundTime", 2);
+	gmsgMoney = REG_USER_MSG("Money", 5);
+	gmsgArmorType = REG_USER_MSG("ArmorType", 1);
+	gmsgBlinkAcct = REG_USER_MSG("BlinkAcct", 1);
+	gmsgStatusValue = REG_USER_MSG("StatusValue", -1);
+	gmsgStatusText = REG_USER_MSG("StatusText", -1);
+	gmsgStatusIcon = REG_USER_MSG("StatusIcon", -1);
+	gmsgBarTime = REG_USER_MSG("BarTime", 2);
+	gmsgReloadSound = REG_USER_MSG("ReloadSound", 2);
+	gmsgCrosshair = REG_USER_MSG("Crosshair", 1);
+	gmsgNVGToggle = REG_USER_MSG("NVGToggle", 1);
+	gmsgRadar = REG_USER_MSG("Radar", 7);
+	gmsgSpectator = REG_USER_MSG("Spectator", 2);
+	gmsgVGUIMenu = REG_USER_MSG("VGUIMenu", -1);
+	gmsgTutorText = REG_USER_MSG("TutorText", -1);
+	gmsgTutorLine = REG_USER_MSG("TutorLine", -1);
+	gmsgTutorState = REG_USER_MSG("TutorState", -1);
+	gmsgTutorClose = REG_USER_MSG("TutorClose", -1);
+	gmsgAllowSpec = REG_USER_MSG("AllowSpec", 1);
+	gmsgBombDrop = REG_USER_MSG("BombDrop", 7);
+	gmsgBombPickup = REG_USER_MSG("BombPickup", 0);
+	gmsgSendCorpse = REG_USER_MSG("ClCorpse", -1);
+	gmsgHostagePos = REG_USER_MSG("HostagePos", 8);
+	gmsgHostageK = REG_USER_MSG("HostageK", 1);
+	gmsgHLTV = REG_USER_MSG("HLTV", 2);
+	gmsgSpecHealth = REG_USER_MSG("SpecHealth", 1);
+	gmsgForceCam = REG_USER_MSG("ForceCam", 3);
+	gmsgADStop = REG_USER_MSG("ADStop", 0);
+	gmsgReceiveW = REG_USER_MSG("ReceiveW", 1);
+	gmsgCZCareer = REG_USER_MSG("CZCareer", -1);
+	gmsgCZCareerHUD = REG_USER_MSG("CZCareerHUD", -1);
+	gmsgShadowIdx = REG_USER_MSG("ShadowIdx", 4);
+	gmsgTaskTime = REG_USER_MSG("TaskTime", 4);
+	gmsgScenarioIcon = REG_USER_MSG("Scenario", -1);
+	gmsgBotVoice = REG_USER_MSG("BotVoice", 2);
+	gmsgBuyClose = REG_USER_MSG("BuyClose", 0);
+	gmsgSpecHealth2 = REG_USER_MSG("SpecHealth2", 2);
+	gmsgBarTime2 = REG_USER_MSG("BarTime2", 4);
+	gmsgItemStatus = REG_USER_MSG("ItemStatus", 1);
+	gmsgLocation = REG_USER_MSG("Location", -1);
+	gmsgBotProgress = REG_USER_MSG("BotProgress", -1);
+	gmsgBrass = REG_USER_MSG("Brass", -1);
+	gmsgFog = REG_USER_MSG("Fog", 7);
+	gmsgShowTimer = REG_USER_MSG("ShowTimer", 0);
+	gmsgHudTextArgs = REG_USER_MSG("HudTextArgs", -1);
 
 #ifdef BUILD_LATEST
-	gmsgAccount       = REG_USER_MSG("Account", 5);
-	gmsgHealthInfo    = REG_USER_MSG("HealthInfo", 5);
+	gmsgAccount = REG_USER_MSG("Account", 5);
+	gmsgHealthInfo = REG_USER_MSG("HealthInfo", 5);
 #endif
 }
 
@@ -235,11 +235,11 @@ void WriteSigonMessages()
 {
 	for (int i = 0; i < MAX_WEAPONS; i++)
 	{
-		ItemInfo &info = CBasePlayerItem::m_ItemInfoArray[i];
+		ItemInfo& info = CBasePlayerItem::m_ItemInfoArray[i];
 		if (!info.iId)
 			continue;
 
-		const char *pszName;
+		const char* pszName;
 		if (!info.pszName)
 			pszName = "Empty";
 		else
@@ -253,15 +253,15 @@ void WriteSigonMessages()
 #endif
 
 		MESSAGE_BEGIN(MSG_INIT, gmsgWeaponList);
-			WRITE_STRING(pszName);
-			WRITE_BYTE(CBasePlayer::GetAmmoIndex(info.pszAmmo1));
-			WRITE_BYTE(info.iMaxAmmo1);
-			WRITE_BYTE(CBasePlayer::GetAmmoIndex(info.pszAmmo2));
-			WRITE_BYTE(info.iMaxAmmo2);
-			WRITE_BYTE(info.iSlot);
-			WRITE_BYTE(info.iPosition);
-			WRITE_BYTE(info.iId);
-			WRITE_BYTE(iFlags);
+		WRITE_STRING(pszName);
+		WRITE_BYTE(CBasePlayer::GetAmmoIndex(info.pszAmmo1));
+		WRITE_BYTE(info.iMaxAmmo1);
+		WRITE_BYTE(CBasePlayer::GetAmmoIndex(info.pszAmmo2));
+		WRITE_BYTE(info.iMaxAmmo2);
+		WRITE_BYTE(info.iSlot);
+		WRITE_BYTE(info.iPosition);
+		WRITE_BYTE(info.iId);
+		WRITE_BYTE(iFlags);
 		MESSAGE_END();
 	}
 }
@@ -278,7 +278,7 @@ int CMD_ARGC_()
 	return i;
 }
 
-const char *CMD_ARGV_(int i)
+const char* CMD_ARGV_(int i)
 {
 	if (!UseBotArgs)
 		return CMD_ARGV(i);
@@ -289,7 +289,7 @@ const char *CMD_ARGV_(int i)
 	return nullptr;
 }
 
-NOXREF void set_suicide_frame(entvars_t *pev)
+NOXREF void set_suicide_frame(entvars_t* pev)
 {
 	if (!FStrEq(STRING(pev->model), "models/player.mdl"))
 		return;
@@ -300,27 +300,27 @@ NOXREF void set_suicide_frame(entvars_t *pev)
 	pev->nextthink = -1;
 }
 
-void BlinkAccount(CBasePlayer *pPlayer, int numBlinks)
+void BlinkAccount(CBasePlayer* pPlayer, int numBlinks)
 {
 	MESSAGE_BEGIN(MSG_ONE, gmsgBlinkAcct, nullptr, pPlayer->pev);
-		WRITE_BYTE(numBlinks);
+	WRITE_BYTE(numBlinks);
 	MESSAGE_END();
 }
 
-BOOL EXT_FUNC ClientConnect(edict_t *pEntity, const char *pszName, const char *pszAddress, char *szRejectReason)
+BOOL EXT_FUNC ClientConnect(edict_t* pEntity, const char* pszName, const char* pszAddress, char* szRejectReason)
 {
 	return g_pGameRules->ClientConnected(pEntity, pszName, pszAddress, szRejectReason);
 }
 
-void EXT_FUNC ClientDisconnect(edict_t *pEntity)
+void EXT_FUNC ClientDisconnect(edict_t* pEntity)
 {
-	CBasePlayer *pPlayer = CBasePlayer::Instance(pEntity);
+	CBasePlayer* pPlayer = CBasePlayer::Instance(pEntity);
 
 	if (!g_pGameRules->IsGameOver())
 	{
 		UTIL_ClientPrintAll(HUD_PRINTNOTIFY, "#Game_disconnected", STRING(pEntity->v.netname));
 #ifndef REGAMEDLL_FIXES
-		CSound *pSound = CSoundEnt::SoundPointerForIndex(CSoundEnt::ClientSoundIndex(pEntity));
+		CSound* pSound = CSoundEnt::SoundPointerForIndex(CSoundEnt::ClientSoundIndex(pEntity));
 
 		if (pSound)
 			pSound->Reset();
@@ -349,14 +349,14 @@ void EXT_FUNC ClientDisconnect(edict_t *pEntity)
 	}
 }
 
-void respawn(entvars_t *pev, BOOL fCopyCorpse)
+void respawn(entvars_t* pev, BOOL fCopyCorpse)
 {
 	if (gpGlobals->coop || gpGlobals->deathmatch)
 	{
 		if (CSGameRules()->m_iTotalRoundsPlayed > 0)
 			CSGameRules()->MarkSpawnSkipped();
 
-		CBasePlayer *pPlayer = GetClassPtr<CCSPlayer>((CBasePlayer *)pev);
+		CBasePlayer* pPlayer = GetClassPtr<CCSPlayer>((CBasePlayer*)pev);
 		if (CSGameRules()->IsCareer() && CSGameRules()->ShouldSkipSpawn() && pPlayer->IsAlive())
 			g_skipCareerInitialSpawn = true;
 
@@ -370,10 +370,10 @@ void respawn(entvars_t *pev, BOOL fCopyCorpse)
 }
 
 // Suicide...
-void EXT_FUNC ClientKill(edict_t *pEntity)
+void EXT_FUNC ClientKill(edict_t* pEntity)
 {
-	entvars_t *pev = &pEntity->v;
-	CBasePlayer *pPlayer = CBasePlayer::Instance(pev);
+	entvars_t* pev = &pEntity->v;
+	CBasePlayer* pPlayer = CBasePlayer::Instance(pev);
 
 	if (pPlayer->GetObserverMode() != OBS_NONE)
 		return;
@@ -400,21 +400,21 @@ void EXT_FUNC ClientKill(edict_t *pEntity)
 	}
 }
 
-LINK_HOOK_VOID_CHAIN(ShowMenu, (CBasePlayer *pPlayer, int bitsValidSlots, int nDisplayTime, BOOL fNeedMore, char *pszText), pPlayer, bitsValidSlots, nDisplayTime, fNeedMore, pszText)
+LINK_HOOK_VOID_CHAIN(ShowMenu, (CBasePlayer* pPlayer, int bitsValidSlots, int nDisplayTime, BOOL fNeedMore, char* pszText), pPlayer, bitsValidSlots, nDisplayTime, fNeedMore, pszText)
 
-void EXT_FUNC __API_HOOK(ShowMenu)(CBasePlayer *pPlayer, int bitsValidSlots, int nDisplayTime, BOOL fNeedMore, char *pszText)
+void EXT_FUNC __API_HOOK(ShowMenu)(CBasePlayer* pPlayer, int bitsValidSlots, int nDisplayTime, BOOL fNeedMore, char* pszText)
 {
 	MESSAGE_BEGIN(MSG_ONE, gmsgShowMenu, nullptr, pPlayer->pev);
-		WRITE_SHORT(bitsValidSlots);
-		WRITE_CHAR(nDisplayTime);
-		WRITE_BYTE(fNeedMore);
-		WRITE_STRING(pszText);
+	WRITE_SHORT(bitsValidSlots);
+	WRITE_CHAR(nDisplayTime);
+	WRITE_BYTE(fNeedMore);
+	WRITE_STRING(pszText);
 	MESSAGE_END();
 }
 
-LINK_HOOK_VOID_CHAIN(ShowVGUIMenu, (CBasePlayer *pPlayer, int MenuType, int BitMask, char *szOldMenu), pPlayer, MenuType, BitMask, szOldMenu);
+LINK_HOOK_VOID_CHAIN(ShowVGUIMenu, (CBasePlayer* pPlayer, int MenuType, int BitMask, char* szOldMenu), pPlayer, MenuType, BitMask, szOldMenu);
 
-void EXT_FUNC __API_HOOK(ShowVGUIMenu)(CBasePlayer *pPlayer, int MenuType, int BitMask, char *szOldMenu)
+void EXT_FUNC __API_HOOK(ShowVGUIMenu)(CBasePlayer* pPlayer, int MenuType, int BitMask, char* szOldMenu)
 {
 #ifdef REGAMEDLL_ADD
 	if (CSGameRules()->ShouldSkipShowMenu()) {
@@ -433,11 +433,11 @@ void EXT_FUNC __API_HOOK(ShowVGUIMenu)(CBasePlayer *pPlayer, int MenuType, int B
 	if (pPlayer->m_bVGUIMenus || MenuType > VGUI_Menu_Buy_Item)
 	{
 		MESSAGE_BEGIN(MSG_ONE, gmsgVGUIMenu, nullptr, pPlayer->pev);
-			WRITE_BYTE(MenuType);
-			WRITE_SHORT(BitMask);
-			WRITE_CHAR(-1);
-			WRITE_BYTE(0);
-			WRITE_STRING(" ");
+		WRITE_BYTE(MenuType);
+		WRITE_SHORT(BitMask);
+		WRITE_CHAR(-1);
+		WRITE_BYTE(0);
+		WRITE_STRING(" ");
 		MESSAGE_END();
 	}
 	else
@@ -448,13 +448,13 @@ NOXREF int CountTeams()
 {
 	int iNumCT = 0, iNumTerrorist = 0;
 
-	CBaseEntity *pEntity = nullptr;
+	CBaseEntity* pEntity = nullptr;
 	while ((pEntity = UTIL_FindEntityByClassname(pEntity, "player")))
 	{
 		if (FNullEnt(pEntity->edict()))
 			break;
 
-		CBasePlayer *pPlayer = GetClassPtr<CCSPlayer>((CBasePlayer *)pEntity->pev);
+		CBasePlayer* pPlayer = GetClassPtr<CCSPlayer>((CBasePlayer*)pEntity->pev);
 
 		if (pPlayer->m_iTeam == UNASSIGNED)
 			continue;
@@ -475,11 +475,11 @@ NOXREF int CountTeams()
 	return iNumCT - iNumTerrorist;
 }
 
-void ListPlayers(CBasePlayer *current)
+void ListPlayers(CBasePlayer* current)
 {
 	char message[120] = "", cNumber[12];
 
-	CBaseEntity *pEntity = nullptr;
+	CBaseEntity* pEntity = nullptr;
 	while ((pEntity = UTIL_FindEntityByClassname(pEntity, "player")))
 	{
 		if (FNullEnt(pEntity->edict()))
@@ -488,7 +488,7 @@ void ListPlayers(CBasePlayer *current)
 		if (pEntity->IsDormant())
 			continue;
 
-		CBasePlayer *pPlayer = GetClassPtr<CCSPlayer>((CBasePlayer *)pEntity->pev);
+		CBasePlayer* pPlayer = GetClassPtr<CCSPlayer>((CBasePlayer*)pEntity->pev);
 		int iUserID = GETPLAYERUSERID(ENT(pPlayer->pev));
 
 		Q_sprintf(cNumber, "%d", iUserID);
@@ -506,7 +506,7 @@ void ListPlayers(CBasePlayer *current)
 int CountTeamPlayers(int iTeam)
 {
 	int nCount = 0;
-	CBaseEntity *pEntity = nullptr;
+	CBaseEntity* pEntity = nullptr;
 	while ((pEntity = UTIL_FindEntityByClassname(pEntity, "player")))
 	{
 		if (FNullEnt(pEntity->edict()))
@@ -515,7 +515,7 @@ int CountTeamPlayers(int iTeam)
 		if (pEntity->IsDormant())
 			continue;
 
-		if (GetClassPtr<CCSPlayer>((CBasePlayer *)pEntity->pev)->m_iTeam == iTeam)
+		if (GetClassPtr<CCSPlayer>((CBasePlayer*)pEntity->pev)->m_iTeam == iTeam)
 		{
 			nCount++;
 		}
@@ -524,10 +524,10 @@ int CountTeamPlayers(int iTeam)
 	return nCount;
 }
 
-void ProcessKickVote(CBasePlayer *pVotingPlayer, CBasePlayer *pKickPlayer)
+void ProcessKickVote(CBasePlayer* pVotingPlayer, CBasePlayer* pKickPlayer)
 {
-	CBaseEntity *pTempEntity;
-	CBasePlayer *pTempPlayer;
+	CBaseEntity* pTempEntity;
+	CBasePlayer* pTempPlayer;
 	int iValidVotes;
 	int iVoteID;
 	int iVotesNeeded;
@@ -550,7 +550,7 @@ void ProcessKickVote(CBasePlayer *pVotingPlayer, CBasePlayer *pKickPlayer)
 		if (FNullEnt(pTempEntity->edict()))
 			break;
 
-		pTempPlayer = GetClassPtr<CCSPlayer>((CBasePlayer *)pTempEntity->pev);
+		pTempPlayer = GetClassPtr<CCSPlayer>((CBasePlayer*)pTempEntity->pev);
 
 		if (!pTempPlayer || pTempPlayer->m_iTeam == UNASSIGNED)
 			continue;
@@ -587,7 +587,7 @@ void ProcessKickVote(CBasePlayer *pVotingPlayer, CBasePlayer *pKickPlayer)
 			if (FNullEnt(pTempEntity->edict()))
 				break;
 
-			pTempPlayer = GetClassPtr<CCSPlayer>((CBasePlayer *)pTempEntity->pev);
+			pTempPlayer = GetClassPtr<CCSPlayer>((CBasePlayer*)pTempEntity->pev);
 
 			if (!pTempPlayer || pTempPlayer->m_iTeam == UNASSIGNED)
 				continue;
@@ -623,10 +623,10 @@ void CheckStartMoney()
 
 }
 
-void EXT_FUNC ClientPutInServer(edict_t *pEntity)
+void EXT_FUNC ClientPutInServer(edict_t* pEntity)
 {
-	entvars_t *pev = &pEntity->v;
-	CBasePlayer *pPlayer = GetClassPtr<CCSPlayer>((CBasePlayer *)pev);
+	entvars_t* pev = &pEntity->v;
+	CBasePlayer* pPlayer = GetClassPtr<CCSPlayer>((CBasePlayer*)pev);
 
 	pPlayer->SetCustomDecalFrames(-1);
 	pPlayer->SetPrefsFromUserinfo(GET_INFO_BUFFER(pEntity));
@@ -683,7 +683,7 @@ void EXT_FUNC ClientPutInServer(edict_t *pEntity)
 
 	pPlayer->SetThink(nullptr);
 
-	CBaseEntity *pTarget = nullptr;
+	CBaseEntity* pTarget = nullptr;
 	pPlayer->m_pIntroCamera = UTIL_FindEntityByClassname(nullptr, "trigger_camera");
 
 	if (g_pGameRules && g_pGameRules->IsMultiplayer())
@@ -728,7 +728,7 @@ void EXT_FUNC ClientPutInServer(edict_t *pEntity)
 
 	if (TheBots)
 	{
-		TheBots->OnEvent(EVENT_PLAYER_CHANGED_TEAM, (CBaseEntity *)pPlayer);
+		TheBots->OnEvent(EVENT_PLAYER_CHANGED_TEAM, (CBaseEntity*)pPlayer);
 	}
 
 	pPlayer->m_iJoiningState = SHOWLTEXT;
@@ -736,7 +736,7 @@ void EXT_FUNC ClientPutInServer(edict_t *pEntity)
 	static char sName[128];
 	Q_strcpy(sName, STRING(pPlayer->pev->netname));
 
-	for (char *pApersand = sName; pApersand && *pApersand != '\0'; pApersand++)
+	for (char* pApersand = sName; pApersand && *pApersand != '\0'; pApersand++)
 	{
 		if (*pApersand == '%')
 			*pApersand = ' ';
@@ -749,19 +749,19 @@ void EXT_FUNC ClientPutInServer(edict_t *pEntity)
 	UTIL_ClientPrintAll(HUD_PRINTNOTIFY, "#Game_connected", (sName[0] != '\0') ? sName : "<unconnected>");
 }
 
-void Host_Say(edict_t *pEntity, BOOL teamonly)
+void Host_Say(edict_t* pEntity, BOOL teamonly)
 {
 	int j;
-	char *p;
+	char* p;
 	char text[128];
 	char szTemp[256];
-	const char *cpSay = "say";
-	const char *cpSayTeam = "say_team";
-	const char *pcmd = CMD_ARGV_(0);
+	const char* cpSay = "say";
+	const char* cpSayTeam = "say_team";
+	const char* pcmd = CMD_ARGV_(0);
 	bool bSenderDead = false;
 
-	entvars_t *pev = &pEntity->v;
-	CBasePlayer *pPlayer = GetClassPtr<CCSPlayer>((CBasePlayer *)pev);
+	entvars_t* pev = &pEntity->v;
+	CBasePlayer* pPlayer = GetClassPtr<CCSPlayer>((CBasePlayer*)pev);
 
 	if (pPlayer->m_flLastTalk != 0.0f && gpGlobals->time - pPlayer->m_flLastTalk < 0.66f)
 		return;
@@ -834,9 +834,9 @@ void Host_Say(edict_t *pEntity, BOOL teamonly)
 	if (Q_strlen(p) <= 0)
 		return;
 
-	const char *placeName = nullptr;
-	char *pszFormat = nullptr;
-	char *pszConsoleFormat = nullptr;
+	const char* placeName = nullptr;
+	char* pszFormat = nullptr;
+	char* pszConsoleFormat = nullptr;
 	bool consoleUsesPlaceName = false;
 
 	// team only
@@ -846,7 +846,7 @@ void Host_Say(edict_t *pEntity, BOOL teamonly)
 		{
 			// search the place name where is located the player
 			Place playerPlace = TheNavAreaGrid.GetPlace(&pPlayer->pev->origin);
-			const BotPhraseList *placeList = TheBotPhrases->GetPlaceList();
+			const BotPhraseList* placeList = TheBotPhrases->GetPlaceList();
 
 			for (auto phrase : *placeList)
 			{
@@ -938,7 +938,7 @@ void Host_Say(edict_t *pEntity, BOOL teamonly)
 	if ((signed int)Q_strlen(p) > j)
 		p[j] = 0;
 
-	for (char *pAmpersand = p; pAmpersand && *pAmpersand != '\0'; pAmpersand++)
+	for (char* pAmpersand = p; pAmpersand && *pAmpersand != '\0'; pAmpersand++)
 	{
 		if (pAmpersand[0] == '%')
 		{
@@ -957,7 +957,7 @@ void Host_Say(edict_t *pEntity, BOOL teamonly)
 	// This may return the world in single player if the client types something between levels or during spawn
 	// so check it, or it will infinite loop
 
-	CBasePlayer *pReceiver = nullptr;
+	CBasePlayer* pReceiver = nullptr;
 	while ((pReceiver = UTIL_FindEntityByClassname(pReceiver, "player")))
 	{
 		if (FNullEnt(pReceiver->edict()))
@@ -990,15 +990,15 @@ void Host_Say(edict_t *pEntity, BOOL teamonly)
 			|| pReceiver->m_iIgnoreGlobalChat == IGNOREMSG_NONE)
 		{
 			MESSAGE_BEGIN(MSG_ONE, gmsgSayText, nullptr, pReceiver->pev);
-				WRITE_BYTE(ENTINDEX(pEntity));
-				WRITE_STRING(pszFormat);
-				WRITE_STRING("");
-				WRITE_STRING(text);
+			WRITE_BYTE(ENTINDEX(pEntity));
+			WRITE_STRING(pszFormat);
+			WRITE_STRING("");
+			WRITE_STRING(text);
 
-				if (placeName)
-				{
-					WRITE_STRING(placeName);
-				}
+			if (placeName)
+			{
+				WRITE_STRING(placeName);
+			}
 
 			MESSAGE_END();
 		}
@@ -1006,15 +1006,15 @@ void Host_Say(edict_t *pEntity, BOOL teamonly)
 
 	// print to the sending client
 	MESSAGE_BEGIN(MSG_ONE, gmsgSayText, nullptr, &pEntity->v);
-		WRITE_BYTE(ENTINDEX(pEntity));
-		WRITE_STRING(pszFormat);
-		WRITE_STRING("");
-		WRITE_STRING(text);
+	WRITE_BYTE(ENTINDEX(pEntity));
+	WRITE_STRING(pszFormat);
+	WRITE_STRING("");
+	WRITE_STRING(text);
 
-		if (placeName)
-		{
-			WRITE_STRING(placeName);
-		}
+	if (placeName)
+	{
+		WRITE_STRING(placeName);
+	}
 
 	MESSAGE_END();
 
@@ -1039,17 +1039,17 @@ void Host_Say(edict_t *pEntity, BOOL teamonly)
 
 	if (logmessages.value)
 	{
-		const char *temp = teamonly ? "say_team" : "say";
-		const char *deadText = (pPlayer->m_iTeam != SPECTATOR && bSenderDead) ? " (dead)" : "";
+		const char* temp = teamonly ? "say_team" : "say";
+		const char* deadText = (pPlayer->m_iTeam != SPECTATOR && bSenderDead) ? " (dead)" : "";
 
-		char *szTeam = GetTeam(pPlayer->m_iTeam);
+		char* szTeam = GetTeam(pPlayer->m_iTeam);
 
 		UTIL_LogPrintf("\"%s<%i><%s><%s>\" %s \"%s\"%s\n", STRING(pPlayer->pev->netname), GETPLAYERUSERID(pPlayer->edict()), GETPLAYERAUTHID(pPlayer->edict()),
 			szTeam, temp, p, deadText);
 	}
 }
 
-bool CanBuyThis(CBasePlayer *pPlayer, int iWeapon)
+bool CanBuyThis(CBasePlayer* pPlayer, int iWeapon)
 {
 	if (pPlayer->HasShield() && iWeapon == WEAPON_ELITE)
 		return false;
@@ -1093,7 +1093,7 @@ bool CanBuyThis(CBasePlayer *pPlayer, int iWeapon)
 	return true;
 }
 
-void BuyPistol(CBasePlayer *pPlayer, int iSlot)
+void BuyPistol(CBasePlayer* pPlayer, int iSlot)
 {
 	if (iSlot < 1 || iSlot > 5)
 		return;
@@ -1121,7 +1121,7 @@ void BuyPistol(CBasePlayer *pPlayer, int iSlot)
 	BuyWeaponByWeaponID(pPlayer, buyWeapon);
 }
 
-void BuyShotgun(CBasePlayer *pPlayer, int iSlot)
+void BuyShotgun(CBasePlayer* pPlayer, int iSlot)
 {
 	if (iSlot < 1 || iSlot > 2)
 		return;
@@ -1140,7 +1140,7 @@ void BuyShotgun(CBasePlayer *pPlayer, int iSlot)
 	BuyWeaponByWeaponID(pPlayer, buyWeapon);
 }
 
-void BuySubMachineGun(CBasePlayer *pPlayer, int iSlot)
+void BuySubMachineGun(CBasePlayer* pPlayer, int iSlot)
 {
 	if (iSlot < 1 || iSlot > 4)
 		return;
@@ -1165,7 +1165,7 @@ void BuySubMachineGun(CBasePlayer *pPlayer, int iSlot)
 	BuyWeaponByWeaponID(pPlayer, buyWeapon);
 }
 
-void BuyRifle(CBasePlayer *pPlayer, int iSlot)
+void BuyRifle(CBasePlayer* pPlayer, int iSlot)
 {
 	if (iSlot < 1 || iSlot > 6)
 		return;
@@ -1198,7 +1198,7 @@ void BuyRifle(CBasePlayer *pPlayer, int iSlot)
 	BuyWeaponByWeaponID(pPlayer, buyWeapon);
 }
 
-void BuyMachineGun(CBasePlayer *pPlayer, int iSlot)
+void BuyMachineGun(CBasePlayer* pPlayer, int iSlot)
 {
 	if (iSlot != 1)
 		return;
@@ -1206,10 +1206,10 @@ void BuyMachineGun(CBasePlayer *pPlayer, int iSlot)
 	BuyWeaponByWeaponID(pPlayer, WEAPON_M249);
 }
 
-void BuyItem(CBasePlayer *pPlayer, int iSlot)
+void BuyItem(CBasePlayer* pPlayer, int iSlot)
 {
 	int iItemPrice = 0;
-	const char *pszItem = nullptr;
+	const char* pszItem = nullptr;
 
 	if (!pPlayer->CanPlayerBuy(true))
 		return;
@@ -1231,270 +1231,270 @@ void BuyItem(CBasePlayer *pPlayer, int iSlot)
 
 	switch (iSlot)
 	{
-		case MENU_SLOT_ITEM_VEST:
-		{
+	case MENU_SLOT_ITEM_VEST:
+	{
 #ifdef REGAMEDLL_ADD
-			if (pPlayer->HasRestrictItem(ITEM_KEVLAR, ITEM_TYPE_BUYING))
-				return;
+		if (pPlayer->HasRestrictItem(ITEM_KEVLAR, ITEM_TYPE_BUYING))
+			return;
 #endif
-			if (bFullArmor)
+		if (bFullArmor)
+		{
+			if (g_bClientPrintEnable)
+			{
+				ClientPrint(pPlayer->pev, HUD_PRINTCENTER, "#Already_Have_Kevlar");
+			}
+
+			return;
+		}
+
+		if (pPlayer->m_iAccount >= KEVLAR_PRICE)
+		{
+			if (bHasHelmet && g_bClientPrintEnable)
+			{
+				ClientPrint(pPlayer->pev, HUD_PRINTCENTER, "#Already_Have_Helmet_Bought_Kevlar");
+			}
+
+			bEnoughMoney = true;
+			pszItem = "item_kevlar";
+			iItemPrice = KEVLAR_PRICE;
+		}
+		break;
+	}
+	case MENU_SLOT_ITEM_VESTHELM:
+	{
+#ifdef REGAMEDLL_ADD
+		if (pPlayer->HasRestrictItem(ITEM_ASSAULT, ITEM_TYPE_BUYING))
+			return;
+#endif
+		if (bFullArmor)
+		{
+			if (bHasHelmet)
 			{
 				if (g_bClientPrintEnable)
 				{
-					ClientPrint(pPlayer->pev, HUD_PRINTCENTER, "#Already_Have_Kevlar");
+					ClientPrint(pPlayer->pev, HUD_PRINTCENTER, "#Already_Have_Kevlar_Helmet");
 				}
 
 				return;
 			}
 
-			if (pPlayer->m_iAccount >= KEVLAR_PRICE)
+			if (pPlayer->m_iAccount >= HELMET_PRICE)
 			{
-				if (bHasHelmet && g_bClientPrintEnable)
+				if (g_bClientPrintEnable)
 				{
-					ClientPrint(pPlayer->pev, HUD_PRINTCENTER, "#Already_Have_Helmet_Bought_Kevlar");
+					ClientPrint(pPlayer->pev, HUD_PRINTCENTER, "#Already_Have_Kevlar_Bought_Helmet");
 				}
 
 				bEnoughMoney = true;
-				pszItem = "item_kevlar";
-				iItemPrice = KEVLAR_PRICE;
+				pszItem = "item_assaultsuit";
+				iItemPrice = HELMET_PRICE;
 			}
 			break;
 		}
-		case MENU_SLOT_ITEM_VESTHELM:
+		else
 		{
-#ifdef REGAMEDLL_ADD
-			if (pPlayer->HasRestrictItem(ITEM_ASSAULT, ITEM_TYPE_BUYING))
-				return;
-#endif
-			if (bFullArmor)
+			if (bHasHelmet)
 			{
-				if (bHasHelmet)
+				if (pPlayer->m_iAccount >= KEVLAR_PRICE)
 				{
 					if (g_bClientPrintEnable)
 					{
-						ClientPrint(pPlayer->pev, HUD_PRINTCENTER, "#Already_Have_Kevlar_Helmet");
-					}
-
-					return;
-				}
-
-				if (pPlayer->m_iAccount >= HELMET_PRICE)
-				{
-					if (g_bClientPrintEnable)
-					{
-						ClientPrint(pPlayer->pev, HUD_PRINTCENTER, "#Already_Have_Kevlar_Bought_Helmet");
+						ClientPrint(pPlayer->pev, HUD_PRINTCENTER, "#Already_Have_Helmet_Bought_Kevlar");
 					}
 
 					bEnoughMoney = true;
 					pszItem = "item_assaultsuit";
-					iItemPrice = HELMET_PRICE;
+					iItemPrice = KEVLAR_PRICE;
 				}
-				break;
 			}
 			else
 			{
-				if (bHasHelmet)
+				if (pPlayer->m_iAccount >= ASSAULTSUIT_PRICE)
 				{
-					if (pPlayer->m_iAccount >= KEVLAR_PRICE)
-					{
-						if (g_bClientPrintEnable)
-						{
-							ClientPrint(pPlayer->pev, HUD_PRINTCENTER, "#Already_Have_Helmet_Bought_Kevlar");
-						}
-
-						bEnoughMoney = true;
-						pszItem = "item_assaultsuit";
-						iItemPrice = KEVLAR_PRICE;
-					}
-				}
-				else
-				{
-					if (pPlayer->m_iAccount >= ASSAULTSUIT_PRICE)
-					{
-						bEnoughMoney = true;
-						pszItem = "item_assaultsuit";
-						iItemPrice = ASSAULTSUIT_PRICE;
-					}
+					bEnoughMoney = true;
+					pszItem = "item_assaultsuit";
+					iItemPrice = ASSAULTSUIT_PRICE;
 				}
 			}
-			break;
 		}
-		case MENU_SLOT_ITEM_FLASHGREN:
-		{
+		break;
+	}
+	case MENU_SLOT_ITEM_FLASHGREN:
+	{
 #ifdef REGAMEDLL_ADD
-			if (pPlayer->HasRestrictItem(ITEM_FLASHBANG, ITEM_TYPE_BUYING))
-				return;
+		if (pPlayer->HasRestrictItem(ITEM_FLASHBANG, ITEM_TYPE_BUYING))
+			return;
 #endif
-			if (pPlayer->AmmoInventory(AMMO_FLASHBANG) >= MaxAmmoCarry(WEAPON_FLASHBANG))
+		if (pPlayer->AmmoInventory(AMMO_FLASHBANG) >= MaxAmmoCarry(WEAPON_FLASHBANG))
+		{
+			if (g_bClientPrintEnable)
 			{
-				if (g_bClientPrintEnable)
-				{
-					ClientPrint(pPlayer->pev, HUD_PRINTCENTER, "#Cannot_Carry_Anymore");
-				}
-
-				return;
+				ClientPrint(pPlayer->pev, HUD_PRINTCENTER, "#Cannot_Carry_Anymore");
 			}
 
-			if (pPlayer->m_iAccount >= FLASHBANG_PRICE)
-			{
-				bEnoughMoney = true;
-				pszItem = "weapon_flashbang";
-				iItemPrice = FLASHBANG_PRICE;
-
-			}
-			break;
+			return;
 		}
-		case MENU_SLOT_ITEM_HEGREN:
+
+		if (pPlayer->m_iAccount >= FLASHBANG_PRICE)
 		{
-#ifdef REGAMEDLL_ADD
-			if (pPlayer->HasRestrictItem(ITEM_HEGRENADE, ITEM_TYPE_BUYING))
-				return;
-#endif
-			if (pPlayer->AmmoInventory(AMMO_HEGRENADE) >= MaxAmmoCarry(WEAPON_HEGRENADE))
-			{
-				if (g_bClientPrintEnable)
-				{
-					ClientPrint(pPlayer->pev, HUD_PRINTCENTER, "#Cannot_Carry_Anymore");
-				}
+			bEnoughMoney = true;
+			pszItem = "weapon_flashbang";
+			iItemPrice = FLASHBANG_PRICE;
 
-				return;
-			}
-
-			if (pPlayer->m_iAccount >= HEGRENADE_PRICE)
-			{
-				bEnoughMoney = true;
-				pszItem = "weapon_hegrenade";
-				iItemPrice = HEGRENADE_PRICE;
-			}
-			break;
 		}
-		case MENU_SLOT_ITEM_SMOKEGREN:
-		{
+		break;
+	}
+	case MENU_SLOT_ITEM_HEGREN:
+	{
 #ifdef REGAMEDLL_ADD
-			if (pPlayer->HasRestrictItem(ITEM_SMOKEGRENADE, ITEM_TYPE_BUYING))
-				return;
+		if (pPlayer->HasRestrictItem(ITEM_HEGRENADE, ITEM_TYPE_BUYING))
+			return;
 #endif
-			if (pPlayer->AmmoInventory(AMMO_SMOKEGRENADE) >= MaxAmmoCarry(WEAPON_SMOKEGRENADE))
+		if (pPlayer->AmmoInventory(AMMO_HEGRENADE) >= MaxAmmoCarry(WEAPON_HEGRENADE))
+		{
+			if (g_bClientPrintEnable)
 			{
-				if (g_bClientPrintEnable)
-				{
-					ClientPrint(pPlayer->pev, HUD_PRINTCENTER, "#Cannot_Carry_Anymore");
-				}
-
-				return;
+				ClientPrint(pPlayer->pev, HUD_PRINTCENTER, "#Cannot_Carry_Anymore");
 			}
 
-			if (pPlayer->m_iAccount >= SMOKEGRENADE_PRICE)
-			{
-				bEnoughMoney = true;
-				pszItem = "weapon_smokegrenade";
-				iItemPrice = SMOKEGRENADE_PRICE;
-			}
-			break;
+			return;
 		}
-		case MENU_SLOT_ITEM_NVG:
+
+		if (pPlayer->m_iAccount >= HEGRENADE_PRICE)
 		{
-#ifdef REGAMEDLL_ADD
-			if (pPlayer->HasRestrictItem(ITEM_NVG, ITEM_TYPE_BUYING))
-				return;
-#endif
-			if (pPlayer->m_bHasNightVision)
-			{
-				if (g_bClientPrintEnable)
-				{
-					ClientPrint(pPlayer->pev, HUD_PRINTCENTER, "#Already_Have_One");
-				}
-
-				return;
-			}
-
-			if (pPlayer->m_iAccount >= NVG_PRICE)
-			{
-				if (!(pPlayer->m_flDisplayHistory & DHF_NIGHTVISION))
-				{
-					pPlayer->HintMessage("#Hint_use_nightvision");
-					pPlayer->m_flDisplayHistory |= DHF_NIGHTVISION;
-				}
-
-				EMIT_SOUND(ENT(pPlayer->pev), CHAN_ITEM, "items/equip_nvg.wav", VOL_NORM, ATTN_NORM);
-
-				bEnoughMoney = true;
-				pPlayer->m_bHasNightVision = true;
-				pPlayer->AddAccount(-NVG_PRICE, RT_PLAYER_BOUGHT_SOMETHING);
-				pPlayer->SendItemStatus();
-			}
-			break;
+			bEnoughMoney = true;
+			pszItem = "weapon_hegrenade";
+			iItemPrice = HEGRENADE_PRICE;
 		}
-		case MENU_SLOT_ITEM_DEFUSEKIT:
-		{
+		break;
+	}
+	case MENU_SLOT_ITEM_SMOKEGREN:
+	{
 #ifdef REGAMEDLL_ADD
-			if (pPlayer->HasRestrictItem(ITEM_DEFUSEKIT, ITEM_TYPE_BUYING))
-				return;
+		if (pPlayer->HasRestrictItem(ITEM_SMOKEGRENADE, ITEM_TYPE_BUYING))
+			return;
 #endif
-			if (pPlayer->m_iTeam != CT || !CSGameRules()->m_bMapHasBombTarget)
-				return;
-
-			if (pPlayer->m_bHasDefuser)
+		if (pPlayer->AmmoInventory(AMMO_SMOKEGRENADE) >= MaxAmmoCarry(WEAPON_SMOKEGRENADE))
+		{
+			if (g_bClientPrintEnable)
 			{
-				if (g_bClientPrintEnable)
-				{
-					ClientPrint(pPlayer->pev, HUD_PRINTCENTER, "#Already_Have_One");
-				}
-
-				return;
+				ClientPrint(pPlayer->pev, HUD_PRINTCENTER, "#Cannot_Carry_Anymore");
 			}
 
-			if (pPlayer->m_iAccount >= DEFUSEKIT_PRICE)
+			return;
+		}
+
+		if (pPlayer->m_iAccount >= SMOKEGRENADE_PRICE)
+		{
+			bEnoughMoney = true;
+			pszItem = "weapon_smokegrenade";
+			iItemPrice = SMOKEGRENADE_PRICE;
+		}
+		break;
+	}
+	case MENU_SLOT_ITEM_NVG:
+	{
+#ifdef REGAMEDLL_ADD
+		if (pPlayer->HasRestrictItem(ITEM_NVG, ITEM_TYPE_BUYING))
+			return;
+#endif
+		if (pPlayer->m_bHasNightVision)
+		{
+			if (g_bClientPrintEnable)
 			{
-				bEnoughMoney = true;
-				pPlayer->m_bHasDefuser = true;
+				ClientPrint(pPlayer->pev, HUD_PRINTCENTER, "#Already_Have_One");
+			}
 
-				MESSAGE_BEGIN(MSG_ONE, gmsgStatusIcon, nullptr, pPlayer->pev);
-					WRITE_BYTE(STATUSICON_SHOW);
-					WRITE_STRING("defuser");
-					WRITE_BYTE(0);
-					WRITE_BYTE(160);
-					WRITE_BYTE(0);
-				MESSAGE_END();
+			return;
+		}
 
-				pPlayer->pev->body = 1;
-				pPlayer->AddAccount(-DEFUSEKIT_PRICE, RT_PLAYER_BOUGHT_SOMETHING);
+		if (pPlayer->m_iAccount >= NVG_PRICE)
+		{
+			if (!(pPlayer->m_flDisplayHistory & DHF_NIGHTVISION))
+			{
+				pPlayer->HintMessage("#Hint_use_nightvision");
+				pPlayer->m_flDisplayHistory |= DHF_NIGHTVISION;
+			}
+
+			EMIT_SOUND(ENT(pPlayer->pev), CHAN_ITEM, "items/equip_nvg.wav", VOL_NORM, ATTN_NORM);
+
+			bEnoughMoney = true;
+			pPlayer->m_bHasNightVision = true;
+			pPlayer->AddAccount(-NVG_PRICE, RT_PLAYER_BOUGHT_SOMETHING);
+			pPlayer->SendItemStatus();
+		}
+		break;
+	}
+	case MENU_SLOT_ITEM_DEFUSEKIT:
+	{
+#ifdef REGAMEDLL_ADD
+		if (pPlayer->HasRestrictItem(ITEM_DEFUSEKIT, ITEM_TYPE_BUYING))
+			return;
+#endif
+		if (pPlayer->m_iTeam != CT || !CSGameRules()->m_bMapHasBombTarget)
+			return;
+
+		if (pPlayer->m_bHasDefuser)
+		{
+			if (g_bClientPrintEnable)
+			{
+				ClientPrint(pPlayer->pev, HUD_PRINTCENTER, "#Already_Have_One");
+			}
+
+			return;
+		}
+
+		if (pPlayer->m_iAccount >= DEFUSEKIT_PRICE)
+		{
+			bEnoughMoney = true;
+			pPlayer->m_bHasDefuser = true;
+
+			MESSAGE_BEGIN(MSG_ONE, gmsgStatusIcon, nullptr, pPlayer->pev);
+			WRITE_BYTE(STATUSICON_SHOW);
+			WRITE_STRING("defuser");
+			WRITE_BYTE(0);
+			WRITE_BYTE(160);
+			WRITE_BYTE(0);
+			MESSAGE_END();
+
+			pPlayer->pev->body = 1;
+			pPlayer->AddAccount(-DEFUSEKIT_PRICE, RT_PLAYER_BOUGHT_SOMETHING);
 
 #ifdef REGAMEDLL_FIXES
-				EMIT_SOUND(ENT(pPlayer->pev), CHAN_VOICE, "items/kevlar.wav", VOL_NORM, ATTN_NORM);
+			EMIT_SOUND(ENT(pPlayer->pev), CHAN_VOICE, "items/kevlar.wav", VOL_NORM, ATTN_NORM);
 #else
-				EMIT_SOUND(ENT(pPlayer->pev), CHAN_ITEM, "items/kevlar.wav", VOL_NORM, ATTN_NORM);
+			EMIT_SOUND(ENT(pPlayer->pev), CHAN_ITEM, "items/kevlar.wav", VOL_NORM, ATTN_NORM);
 #endif
-				pPlayer->SendItemStatus();
+			pPlayer->SendItemStatus();
 
 #ifdef BUILD_LATEST
-				pPlayer->SetScoreboardAttributes();
+			pPlayer->SetScoreboardAttributes();
 #endif
-			}
-			break;
 		}
-		case MENU_SLOT_ITEM_SHIELD:
-		{
+		break;
+	}
+	case MENU_SLOT_ITEM_SHIELD:
+	{
 #ifdef REGAMEDLL_ADD
-			if (pPlayer->HasRestrictItem(ITEM_SHIELDGUN, ITEM_TYPE_BUYING))
-				return;
+		if (pPlayer->HasRestrictItem(ITEM_SHIELDGUN, ITEM_TYPE_BUYING))
+			return;
 #endif
 
-			if (!CanBuyThis(pPlayer, WEAPON_SHIELDGUN))
-				return;
+		if (!CanBuyThis(pPlayer, WEAPON_SHIELDGUN))
+			return;
 
-			if (pPlayer->m_iAccount >= SHIELDGUN_PRICE)
-			{
-				bEnoughMoney = true;
+		if (pPlayer->m_iAccount >= SHIELDGUN_PRICE)
+		{
+			bEnoughMoney = true;
 
-				pPlayer->DropPrimary();
-				pPlayer->GiveShield();
-				pPlayer->AddAccount(-SHIELDGUN_PRICE, RT_PLAYER_BOUGHT_SOMETHING);
+			pPlayer->DropPrimary();
+			pPlayer->GiveShield();
+			pPlayer->AddAccount(-SHIELDGUN_PRICE, RT_PLAYER_BOUGHT_SOMETHING);
 
-				EMIT_SOUND(ENT(pPlayer->pev), CHAN_ITEM, "items/gunpickup2.wav", VOL_NORM, ATTN_NORM);
-			}
-			break;
+			EMIT_SOUND(ENT(pPlayer->pev), CHAN_ITEM, "items/gunpickup2.wav", VOL_NORM, ATTN_NORM);
 		}
+		break;
+	}
 	}
 
 	if (!bEnoughMoney)
@@ -1523,9 +1523,9 @@ void BuyItem(CBasePlayer *pPlayer, int iSlot)
 	}
 }
 
-LINK_HOOK_CHAIN(CBaseEntity *, BuyWeaponByWeaponID, (CBasePlayer *pPlayer, WeaponIdType weaponID), pPlayer, weaponID)
+LINK_HOOK_CHAIN(CBaseEntity*, BuyWeaponByWeaponID, (CBasePlayer* pPlayer, WeaponIdType weaponID), pPlayer, weaponID)
 
-CBaseEntity *EXT_FUNC __API_HOOK(BuyWeaponByWeaponID)(CBasePlayer *pPlayer, WeaponIdType weaponID)
+CBaseEntity* EXT_FUNC __API_HOOK(BuyWeaponByWeaponID)(CBasePlayer* pPlayer, WeaponIdType weaponID)
 {
 	if (!pPlayer->CanPlayerBuy(true))
 		return nullptr;
@@ -1538,7 +1538,7 @@ CBaseEntity *EXT_FUNC __API_HOOK(BuyWeaponByWeaponID)(CBasePlayer *pPlayer, Weap
 	if (!CanBuyThis(pPlayer, weaponID))
 		return nullptr;
 
-	WeaponInfoStruct *info = GetWeaponInfo(weaponID);
+	WeaponInfoStruct* info = GetWeaponInfo(weaponID);
 	if (!info || !info->entityName)
 		return nullptr;
 
@@ -1568,7 +1568,7 @@ CBaseEntity *EXT_FUNC __API_HOOK(BuyWeaponByWeaponID)(CBasePlayer *pPlayer, Weap
 #ifdef REGAMEDLL_ADD
 	if (refill_bpammo_weapons.value > 1)
 	{
-		CBasePlayerItem *pItem = static_cast<CBasePlayerItem *>(pEntity);
+		CBasePlayerItem* pItem = static_cast<CBasePlayerItem*>(pEntity);
 
 		if (pItem) {
 			pPlayer->GiveAmmo(pItem->iMaxAmmo1(), pItem->pszAmmo1(), pItem->iMaxAmmo1());
@@ -1584,16 +1584,16 @@ CBaseEntity *EXT_FUNC __API_HOOK(BuyWeaponByWeaponID)(CBasePlayer *pPlayer, Weap
 	return pEntity;
 }
 
-LINK_HOOK_VOID_CHAIN(HandleMenu_ChooseAppearance, (CBasePlayer *pPlayer, int slot), pPlayer, slot)
+LINK_HOOK_VOID_CHAIN(HandleMenu_ChooseAppearance, (CBasePlayer* pPlayer, int slot), pPlayer, slot)
 
-void EXT_FUNC __API_HOOK(HandleMenu_ChooseAppearance)(CBasePlayer *pPlayer, int slot)
+void EXT_FUNC __API_HOOK(HandleMenu_ChooseAppearance)(CBasePlayer* pPlayer, int slot)
 {
 	int numSkins = AreRunningCZero() ? CZ_NUM_SKIN : CS_NUM_SKIN;
 
 	struct
 	{
 		ModelName model_id;
-		char *model_name;
+		char* model_name;
 		int model_name_index;
 
 	} appearance;
@@ -1635,7 +1635,7 @@ void EXT_FUNC __API_HOOK(HandleMenu_ChooseAppearance)(CBasePlayer *pPlayer, int 
 		default:
 			if (TheBotProfiles->GetCustomSkinModelname(slot) && pPlayer->IsBot())
 			{
-				appearance.model_name = (char *)TheBotProfiles->GetCustomSkinModelname(slot);
+				appearance.model_name = (char*)TheBotProfiles->GetCustomSkinModelname(slot);
 			}
 			else
 			{
@@ -1684,7 +1684,7 @@ void EXT_FUNC __API_HOOK(HandleMenu_ChooseAppearance)(CBasePlayer *pPlayer, int 
 		default:
 			if (TheBotProfiles->GetCustomSkinModelname(slot) && pPlayer->IsBot())
 			{
-				appearance.model_name = (char *)TheBotProfiles->GetCustomSkinModelname(slot);
+				appearance.model_name = (char*)TheBotProfiles->GetCustomSkinModelname(slot);
 			}
 			else
 			{
@@ -1741,11 +1741,11 @@ void EXT_FUNC __API_HOOK(HandleMenu_ChooseAppearance)(CBasePlayer *pPlayer, int 
 	}
 }
 
-LINK_HOOK_CHAIN(BOOL, HandleMenu_ChooseTeam, (CBasePlayer *pPlayer, int slot), pPlayer, slot)
+LINK_HOOK_CHAIN(BOOL, HandleMenu_ChooseTeam, (CBasePlayer* pPlayer, int slot), pPlayer, slot)
 
 // returns true if the selection has been handled and the player's menu
 // can be closed...false if the menu should be displayed again
-BOOL EXT_FUNC __API_HOOK(HandleMenu_ChooseTeam)(CBasePlayer *pPlayer, int slot)
+BOOL EXT_FUNC __API_HOOK(HandleMenu_ChooseTeam)(CBasePlayer* pPlayer, int slot)
 {
 	// If this player is a VIP, don't allow him to switch teams/appearances unless the following conditions are met :
 	// a) There is another TEAM_CT player who is in the queue to be a VIP
@@ -1884,8 +1884,8 @@ BOOL EXT_FUNC __API_HOOK(HandleMenu_ChooseTeam)(CBasePlayer *pPlayer, int slot)
 			pPlayer->m_iAccount = 0;
 
 			MESSAGE_BEGIN(MSG_ONE, gmsgMoney, nullptr, pPlayer->pev);
-				WRITE_LONG(pPlayer->m_iAccount);
-				WRITE_BYTE(0);
+			WRITE_LONG(pPlayer->m_iAccount);
+			WRITE_BYTE(0);
 			MESSAGE_END();
 #endif
 
@@ -1894,11 +1894,11 @@ BOOL EXT_FUNC __API_HOOK(HandleMenu_ChooseTeam)(CBasePlayer *pPlayer, int slot)
 #else
 			MESSAGE_BEGIN(MSG_ALL, gmsgScoreInfo);
 #endif
-				WRITE_BYTE(ENTINDEX(pPlayer->edict()));
-				WRITE_SHORT(int(pPlayer->pev->frags));
-				WRITE_SHORT(pPlayer->m_iDeaths);
-				WRITE_SHORT(0);
-				WRITE_SHORT(0);
+			WRITE_BYTE(ENTINDEX(pPlayer->edict()));
+			WRITE_SHORT(int(pPlayer->pev->frags));
+			WRITE_SHORT(pPlayer->m_iDeaths);
+			WRITE_SHORT(0);
+			WRITE_SHORT(0);
 			MESSAGE_END();
 
 			pPlayer->m_pIntroCamera = nullptr;
@@ -1911,14 +1911,14 @@ BOOL EXT_FUNC __API_HOOK(HandleMenu_ChooseTeam)(CBasePlayer *pPlayer, int slot)
 
 			pPlayer->TeamChangeUpdate();
 
-			edict_t *pentSpawnSpot = g_pGameRules->GetPlayerSpawnSpot(pPlayer);
+			edict_t* pentSpawnSpot = g_pGameRules->GetPlayerSpawnSpot(pPlayer);
 			pPlayer->StartObserver(pentSpawnSpot->v.origin, pentSpawnSpot->v.angles);
 
 #ifndef REGAMEDLL_FIXES
 			// TODO: it was already sent in StartObserver
 			MESSAGE_BEGIN(MSG_ALL, gmsgSpectator);
-				WRITE_BYTE(ENTINDEX(pPlayer->edict()));
-				WRITE_BYTE(1);
+			WRITE_BYTE(ENTINDEX(pPlayer->edict()));
+			WRITE_BYTE(1);
 			MESSAGE_END();
 #endif
 			// do we have fadetoblack on? (need to fade their screen back in)
@@ -1979,7 +1979,7 @@ BOOL EXT_FUNC __API_HOOK(HandleMenu_ChooseTeam)(CBasePlayer *pPlayer, int slot)
 #ifdef REGAMEDLL_ADD
 		&& !(pPlayer->pev->flags & FL_FAKECLIENT) && auto_join_team.value != 1.0f
 #endif
-	)
+		)
 	{
 		int humanTeam = UNASSIGNED;
 		if (!Q_stricmp(humans_join_team.string, "CT"))
@@ -2091,7 +2091,7 @@ BOOL EXT_FUNC __API_HOOK(HandleMenu_ChooseTeam)(CBasePlayer *pPlayer, int slot)
 	}
 
 	TeamName oldTeam;
-	char *szOldTeam, *szNewTeam;
+	char* szOldTeam, * szNewTeam;
 
 	// Switch their actual team...
 	pPlayer->m_bTeamChanged = true;
@@ -2116,7 +2116,7 @@ BOOL EXT_FUNC __API_HOOK(HandleMenu_ChooseTeam)(CBasePlayer *pPlayer, int slot)
 	return TRUE;
 }
 
-void Radio1(CBasePlayer *pPlayer, int slot)
+void Radio1(CBasePlayer* pPlayer, int slot)
 {
 	if (pPlayer->m_flRadioTime >= gpGlobals->time)
 		return;
@@ -2155,7 +2155,7 @@ void Radio1(CBasePlayer *pPlayer, int slot)
 	}
 }
 
-void Radio2(CBasePlayer *pPlayer, int slot)
+void Radio2(CBasePlayer* pPlayer, int slot)
 {
 	if (pPlayer->m_flRadioTime >= gpGlobals->time)
 		return;
@@ -2194,7 +2194,7 @@ void Radio2(CBasePlayer *pPlayer, int slot)
 	}
 }
 
-void Radio3(CBasePlayer *pPlayer, int slot)
+void Radio3(CBasePlayer* pPlayer, int slot)
 {
 	if (pPlayer->m_flRadioTime >= gpGlobals->time)
 		return;
@@ -2246,9 +2246,9 @@ void Radio3(CBasePlayer *pPlayer, int slot)
 	}
 }
 
-LINK_HOOK_CHAIN(bool, BuyGunAmmo, (CBasePlayer *pPlayer, CBasePlayerItem *weapon, bool bBlinkMoney), pPlayer, weapon, bBlinkMoney)
+LINK_HOOK_CHAIN(bool, BuyGunAmmo, (CBasePlayer* pPlayer, CBasePlayerItem* weapon, bool bBlinkMoney), pPlayer, weapon, bBlinkMoney)
 
-bool EXT_FUNC __API_HOOK(BuyGunAmmo)(CBasePlayer *pPlayer, CBasePlayerItem *weapon, bool bBlinkMoney)
+bool EXT_FUNC __API_HOOK(BuyGunAmmo)(CBasePlayer* pPlayer, CBasePlayerItem* weapon, bool bBlinkMoney)
 {
 	if (!pPlayer->CanPlayerBuy(true))
 		return false;
@@ -2262,7 +2262,7 @@ bool EXT_FUNC __API_HOOK(BuyGunAmmo)(CBasePlayer *pPlayer, CBasePlayerItem *weap
 	if (pPlayer->m_rgAmmo[nAmmo] >= weapon->iMaxAmmo1())
 		return false;
 
-	WeaponInfoStruct *info = GetWeaponInfo(weapon->m_iId);
+	WeaponInfoStruct* info = GetWeaponInfo(weapon->m_iId);
 	if (!info)
 	{
 		ALERT(at_console, "Tried to buy ammo for an unrecognized gun\n");
@@ -2300,7 +2300,7 @@ bool EXT_FUNC __API_HOOK(BuyGunAmmo)(CBasePlayer *pPlayer, CBasePlayerItem *weap
 	return false;
 }
 
-bool BuyAmmo(CBasePlayer *pPlayer, int nSlot, bool bBlinkMoney)
+bool BuyAmmo(CBasePlayer* pPlayer, int nSlot, bool bBlinkMoney)
 {
 	if (!pPlayer->CanPlayerBuy(true))
 		return false;
@@ -2313,7 +2313,7 @@ bool BuyAmmo(CBasePlayer *pPlayer, int nSlot, bool bBlinkMoney)
 	// nSlot == 1 : Primary weapons
 	// nSlot == 2 : Secondary weapons
 
-	CBasePlayerItem *pItem = pPlayer->m_rgpPlayerItems[nSlot];
+	CBasePlayerItem* pItem = pPlayer->m_rgpPlayerItems[nSlot];
 
 	if (pPlayer->HasShield())
 	{
@@ -2337,15 +2337,15 @@ bool BuyAmmo(CBasePlayer *pPlayer, int nSlot, bool bBlinkMoney)
 	return false;
 }
 
-CBaseEntity *EntityFromUserID(int userID)
+CBaseEntity* EntityFromUserID(int userID)
 {
-	CBaseEntity *pTempEntity = nullptr;
+	CBaseEntity* pTempEntity = nullptr;
 	while ((pTempEntity = UTIL_FindEntityByClassname(pTempEntity, "player")))
 	{
 		if (FNullEnt(pTempEntity->edict()))
 			break;
 
-		CBasePlayer *pTempPlayer = GetClassPtr<CCSPlayer>((CBasePlayer *)pTempEntity->pev);
+		CBasePlayer* pTempPlayer = GetClassPtr<CCSPlayer>((CBasePlayer*)pTempEntity->pev);
 
 		if (pTempPlayer->m_iTeam != UNASSIGNED && userID == GETPLAYERUSERID(pTempEntity->edict()))
 		{
@@ -2359,13 +2359,13 @@ CBaseEntity *EntityFromUserID(int userID)
 NOXREF int CountPlayersInServer()
 {
 	int count = 0;
-	CBaseEntity *pTempEntity = nullptr;
+	CBaseEntity* pTempEntity = nullptr;
 	while ((pTempEntity = UTIL_FindEntityByClassname(pTempEntity, "player")))
 	{
 		if (FNullEnt(pTempEntity->edict()))
 			break;
 
-		CBasePlayer *pTempPlayer = GetClassPtr<CCSPlayer>((CBasePlayer *)pTempEntity->pev);
+		CBasePlayer* pTempPlayer = GetClassPtr<CCSPlayer>((CBasePlayer*)pTempEntity->pev);
 
 		if (pTempPlayer->m_iTeam != UNASSIGNED)
 		{
@@ -2379,14 +2379,14 @@ NOXREF int CountPlayersInServer()
 // Handles the special "buy" alias commands we're creating to accommodate the buy
 // scripts players use (now that we've rearranged the buy menus and broken the scripts)
 // ** Returns TRUE if we've handled the command **
-BOOL HandleBuyAliasCommands(CBasePlayer *pPlayer, const char *pszCommand)
+BOOL HandleBuyAliasCommands(CBasePlayer* pPlayer, const char* pszCommand)
 {
 	// Let them buy it if it's got a weapon data string.
 	BOOL bRetVal = FALSE;
-	const char *pszFailItem = nullptr;
+	const char* pszFailItem = nullptr;
 
 	WeaponIdType weaponID = WEAPON_NONE;
-	const char *weaponFailName = BuyAliasToWeaponID(pszCommand, weaponID);
+	const char* weaponFailName = BuyAliasToWeaponID(pszCommand, weaponID);
 
 	// Ok, we have weapon info ID.
 	if (weaponID != WEAPON_NONE)
@@ -2525,8 +2525,8 @@ BOOL HandleBuyAliasCommands(CBasePlayer *pPlayer, const char *pszCommand)
 struct RadioStruct
 {
 	int slot;
-	void (*func)(CBasePlayer *, int);
-	const char *alias;
+	void (*func)(CBasePlayer*, int);
+	const char* alias;
 
 } radioInfo[] = {
 	{ 1, Radio1, "coverme" },
@@ -2554,7 +2554,7 @@ struct RadioStruct
 	{ 9, Radio3, "enemydown" },
 };
 
-BOOL HandleRadioAliasCommands(CBasePlayer *pPlayer, const char *pszCommand)
+BOOL HandleRadioAliasCommands(CBasePlayer* pPlayer, const char* pszCommand)
 {
 	for (auto& radio : radioInfo)
 	{
@@ -2568,11 +2568,11 @@ BOOL HandleRadioAliasCommands(CBasePlayer *pPlayer, const char *pszCommand)
 	return FALSE;
 }
 
-void EXT_FUNC InternalCommand(edict_t *pEntity, const char *pcmd, const char *parg1)
+void EXT_FUNC InternalCommand(edict_t* pEntity, const char* pcmd, const char* parg1)
 {
-	const char *pstr = nullptr;
-	entvars_t *pev = &pEntity->v;
-	CBasePlayer *pPlayer = GetClassPtr<CCSPlayer>((CBasePlayer *)pev);
+	const char* pstr = nullptr;
+	entvars_t* pev = &pEntity->v;
+	CBasePlayer* pPlayer = GetClassPtr<CCSPlayer>((CBasePlayer*)pev);
 
 	if (FStrEq(pcmd, "say"))
 	{
@@ -2642,10 +2642,10 @@ void EXT_FUNC InternalCommand(edict_t *pEntity, const char *pcmd, const char *pa
 					return;
 				}
 
-				CBaseEntity *pKickEntity = EntityFromUserID(iVoteID);
+				CBaseEntity* pKickEntity = EntityFromUserID(iVoteID);
 				if (pKickEntity)
 				{
-					CBasePlayer *pKickPlayer = GetClassPtr<CCSPlayer>((CBasePlayer *)pKickEntity->pev);
+					CBasePlayer* pKickPlayer = GetClassPtr<CCSPlayer>((CBasePlayer*)pKickEntity->pev);
 
 					if (pKickPlayer->m_iTeam != pPlayer->m_iTeam)
 					{
@@ -2767,7 +2767,7 @@ void EXT_FUNC InternalCommand(edict_t *pEntity, const char *pcmd, const char *pa
 			int iSeconds = timeRemaining % 60;
 
 			char secs[5];
-			char *temp = UTIL_dtos2(iSeconds);
+			char* temp = UTIL_dtos2(iSeconds);
 
 			if (iSeconds >= 10)
 			{
@@ -2849,254 +2849,254 @@ void EXT_FUNC InternalCommand(edict_t *pEntity, const char *pcmd, const char *pa
 
 		switch (pPlayer->m_iMenu)
 		{
-			case Menu_OFF:
-				break;
+		case Menu_OFF:
+			break;
 
-			case Menu_ChooseTeam:
+		case Menu_ChooseTeam:
+		{
+			if (canOpenOldMenu() && !HandleMenu_ChooseTeam(pPlayer, slot))
 			{
-				if (canOpenOldMenu() && !HandleMenu_ChooseTeam(pPlayer, slot))
+				pPlayer->m_iMenu = Menu_ChooseTeam;
+				if (pPlayer->m_iJoiningState == JOINED)
+					ShowVGUIMenu(pPlayer, VGUI_Menu_Team, (MENU_KEY_1 | MENU_KEY_2 | MENU_KEY_5 | MENU_KEY_0), "#IG_Team_Select");
+				else
+					ShowVGUIMenu(pPlayer, VGUI_Menu_Team, (MENU_KEY_1 | MENU_KEY_2 | MENU_KEY_5), "#Team_Select");
+			}
+			break;
+		}
+		case Menu_IGChooseTeam:
+		{
+			if (canOpenOldMenu()) {
+				HandleMenu_ChooseTeam(pPlayer, slot);
+			}
+			break;
+		}
+		case Menu_ChooseAppearance:
+		{
+			if (canOpenOldMenu()) {
+				HandleMenu_ChooseAppearance(pPlayer, slot);
+			}
+			break;
+		}
+		case Menu_Buy:
+		{
+			if (canOpenOldMenu())
+			{
+				switch (slot)
 				{
-					pPlayer->m_iMenu = Menu_ChooseTeam;
-					if (pPlayer->m_iJoiningState == JOINED)
-						ShowVGUIMenu(pPlayer, VGUI_Menu_Team, (MENU_KEY_1 | MENU_KEY_2 | MENU_KEY_5 | MENU_KEY_0), "#IG_Team_Select");
+				case VGUI_MenuSlot_Buy_Pistol:
+				{
+					pPlayer->m_iMenu = Menu_BuyPistol;
+					if (pPlayer->m_iTeam == CT)
+						ShowVGUIMenu(pPlayer, VGUI_Menu_Buy_Pistol, (MENU_KEY_1 | MENU_KEY_2 | MENU_KEY_3 | MENU_KEY_4 | MENU_KEY_5 | MENU_KEY_0), "#CT_BuyPistol");
 					else
-						ShowVGUIMenu(pPlayer, VGUI_Menu_Team, (MENU_KEY_1 | MENU_KEY_2 | MENU_KEY_5), "#Team_Select");
+						ShowVGUIMenu(pPlayer, VGUI_Menu_Buy_Pistol, (MENU_KEY_1 | MENU_KEY_2 | MENU_KEY_3 | MENU_KEY_4 | MENU_KEY_5 | MENU_KEY_0), "#T_BuyPistol");
+					break;
 				}
-				break;
-			}
-			case Menu_IGChooseTeam:
-			{
-				if (canOpenOldMenu()) {
-					HandleMenu_ChooseTeam(pPlayer, slot);
-				}
-				break;
-			}
-			case Menu_ChooseAppearance:
-			{
-				if (canOpenOldMenu()) {
-					HandleMenu_ChooseAppearance(pPlayer, slot);
-				}
-				break;
-			}
-			case Menu_Buy:
-			{
-				if (canOpenOldMenu())
+				case VGUI_MenuSlot_Buy_ShotGun:
 				{
-					switch (slot)
+					pPlayer->m_iMenu = Menu_BuyShotgun;
+					if (CSGameRules()->m_bMapHasVIPSafetyZone && pPlayer->m_iTeam == TERRORIST)
+						ShowVGUIMenu(pPlayer, VGUI_Menu_Buy_ShotGun, MENU_KEY_0, "#AS_BuyShotgun");
+					else
+						ShowVGUIMenu(pPlayer, VGUI_Menu_Buy_ShotGun, (MENU_KEY_1 | MENU_KEY_2 | MENU_KEY_0), "#BuyShotgun");
+					break;
+				}
+				case VGUI_MenuSlot_Buy_SubMachineGun:
+				{
+					pPlayer->m_iMenu = Menu_BuySubMachineGun;
+					if (CSGameRules()->m_bMapHasVIPSafetyZone)
 					{
-						case VGUI_MenuSlot_Buy_Pistol:
+						if (pPlayer->m_iTeam == CT)
+							ShowVGUIMenu(pPlayer, VGUI_Menu_Buy_SubMachineGun, (MENU_KEY_1 | MENU_KEY_2 | MENU_KEY_3 | MENU_KEY_4 | MENU_KEY_0), "#AS_CT_BuySubMachineGun");
+						else
+							ShowVGUIMenu(pPlayer, VGUI_Menu_Buy_SubMachineGun, (MENU_KEY_1 | MENU_KEY_3 | MENU_KEY_0), "#AS_T_BuySubMachineGun");
+					}
+					else
+					{
+						if (pPlayer->m_iTeam == CT)
+							ShowVGUIMenu(pPlayer, VGUI_Menu_Buy_SubMachineGun, (MENU_KEY_1 | MENU_KEY_2 | MENU_KEY_3 | MENU_KEY_4 | MENU_KEY_0), "#CT_BuySubMachineGun");
+						else
+							ShowVGUIMenu(pPlayer, VGUI_Menu_Buy_SubMachineGun, (MENU_KEY_1 | MENU_KEY_2 | MENU_KEY_3 | MENU_KEY_4 | MENU_KEY_0), "#T_BuySubMachineGun");
+					}
+					break;
+				}
+				case VGUI_MenuSlot_Buy_Rifle:
+				{
+					pPlayer->m_iMenu = Menu_BuyRifle;
+					if (CSGameRules()->m_bMapHasVIPSafetyZone)
+					{
+						if (pPlayer->m_iTeam == CT)
+							ShowVGUIMenu(pPlayer, VGUI_Menu_Buy_Rifle, (MENU_KEY_1 | MENU_KEY_3 | MENU_KEY_4 | MENU_KEY_5 | MENU_KEY_0), "#AS_CT_BuyRifle");
+						else
+							ShowVGUIMenu(pPlayer, VGUI_Menu_Buy_Rifle, (MENU_KEY_1 | MENU_KEY_2 | MENU_KEY_5 | MENU_KEY_0), "#AS_T_BuyRifle");
+					}
+					else
+					{
+						if (pPlayer->m_iTeam == CT)
+							ShowVGUIMenu(pPlayer, VGUI_Menu_Buy_Rifle, (MENU_KEY_1 | MENU_KEY_2 | MENU_KEY_3 | MENU_KEY_4 | MENU_KEY_5 | MENU_KEY_6 | MENU_KEY_0), "#CT_BuyRifle");
+						else
+							ShowVGUIMenu(pPlayer, VGUI_Menu_Buy_Rifle, (MENU_KEY_1 | MENU_KEY_2 | MENU_KEY_3 | MENU_KEY_4 | MENU_KEY_5 | MENU_KEY_6 | MENU_KEY_0), "#T_BuyRifle");
+					}
+					break;
+				}
+				case VGUI_MenuSlot_Buy_MachineGun:
+				{
+					pPlayer->m_iMenu = Menu_BuyMachineGun;
+					if (CSGameRules()->m_bMapHasVIPSafetyZone && pPlayer->m_iTeam == TERRORIST)
+						ShowVGUIMenu(pPlayer, VGUI_Menu_Buy_MachineGun, MENU_KEY_0, "#AS_T_BuyMachineGun");
+					else
+						ShowVGUIMenu(pPlayer, VGUI_Menu_Buy_MachineGun, (MENU_KEY_1 | MENU_KEY_0), "#BuyMachineGun");
+					break;
+				}
+				case VGUI_MenuSlot_Buy_PrimAmmo:
+				{
+					if (pPlayer->m_signals.GetState() & SIGNAL_BUY)
+					{
+						if (BuyAmmo(pPlayer, PRIMARY_WEAPON_SLOT, true))
 						{
-							pPlayer->m_iMenu = Menu_BuyPistol;
+							while (BuyAmmo(pPlayer, PRIMARY_WEAPON_SLOT, false))
+								;
+
+							if (TheTutor)
+							{
+								TheTutor->OnEvent(EVENT_PLAYER_BOUGHT_SOMETHING, pPlayer);
+							}
+						}
+
+						pPlayer->BuildRebuyStruct();
+					}
+					break;
+				}
+				case VGUI_MenuSlot_Buy_SecAmmo:
+				{
+					if (pPlayer->m_signals.GetState() & SIGNAL_BUY)
+					{
+						if (BuyAmmo(pPlayer, PISTOL_SLOT, true))
+						{
+							while (BuyAmmo(pPlayer, PISTOL_SLOT, false))
+								;
+
+							if (TheTutor)
+							{
+								TheTutor->OnEvent(EVENT_PLAYER_BOUGHT_SOMETHING, pPlayer);
+							}
+						}
+
+						pPlayer->BuildRebuyStruct();
+					}
+					break;
+				}
+				case VGUI_MenuSlot_Buy_Item:
+				{
+					if (pPlayer->m_signals.GetState() & SIGNAL_BUY)
+					{
+						pPlayer->m_iMenu = Menu_BuyItem;
+						if (CSGameRules()->m_bMapHasBombTarget)
+						{
 							if (pPlayer->m_iTeam == CT)
-								ShowVGUIMenu(pPlayer, VGUI_Menu_Buy_Pistol, (MENU_KEY_1 | MENU_KEY_2 | MENU_KEY_3 | MENU_KEY_4 | MENU_KEY_5 | MENU_KEY_0), "#CT_BuyPistol");
+								ShowVGUIMenu(pPlayer, VGUI_Menu_Buy_Item, (MENU_KEY_1 | MENU_KEY_2 | MENU_KEY_3 | MENU_KEY_4 | MENU_KEY_5 | MENU_KEY_6 | MENU_KEY_7 | MENU_KEY_8 | MENU_KEY_0), "#DCT_BuyItem");
 							else
-								ShowVGUIMenu(pPlayer, VGUI_Menu_Buy_Pistol, (MENU_KEY_1 | MENU_KEY_2 | MENU_KEY_3 | MENU_KEY_4 | MENU_KEY_5 | MENU_KEY_0), "#T_BuyPistol");
-							break;
+								ShowVGUIMenu(pPlayer, VGUI_Menu_Buy_Item, (MENU_KEY_1 | MENU_KEY_2 | MENU_KEY_3 | MENU_KEY_4 | MENU_KEY_5 | MENU_KEY_6 | MENU_KEY_0), "#DT_BuyItem");
 						}
-						case VGUI_MenuSlot_Buy_ShotGun:
+						else
 						{
-							pPlayer->m_iMenu = Menu_BuyShotgun;
-							if (CSGameRules()->m_bMapHasVIPSafetyZone && pPlayer->m_iTeam == TERRORIST)
-								ShowVGUIMenu(pPlayer, VGUI_Menu_Buy_ShotGun, MENU_KEY_0, "#AS_BuyShotgun");
+							if (pPlayer->m_iTeam == CT)
+								ShowVGUIMenu(pPlayer, VGUI_Menu_Buy_Item, (MENU_KEY_1 | MENU_KEY_2 | MENU_KEY_3 | MENU_KEY_4 | MENU_KEY_5 | MENU_KEY_6 | MENU_KEY_8 | MENU_KEY_0), "#CT_BuyItem");
 							else
-								ShowVGUIMenu(pPlayer, VGUI_Menu_Buy_ShotGun, (MENU_KEY_1 | MENU_KEY_2 | MENU_KEY_0), "#BuyShotgun");
-							break;
-						}
-						case VGUI_MenuSlot_Buy_SubMachineGun:
-						{
-							pPlayer->m_iMenu = Menu_BuySubMachineGun;
-							if (CSGameRules()->m_bMapHasVIPSafetyZone)
-							{
-								if (pPlayer->m_iTeam == CT)
-									ShowVGUIMenu(pPlayer, VGUI_Menu_Buy_SubMachineGun, (MENU_KEY_1 | MENU_KEY_2 | MENU_KEY_3 | MENU_KEY_4 | MENU_KEY_0), "#AS_CT_BuySubMachineGun");
-								else
-									ShowVGUIMenu(pPlayer, VGUI_Menu_Buy_SubMachineGun, (MENU_KEY_1 | MENU_KEY_3 | MENU_KEY_0), "#AS_T_BuySubMachineGun");
-							}
-							else
-							{
-								if (pPlayer->m_iTeam == CT)
-									ShowVGUIMenu(pPlayer, VGUI_Menu_Buy_SubMachineGun, (MENU_KEY_1 | MENU_KEY_2 | MENU_KEY_3 | MENU_KEY_4 | MENU_KEY_0), "#CT_BuySubMachineGun");
-								else
-									ShowVGUIMenu(pPlayer, VGUI_Menu_Buy_SubMachineGun, (MENU_KEY_1 | MENU_KEY_2 | MENU_KEY_3 | MENU_KEY_4 | MENU_KEY_0), "#T_BuySubMachineGun");
-							}
-							break;
-						}
-						case VGUI_MenuSlot_Buy_Rifle:
-						{
-							pPlayer->m_iMenu = Menu_BuyRifle;
-							if (CSGameRules()->m_bMapHasVIPSafetyZone)
-							{
-								if (pPlayer->m_iTeam == CT)
-									ShowVGUIMenu(pPlayer, VGUI_Menu_Buy_Rifle, (MENU_KEY_1 | MENU_KEY_3 | MENU_KEY_4 | MENU_KEY_5 | MENU_KEY_0), "#AS_CT_BuyRifle");
-								else
-									ShowVGUIMenu(pPlayer, VGUI_Menu_Buy_Rifle, (MENU_KEY_1 | MENU_KEY_2 | MENU_KEY_5 | MENU_KEY_0), "#AS_T_BuyRifle");
-							}
-							else
-							{
-								if (pPlayer->m_iTeam == CT)
-									ShowVGUIMenu(pPlayer, VGUI_Menu_Buy_Rifle, (MENU_KEY_1 | MENU_KEY_2 | MENU_KEY_3 | MENU_KEY_4 | MENU_KEY_5 | MENU_KEY_6 | MENU_KEY_0), "#CT_BuyRifle");
-								else
-									ShowVGUIMenu(pPlayer, VGUI_Menu_Buy_Rifle, (MENU_KEY_1 | MENU_KEY_2 | MENU_KEY_3 | MENU_KEY_4 | MENU_KEY_5 | MENU_KEY_6 | MENU_KEY_0), "#T_BuyRifle");
-							}
-							break;
-						}
-						case VGUI_MenuSlot_Buy_MachineGun:
-						{
-							pPlayer->m_iMenu = Menu_BuyMachineGun;
-							if (CSGameRules()->m_bMapHasVIPSafetyZone && pPlayer->m_iTeam == TERRORIST)
-								ShowVGUIMenu(pPlayer, VGUI_Menu_Buy_MachineGun, MENU_KEY_0, "#AS_T_BuyMachineGun");
-							else
-								ShowVGUIMenu(pPlayer, VGUI_Menu_Buy_MachineGun, (MENU_KEY_1 | MENU_KEY_0), "#BuyMachineGun");
-							break;
-						}
-						case VGUI_MenuSlot_Buy_PrimAmmo:
-						{
-							if (pPlayer->m_signals.GetState() & SIGNAL_BUY)
-							{
-								if (BuyAmmo(pPlayer, PRIMARY_WEAPON_SLOT, true))
-								{
-									while (BuyAmmo(pPlayer, PRIMARY_WEAPON_SLOT, false))
-										;
-
-									if (TheTutor)
-									{
-										TheTutor->OnEvent(EVENT_PLAYER_BOUGHT_SOMETHING, pPlayer);
-									}
-								}
-
-								pPlayer->BuildRebuyStruct();
-							}
-							break;
-						}
-						case VGUI_MenuSlot_Buy_SecAmmo:
-						{
-							if (pPlayer->m_signals.GetState() & SIGNAL_BUY)
-							{
-								if (BuyAmmo(pPlayer, PISTOL_SLOT, true))
-								{
-									while (BuyAmmo(pPlayer, PISTOL_SLOT, false))
-										;
-
-									if (TheTutor)
-									{
-										TheTutor->OnEvent(EVENT_PLAYER_BOUGHT_SOMETHING, pPlayer);
-									}
-								}
-
-								pPlayer->BuildRebuyStruct();
-							}
-							break;
-						}
-						case VGUI_MenuSlot_Buy_Item:
-						{
-							if (pPlayer->m_signals.GetState() & SIGNAL_BUY)
-							{
-								pPlayer->m_iMenu = Menu_BuyItem;
-								if (CSGameRules()->m_bMapHasBombTarget)
-								{
-									if (pPlayer->m_iTeam == CT)
-										ShowVGUIMenu(pPlayer, VGUI_Menu_Buy_Item, (MENU_KEY_1 | MENU_KEY_2 | MENU_KEY_3 | MENU_KEY_4 | MENU_KEY_5 | MENU_KEY_6 | MENU_KEY_7 | MENU_KEY_8 | MENU_KEY_0), "#DCT_BuyItem");
-									else
-										ShowVGUIMenu(pPlayer, VGUI_Menu_Buy_Item, (MENU_KEY_1 | MENU_KEY_2 | MENU_KEY_3 | MENU_KEY_4 | MENU_KEY_5 | MENU_KEY_6 | MENU_KEY_0), "#DT_BuyItem");
-								}
-								else
-								{
-									if (pPlayer->m_iTeam == CT)
-										ShowVGUIMenu(pPlayer, VGUI_Menu_Buy_Item, (MENU_KEY_1 | MENU_KEY_2 | MENU_KEY_3 | MENU_KEY_4 | MENU_KEY_5 | MENU_KEY_6 | MENU_KEY_8 | MENU_KEY_0), "#CT_BuyItem");
-									else
-										ShowVGUIMenu(pPlayer, VGUI_Menu_Buy_Item, (MENU_KEY_1 | MENU_KEY_2 | MENU_KEY_3 | MENU_KEY_4 | MENU_KEY_5 | MENU_KEY_6 | MENU_KEY_0), "#T_BuyItem");
-								}
-							}
-							break;
+								ShowVGUIMenu(pPlayer, VGUI_Menu_Buy_Item, (MENU_KEY_1 | MENU_KEY_2 | MENU_KEY_3 | MENU_KEY_4 | MENU_KEY_5 | MENU_KEY_6 | MENU_KEY_0), "#T_BuyItem");
 						}
 					}
+					break;
 				}
-				break;
+				}
 			}
-			case Menu_BuyPistol:
+			break;
+		}
+		case Menu_BuyPistol:
+		{
+			if (canOpenOldMenu())
 			{
-				if (canOpenOldMenu())
-				{
-					BuyPistol(pPlayer, slot);
+				BuyPistol(pPlayer, slot);
 #ifdef REGAMEDLL_FIXES
-					pPlayer->BuildRebuyStruct();
+				pPlayer->BuildRebuyStruct();
 #endif
-				}
-				break;
 			}
-			case Menu_BuyShotgun:
+			break;
+		}
+		case Menu_BuyShotgun:
+		{
+			if (canOpenOldMenu())
 			{
-				if (canOpenOldMenu())
-				{
-					BuyShotgun(pPlayer, slot);
+				BuyShotgun(pPlayer, slot);
 #ifdef REGAMEDLL_FIXES
-					pPlayer->BuildRebuyStruct();
+				pPlayer->BuildRebuyStruct();
 #endif
-				}
-				break;
 			}
-			case Menu_BuySubMachineGun:
+			break;
+		}
+		case Menu_BuySubMachineGun:
+		{
+			if (canOpenOldMenu())
 			{
-				if (canOpenOldMenu())
-				{
-					BuySubMachineGun(pPlayer, slot);
+				BuySubMachineGun(pPlayer, slot);
 #ifdef REGAMEDLL_FIXES
-					pPlayer->BuildRebuyStruct();
+				pPlayer->BuildRebuyStruct();
 #endif
-				}
-				break;
 			}
-			case Menu_BuyRifle:
+			break;
+		}
+		case Menu_BuyRifle:
+		{
+			if (canOpenOldMenu())
 			{
-				if (canOpenOldMenu())
-				{
-					BuyRifle(pPlayer, slot);
+				BuyRifle(pPlayer, slot);
 #ifdef REGAMEDLL_FIXES
-					pPlayer->BuildRebuyStruct();
+				pPlayer->BuildRebuyStruct();
 #endif
-				}
-				break;
 			}
-			case Menu_BuyMachineGun:
+			break;
+		}
+		case Menu_BuyMachineGun:
+		{
+			if (canOpenOldMenu())
 			{
-				if (canOpenOldMenu())
-				{
-					BuyMachineGun(pPlayer, slot);
+				BuyMachineGun(pPlayer, slot);
 #ifdef REGAMEDLL_FIXES
-					pPlayer->BuildRebuyStruct();
+				pPlayer->BuildRebuyStruct();
 #endif
-				}
-				break;
 			}
-			case Menu_BuyItem:
+			break;
+		}
+		case Menu_BuyItem:
+		{
+			if (canOpenOldMenu())
 			{
-				if (canOpenOldMenu())
-				{
-					BuyItem(pPlayer, slot);
+				BuyItem(pPlayer, slot);
 #ifdef REGAMEDLL_FIXES
-					pPlayer->BuildRebuyStruct();
+				pPlayer->BuildRebuyStruct();
 #endif
-				}
-				break;
 			}
-			case Menu_Radio1:
-			{
-				Radio1(pPlayer, slot);
-				break;
-			}
-			case Menu_Radio2:
-			{
-				Radio2(pPlayer, slot);
-				break;
-			}
-			case Menu_Radio3:
-			{
-				Radio3(pPlayer, slot);
-				break;
-			}
-			default:
-				ALERT(at_console, "ClientCommand(): Invalid menu selected\n");
-				break;
+			break;
+		}
+		case Menu_Radio1:
+		{
+			Radio1(pPlayer, slot);
+			break;
+		}
+		case Menu_Radio2:
+		{
+			Radio2(pPlayer, slot);
+			break;
+		}
+		case Menu_Radio3:
+		{
+			Radio3(pPlayer, slot);
+			break;
+		}
+		default:
+			ALERT(at_console, "ClientCommand(): Invalid menu selected\n");
+			break;
 		}
 	}
 	else if (FStrEq(pcmd, "chooseteam"))
@@ -3266,12 +3266,12 @@ void EXT_FUNC InternalCommand(edict_t *pEntity, const char *pcmd, const char *pa
 #endif
 	else
 	{
-		if (g_pGameRules->ClientCommand_DeadOrAlive(GetClassPtr<CCSPlayer>((CBasePlayer *)pev), pcmd))
+		if (g_pGameRules->ClientCommand_DeadOrAlive(GetClassPtr<CCSPlayer>((CBasePlayer*)pev), pcmd))
 			return;
 
 		if (TheBots)
 		{
-			if (TheBots->ClientCommand(GetClassPtr<CCSPlayer>((CBasePlayer *)pev), pcmd))
+			if (TheBots->ClientCommand(GetClassPtr<CCSPlayer>((CBasePlayer*)pev), pcmd))
 				return;
 		}
 
@@ -3337,20 +3337,20 @@ void EXT_FUNC InternalCommand(edict_t *pEntity, const char *pcmd, const char *pa
 						EMIT_SOUND(ENT(pPlayer->pev), CHAN_ITEM, "items/nvg_off.wav", RANDOM_FLOAT(0.92, 1), ATTN_NORM);
 
 						MESSAGE_BEGIN(MSG_ONE, gmsgNVGToggle, nullptr, pPlayer->pev);
-							WRITE_BYTE(0); // disable nightvision
+						WRITE_BYTE(0); // disable nightvision
 						MESSAGE_END();
 
 						pPlayer->m_bNightVisionOn = false;
 
 						for (int i = 1; i <= gpGlobals->maxClients; i++)
 						{
-							CBasePlayer *pObserver = UTIL_PlayerByIndex(i);
+							CBasePlayer* pObserver = UTIL_PlayerByIndex(i);
 							if (pObserver && pObserver->IsObservingPlayer(pPlayer))
 							{
 								EMIT_SOUND(ENT(pObserver->pev), CHAN_ITEM, "items/nvg_off.wav", RANDOM_FLOAT(0.92, 1), ATTN_NORM);
 
 								MESSAGE_BEGIN(MSG_ONE, gmsgNVGToggle, nullptr, pObserver->pev);
-									WRITE_BYTE(0); // disable nightvision
+								WRITE_BYTE(0); // disable nightvision
 								MESSAGE_END();
 
 								pObserver->m_bNightVisionOn = false;
@@ -3362,20 +3362,20 @@ void EXT_FUNC InternalCommand(edict_t *pEntity, const char *pcmd, const char *pa
 						EMIT_SOUND(ENT(pPlayer->pev), CHAN_ITEM, "items/nvg_on.wav", RANDOM_FLOAT(0.92, 1), ATTN_NORM);
 
 						MESSAGE_BEGIN(MSG_ONE, gmsgNVGToggle, nullptr, pPlayer->pev);
-							WRITE_BYTE(1); // enable nightvision
+						WRITE_BYTE(1); // enable nightvision
 						MESSAGE_END();
 
 						pPlayer->m_bNightVisionOn = true;
 
 						for (int i = 1; i <= gpGlobals->maxClients; i++)
 						{
-							CBasePlayer *pObserver = UTIL_PlayerByIndex(i);
+							CBasePlayer* pObserver = UTIL_PlayerByIndex(i);
 							if (pObserver && pObserver->IsObservingPlayer(pPlayer))
 							{
 								EMIT_SOUND(ENT(pObserver->pev), CHAN_ITEM, "items/nvg_on.wav", RANDOM_FLOAT(0.92, 1), ATTN_NORM);
 
 								MESSAGE_BEGIN(MSG_ONE, gmsgNVGToggle, nullptr, pObserver->pev);
-									WRITE_BYTE(1);  // enable nightvision
+								WRITE_BYTE(1);  // enable nightvision
 								MESSAGE_END();
 
 								pObserver->m_bNightVisionOn = true;
@@ -3419,22 +3419,22 @@ void EXT_FUNC InternalCommand(edict_t *pEntity, const char *pcmd, const char *pa
 			{
 #if 0
 				if (CVAR_GET_FLOAT("sv_cheats") != 0.0f && CMD_ARGC() > 1)
-					GetClassPtr<CCSPlayer>((CBasePlayer *)pev)->m_iFOV = Q_atoi(CMD_ARGV(1));
+					GetClassPtr<CCSPlayer>((CBasePlayer*)pev)->m_iFOV = Q_atoi(CMD_ARGV(1));
 				else
-					CLIENT_PRINTF(pEntity, print_console, UTIL_VarArgs("\"fov\" is \"%d\"\n", int(GetClassPtr<CCSPlayer>((CBasePlayer *)pev)->m_iFOV)));
+					CLIENT_PRINTF(pEntity, print_console, UTIL_VarArgs("\"fov\" is \"%d\"\n", int(GetClassPtr<CCSPlayer>((CBasePlayer*)pev)->m_iFOV)));
 #endif
 			}
 			else if (FStrEq(pcmd, "use"))
 			{
-				GetClassPtr<CCSPlayer>((CBasePlayer *)pev)->SelectItem(parg1);
+				GetClassPtr<CCSPlayer>((CBasePlayer*)pev)->SelectItem(parg1);
 			}
 			else if (((pstr = Q_strstr(pcmd, "weapon_"))) && (pstr == pcmd))
 			{
-				GetClassPtr<CCSPlayer>((CBasePlayer *)pev)->SelectItem(pcmd);
+				GetClassPtr<CCSPlayer>((CBasePlayer*)pev)->SelectItem(pcmd);
 			}
 			else if (FStrEq(pcmd, "lastinv"))
 			{
-				GetClassPtr<CCSPlayer>((CBasePlayer *)pev)->SelectLastItem();
+				GetClassPtr<CCSPlayer>((CBasePlayer*)pev)->SelectLastItem();
 			}
 			else if (FStrEq(pcmd, "buyammo1"))
 			{
@@ -3575,7 +3575,7 @@ void EXT_FUNC InternalCommand(edict_t *pEntity, const char *pcmd, const char *pa
 				if (HandleRadioAliasCommands(pPlayer, pcmd))
 					return;
 
-				if (!g_pGameRules->ClientCommand(GetClassPtr<CCSPlayer>((CBasePlayer *)pev), pcmd))
+				if (!g_pGameRules->ClientCommand(GetClassPtr<CCSPlayer>((CBasePlayer*)pev), pcmd))
 				{
 					// tell the user they entered an unknown command
 					char command[128];
@@ -3600,7 +3600,7 @@ void EXT_FUNC InternalCommand(edict_t *pEntity, const char *pcmd, const char *pa
 }
 
 // Use CMD_ARGV, CMD_ARGV, and CMD_ARGC to get pointers the character string command.
-void EXT_FUNC ClientCommand_(edict_t *pEntity)
+void EXT_FUNC ClientCommand_(edict_t* pEntity)
 {
 	// Is the client spawned yet?
 	if (!pEntity->pvPrivateData)
@@ -3614,14 +3614,14 @@ void EXT_FUNC ClientCommand_(edict_t *pEntity)
 }
 
 // called after the player changes userinfo - gives dll a chance to modify it before it gets sent into the rest of the engine.
-void EXT_FUNC ClientUserInfoChanged(edict_t *pEntity, char *infobuffer)
+void EXT_FUNC ClientUserInfoChanged(edict_t* pEntity, char* infobuffer)
 {
 	// Is the client spawned yet?
 	if (!pEntity->pvPrivateData)
 		return;
 
-	CBasePlayer *pPlayer = CBasePlayer::Instance(pEntity);
-	char *szBufferName = GET_KEY_VALUE(infobuffer, "name");
+	CBasePlayer* pPlayer = CBasePlayer::Instance(pEntity);
+	char* szBufferName = GET_KEY_VALUE(infobuffer, "name");
 
 	// msg everyone if someone changes their name, and it isn't the first time (changing no name to current name)
 	if (pEntity->v.netname && STRING(pEntity->v.netname)[0] != '\0' && !FStrEq(STRING(pEntity->v.netname), szBufferName))
@@ -3630,7 +3630,7 @@ void EXT_FUNC ClientUserInfoChanged(edict_t *pEntity, char *infobuffer)
 		Q_snprintf(szName, sizeof(szName), "%s", szBufferName);
 
 		// First parse the name and remove any %'s
-		for (char *pPct = szName; pPct && *pPct != '\0'; pPct++)
+		for (char* pPct = szName; pPct && *pPct != '\0'; pPct++)
 		{
 			// Replace it with a space
 			if (*pPct == '%' || *pPct == '&')
@@ -3650,7 +3650,7 @@ void EXT_FUNC ClientUserInfoChanged(edict_t *pEntity, char *infobuffer)
 
 	// was already checking on pvPrivateData
 #ifndef REGAMEDLL_FIXES
-	g_pGameRules->ClientUserInfoChanged(GetClassPtr<CCSPlayer>((CBasePlayer *)&pEntity->v), infobuffer);
+	g_pGameRules->ClientUserInfoChanged(GetClassPtr<CCSPlayer>((CBasePlayer*)&pEntity->v), infobuffer);
 #else
 	g_pGameRules->ClientUserInfoChanged(pPlayer, infobuffer);
 #endif
@@ -3682,10 +3682,10 @@ void EXT_FUNC ServerDeactivate()
 	WeaponInfoReset();
 }
 
-void EXT_FUNC ServerActivate(edict_t *pEdictList, int edictCount, int clientMax)
+void EXT_FUNC ServerActivate(edict_t* pEdictList, int edictCount, int clientMax)
 {
 	int i;
-	CBaseEntity *pClass;
+	CBaseEntity* pClass;
 
 	// Every call to ServerActivate should be matched by a call to ServerDeactivate
 	g_bServerActive = true;
@@ -3694,7 +3694,7 @@ void EXT_FUNC ServerActivate(edict_t *pEdictList, int edictCount, int clientMax)
 	// Clients have not been initialized yet
 	for (i = 0; i < edictCount; i++)
 	{
-		edict_t *pEdict = &pEdictList[i];
+		edict_t* pEdict = &pEdictList[i];
 
 		if (pEdict->free)
 			continue;
@@ -3741,10 +3741,10 @@ void EXT_FUNC ServerActivate(edict_t *pEdictList, int edictCount, int clientMax)
 #endif
 }
 
-void EXT_FUNC PlayerPreThink(edict_t *pEntity)
+void EXT_FUNC PlayerPreThink(edict_t* pEntity)
 {
-	entvars_t *pev = &pEntity->v;
-	CBasePlayer *pPlayer = (CBasePlayer *)GET_PRIVATE(pEntity);
+	entvars_t* pev = &pEntity->v;
+	CBasePlayer* pPlayer = (CBasePlayer*)GET_PRIVATE(pEntity);
 
 	if (pPlayer)
 	{
@@ -3752,10 +3752,10 @@ void EXT_FUNC PlayerPreThink(edict_t *pEntity)
 	}
 }
 
-void EXT_FUNC PlayerPostThink(edict_t *pEntity)
+void EXT_FUNC PlayerPostThink(edict_t* pEntity)
 {
-	entvars_t *pev = &pEntity->v;
-	CBasePlayer *pPlayer = (CBasePlayer *)GET_PRIVATE(pEntity);
+	entvars_t* pev = &pEntity->v;
+	CBasePlayer* pPlayer = (CBasePlayer*)GET_PRIVATE(pEntity);
 
 	if (pPlayer)
 	{
@@ -3771,7 +3771,7 @@ void EXT_FUNC ParmsNewLevel()
 void EXT_FUNC ParmsChangeLevel()
 {
 	// retrieve the pointer to the save data
-	SAVERESTOREDATA *pSaveData = (SAVERESTOREDATA *)gpGlobals->pSaveData;
+	SAVERESTOREDATA* pSaveData = (SAVERESTOREDATA*)gpGlobals->pSaveData;
 
 	if (pSaveData)
 	{
@@ -3938,7 +3938,7 @@ void ClientPrecache()
 	{
 		for (i = FirstCustomSkin; i <= LastCustomSkin; i++)
 		{
-			const char *fname = TheBotProfiles->GetCustomSkinFname(i);
+			const char* fname = TheBotProfiles->GetCustomSkinFname(i);
 
 			if (!fname)
 				break;
@@ -3997,31 +3997,31 @@ void ClientPrecache()
 	Vector vMax(38, 24, 41);
 
 	for (i = 0; i < numPlayerModels; i++)
-		ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, sPlayerModelFiles[i]);
+		ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, sPlayerModelFiles[i]);
 
 	if (AreRunningCZero())
 	{
 		for (i = FirstCustomSkin; i <= LastCustomSkin; i++)
 		{
-			const char *fname = TheBotProfiles->GetCustomSkinFname(i);
+			const char* fname = TheBotProfiles->GetCustomSkinFname(i);
 			if (!fname)
 				break;
 
-			ENGINE_FORCE_UNMODIFIED(force_model_specifybounds_if_avail, (float *)&vMin, (float *)&vMax, fname);
+			ENGINE_FORCE_UNMODIFIED(force_model_specifybounds_if_avail, (float*)&vMin, (float*)&vMax, fname);
 		}
 	}
 
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, (float *)&temp, (float *)&temp, "sprites/black_smoke1.spr");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, (float *)&temp, (float *)&temp, "sprites/black_smoke2.spr");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, (float *)&temp, (float *)&temp, "sprites/black_smoke3.spr");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, (float *)&temp, (float *)&temp, "sprites/black_smoke4.spr");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, (float *)&temp, (float *)&temp, "sprites/fast_wallpuff1.spr");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, (float *)&temp, (float *)&temp, "sprites/smokepuff.spr");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, (float *)&temp, (float *)&temp, "sprites/gas_puff_01.spr");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, (float *)&temp, (float *)&temp, "sprites/scope_arc.tga");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, (float *)&temp, (float *)&temp, "sprites/scope_arc_nw.tga");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, (float *)&temp, (float *)&temp, "sprites/scope_arc_ne.tga");
-	ENGINE_FORCE_UNMODIFIED(force_exactfile, (float *)&temp, (float *)&temp, "sprites/scope_arc_sw.tga");
+	ENGINE_FORCE_UNMODIFIED(force_exactfile, (float*)&temp, (float*)&temp, "sprites/black_smoke1.spr");
+	ENGINE_FORCE_UNMODIFIED(force_exactfile, (float*)&temp, (float*)&temp, "sprites/black_smoke2.spr");
+	ENGINE_FORCE_UNMODIFIED(force_exactfile, (float*)&temp, (float*)&temp, "sprites/black_smoke3.spr");
+	ENGINE_FORCE_UNMODIFIED(force_exactfile, (float*)&temp, (float*)&temp, "sprites/black_smoke4.spr");
+	ENGINE_FORCE_UNMODIFIED(force_exactfile, (float*)&temp, (float*)&temp, "sprites/fast_wallpuff1.spr");
+	ENGINE_FORCE_UNMODIFIED(force_exactfile, (float*)&temp, (float*)&temp, "sprites/smokepuff.spr");
+	ENGINE_FORCE_UNMODIFIED(force_exactfile, (float*)&temp, (float*)&temp, "sprites/gas_puff_01.spr");
+	ENGINE_FORCE_UNMODIFIED(force_exactfile, (float*)&temp, (float*)&temp, "sprites/scope_arc.tga");
+	ENGINE_FORCE_UNMODIFIED(force_exactfile, (float*)&temp, (float*)&temp, "sprites/scope_arc_nw.tga");
+	ENGINE_FORCE_UNMODIFIED(force_exactfile, (float*)&temp, (float*)&temp, "sprites/scope_arc_ne.tga");
+	ENGINE_FORCE_UNMODIFIED(force_exactfile, (float*)&temp, (float*)&temp, "sprites/scope_arc_sw.tga");
 
 	if (AreRunningCZero())
 	{
@@ -4034,12 +4034,12 @@ void ClientPrecache()
 		vMax = Vector(12, 6, 22);
 	}
 
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/p_deagle.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/p_p228.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/p_elite.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/p_usp.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/p_fiveseven.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/p_glock18.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/p_deagle.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/p_p228.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/p_elite.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/p_usp.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/p_fiveseven.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/p_glock18.mdl");
 
 	if (AreRunningCZero())
 	{
@@ -4052,8 +4052,8 @@ void ClientPrecache()
 		vMax = Vector(25, 23, 21);
 	}
 
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/p_xm1014.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/p_m3.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/p_xm1014.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/p_m3.mdl");
 
 	if (AreRunningCZero())
 	{
@@ -4066,11 +4066,11 @@ void ClientPrecache()
 		vMax = Vector(23, 8, 20);
 	}
 
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/p_mac10.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/p_mp5.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/p_ump45.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/p_tmp.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/p_p90.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/p_mac10.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/p_mp5.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/p_ump45.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/p_tmp.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/p_p90.mdl");
 
 	if (AreRunningCZero())
 	{
@@ -4083,16 +4083,16 @@ void ClientPrecache()
 		vMax = Vector(31, 12, 31);
 	}
 
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/p_ak47.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/p_aug.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/p_awp.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/p_g3sg1.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/p_sg550.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/p_m4a1.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/p_scout.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/p_sg552.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/p_famas.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/p_galil.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/p_ak47.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/p_aug.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/p_awp.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/p_g3sg1.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/p_sg550.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/p_m4a1.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/p_scout.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/p_sg552.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/p_famas.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/p_galil.mdl");
 
 	if (AreRunningCZero())
 	{
@@ -4105,12 +4105,12 @@ void ClientPrecache()
 		vMax = Vector(25, 10, 20);
 	}
 
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/p_m249.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/p_m249.mdl");
 
 	vMin = Vector(-7, -7, -15);
 	vMax = Vector(7, 7, 15);
 
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/p_c4.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/p_c4.mdl");
 
 	vMin = Vector(-4, -8, -3);
 	vMax = Vector(3, 7, 3);
@@ -4126,7 +4126,7 @@ void ClientPrecache()
 		vMax = Vector(3, 7, 3);
 	}
 
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/w_c4.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/w_c4.mdl");
 
 	if (AreRunningCZero())
 	{
@@ -4139,9 +4139,9 @@ void ClientPrecache()
 		vMax = Vector(7, 2, 18);
 	}
 
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/p_flashbang.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/p_hegrenade.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/p_smokegrenade.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/p_flashbang.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/p_hegrenade.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/p_smokegrenade.mdl");
 
 	if (AreRunningCZero())
 		vMin = Vector(-5, -5, -7);
@@ -4150,14 +4150,14 @@ void ClientPrecache()
 
 	vMax = Vector(5, 5, 14);
 
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/w_flashbang.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/w_hegrenade.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/w_smokegrenade.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/w_flashbang.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/w_hegrenade.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/w_smokegrenade.mdl");
 
 	vMin = Vector(-7, -11, -18);
 	vMax = Vector(7, 6, 18);
 
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/p_knife.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/p_knife.mdl");
 
 	if (AreRunningCZero())
 	{
@@ -4170,15 +4170,15 @@ void ClientPrecache()
 		vMax = Vector(16, 6, 24);
 	}
 
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/shield/p_shield_deagle.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/shield/p_shield_fiveseven.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/shield/p_shield_flashbang.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/shield/p_shield_glock18.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/shield/p_shield_hegrenade.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/shield/p_shield_knife.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/shield/p_shield_p228.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/shield/p_shield_smokegrenade.mdl");
-	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float *)&vMin, (float *)&vMax, "models/shield/p_shield_usp.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/shield/p_shield_deagle.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/shield/p_shield_fiveseven.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/shield/p_shield_flashbang.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/shield/p_shield_glock18.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/shield/p_shield_hegrenade.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/shield/p_shield_knife.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/shield/p_shield_p228.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/shield/p_shield_smokegrenade.mdl");
+	ENGINE_FORCE_UNMODIFIED(force_model_specifybounds, (float*)&vMin, (float*)&vMax, "models/shield/p_shield_usp.mdl");
 
 	PRECACHE_SOUND("common/wpn_hudoff.wav");
 	PRECACHE_SOUND("common/wpn_hudon.wav");
@@ -4221,7 +4221,7 @@ void ClientPrecache()
 	m_usResetDecals = g_engfuncs.pfnPrecacheEvent(1, "events/decal_reset.sc");
 }
 
-const char *EXT_FUNC GetGameDescription()
+const char* EXT_FUNC GetGameDescription()
 {
 #ifdef REGAMEDLL_ADD
 	if (CSGameRules()) {
@@ -4235,14 +4235,14 @@ const char *EXT_FUNC GetGameDescription()
 	return "Counter-Strike";
 }
 
-void EXT_FUNC SysEngine_Error(const char *error_string)
+void EXT_FUNC SysEngine_Error(const char* error_string)
 {
 	;
 }
 
-void EXT_FUNC PlayerCustomization(edict_t *pEntity, customization_t *pCust)
+void EXT_FUNC PlayerCustomization(edict_t* pEntity, customization_t* pCust)
 {
-	CBasePlayer *pPlayer = (CBasePlayer *)GET_PRIVATE(pEntity);
+	CBasePlayer* pPlayer = (CBasePlayer*)GET_PRIVATE(pEntity);
 
 	if (!pPlayer)
 	{
@@ -4271,9 +4271,9 @@ void EXT_FUNC PlayerCustomization(edict_t *pEntity, customization_t *pCust)
 	}
 }
 
-void EXT_FUNC SpectatorConnect(edict_t *pEntity)
+void EXT_FUNC SpectatorConnect(edict_t* pEntity)
 {
-	CBaseSpectator *pPlayer = (CBaseSpectator *)GET_PRIVATE(pEntity);
+	CBaseSpectator* pPlayer = (CBaseSpectator*)GET_PRIVATE(pEntity);
 
 	if (pPlayer)
 	{
@@ -4281,9 +4281,9 @@ void EXT_FUNC SpectatorConnect(edict_t *pEntity)
 	}
 }
 
-void EXT_FUNC SpectatorDisconnect(edict_t *pEntity)
+void EXT_FUNC SpectatorDisconnect(edict_t* pEntity)
 {
-	CBaseSpectator *pPlayer = (CBaseSpectator *)GET_PRIVATE(pEntity);
+	CBaseSpectator* pPlayer = (CBaseSpectator*)GET_PRIVATE(pEntity);
 
 	if (pPlayer)
 	{
@@ -4291,9 +4291,9 @@ void EXT_FUNC SpectatorDisconnect(edict_t *pEntity)
 	}
 }
 
-void EXT_FUNC SpectatorThink(edict_t *pEntity)
+void EXT_FUNC SpectatorThink(edict_t* pEntity)
 {
-	CBaseSpectator *pPlayer = (CBaseSpectator *)GET_PRIVATE(pEntity);
+	CBaseSpectator* pPlayer = (CBaseSpectator*)GET_PRIVATE(pEntity);
 
 	if (pPlayer)
 	{
@@ -4301,9 +4301,9 @@ void EXT_FUNC SpectatorThink(edict_t *pEntity)
 	}
 }
 
-void EXT_FUNC SetupVisibility(edict_t *pViewEntity, edict_t *pClient, unsigned char **pvs, unsigned char **pas)
+void EXT_FUNC SetupVisibility(edict_t* pViewEntity, edict_t* pClient, unsigned char** pvs, unsigned char** pas)
 {
-	edict_t *pView = pClient;
+	edict_t* pView = pClient;
 
 	// Find the client's PVS
 	if (pViewEntity)
@@ -4318,7 +4318,7 @@ void EXT_FUNC SetupVisibility(edict_t *pViewEntity, edict_t *pClient, unsigned c
 		return;
 	}
 
-	CBasePlayer *pPlayer = CBasePlayer::Instance(pClient);
+	CBasePlayer* pPlayer = CBasePlayer::Instance(pClient);
 	if (pPlayer && pPlayer->pev->iuser2 && pPlayer->m_hObserverTarget)
 	{
 		if (pPlayer->m_afPhysicsFlags & PFLAG_OBSERVER)
@@ -4335,13 +4335,13 @@ void EXT_FUNC SetupVisibility(edict_t *pViewEntity, edict_t *pClient, unsigned c
 		org = org + (VEC_HULL_MIN - VEC_DUCK_HULL_MIN);
 	}
 
-	*pvs = ENGINE_SET_PVS((float *)&org);
-	*pas = ENGINE_SET_PAS((float *)&org);
+	*pvs = ENGINE_SET_PVS((float*)&org);
+	*pas = ENGINE_SET_PAS((float*)&org);
 }
 
-void ResetPlayerPVS(edict_t *client, int clientnum)
+void ResetPlayerPVS(edict_t* client, int clientnum)
 {
-	PLAYERPVSSTATUS *pvs = &g_PVSStatus[clientnum];
+	PLAYERPVSSTATUS* pvs = &g_PVSStatus[clientnum];
 
 	Q_memset(pvs, 0, sizeof(*pvs));
 	pvs->headnode = client->headnode;
@@ -4349,9 +4349,9 @@ void ResetPlayerPVS(edict_t *client, int clientnum)
 	Q_memcpy(pvs->leafnums, client->leafnums, sizeof(pvs->leafnums));
 }
 
-bool CheckPlayerPVSLeafChanged(edict_t *client, int clientnum)
+bool CheckPlayerPVSLeafChanged(edict_t* client, int clientnum)
 {
-	PLAYERPVSSTATUS *pvs = &g_PVSStatus[clientnum];
+	PLAYERPVSSTATUS* pvs = &g_PVSStatus[clientnum];
 	if (pvs->headnode != client->headnode || pvs->num_leafs != client->num_leafs)
 		return true;
 
@@ -4366,8 +4366,8 @@ bool CheckPlayerPVSLeafChanged(edict_t *client, int clientnum)
 
 void MarkEntityInPVS(int clientnum, int entitynum, float time, bool inpvs)
 {
-	PLAYERPVSSTATUS *pvs;
-	ENTITYPVSSTATUS *es;
+	PLAYERPVSSTATUS* pvs;
+	ENTITYPVSSTATUS* es;
 
 	pvs = &g_PVSStatus[clientnum];
 	es = &pvs->m_Status[entitynum];
@@ -4380,8 +4380,8 @@ void MarkEntityInPVS(int clientnum, int entitynum, float time, bool inpvs)
 
 bool CheckEntityRecentlyInPVS(int clientnum, int entitynum, float currenttime)
 {
-	PLAYERPVSSTATUS *pvs;
-	ENTITYPVSSTATUS *es;
+	PLAYERPVSSTATUS* pvs;
+	ENTITYPVSSTATUS* es;
 
 	pvs = &g_PVSStatus[clientnum];
 	es = &pvs->m_Status[entitynum];
@@ -4394,7 +4394,7 @@ bool CheckEntityRecentlyInPVS(int clientnum, int entitynum, float currenttime)
 	return false;
 }
 
-BOOL EXT_FUNC AddToFullPack(struct entity_state_s *state, int e, edict_t *ent, edict_t *host, int hostflags, BOOL player, unsigned char *pSet)
+BOOL EXT_FUNC AddToFullPack(struct entity_state_s* state, int e, edict_t* ent, edict_t* host, int hostflags, BOOL player, unsigned char* pSet)
 {
 	if (ent != host)
 	{
@@ -4496,7 +4496,7 @@ BOOL EXT_FUNC AddToFullPack(struct entity_state_s *state, int e, edict_t *ent, e
 	// don't send unhandled custom bits to client
 	state->effects &= ~(EF_FORCEVISIBILITY | EF_OWNER_VISIBILITY | EF_OWNER_NO_VISIBILITY);
 
-	if  (ent->v.skin == CONTENTS_LADDER &&
+	if (ent->v.skin == CONTENTS_LADDER &&
 		(host->v.iuser3 & PLAYER_PREVENT_CLIMB) == PLAYER_PREVENT_CLIMB) {
 		state->skin = CONTENTS_EMPTY;
 	}
@@ -4560,7 +4560,7 @@ BOOL EXT_FUNC AddToFullPack(struct entity_state_s *state, int e, edict_t *ent, e
 }
 
 // Creates baselines used for network encoding, especially for player data since players are not spawned until connect time.
-void EXT_FUNC CreateBaseline(int player, int eindex, struct entity_state_s *baseline, edict_t *entity, int playermodelindex, Vector player_mins, Vector player_maxs)
+void EXT_FUNC CreateBaseline(int player, int eindex, struct entity_state_s* baseline, edict_t* entity, int playermodelindex, Vector player_mins, Vector player_maxs)
 {
 	baseline->origin = entity->v.origin;
 	baseline->angles = entity->v.angles;
@@ -4571,9 +4571,9 @@ void EXT_FUNC CreateBaseline(int player, int eindex, struct entity_state_s *base
 	// render information
 	baseline->rendermode = byte(entity->v.rendermode);
 	baseline->renderamt = byte(entity->v.renderamt);
-	baseline->rendercolor.r	= byte(entity->v.rendercolor.x);
-	baseline->rendercolor.g	= byte(entity->v.rendercolor.y);
-	baseline->rendercolor.b	= byte(entity->v.rendercolor.z);
+	baseline->rendercolor.r = byte(entity->v.rendercolor.x);
+	baseline->rendercolor.g = byte(entity->v.rendercolor.y);
+	baseline->rendercolor.b = byte(entity->v.rendercolor.z);
 	baseline->renderfx = byte(entity->v.renderfx);
 
 	if (player)
@@ -4607,7 +4607,7 @@ void EXT_FUNC CreateBaseline(int player, int eindex, struct entity_state_s *base
 	}
 }
 
-void Entity_FieldInit(struct delta_s *pFields)
+void Entity_FieldInit(struct delta_s* pFields)
 {
 	entity_field_alias[FIELD_ORIGIN0].field = DELTA_FINDFIELD(pFields, entity_field_alias[FIELD_ORIGIN0].name);
 	entity_field_alias[FIELD_ORIGIN1].field = DELTA_FINDFIELD(pFields, entity_field_alias[FIELD_ORIGIN1].name);
@@ -4618,9 +4618,9 @@ void Entity_FieldInit(struct delta_s *pFields)
 }
 
 // Callback for sending entity_state_t info over network.
-void Entity_Encode(struct delta_s *pFields, const unsigned char *from, const unsigned char *to)
+void Entity_Encode(struct delta_s* pFields, const unsigned char* from, const unsigned char* to)
 {
-	entity_state_t *f, *t;
+	entity_state_t* f, * t;
 	int localplayer = 0;
 	static int initialized = 0;
 
@@ -4630,8 +4630,8 @@ void Entity_Encode(struct delta_s *pFields, const unsigned char *from, const uns
 		initialized = 1;
 	}
 
-	f = (entity_state_t *)from;
-	t = (entity_state_t *)to;
+	f = (entity_state_t*)from;
+	t = (entity_state_t*)to;
 
 	// Never send origin to local player, it's sent with more resolution in clientdata_t structure
 	localplayer = (t->number - 1) == ENGINE_CURRENT_PLAYER();
@@ -4666,7 +4666,7 @@ void Entity_Encode(struct delta_s *pFields, const unsigned char *from, const uns
 	}
 }
 
-void Player_FieldInit(struct delta_s *pFields)
+void Player_FieldInit(struct delta_s* pFields)
 {
 	player_field_alias[FIELD_ORIGIN0].field = DELTA_FINDFIELD(pFields, player_field_alias[FIELD_ORIGIN0].name);
 	player_field_alias[FIELD_ORIGIN1].field = DELTA_FINDFIELD(pFields, player_field_alias[FIELD_ORIGIN1].name);
@@ -4674,9 +4674,9 @@ void Player_FieldInit(struct delta_s *pFields)
 }
 
 // Callback for sending entity_state_t for players info over network.
-void Player_Encode(struct delta_s *pFields, const unsigned char *from, const unsigned char *to)
+void Player_Encode(struct delta_s* pFields, const unsigned char* from, const unsigned char* to)
 {
-	entity_state_t *f, *t;
+	entity_state_t* f, * t;
 	int localplayer = 0;
 
 	static int initialized = 0;
@@ -4686,8 +4686,8 @@ void Player_Encode(struct delta_s *pFields, const unsigned char *from, const uns
 		initialized = 1;
 	}
 
-	f = (entity_state_t *)from;
-	t = (entity_state_t *)to;
+	f = (entity_state_t*)from;
+	t = (entity_state_t*)to;
 
 	// Never send origin to local player, it's sent with more resolution in clientdata_t structure
 	localplayer = (t->number - 1) == ENGINE_CURRENT_PLAYER();
@@ -4712,7 +4712,7 @@ void Player_Encode(struct delta_s *pFields, const unsigned char *from, const uns
 	}
 }
 
-void Custom_Entity_FieldInit(delta_s *pFields)
+void Custom_Entity_FieldInit(delta_s* pFields)
 {
 	custom_entity_field_alias[CUSTOMFIELD_ORIGIN0].field = DELTA_FINDFIELD(pFields, custom_entity_field_alias[CUSTOMFIELD_ORIGIN0].name);
 	custom_entity_field_alias[CUSTOMFIELD_ORIGIN1].field = DELTA_FINDFIELD(pFields, custom_entity_field_alias[CUSTOMFIELD_ORIGIN1].name);
@@ -4726,9 +4726,9 @@ void Custom_Entity_FieldInit(delta_s *pFields)
 }
 
 // Callback for sending entity_state_t info ( for custom entities ) over network.
-void Custom_Encode(struct delta_s *pFields, const unsigned char *from, const unsigned char *to)
+void Custom_Encode(struct delta_s* pFields, const unsigned char* from, const unsigned char* to)
 {
-	entity_state_t *f, *t;
+	entity_state_t* f, * t;
 	int beamType;
 	static int initialized = 0;
 
@@ -4738,8 +4738,8 @@ void Custom_Encode(struct delta_s *pFields, const unsigned char *from, const uns
 		initialized = 1;
 	}
 
-	f = (entity_state_t *)from;
-	t = (entity_state_t *)to;
+	f = (entity_state_t*)from;
+	t = (entity_state_t*)to;
 
 	beamType = t->rendermode & 0x0F;
 
@@ -4779,11 +4779,11 @@ void EXT_FUNC RegisterEncoders()
 	DELTA_ADDENCODER("Player_Encode", Player_Encode);
 }
 
-int EXT_FUNC GetWeaponData(edict_t *pEdict, struct weapon_data_s *info)
+int EXT_FUNC GetWeaponData(edict_t* pEdict, struct weapon_data_s* info)
 {
 #ifdef CLIENT_WEAPONS
-	entvars_t *pev = &pEdict->v;
-	CBasePlayer *pPlayer = CBasePlayer::Instance(pev);
+	entvars_t* pev = &pEdict->v;
+	CBasePlayer* pPlayer = CBasePlayer::Instance(pev);
 
 	Q_memset(info, 0, sizeof(weapon_data_t) * MAX_WEAPONS);
 
@@ -4797,7 +4797,7 @@ int EXT_FUNC GetWeaponData(edict_t *pEdict, struct weapon_data_s *info)
 		while (pPlayerItem)
 		{
 			// there's a weapon here. Should I pack it?
-			auto weapon = (CBasePlayerWeapon *)pPlayerItem->GetWeaponPtr();
+			auto weapon = (CBasePlayerWeapon*)pPlayerItem->GetWeaponPtr();
 			if (weapon && weapon->UseDecrement())
 			{
 				// Get The ID
@@ -4842,14 +4842,14 @@ int EXT_FUNC GetWeaponData(edict_t *pEdict, struct weapon_data_s *info)
 }
 
 // Data sent to current client only engine sets cd to 0 before calling.
-void EXT_FUNC UpdateClientData(const edict_t *ent, int sendweapons, struct clientdata_s *cd)
+void EXT_FUNC UpdateClientData(const edict_t* ent, int sendweapons, struct clientdata_s* cd)
 {
 	if (!ent || !ent->pvPrivateData)
 		return;
 
-	entvars_t *pevOrg = nullptr;
-	entvars_t *pev = const_cast<entvars_t *>(&ent->v);
-	CBasePlayer *pPlayer = CBasePlayer::Instance(pev);
+	entvars_t* pevOrg = nullptr;
+	entvars_t* pev = const_cast<entvars_t*>(&ent->v);
+	CBasePlayer* pPlayer = CBasePlayer::Instance(pev);
 
 	// if user is spectating different player in First person, override some vars
 	if (pPlayer && pPlayer->pev->iuser1 == OBS_IN_EYE && pPlayer->m_hObserverTarget)
@@ -4945,7 +4945,7 @@ void EXT_FUNC UpdateClientData(const edict_t *ent, int sendweapons, struct clien
 			ItemInfo II;
 			Q_memset(&II, 0, sizeof(II));
 
-			CBasePlayerWeapon *weapon = (CBasePlayerWeapon *)pPlayer->m_pActiveItem->GetWeaponPtr();
+			CBasePlayerWeapon* weapon = (CBasePlayerWeapon*)pPlayer->m_pActiveItem->GetWeaponPtr();
 			if (weapon && weapon->UseDecrement() &&
 #ifdef REGAMEDLL_API
 				weapon->CSPlayerItem()->GetItemInfo(&II)
@@ -4971,10 +4971,10 @@ void EXT_FUNC UpdateClientData(const edict_t *ent, int sendweapons, struct clien
 	}
 }
 
-void EXT_FUNC CmdStart(const edict_t *pEdict, const struct usercmd_s *cmd, unsigned int random_seed)
+void EXT_FUNC CmdStart(const edict_t* pEdict, const struct usercmd_s* cmd, unsigned int random_seed)
 {
-	entvars_t *pev = const_cast<entvars_t *>(&pEdict->v);
-	CBasePlayer *pPlayer = CBasePlayer::Instance(pev);
+	entvars_t* pev = const_cast<entvars_t*>(&pEdict->v);
+	CBasePlayer* pPlayer = CBasePlayer::Instance(pev);
 
 	if (!pPlayer)
 		return;
@@ -4985,10 +4985,10 @@ void EXT_FUNC CmdStart(const edict_t *pEdict, const struct usercmd_s *cmd, unsig
 	pPlayer->random_seed = random_seed;
 }
 
-void EXT_FUNC CmdEnd(const edict_t *pEdict)
+void EXT_FUNC CmdEnd(const edict_t* pEdict)
 {
-	entvars_t *pev = const_cast<entvars_t *>(&pEdict->v);
-	CBasePlayer *pPlayer = CBasePlayer::Instance(pev);
+	entvars_t* pev = const_cast<entvars_t*>(&pEdict->v);
+	CBasePlayer* pPlayer = CBasePlayer::Instance(pev);
 
 	if (!pPlayer)
 		return;
@@ -5000,7 +5000,7 @@ void EXT_FUNC CmdEnd(const edict_t *pEdict)
 		UTIL_SetSize(pev, VEC_DUCK_HULL_MIN, VEC_DUCK_HULL_MAX);
 }
 
-int EXT_FUNC ConnectionlessPacket(const struct netadr_s *net_from, const char *args, char *response_buffer, int *response_buffer_size)
+int EXT_FUNC ConnectionlessPacket(const struct netadr_s* net_from, const char* args, char* response_buffer, int* response_buffer_size)
 {
 	// Parse stuff from args
 	int max_buffer_size = *response_buffer_size;
@@ -5014,7 +5014,7 @@ int EXT_FUNC ConnectionlessPacket(const struct netadr_s *net_from, const char *a
 	return 0;
 }
 
-BOOL EXT_FUNC GetHullBounds(int hullnumber, float *mins, float *maxs)
+BOOL EXT_FUNC GetHullBounds(int hullnumber, float* mins, float* maxs)
 {
 #ifdef REGAMEDLL_ADD
 	if (hullbounds_sets.value == 0.0f)
@@ -5080,7 +5080,7 @@ void EXT_FUNC CreateInstancedBaselines()
 #endif
 }
 
-int EXT_FUNC InconsistentFile(const edict_t *pEdict, const char *filename, char *disconnect_message)
+int EXT_FUNC InconsistentFile(const edict_t* pEdict, const char* filename, char* disconnect_message)
 {
 	// Server doesn't care?
 	if (!CVAR_GET_FLOAT("mp_consistency"))

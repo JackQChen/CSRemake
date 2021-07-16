@@ -30,12 +30,12 @@ void SV_Continue_f()
 
 		// go continue
 		MESSAGE_BEGIN(MSG_ALL, gmsgCZCareer);
-			WRITE_STRING("GOGOGO");
+		WRITE_STRING("GOGOGO");
 		MESSAGE_END();
 
 		for (int i = 1; i <= gpGlobals->maxClients; i++)
 		{
-			CBasePlayer *pPlayer = UTIL_PlayerByIndex(i);
+			CBasePlayer* pPlayer = UTIL_PlayerByIndex(i);
 
 			if (pPlayer && !pPlayer->IsBot())
 			{
@@ -66,8 +66,8 @@ void SV_CareerAddTask_f()
 	if (CMD_ARGC() != 7)
 		return;
 
-	const char *taskName = CMD_ARGV(1);
-	const char *weaponName = CMD_ARGV(2);
+	const char* taskName = CMD_ARGV(1);
+	const char* weaponName = CMD_ARGV(2);
 
 	int reps = Q_atoi(CMD_ARGV(3));
 	bool mustLive = Q_atoi(CMD_ARGV(4)) != 0;
@@ -87,14 +87,14 @@ void SV_Career_EndRound_f()
 		return;
 	}
 
-	CBasePlayer *pLocalPlayer = UTIL_GetLocalPlayer();
+	CBasePlayer* pLocalPlayer = UTIL_GetLocalPlayer();
 	if (pLocalPlayer)
 	{
 		SERVER_COMMAND("kill\n");
 
 		for (int i = 1; i <= gpGlobals->maxClients; i++)
 		{
-			CBasePlayer *pPlayer = UTIL_PlayerByIndex(i);
+			CBasePlayer* pPlayer = UTIL_PlayerByIndex(i);
 
 			if (!pPlayer || FNullEnt(pPlayer->pev))
 				continue;
@@ -132,7 +132,7 @@ void SV_LoopPerformance_f()
 
 	for (i = 0; i < 100; i++)
 	{
-		CBaseEntity *pSpot;
+		CBaseEntity* pSpot;
 		for (pSpot = UTIL_FindEntityByString_Old(nullptr, "classname", "info_player_start"); pSpot; pSpot = UTIL_FindEntityByString_Old(pSpot, "classname", "info_player_start"))
 			;
 
@@ -154,7 +154,7 @@ void SV_LoopPerformance_f()
 
 	for (i = 0; i < 100; i++)
 	{
-		CBaseEntity *pSpot;
+		CBaseEntity* pSpot;
 		for (pSpot = UTIL_FindEntityByClassname(nullptr, "info_player_start"); pSpot; pSpot = UTIL_FindEntityByClassname(pSpot, "info_player_start"))
 			;
 
@@ -176,7 +176,7 @@ void SV_PrintEntities_f()
 {
 	for (int i = 0; i < stringsHashTable.Count(); i++)
 	{
-		hash_item_t *item = &stringsHashTable[i];
+		hash_item_t* item = &stringsHashTable[i];
 
 		if (item->pev)
 		{

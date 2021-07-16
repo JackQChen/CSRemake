@@ -42,8 +42,8 @@ typedef void (*xcommand_t)(void);
 /* <904> ../engine/cmd.h:71 */
 typedef struct cmd_function_s
 {
-	struct cmd_function_s *next;
-	char *name;
+	struct cmd_function_s* next;
+	char* name;
 	xcommand_t function;
 	int flags;
 

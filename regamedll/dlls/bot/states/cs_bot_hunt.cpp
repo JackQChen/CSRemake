@@ -29,7 +29,7 @@
 #include "precompiled.h"
 
 // Begin the hunt
-void HuntState::OnEnter(CCSBot *me)
+void HuntState::OnEnter(CCSBot* me)
 {
 	// lurking death
 	if (me->IsUsingKnife() && me->IsWellPastSafe() && !me->IsHurrying())
@@ -44,7 +44,7 @@ void HuntState::OnEnter(CCSBot *me)
 }
 
 // Hunt down our enemies
-void HuntState::OnUpdate(CCSBot *me)
+void HuntState::OnUpdate(CCSBot* me)
 {
 	// if we've been hunting for a long time, drop into Idle for a moment to
 	// select something else to do
@@ -82,7 +82,7 @@ void HuntState::OnUpdate(CCSBot *me)
 			}
 
 			// if bomb has been planted, and we hear it, move to a hiding spot near the bomb and watch it
-			const Vector *bombPos = me->GetGameState()->GetBombPosition();
+			const Vector* bombPos = me->GetGameState()->GetBombPosition();
 			if (!me->IsRogue() && me->GetGameState()->IsBombPlanted() && bombPos)
 			{
 				me->SetTask(CCSBot::GUARD_TICKING_BOMB);
@@ -133,10 +133,10 @@ void HuntState::OnUpdate(CCSBot *me)
 			// if safe time is up, and we stumble across a hostage, guard it
 			if (!me->IsRogue() && !me->IsSafe())
 			{
-				CHostage *pHostage = me->GetGameState()->GetNearestVisibleFreeHostage();
+				CHostage* pHostage = me->GetGameState()->GetNearestVisibleFreeHostage();
 				if (pHostage)
 				{
-					CNavArea *area = TheNavAreaGrid.GetNearestNavArea(&pHostage->pev->origin);
+					CNavArea* area = TheNavAreaGrid.GetNearestNavArea(&pHostage->pev->origin);
 					if (area)
 					{
 						// we see a free hostage, guard it
@@ -175,7 +175,7 @@ void HuntState::OnUpdate(CCSBot *me)
 			areaCount++;
 
 			// skip the small areas
-			const Extent *extent = area->GetExtent();
+			const Extent* extent = area->GetExtent();
 			if (extent->hi.x - extent->lo.x < minSize || extent->hi.y - extent->lo.y < minSize)
 				continue;
 
@@ -211,7 +211,7 @@ void HuntState::OnUpdate(CCSBot *me)
 }
 
 // Done hunting
-void HuntState::OnExit(CCSBot *me)
+void HuntState::OnExit(CCSBot* me)
 {
 	;
 }

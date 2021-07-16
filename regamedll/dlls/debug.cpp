@@ -18,7 +18,7 @@ bool IsDeveloper()
 	return (CVAR_GET_FLOAT("developer") > 0.0);
 }
 
-NOXREF void UTIL_DPrintf(DebugOutputType outputType, char *pszMsg, ...)
+NOXREF void UTIL_DPrintf(DebugOutputType outputType, char* pszMsg, ...)
 {
 	if (!IsDeveloper())
 		return;
@@ -34,7 +34,7 @@ NOXREF void UTIL_DPrintf(DebugOutputType outputType, char *pszMsg, ...)
 	}
 }
 
-void UTIL_DPrintf(char *pszMsg, ...)
+void UTIL_DPrintf(char* pszMsg, ...)
 {
 	if (!IsDeveloper())
 		return;
@@ -49,7 +49,7 @@ void UTIL_DPrintf(char *pszMsg, ...)
 
 void PrintDebugFlags()
 {
-	char *tmp;
+	char* tmp;
 	int remainder = MAX_DEBUG_BUFF_SIZE;
 
 	theDebugBuffer[0] = '\0';
@@ -62,7 +62,7 @@ void PrintDebugFlags()
 	SERVER_PRINT(theDebugBuffer);
 }
 
-void SetDebugFlag(const char *flagStr, bool state)
+void SetDebugFlag(const char* flagStr, bool state)
 {
 	if (flagStr)
 	{
@@ -85,7 +85,7 @@ void SetDebugFlag(const char *flagStr, bool state)
 	SERVER_PRINT(SharedVarArgs("mp_debug: unknown variable '%s'\n", flagStr));
 }
 
-void PrintDebugFlag(const char *flagStr)
+void PrintDebugFlag(const char* flagStr)
 {
 	if (flagStr)
 	{
@@ -102,7 +102,7 @@ void PrintDebugFlag(const char *flagStr)
 	SERVER_PRINT(SharedVarArgs("mp_debug: unknown variable '%s'\n", flagStr));
 }
 
-void UTIL_SetDprintfFlags(const char *flagStr)
+void UTIL_SetDprintfFlags(const char* flagStr)
 {
 	if (!IsDeveloper())
 		return;
@@ -121,7 +121,7 @@ void UTIL_SetDprintfFlags(const char *flagStr)
 		PrintDebugFlag(flagStr);
 }
 
-NOXREF void UTIL_BotDPrintf(char *pszMsg, ...)
+NOXREF void UTIL_BotDPrintf(char* pszMsg, ...)
 {
 	if (!IsDeveloper())
 		return;
@@ -137,7 +137,7 @@ NOXREF void UTIL_BotDPrintf(char *pszMsg, ...)
 	}
 }
 
-void UTIL_CareerDPrintf(char *pszMsg, ...)
+void UTIL_CareerDPrintf(char* pszMsg, ...)
 {
 	if (!IsDeveloper())
 		return;
@@ -153,7 +153,7 @@ void UTIL_CareerDPrintf(char *pszMsg, ...)
 	}
 }
 
-NOXREF void UTIL_TutorDPrintf(char *pszMsg, ...)
+NOXREF void UTIL_TutorDPrintf(char* pszMsg, ...)
 {
 	if (!IsDeveloper())
 		return;
@@ -169,7 +169,7 @@ NOXREF void UTIL_TutorDPrintf(char *pszMsg, ...)
 	}
 }
 
-NOXREF void UTIL_StatsDPrintf(char *pszMsg, ...)
+NOXREF void UTIL_StatsDPrintf(char* pszMsg, ...)
 {
 	if (!IsDeveloper())
 		return;
@@ -185,7 +185,7 @@ NOXREF void UTIL_StatsDPrintf(char *pszMsg, ...)
 	}
 }
 
-NOXREF void UTIL_HostageDPrintf(char *pszMsg, ...)
+NOXREF void UTIL_HostageDPrintf(char* pszMsg, ...)
 {
 	if (!IsDeveloper())
 		return;

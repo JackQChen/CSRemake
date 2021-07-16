@@ -24,7 +24,7 @@ public:
 	long lineNumber;
 	bool warning;
 
-	virtual const char * what() const throw() {
+	virtual const char* what() const throw() {
 		return message.c_str();
 	}
 };
@@ -32,7 +32,7 @@ public:
 class Failure {
 
 public:
-	Failure (TestFailException &e, std::string testName) {
+	Failure(TestFailException& e, std::string testName) {
 		this->testName = testName;
 		this->message = e.message;
 		this->fileName = e.fileName;
@@ -40,7 +40,7 @@ public:
 		this->warning = e.warning;
 	}
 
-	Failure (std::string message, std::string testName) {
+	Failure(std::string message, std::string testName) {
 		this->testName = testName;
 		this->message = message;
 		this->fileName = "<unknown>";

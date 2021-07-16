@@ -8,7 +8,7 @@ TYPEDESCRIPTION CPathCorner::m_SaveData[] =
 LINK_ENTITY_TO_CLASS(path_corner, CPathCorner, CCSPathCorner)
 IMPLEMENT_SAVERESTORE(CPathCorner, CPointEntity)
 
-void CPathCorner::KeyValue(KeyValueData *pkvd)
+void CPathCorner::KeyValue(KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "wait"))
 	{
@@ -38,7 +38,7 @@ TYPEDESCRIPTION CPathTrack::m_SaveData[] =
 IMPLEMENT_SAVERESTORE(CPathTrack, CBaseEntity)
 LINK_ENTITY_TO_CLASS(path_track, CPathTrack, CCSPathTrack)
 
-void CPathTrack::KeyValue(KeyValueData *pkvd)
+void CPathTrack::KeyValue(KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "altpath"))
 	{
@@ -51,7 +51,7 @@ void CPathTrack::KeyValue(KeyValueData *pkvd)
 	}
 }
 
-void CPathTrack::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void CPathTrack::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	int on;
 
@@ -78,7 +78,7 @@ void CPathTrack::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE use
 
 void CPathTrack::Link()
 {
-	edict_t *pentTarget;
+	edict_t* pentTarget;
 
 	if (!FStringNull(pev->target))
 	{
@@ -134,7 +134,7 @@ void CPathTrack::Activate()
 	}
 }
 
-CPathTrack *CPathTrack::ValidPath(CPathTrack *ppath, int testFlag)
+CPathTrack* CPathTrack::ValidPath(CPathTrack* ppath, int testFlag)
 {
 	if (!ppath)
 		return nullptr;
@@ -145,7 +145,7 @@ CPathTrack *CPathTrack::ValidPath(CPathTrack *ppath, int testFlag)
 	return ppath;
 }
 
-void CPathTrack::Project(CPathTrack *pstart, CPathTrack *pend, Vector *origin, float dist)
+void CPathTrack::Project(CPathTrack* pstart, CPathTrack* pend, Vector* origin, float dist)
 {
 	if (pstart && pend)
 	{
@@ -156,7 +156,7 @@ void CPathTrack::Project(CPathTrack *pstart, CPathTrack *pend, Vector *origin, f
 	}
 }
 
-CPathTrack *CPathTrack::GetNext()
+CPathTrack* CPathTrack::GetNext()
 {
 	if (m_paltpath && (pev->spawnflags & SF_PATH_ALTERNATE) && !(pev->spawnflags & SF_PATH_ALTREVERSE))
 	{
@@ -166,7 +166,7 @@ CPathTrack *CPathTrack::GetNext()
 	return m_pnext;
 }
 
-CPathTrack *CPathTrack::GetPrevious()
+CPathTrack* CPathTrack::GetPrevious()
 {
 	if (m_paltpath && (pev->spawnflags & SF_PATH_ALTERNATE) && (pev->spawnflags & SF_PATH_ALTREVERSE))
 	{
@@ -176,7 +176,7 @@ CPathTrack *CPathTrack::GetPrevious()
 	return m_pprevious;
 }
 
-void CPathTrack::SetPrevious(CPathTrack *pprev)
+void CPathTrack::SetPrevious(CPathTrack* pprev)
 {
 	// Only set previous if this isn't my alternate path
 	if (pprev && !FStrEq(pprev->pev->targetname, m_altName))
@@ -186,9 +186,9 @@ void CPathTrack::SetPrevious(CPathTrack *pprev)
 }
 
 // Assumes this is ALWAYS enabled
-CPathTrack *CPathTrack::LookAhead(Vector *origin, float dist, int move)
+CPathTrack* CPathTrack::LookAhead(Vector* origin, float dist, int move)
 {
-	CPathTrack *pcurrent;
+	CPathTrack* pcurrent;
 	float originalDist = dist;
 
 	pcurrent = this;
@@ -294,12 +294,12 @@ CPathTrack *CPathTrack::LookAhead(Vector *origin, float dist, int move)
 }
 
 // Assumes this is ALWAYS enabled
-CPathTrack *CPathTrack::Nearest(Vector origin)
+CPathTrack* CPathTrack::Nearest(Vector origin)
 {
 	int deadCount;
 	float minDist, dist;
 	Vector delta;
-	CPathTrack *ppath, *pnearest;
+	CPathTrack* ppath, * pnearest;
 
 	delta = origin - pev->origin;
 	delta.z = 0;
@@ -333,7 +333,7 @@ CPathTrack *CPathTrack::Nearest(Vector origin)
 	return pnearest;
 }
 
-CPathTrack *CPathTrack::Instance(edict_t *pEdict)
+CPathTrack* CPathTrack::Instance(edict_t* pEdict)
 {
 	if (FClassnameIs(pEdict, "path_track"))
 	{

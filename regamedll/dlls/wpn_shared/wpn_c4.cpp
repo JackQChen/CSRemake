@@ -40,7 +40,7 @@ void CC4::Precache()
 	PRECACHE_SOUND("weapons/c4_click.wav");
 }
 
-int CC4::GetItemInfo(ItemInfo *p)
+int CC4::GetItemInfo(ItemInfo* p)
 {
 	p->pszName = STRING(pev->classname);
 	p->pszAmmo1 = "C4";
@@ -78,7 +78,7 @@ void CC4::Holster(int skiplocal)
 	m_pPlayer->m_flNextAttack = UTIL_WeaponTimeBase() + 0.5f;
 
 #ifdef REGAMEDLL_FIXES
-	if(m_bStartedArming)
+	if (m_bStartedArming)
 	{
 		m_pPlayer->SetProgressBarTime(0);
 	}
@@ -159,8 +159,8 @@ void CC4::PrimaryAttack()
 	{
 		if (bPlaceBomb)
 		{
-			CBaseEntity *pEntity = nullptr;
-			CBasePlayer *pTempPlayer = nullptr;
+			CBaseEntity* pEntity = nullptr;
+			CBasePlayer* pTempPlayer = nullptr;
 
 			if (m_fArmedTime <= gpGlobals->time)
 			{
@@ -180,21 +180,21 @@ void CC4::PrimaryAttack()
 #else
 				Vector vBombAngles = Vector(0, 0, 0);
 #endif
-				CGrenade *pBomb = CGrenade::ShootSatchelCharge(m_pPlayer->pev, m_pPlayer->pev->origin, vBombAngles);
+				CGrenade* pBomb = CGrenade::ShootSatchelCharge(m_pPlayer->pev, m_pPlayer->pev->origin, vBombAngles);
 
 				MESSAGE_BEGIN(MSG_SPEC, SVC_DIRECTOR);
-					WRITE_BYTE(9);
-					WRITE_BYTE(DRC_CMD_EVENT);
-					WRITE_SHORT(m_pPlayer->entindex());
-					WRITE_SHORT(0);
-					WRITE_LONG(DRC_FLAG_FACEPLAYER | 11);
+				WRITE_BYTE(9);
+				WRITE_BYTE(DRC_CMD_EVENT);
+				WRITE_SHORT(m_pPlayer->entindex());
+				WRITE_SHORT(0);
+				WRITE_LONG(DRC_FLAG_FACEPLAYER | 11);
 				MESSAGE_END();
 
 				MESSAGE_BEGIN(MSG_ALL, gmsgBombDrop);
-					WRITE_COORD(pBomb->pev->origin.x);
-					WRITE_COORD(pBomb->pev->origin.y);
-					WRITE_COORD(pBomb->pev->origin.z);
-					WRITE_BYTE(BOMB_FLAG_PLANTED);
+				WRITE_COORD(pBomb->pev->origin.x);
+				WRITE_COORD(pBomb->pev->origin.y);
+				WRITE_COORD(pBomb->pev->origin.z);
+				WRITE_BYTE(BOMB_FLAG_PLANTED);
 				MESSAGE_END();
 
 				UTIL_ClientPrintAll(HUD_PRINTCENTER, "#Bomb_Planted");
@@ -312,7 +312,7 @@ void CC4::WeaponIdle()
 	}
 }
 
-void CC4::KeyValue(KeyValueData *pkvd)
+void CC4::KeyValue(KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "detonatedelay"))
 	{
@@ -335,16 +335,16 @@ void CC4::KeyValue(KeyValueData *pkvd)
 	}
 }
 
-void CC4::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void CC4::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 #ifndef REGAMEDLL_FIXES
 	if (m_pPlayer)
 		return;
 
-	CBasePlayer *pPlayer = UTIL_PlayerByIndex(1);
+	CBasePlayer* pPlayer = UTIL_PlayerByIndex(1);
 	if (pPlayer)
 	{
-		edict_t *m_pentOldCurBombTarget = pPlayer->m_pentCurBombTarget;
+		edict_t* m_pentOldCurBombTarget = pPlayer->m_pentCurBombTarget;
 		pPlayer->m_pentCurBombTarget = nullptr;
 
 		if (pev->speed != 0 && CSGameRules())
@@ -356,7 +356,7 @@ void CC4::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, f
 
 		CGrenade::ShootSatchelCharge(pPlayer->pev, pev->origin, Vector(0, 0, 0));
 
-		CGrenade *pBomb = nullptr;
+		CGrenade* pBomb = nullptr;
 		while ((pBomb = UTIL_FindEntityByClassname(pBomb, "grenade")))
 		{
 			if (pBomb->m_bIsC4 && pBomb->m_flNextFreq == gpGlobals->time)

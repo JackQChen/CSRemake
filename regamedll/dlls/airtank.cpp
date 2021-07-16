@@ -36,7 +36,7 @@ void CAirtank::Precache()
 	PRECACHE_SOUND("doors/aliendoor3.wav");
 }
 
-void CAirtank::Killed(entvars_t *pevAttacker, int iGib)
+void CAirtank::Killed(entvars_t* pevAttacker, int iGib)
 {
 	pev->owner = ENT(pevAttacker);
 
@@ -51,7 +51,7 @@ void CAirtank::TankThink()
 	SUB_UseTargets(this, USE_TOGGLE, 0);
 }
 
-void CAirtank::TankTouch(CBaseEntity *pOther)
+void CAirtank::TankTouch(CBaseEntity* pOther)
 {
 	if (!pOther->IsPlayer())
 	{

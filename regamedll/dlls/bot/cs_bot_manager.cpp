@@ -28,7 +28,7 @@
 
 #include "precompiled.h"
 
-CBotManager *TheBots = nullptr;
+CBotManager* TheBots = nullptr;
 
 float CCSBotManager::m_flNextCVarCheck = 0.0f;
 bool CCSBotManager::m_isMapDataLoaded = false;
@@ -63,7 +63,7 @@ CCSBotManager::CCSBotManager()
 	// make sure default voice bank is first
 	TheBotProfiles->FindVoiceBankIndex("BotChatter.db");
 
-	const char *filename;
+	const char* filename;
 	if (IS_CAREER_MATCH())
 	{
 		filename = "MissionPacks/BotPackList.db";
@@ -75,20 +75,20 @@ CCSBotManager::CCSBotManager()
 
 	// read in the list of bot profile DBs
 	int dataLength;
-	char *dataPointer = (char *)LOAD_FILE_FOR_ME((char *)filename, &dataLength);
+	char* dataPointer = (char*)LOAD_FILE_FOR_ME((char*)filename, &dataLength);
 	if (!dataPointer)
 	{
 		TheBotProfiles->Init("BotProfile.db");
 	}
 	else
 	{
-		char *dataFile = SharedParse(dataPointer);
-		char *token;
+		char* dataFile = SharedParse(dataPointer);
+		char* token;
 
 		while (dataFile)
 		{
 			token = SharedGetToken();
-			char *clone = CloneString(token);
+			char* clone = CloneString(token);
 			TheBotProfiles->Init(clone);
 			delete[] clone;
 			dataFile = SharedParse(dataFile);
@@ -99,7 +99,7 @@ CCSBotManager::CCSBotManager()
 
 	// Now that we've parsed all the profiles, we have a list of the voice banks they're using.
 	// Go back and parse the custom voice speakables.
-	const BotProfileManager::VoiceBankList *pVoiceBanks = TheBotProfiles->GetVoiceBanks();
+	const BotProfileManager::VoiceBankList* pVoiceBanks = TheBotProfiles->GetVoiceBanks();
 	for (uint32 i = 1; i < pVoiceBanks->size(); i++)
 	{
 		TheBotPhrases->Initialize((*pVoiceBanks)[i], i);
@@ -151,14 +151,14 @@ void CCSBotManager::StartFrame()
 	{
 		for (int z = 0; z < m_zoneCount; z++)
 		{
-			Zone *zone = &m_zone[z];
+			Zone* zone = &m_zone[z];
 			UTIL_DrawBox(&zone->m_extent, 1, 255, 100, 0);
 		}
 	}
 }
 
 // Return true if the bot can use this weapon
-bool CCSBotManager::IsWeaponUseable(CBasePlayerItem *item) const
+bool CCSBotManager::IsWeaponUseable(CBasePlayerItem* item) const
 {
 	if (!item)
 	{
@@ -170,14 +170,14 @@ bool CCSBotManager::IsWeaponUseable(CBasePlayerItem *item) const
 
 	WeaponClassType weaponClass = WeaponIDToWeaponClass(item->m_iId);
 
-	if ((!AllowShotguns()          && weaponClass == WEAPONCLASS_SHOTGUN)
-		|| (!AllowMachineGuns()    && weaponClass == WEAPONCLASS_MACHINEGUN)
-		|| (!AllowRifles()         && weaponClass == WEAPONCLASS_RIFLE)
-		|| (!AllowSnipers()        && weaponClass == WEAPONCLASS_SNIPERRIFLE)
+	if ((!AllowShotguns() && weaponClass == WEAPONCLASS_SHOTGUN)
+		|| (!AllowMachineGuns() && weaponClass == WEAPONCLASS_MACHINEGUN)
+		|| (!AllowRifles() && weaponClass == WEAPONCLASS_RIFLE)
+		|| (!AllowSnipers() && weaponClass == WEAPONCLASS_SNIPERRIFLE)
 		|| (!AllowSubMachineGuns() && weaponClass == WEAPONCLASS_SUBMACHINEGUN)
 		|| (!AllowTacticalShield() && item->m_iId == WEAPON_SHIELDGUN)
-		|| (!AllowPistols()        && weaponClass == WEAPONCLASS_PISTOL)
-		|| (!AllowGrenades()       && weaponClass == WEAPONCLASS_GRENADE))
+		|| (!AllowPistols() && weaponClass == WEAPONCLASS_PISTOL)
+		|| (!AllowGrenades() && weaponClass == WEAPONCLASS_GRENADE))
 	{
 		return false;
 	}
@@ -189,14 +189,14 @@ bool CCSBotManager::IsWeaponUseable(ArmouryItemPack item) const
 {
 	WeaponClassType weaponClass = WeaponIDToWeaponClass(item);
 
-	if ((!AllowShotguns()          && weaponClass == WEAPONCLASS_SHOTGUN)
-		|| (!AllowMachineGuns()    && weaponClass == WEAPONCLASS_MACHINEGUN)
-		|| (!AllowRifles()         && weaponClass == WEAPONCLASS_RIFLE)
-		|| (!AllowSnipers()        && weaponClass == WEAPONCLASS_SNIPERRIFLE)
+	if ((!AllowShotguns() && weaponClass == WEAPONCLASS_SHOTGUN)
+		|| (!AllowMachineGuns() && weaponClass == WEAPONCLASS_MACHINEGUN)
+		|| (!AllowRifles() && weaponClass == WEAPONCLASS_RIFLE)
+		|| (!AllowSnipers() && weaponClass == WEAPONCLASS_SNIPERRIFLE)
 		|| (!AllowSubMachineGuns() && weaponClass == WEAPONCLASS_SUBMACHINEGUN)
 		|| (!AllowTacticalShield() && item == ARMOURY_SHIELD)
-		|| (!AllowPistols()        && weaponClass == WEAPONCLASS_PISTOL)
-		|| (!AllowGrenades()       && weaponClass == WEAPONCLASS_GRENADE))
+		|| (!AllowPistols() && weaponClass == WEAPONCLASS_PISTOL)
+		|| (!AllowGrenades() && weaponClass == WEAPONCLASS_GRENADE))
 	{
 		return false;
 	}
@@ -205,7 +205,7 @@ bool CCSBotManager::IsWeaponUseable(ArmouryItemPack item) const
 }
 
 // Return true if this player is on "defense"
-bool CCSBotManager::IsOnDefense(CBasePlayer *pPlayer) const
+bool CCSBotManager::IsOnDefense(CBasePlayer* pPlayer) const
 {
 	switch (GetScenario())
 	{
@@ -223,7 +223,7 @@ bool CCSBotManager::IsOnDefense(CBasePlayer *pPlayer) const
 }
 
 // Return true if this player is on "offense"
-bool CCSBotManager::IsOnOffense(CBasePlayer *pPlayer) const
+bool CCSBotManager::IsOnOffense(CBasePlayer* pPlayer) const
 {
 	return !IsOnDefense(pPlayer);
 }
@@ -252,9 +252,9 @@ void CCSBotManager::ServerActivate()
 	TheBotPhrases->OnMapChange();
 }
 
-void CCSBotManager::AddServerCommand(const char *cmd)
+void CCSBotManager::AddServerCommand(const char* cmd)
 {
-	ADD_SERVER_COMMAND((char *)cmd, Bot_ServerCommand);
+	ADD_SERVER_COMMAND((char*)cmd, Bot_ServerCommand);
 }
 
 void CCSBotManager::AddServerCommands()
@@ -317,14 +317,14 @@ void CCSBotManager::ServerDeactivate()
 	m_bServerActive = false;
 }
 
-void CCSBotManager::ClientDisconnect(CBasePlayer *pPlayer)
+void CCSBotManager::ClientDisconnect(CBasePlayer* pPlayer)
 {
 	if (!pPlayer || !pPlayer->IsBot())
 		return;
 
 	auto pevTemp = VARS(pPlayer->edict());
 
-	CCSBot *pBot = static_cast<CCSBot *>(pPlayer);
+	CCSBot* pBot = static_cast<CCSBot*>(pPlayer);
 	pBot->Disconnect();
 
 	if (!FStringNull(pPlayer->pev->classname))
@@ -334,7 +334,7 @@ void CCSBotManager::ClientDisconnect(CBasePlayer *pPlayer)
 
 	FREE_PRIVATE(pPlayer->edict());
 
-	pPlayer = GetClassPtr<CCSPlayer>((CBasePlayer *)pevTemp);
+	pPlayer = GetClassPtr<CCSPlayer>((CBasePlayer*)pevTemp);
 	AddEntityHashValue(pPlayer->pev, STRING(pPlayer->pev->classname), CLASSNAME);
 	pPlayer->pev->flags = FL_DORMANT;
 }
@@ -343,7 +343,7 @@ void PrintAllEntities()
 {
 	for (int i = 1; i < gpGlobals->maxEntities; i++)
 	{
-		edict_t *edict = INDEXENT(i);
+		edict_t* edict = INDEXENT(i);
 
 		if (!edict || FStringNull(edict->v.classname))
 			continue;
@@ -352,13 +352,13 @@ void PrintAllEntities()
 	}
 }
 
-void CCSBotManager::ServerCommand(const char *pcmd)
+void CCSBotManager::ServerCommand(const char* pcmd)
 {
 	if (!m_bServerActive || !AreBotsAllowed())
 		return;
 
 	char buffer[400];
-	const char *msg = CMD_ARGV(1);
+	const char* msg = CMD_ARGV(1);
 
 	if (FStrEq(pcmd, "bot_about"))
 	{
@@ -395,14 +395,14 @@ void CCSBotManager::ServerCommand(const char *pcmd)
 
 		for (int i = 1; i <= gpGlobals->maxClients; i++)
 		{
-			CBasePlayer *pPlayer = UTIL_PlayerByIndex(i);
+			CBasePlayer* pPlayer = UTIL_PlayerByIndex(i);
 			if (!pPlayer)
 				continue;
 
 			if (FNullEnt(pPlayer->pev))
 				continue;
 
-			const char *name = STRING(pPlayer->pev->netname);
+			const char* name = STRING(pPlayer->pev->netname);
 			if (FStrEq(name, ""))
 				continue;
 
@@ -429,14 +429,14 @@ void CCSBotManager::ServerCommand(const char *pcmd)
 
 		for (int i = 1; i <= gpGlobals->maxClients; i++)
 		{
-			CBasePlayer *pPlayer = UTIL_PlayerByIndex(i);
+			CBasePlayer* pPlayer = UTIL_PlayerByIndex(i);
 			if (!pPlayer)
 				continue;
 
 			if (FNullEnt(pPlayer->pev))
 				continue;
 
-			const char *name = STRING(pPlayer->pev->netname);
+			const char* name = STRING(pPlayer->pev->netname);
 
 			if (FStrEq(name, ""))
 				continue;
@@ -587,7 +587,7 @@ void CCSBotManager::ServerCommand(const char *pcmd)
 		{
 			// no arguments = list all available places
 			int i = 0;
-			const BotPhraseList *placeList = TheBotPhrases->GetPlaceList();
+			const BotPhraseList* placeList = TheBotPhrases->GetPlaceList();
 			for (auto phrase : *placeList)
 			{
 				if (phrase->GetID() == GetNavPlace())
@@ -604,8 +604,8 @@ void CCSBotManager::ServerCommand(const char *pcmd)
 		else
 		{
 			// single argument = set current place
-			const BotPhraseList *placeList = TheBotPhrases->GetPlaceList();
-			const BotPhrase *found = nullptr;
+			const BotPhraseList* placeList = TheBotPhrases->GetPlaceList();
+			const BotPhrase* found = nullptr;
 			bool isAmbiguous = false;
 			for (auto phrase : *placeList)
 			{
@@ -660,10 +660,10 @@ void CCSBotManager::ServerCommand(const char *pcmd)
 	else if (FStrEq(pcmd, "bot_goto_mark"))
 	{
 		// tell the first bot we find to go to our marked area
-		CNavArea *area = GetMarkedArea();
+		CNavArea* area = GetMarkedArea();
 		if (area)
 		{
-			CBaseEntity *pEntity = nullptr;
+			CBaseEntity* pEntity = nullptr;
 			while ((pEntity = UTIL_FindEntityByClassname(pEntity, "player")))
 			{
 				if (!pEntity->IsPlayer())
@@ -672,11 +672,11 @@ void CCSBotManager::ServerCommand(const char *pcmd)
 				if (pEntity->IsDormant())
 					continue;
 
-				CBasePlayer *playerOrBot = GetClassPtr<CCSPlayer>((CBasePlayer *)pEntity->pev);
+				CBasePlayer* playerOrBot = GetClassPtr<CCSPlayer>((CBasePlayer*)pEntity->pev);
 
 				if (playerOrBot->IsBot())
 				{
-					CCSBot *pBot = static_cast<CCSBot *>(playerOrBot);
+					CCSBot* pBot = static_cast<CCSBot*>(playerOrBot);
 					if (pBot)
 					{
 						pBot->MoveTo(&area->m_center, FASTEST_ROUTE);
@@ -744,7 +744,7 @@ void CCSBotManager::ServerCommand(const char *pcmd)
 	}
 }
 
-BOOL CCSBotManager::ClientCommand(CBasePlayer *pPlayer, const char *pcmd)
+BOOL CCSBotManager::ClientCommand(CBasePlayer* pPlayer, const char* pcmd)
 {
 	return FALSE;
 }
@@ -756,7 +756,7 @@ bool CCSBotManager::BotAddCommand(BotProfileTeamType team, bool isFromConsole)
 	if (m_isLearningMap)
 		return false;
 
-	const BotProfile *profile = nullptr;
+	const BotProfile* profile = nullptr;
 	if (!isFromConsole || CMD_ARGC() < 2)
 	{
 		// if team not specified, check cv_bot_join_team cvar for preference
@@ -862,8 +862,8 @@ void CCSBotManager::MaintainBotQuota()
 
 	// isRoundInProgress is true if the round has progressed far enough that new players will join as dead.
 	bool isRoundInProgress = CSGameRules()->IsGameStarted() &&
-							 !TheCSBots()->IsRoundOver() &&
-							 (CSGameRules()->GetRoundElapsedTime() >= CSGameRules()->GetRoundRespawnTime());
+		!TheCSBots()->IsRoundOver() &&
+		(CSGameRules()->GetRoundElapsedTime() >= CSGameRules()->GetRoundRespawnTime());
 
 #ifdef REGAMEDLL_ADD
 	if (FStrEq(cv_bot_quota_mode.string, "fill"))
@@ -1068,14 +1068,14 @@ void CCSBotManager::MonitorBotCVars()
 class CollectOverlappingAreas
 {
 public:
-	CollectOverlappingAreas(CCSBotManager::Zone *zone)
+	CollectOverlappingAreas(CCSBotManager::Zone* zone)
 	{
 		m_zone = zone;
 		zone->m_areaCount = 0;
 	}
-	bool operator()(CNavArea *area)
+	bool operator()(CNavArea* area)
 	{
-		const Extent *areaExtent = area->GetExtent();
+		const Extent* areaExtent = area->GetExtent();
 
 		if (areaExtent->hi.x >= m_zone->m_extent.lo.x && areaExtent->lo.x <= m_zone->m_extent.hi.x
 			&& areaExtent->hi.y >= m_zone->m_extent.lo.y && areaExtent->lo.y <= m_zone->m_extent.hi.y
@@ -1093,7 +1093,7 @@ public:
 	}
 
 private:
-	CCSBotManager::Zone *m_zone;
+	CCSBotManager::Zone* m_zone;
 };
 
 // Search the map entities to determine the game scenario and define important zones.
@@ -1116,7 +1116,7 @@ void CCSBotManager::ValidateMapData()
 	m_gameScenario = SCENARIO_DEATHMATCH;
 
 	// Search all entities in the map and set the game type and store all zones (bomb target, etc).
-	CBaseEntity *pEntity = nullptr;
+	CBaseEntity* pEntity = nullptr;
 	for (int i = 1; i < gpGlobals->maxEntities; i++)
 	{
 		pEntity = CBaseEntity::Instance(INDEXENT(i));
@@ -1215,7 +1215,7 @@ void CCSBotManager::ValidateMapData()
 	// Collect nav areas that overlap each zone
 	for (int i = 0; i < m_zoneCount; i++)
 	{
-		Zone *zone = &m_zone[i];
+		Zone* zone = &m_zone[i];
 
 		if (zone->m_isLegacy)
 		{
@@ -1244,7 +1244,7 @@ void CCSBotManager::ValidateMapData()
 	}
 }
 
-bool CCSBotManager::AddBot(const BotProfile *profile, BotProfileTeamType team)
+bool CCSBotManager::AddBot(const BotProfile* profile, BotProfileTeamType team)
 {
 	if (!AreBotsAllowed())
 		return false;
@@ -1282,7 +1282,7 @@ bool CCSBotManager::AddBot(const BotProfile *profile, BotProfileTeamType team)
 		return false;
 	}
 
-	CCSBot *pBot = CreateBot<CCSBot, CAPI_CSBot>(profile);
+	CCSBot* pBot = CreateBot<CCSBot, CAPI_CSBot>(profile);
 	if (!pBot)
 	{
 		return false;
@@ -1317,7 +1317,7 @@ bool CCSBotManager::AddBot(const BotProfile *profile, BotProfileTeamType team)
 }
 
 // Return the zone that contains the given position
-const CCSBotManager::Zone *CCSBotManager::GetZone(const Vector *pos) const
+const CCSBotManager::Zone* CCSBotManager::GetZone(const Vector* pos) const
 {
 	for (int z = 0; z < m_zoneCount; z++)
 	{
@@ -1331,9 +1331,9 @@ const CCSBotManager::Zone *CCSBotManager::GetZone(const Vector *pos) const
 }
 
 // Return the closest zone to the given position
-const CCSBotManager::Zone *CCSBotManager::GetClosestZone(const Vector *pos) const
+const CCSBotManager::Zone* CCSBotManager::GetClosestZone(const Vector* pos) const
 {
-	const Zone *close = nullptr;
+	const Zone* close = nullptr;
 	float closeRangeSq = 1e9f;
 
 	for (int z = 0; z < m_zoneCount; z++)
@@ -1351,7 +1351,7 @@ const CCSBotManager::Zone *CCSBotManager::GetClosestZone(const Vector *pos) cons
 }
 
 // Return a random position inside the given zone
-const Vector *CCSBotManager::GetRandomPositionInZone(const Zone *zone) const
+const Vector* CCSBotManager::GetRandomPositionInZone(const Zone* zone) const
 {
 	static Vector pos;
 
@@ -1362,7 +1362,7 @@ const Vector *CCSBotManager::GetRandomPositionInZone(const Zone *zone) const
 		return nullptr;
 
 	// pick a random overlapping area
-	CNavArea *area = GetRandomAreaInZone(zone);
+	CNavArea* area = GetRandomAreaInZone(zone);
 
 	// pick a location inside both the nav area and the zone
 	// TODO: Randomize this
@@ -1373,7 +1373,7 @@ const Vector *CCSBotManager::GetRandomPositionInZone(const Zone *zone) const
 	}
 	else
 	{
-		const Extent &areaExtent = *area->GetExtent();
+		const Extent& areaExtent = *area->GetExtent();
 		Extent overlap;
 		overlap.lo.x = Q_max(areaExtent.lo.x, zone->m_extent.lo.x);
 		overlap.lo.y = Q_max(areaExtent.lo.y, zone->m_extent.lo.y);
@@ -1389,7 +1389,7 @@ const Vector *CCSBotManager::GetRandomPositionInZone(const Zone *zone) const
 }
 
 // Return a random area inside the given zone
-CNavArea *CCSBotManager::GetRandomAreaInZone(const Zone *zone) const
+CNavArea* CCSBotManager::GetRandomAreaInZone(const Zone* zone) const
 {
 	// TODO: improvement is needed
 	if (!zone->m_areaCount)
@@ -1398,7 +1398,7 @@ CNavArea *CCSBotManager::GetRandomAreaInZone(const Zone *zone) const
 	return zone->m_area[RANDOM_LONG(0, zone->m_areaCount - 1)];
 }
 
-void CCSBotManager::OnEvent(GameEventType event, CBaseEntity *pEntity, CBaseEntity *pOther)
+void CCSBotManager::OnEvent(GameEventType event, CBaseEntity* pEntity, CBaseEntity* pOther)
 {
 	switch (event)
 	{
@@ -1408,7 +1408,7 @@ void CCSBotManager::OnEvent(GameEventType event, CBaseEntity *pEntity, CBaseEnti
 		break;
 
 	case EVENT_BOMB_DEFUSING:
-		m_bombDefuser = static_cast<CBasePlayer *>(pEntity);
+		m_bombDefuser = static_cast<CBasePlayer*>(pEntity);
 		break;
 
 	case EVENT_BOMB_DEFUSE_ABORTED:
@@ -1444,7 +1444,7 @@ float CCSBotManager::GetBombTimeLeft() const
 	return (CSGameRules()->m_iC4Timer - (gpGlobals->time - m_bombPlantTimestamp));
 }
 
-void CCSBotManager::SetLooseBomb(CBaseEntity *bomb)
+void CCSBotManager::SetLooseBomb(CBaseEntity* bomb)
 {
 	m_looseBomb = bomb;
 
@@ -1459,30 +1459,30 @@ void CCSBotManager::SetLooseBomb(CBaseEntity *bomb)
 }
 
 // Return true if player is important to scenario (VIP, bomb carrier, etc)
-bool CCSBotManager::IsImportantPlayer(CBasePlayer *pPlayer) const
+bool CCSBotManager::IsImportantPlayer(CBasePlayer* pPlayer) const
 {
 	switch (GetScenario())
 	{
-		case SCENARIO_DEFUSE_BOMB:
-		{
-			if (pPlayer->m_iTeam == TERRORIST && pPlayer->IsBombGuy())
-				return true;
+	case SCENARIO_DEFUSE_BOMB:
+	{
+		if (pPlayer->m_iTeam == TERRORIST && pPlayer->IsBombGuy())
+			return true;
 
-			// TODO: TEAM_CT's defusing the bomb are important
-			return false;
-		}
-		case SCENARIO_ESCORT_VIP:
-		{
-			if (pPlayer->m_iTeam == CT && pPlayer->m_bIsVIP)
-				return true;
+		// TODO: TEAM_CT's defusing the bomb are important
+		return false;
+	}
+	case SCENARIO_ESCORT_VIP:
+	{
+		if (pPlayer->m_iTeam == CT && pPlayer->m_bIsVIP)
+			return true;
 
-			return false;
-		}
-		case SCENARIO_RESCUE_HOSTAGES:
-		{
-			// TODO: TEAM_CT's escorting hostages are important
-			return false;
-		}
+		return false;
+	}
+	case SCENARIO_RESCUE_HOSTAGES:
+	{
+		// TODO: TEAM_CT's escorting hostages are important
+		return false;
+	}
 	}
 
 	// everyone is equally important in a deathmatch
@@ -1490,7 +1490,7 @@ bool CCSBotManager::IsImportantPlayer(CBasePlayer *pPlayer) const
 }
 
 // Return priority of player (0 = max pri)
-unsigned int CCSBotManager::GetPlayerPriority(CBasePlayer *pPlayer) const
+unsigned int CCSBotManager::GetPlayerPriority(CBasePlayer* pPlayer) const
 {
 	const unsigned int lowestPriority = 0xFFFFFFFF;
 
@@ -1501,7 +1501,7 @@ unsigned int CCSBotManager::GetPlayerPriority(CBasePlayer *pPlayer) const
 	if (!pPlayer->IsBot())
 		return 0;
 
-	CCSBot *pBot = static_cast<CCSBot *>(pPlayer);
+	CCSBot* pBot = static_cast<CCSBot*>(pPlayer);
 
 	// bots doing something important for the current scenario have high priority
 	switch (GetScenario())
@@ -1574,17 +1574,17 @@ void CCSBotManager::ResetRadioMessageTimestamps()
 	Q_memset(m_radioMsgTimestamp, 0, sizeof(m_radioMsgTimestamp));
 }
 
-void CCSBotManager::OnFreeEntPrivateData(CBaseEntity *pEntity)
+void CCSBotManager::OnFreeEntPrivateData(CBaseEntity* pEntity)
 {
 	for (int i = 1; i <= gpGlobals->maxClients; i++)
 	{
-		CBasePlayer *pPlayer = UTIL_PlayerByIndex(i);
+		CBasePlayer* pPlayer = UTIL_PlayerByIndex(i);
 		if (!pPlayer || pPlayer->IsDormant())
 			continue;
 
 		if (pPlayer->IsBot())
 		{
-			CCSBot *pBot = static_cast<CCSBot *>(pPlayer);
+			CCSBot* pBot = static_cast<CCSBot*>(pPlayer);
 			if (pBot->m_attacker == pEntity)
 				pBot->m_attacker = nullptr;
 

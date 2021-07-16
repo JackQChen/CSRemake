@@ -755,7 +755,7 @@ typedef struct
 
 typedef struct link_s
 {
-	struct link_s *prev, *next;
+	struct link_s* prev, * next;
 } link_t;
 
 typedef struct edict_s edict_t;
@@ -774,7 +774,7 @@ typedef struct
 	float fraction;           // time completed, 1.0 = didn't hit anything
 	vec3_t endpos;            // final position
 	plane_t plane;            // surface normal at impact
-	edict_t *ent;             // entity the surface is on
+	edict_t* ent;             // entity the surface is on
 	int hitgroup;             // 0 == generic, non zero is specific body part
 } trace_t;
 

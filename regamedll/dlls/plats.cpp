@@ -9,7 +9,7 @@ TYPEDESCRIPTION CBasePlatTrain::m_SaveData[] =
 
 IMPLEMENT_SAVERESTORE(CBasePlatTrain, CBaseToggle)
 
-void CBasePlatTrain::KeyValue(KeyValueData *pkvd)
+void CBasePlatTrain::KeyValue(KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "lip"))
 	{
@@ -240,9 +240,9 @@ void CFuncPlat::Setup()
 	}
 }
 
-void PlatSpawnInsideTrigger(entvars_t *pevPlatform)
+void PlatSpawnInsideTrigger(entvars_t* pevPlatform)
 {
-	GetClassPtr<CCSPlatTrigger>((CPlatTrigger *)nullptr)->SpawnInsideTrigger(GetClassPtr<CCSFuncPlat>((CFuncPlat *)pevPlatform));
+	GetClassPtr<CCSPlatTrigger>((CPlatTrigger*)nullptr)->SpawnInsideTrigger(GetClassPtr<CCSFuncPlat>((CFuncPlat*)pevPlatform));
 }
 
 void CFuncPlat::Precache()
@@ -277,7 +277,7 @@ void CFuncPlat::Spawn()
 }
 
 // Create a trigger entity for a platform.
-void CPlatTrigger::SpawnInsideTrigger(CFuncPlat *pPlatform)
+void CPlatTrigger::SpawnInsideTrigger(CFuncPlat* pPlatform)
 {
 	m_pPlatform = pPlatform;
 
@@ -307,10 +307,10 @@ void CPlatTrigger::SpawnInsideTrigger(CFuncPlat *pPlatform)
 	UTIL_SetSize(pev, vecTMin, vecTMax);
 }
 
-void CPlatTrigger::Touch(CBaseEntity *pOther)
+void CPlatTrigger::Touch(CBaseEntity* pOther)
 {
 	// Ignore touches by non-players
-	entvars_t *pevToucher = pOther->pev;
+	entvars_t* pevToucher = pOther->pev;
 
 	if (!FClassnameIs(pevToucher, "player"))
 	{
@@ -335,7 +335,7 @@ void CPlatTrigger::Touch(CBaseEntity *pOther)
 
 // Used by SUB_UseTargets, when a platform is the target of a button.
 // Start bringing platform down.
-void CFuncPlat::PlatUse(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void CFuncPlat::PlatUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	if (IsTogglePlat())
 	{
@@ -370,7 +370,7 @@ void CFuncPlat::GoDown()
 {
 	if (pev->noiseMovement)
 	{
-		EMIT_SOUND(ENT(pev), CHAN_STATIC, (char *)STRING(pev->noiseMovement), m_volume, ATTN_NORM);
+		EMIT_SOUND(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseMovement), m_volume, ATTN_NORM);
 	}
 
 	assert(m_toggle_state == TS_AT_TOP || m_toggle_state == TS_GOING_UP);
@@ -384,12 +384,12 @@ void CFuncPlat::HitBottom()
 {
 	if (pev->noiseMovement)
 	{
-		STOP_SOUND(ENT(pev), CHAN_STATIC, (char *)STRING(pev->noiseMovement));
+		STOP_SOUND(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseMovement));
 	}
 
 	if (pev->noiseStopMoving)
 	{
-		EMIT_SOUND(ENT(pev), CHAN_WEAPON, (char *)STRING(pev->noiseStopMoving), m_volume, ATTN_NORM);
+		EMIT_SOUND(ENT(pev), CHAN_WEAPON, (char*)STRING(pev->noiseStopMoving), m_volume, ATTN_NORM);
 	}
 
 	assert(m_toggle_state == TS_GOING_DOWN);
@@ -401,7 +401,7 @@ void CFuncPlat::GoUp()
 {
 	if (pev->noiseMovement)
 	{
-		EMIT_SOUND(ENT(pev), CHAN_STATIC, (char *)STRING(pev->noiseMovement), m_volume, ATTN_NORM);
+		EMIT_SOUND(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseMovement), m_volume, ATTN_NORM);
 	}
 
 	assert(m_toggle_state == TS_AT_BOTTOM || m_toggle_state == TS_GOING_DOWN);
@@ -415,12 +415,12 @@ void CFuncPlat::HitTop()
 {
 	if (pev->noiseMovement)
 	{
-		STOP_SOUND(ENT(pev), CHAN_STATIC, (char *)STRING(pev->noiseMovement));
+		STOP_SOUND(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseMovement));
 	}
 
 	if (pev->noiseStopMoving)
 	{
-		EMIT_SOUND(ENT(pev), CHAN_WEAPON, (char *)STRING(pev->noiseStopMoving), m_volume, ATTN_NORM);
+		EMIT_SOUND(ENT(pev), CHAN_WEAPON, (char*)STRING(pev->noiseStopMoving), m_volume, ATTN_NORM);
 	}
 
 	assert(m_toggle_state == TS_GOING_UP);
@@ -434,7 +434,7 @@ void CFuncPlat::HitTop()
 	}
 }
 
-void CFuncPlat::Blocked(CBaseEntity *pOther)
+void CFuncPlat::Blocked(CBaseEntity* pOther)
 {
 	ALERT(at_aiconsole, "%s Blocked by %s\n", STRING(pev->classname), STRING(pOther->pev->classname));
 
@@ -443,7 +443,7 @@ void CFuncPlat::Blocked(CBaseEntity *pOther)
 
 	if (pev->noiseMovement)
 	{
-		STOP_SOUND(ENT(pev), CHAN_STATIC, (char *)STRING(pev->noiseMovement));
+		STOP_SOUND(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseMovement));
 	}
 
 	// Send the platform back where it came from
@@ -525,7 +525,7 @@ void CFuncPlatRot::HitTop()
 	pev->angles = m_end;
 }
 
-void CFuncPlatRot::RotMove(Vector &destAngle, float time)
+void CFuncPlatRot::RotMove(Vector& destAngle, float time)
 {
 	// set destdelta to the vector needed to move
 	Vector vecDestDelta = destAngle - pev->angles;
@@ -552,7 +552,7 @@ TYPEDESCRIPTION CFuncTrain::m_SaveData[] =
 LINK_ENTITY_TO_CLASS(func_train, CFuncTrain, CCSFuncTrain)
 IMPLEMENT_SAVERESTORE(CFuncTrain, CBasePlatTrain)
 
-void CFuncTrain::KeyValue(KeyValueData *pkvd)
+void CFuncTrain::KeyValue(KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "sounds"))
 	{
@@ -565,7 +565,7 @@ void CFuncTrain::KeyValue(KeyValueData *pkvd)
 	}
 }
 
-void CFuncTrain::Blocked(CBaseEntity *pOther)
+void CFuncTrain::Blocked(CBaseEntity* pOther)
 {
 	if (gpGlobals->time < m_flActivateFinished)
 		return;
@@ -574,7 +574,7 @@ void CFuncTrain::Blocked(CBaseEntity *pOther)
 	pOther->TakeDamage(pev, pev, pev->dmg, DMG_CRUSH);
 }
 
-void CFuncTrain::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void CFuncTrain::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	if (pev->spawnflags & SF_TRAIN_WAIT_RETRIGGER)
 	{
@@ -595,7 +595,7 @@ void CFuncTrain::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE use
 		pev->velocity = g_vecZero;
 		if (pev->noiseStopMoving)
 		{
-			EMIT_SOUND(ENT(pev), CHAN_VOICE, (char *)STRING(pev->noiseStopMoving), m_volume, ATTN_NORM);
+			EMIT_SOUND(ENT(pev), CHAN_VOICE, (char*)STRING(pev->noiseStopMoving), m_volume, ATTN_NORM);
 		}
 	}
 }
@@ -622,11 +622,11 @@ void CFuncTrain::Wait()
 			// clear the sound channel.
 			if (pev->noiseMovement)
 			{
-				STOP_SOUND(edict(), CHAN_STATIC, (char *)STRING(pev->noiseMovement));
+				STOP_SOUND(edict(), CHAN_STATIC, (char*)STRING(pev->noiseMovement));
 			}
 			if (pev->noiseStopMoving)
 			{
-				EMIT_SOUND(ENT(pev), CHAN_VOICE, (char *)STRING(pev->noiseStopMoving), m_volume, ATTN_NORM);
+				EMIT_SOUND(ENT(pev), CHAN_VOICE, (char*)STRING(pev->noiseStopMoving), m_volume, ATTN_NORM);
 			}
 
 			pev->nextthink = 0;
@@ -640,11 +640,11 @@ void CFuncTrain::Wait()
 		pev->nextthink = pev->ltime + m_flWait;
 		if (pev->noiseMovement)
 		{
-			STOP_SOUND(edict(), CHAN_STATIC, (char *)STRING(pev->noiseMovement));
+			STOP_SOUND(edict(), CHAN_STATIC, (char*)STRING(pev->noiseMovement));
 		}
 		if (pev->noiseStopMoving)
 		{
-			EMIT_SOUND(ENT(pev), CHAN_VOICE, (char *)STRING(pev->noiseStopMoving), m_volume, ATTN_NORM);
+			EMIT_SOUND(ENT(pev), CHAN_VOICE, (char*)STRING(pev->noiseStopMoving), m_volume, ATTN_NORM);
 		}
 		SetThink(&CFuncTrain::Next);
 	}
@@ -658,7 +658,7 @@ void CFuncTrain::Wait()
 // Train next - path corner needs to change to next target
 void CFuncTrain::Next()
 {
-	CBaseEntity *pTarg;
+	CBaseEntity* pTarg;
 
 	// now find our next target
 	pTarg = GetNextTarget();
@@ -667,13 +667,13 @@ void CFuncTrain::Next()
 	{
 		if (pev->noiseMovement)
 		{
-			STOP_SOUND(edict(), CHAN_STATIC, (char *)STRING(pev->noiseMovement));
+			STOP_SOUND(edict(), CHAN_STATIC, (char*)STRING(pev->noiseMovement));
 		}
 
 		// Play stop sound
 		if (pev->noiseStopMoving)
 		{
-			EMIT_SOUND(ENT(pev), CHAN_VOICE, (char *)STRING(pev->noiseStopMoving), m_volume, ATTN_NORM);
+			EMIT_SOUND(ENT(pev), CHAN_VOICE, (char*)STRING(pev->noiseStopMoving), m_volume, ATTN_NORM);
 		}
 
 		return;
@@ -715,11 +715,11 @@ void CFuncTrain::Next()
 		// this is not a hack or temporary fix, this is how things should be. (sjb).
 		if (pev->noiseMovement)
 		{
-			STOP_SOUND(edict(), CHAN_STATIC, (char *)STRING(pev->noiseMovement));
+			STOP_SOUND(edict(), CHAN_STATIC, (char*)STRING(pev->noiseMovement));
 		}
 		if (pev->noiseMovement)
 		{
-			EMIT_SOUND(ENT(pev), CHAN_STATIC, (char *)STRING(pev->noiseMovement), m_volume, ATTN_NORM);
+			EMIT_SOUND(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseMovement), m_volume, ATTN_NORM);
 		}
 
 		pev->effects &= ~EF_NOINTERP;
@@ -734,7 +734,7 @@ void CFuncTrain::Activate()
 	if (!m_activated)
 	{
 		m_activated = TRUE;
-		entvars_t *pevTarg = VARS(FIND_ENTITY_BY_TARGETNAME(nullptr, STRING(pev->target)));
+		entvars_t* pevTarg = VARS(FIND_ENTITY_BY_TARGETNAME(nullptr, STRING(pev->target)));
 
 		pev->target = pevTarg->target;
 
@@ -840,11 +840,11 @@ void CFuncTrain::Restart()
 
 	if (pev->noiseMovement)
 	{
-		STOP_SOUND(edict(), CHAN_STATIC, (char *)STRING(pev->noiseMovement));
+		STOP_SOUND(edict(), CHAN_STATIC, (char*)STRING(pev->noiseMovement));
 	}
 	if (pev->noiseStopMoving)
 	{
-		EMIT_SOUND(ENT(pev), CHAN_VOICE, (char *)STRING(pev->noiseStopMoving), m_volume, ATTN_NORM);
+		EMIT_SOUND(ENT(pev), CHAN_VOICE, (char*)STRING(pev->noiseStopMoving), m_volume, ATTN_NORM);
 	}
 
 	Activate();
@@ -858,7 +858,7 @@ void CFuncTrain::Precache()
 
 void CFuncTrain::OverrideReset()
 {
-	CBaseEntity *pTarg;
+	CBaseEntity* pTarg;
 
 	// Are we moving?
 	if (pev->velocity != g_vecZero && pev->nextthink != 0)
@@ -900,7 +900,7 @@ TYPEDESCRIPTION CFuncTrackTrain::m_SaveData[] =
 IMPLEMENT_SAVERESTORE(CFuncTrackTrain, CBaseEntity)
 LINK_ENTITY_TO_CLASS(func_tracktrain, CFuncTrackTrain, CCSFuncTrackTrain)
 
-void CFuncTrackTrain::KeyValue(KeyValueData *pkvd)
+void CFuncTrackTrain::KeyValue(KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "wheels"))
 	{
@@ -951,9 +951,9 @@ void CFuncTrackTrain::NextThink(float thinkTime, BOOL alwaysThink)
 	pev->nextthink = thinkTime;
 }
 
-void CFuncTrackTrain::Blocked(CBaseEntity *pOther)
+void CFuncTrackTrain::Blocked(CBaseEntity* pOther)
 {
-	entvars_t *pevOther = pOther->pev;
+	entvars_t* pevOther = pOther->pev;
 
 	// Blocker is on-ground on the train
 	if ((pevOther->flags & FL_ONGROUND) && VARS(pevOther->groundentity) == pev)
@@ -986,7 +986,7 @@ void CFuncTrackTrain::Blocked(CBaseEntity *pOther)
 #endif
 }
 
-void CFuncTrackTrain::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void CFuncTrackTrain::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	if (useType != USE_SET)
 	{
@@ -1039,7 +1039,7 @@ void CFuncTrackTrain::StopSound()
 
 		us_encode = us_sound;
 
-		PLAYBACK_EVENT_FULL(FEV_RELIABLE | FEV_UPDATE, edict(), m_usAdjustPitch, 0.0, (float *)&g_vecZero, (float *)&g_vecZero, 0.0, 0.0, us_encode, 0, 1, 0);
+		PLAYBACK_EVENT_FULL(FEV_RELIABLE | FEV_UPDATE, edict(), m_usAdjustPitch, 0.0, (float*)&g_vecZero, (float*)&g_vecZero, 0.0, 0.0, us_encode, 0, 1, 0);
 		EMIT_SOUND_DYN(ENT(pev), CHAN_ITEM, "plats/ttrain_brake1.wav", m_flVolume, ATTN_NORM, 0, 100);
 	}
 
@@ -1061,7 +1061,7 @@ void CFuncTrackTrain::UpdateSound()
 	{
 		// play startup sound for train
 		EMIT_SOUND_DYN(ENT(pev), CHAN_ITEM, "plats/ttrain_start1.wav", m_flVolume, ATTN_NORM, 0, 100);
-		EMIT_SOUND_DYN(ENT(pev), CHAN_STATIC, (char *)STRING(pev->noise), m_flVolume, ATTN_NORM, 0, int(flpitch));
+		EMIT_SOUND_DYN(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noise), m_flVolume, ATTN_NORM, 0, int(flpitch));
 		m_soundPlaying = 1;
 	}
 	else
@@ -1075,13 +1075,13 @@ void CFuncTrackTrain::UpdateSound()
 		// 15 bits total
 
 		unsigned short us_encode;
-		unsigned short us_sound  = ((unsigned short)(m_sounds) & 0x0007) << 12;
-		unsigned short us_pitch  = ((unsigned short)(flpitch / 10.0) & 0x003f) << 6;
+		unsigned short us_sound = ((unsigned short)(m_sounds) & 0x0007) << 12;
+		unsigned short us_pitch = ((unsigned short)(flpitch / 10.0) & 0x003f) << 6;
 		unsigned short us_volume = ((unsigned short)(m_flVolume * 40.0) & 0x003f);
 
 		us_encode = us_sound | us_pitch | us_volume;
 
-		PLAYBACK_EVENT_FULL(FEV_UPDATE, edict(), m_usAdjustPitch, 0.0, (float *)&g_vecZero, (float *)&g_vecZero, 0.0, 0.0, us_encode, 0, 0, 0);
+		PLAYBACK_EVENT_FULL(FEV_UPDATE, edict(), m_usAdjustPitch, 0.0, (float*)&g_vecZero, (float*)&g_vecZero, 0.0, 0.0, us_encode, 0, 0, 0);
 	}
 }
 
@@ -1108,7 +1108,7 @@ void CFuncTrackTrain::Next()
 	Vector nextPos = pev->origin;
 
 	nextPos.z -= m_height;
-	CPathTrack *pnext = m_ppath->LookAhead(&nextPos, pev->speed * 0.1, 1);
+	CPathTrack* pnext = m_ppath->LookAhead(&nextPos, pev->speed * 0.1, 1);
 	nextPos.z += m_height;
 
 #ifndef PLAY_GAMEDLL
@@ -1182,7 +1182,7 @@ void CFuncTrackTrain::Next()
 	{
 		if (pnext != m_ppath)
 		{
-			CPathTrack *pFire;
+			CPathTrack* pFire;
 			if (pev->speed >= 0)
 				pFire = pnext;
 			else
@@ -1252,7 +1252,7 @@ void CFuncTrackTrain::Next()
 void CFuncTrackTrain::DeadEnd()
 {
 	// Fire the dead-end target if there is one
-	CPathTrack *pTrack, *pNext;
+	CPathTrack* pTrack, * pNext;
 
 	pTrack = m_ppath;
 
@@ -1272,8 +1272,7 @@ void CFuncTrackTrain::DeadEnd()
 				{
 					pTrack = pNext;
 				}
-			}
-			while (pNext);
+			} while (pNext);
 		}
 		else
 		{
@@ -1284,8 +1283,7 @@ void CFuncTrackTrain::DeadEnd()
 				{
 					pTrack = pNext;
 				}
-			}
-			while (pNext);
+			} while (pNext);
 		}
 	}
 
@@ -1305,7 +1303,7 @@ void CFuncTrackTrain::DeadEnd()
 		ALERT(at_aiconsole, "\n");
 }
 
-void CFuncTrackTrain::SetControls(entvars_t *pevControls)
+void CFuncTrackTrain::SetControls(entvars_t* pevControls)
 {
 	Vector offset = pevControls->origin - pev->oldorigin;
 
@@ -1313,7 +1311,7 @@ void CFuncTrackTrain::SetControls(entvars_t *pevControls)
 	m_controlMaxs = pevControls->maxs + offset;
 }
 
-BOOL CFuncTrackTrain::OnControls(entvars_t *pevTest)
+BOOL CFuncTrackTrain::OnControls(entvars_t* pevTest)
 {
 	Vector offset = pevTest->origin - pev->origin;
 
@@ -1350,7 +1348,7 @@ void CFuncTrackTrain::Find()
 		return;
 	}
 
-	entvars_t *pevTarget = m_ppath->pev;
+	entvars_t* pevTarget = m_ppath->pev;
 	if (!FClassnameIs(pevTarget, "path_track"))
 	{
 		ALERT(at_error, "func_track_train must be on a path of path_track\n");
@@ -1386,8 +1384,8 @@ void CFuncTrackTrain::Find()
 
 void CFuncTrackTrain::NearestPath()
 {
-	CPathTrack *pTrack = nullptr;
-	CPathTrack *pNearest = nullptr;
+	CPathTrack* pTrack = nullptr;
+	CPathTrack* pNearest = nullptr;
 	real_t dist;
 	float closest = 1024.0f;
 
@@ -1441,7 +1439,7 @@ void CFuncTrackTrain::OverrideReset()
 	SetThink(&CFuncTrackTrain::NearestPath);
 }
 
-CFuncTrackTrain *CFuncTrackTrain::Instance(edict_t *pEdict)
+CFuncTrackTrain* CFuncTrackTrain::Instance(edict_t* pEdict)
 {
 	if (FClassnameIs(pEdict, "func_tracktrain"))
 	{
@@ -1547,7 +1545,7 @@ LINK_ENTITY_TO_CLASS(func_traincontrols, CFuncTrainControls, CCSFuncTrainControl
 
 void CFuncTrainControls::Find()
 {
-	CFuncTrackTrain *pTrain = nullptr;
+	CFuncTrackTrain* pTrain = nullptr;
 	while ((pTrain = UTIL_FindEntityByTargetname(pTrain, pev->target)))
 	{
 		if (FClassnameIs(pTrain->pev, "func_tracktrain"))
@@ -1633,15 +1631,15 @@ void CFuncTrackChange::Precache()
 }
 
 // UNDONE: Filter touches before re-evaluating the train.
-void CFuncTrackChange::Touch(CBaseEntity *pOther)
+void CFuncTrackChange::Touch(CBaseEntity* pOther)
 {
 #if 0
 	TRAIN_CODE code;
-	entvars_t *pevToucher = pOther->pev;
+	entvars_t* pevToucher = pOther->pev;
 #endif
 }
 
-void CFuncTrackChange::KeyValue(KeyValueData *pkvd)
+void CFuncTrackChange::KeyValue(KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "train"))
 	{
@@ -1674,7 +1672,7 @@ void CFuncTrackChange::OverrideReset()
 void CFuncTrackChange::Find()
 {
 	// Find track entities
-	edict_t *pTarget = FIND_ENTITY_BY_TARGETNAME(nullptr, STRING(m_trackTopName));
+	edict_t* pTarget = FIND_ENTITY_BY_TARGETNAME(nullptr, STRING(m_trackTopName));
 	if (FNullEnt(pTarget))
 	{
 		ALERT(at_error, "Can't find top track for track change! %s\n", STRING(m_trackTopName));
@@ -1718,7 +1716,7 @@ void CFuncTrackChange::Find()
 	return;
 }
 
-TRAIN_CODE CFuncTrackChange::EvaluateTrain(CPathTrack *pcurrent)
+TRAIN_CODE CFuncTrackChange::EvaluateTrain(CPathTrack* pcurrent)
 {
 	// Go ahead and work, we don't have anything to switch, so just be an elevator
 	if (!pcurrent || !m_train)
@@ -1748,7 +1746,7 @@ TRAIN_CODE CFuncTrackChange::EvaluateTrain(CPathTrack *pcurrent)
 
 }
 
-void CFuncTrackChange::UpdateTrain(Vector &dest)
+void CFuncTrackChange::UpdateTrain(Vector& dest)
 {
 	real_t time = (pev->nextthink - pev->ltime);
 
@@ -1858,7 +1856,7 @@ void CFuncTrackChange::UpdateAutoTargets(int toggleState)
 		m_trackBottom->pev->spawnflags |= SF_PATH_DISABLED;
 }
 
-void CFuncTrackChange::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void CFuncTrackChange::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	if (m_toggle_state != TS_AT_TOP && m_toggle_state != TS_AT_BOTTOM)
 		return;
@@ -1934,7 +1932,7 @@ LINK_ENTITY_TO_CLASS(func_trackautochange, CFuncTrackAuto, CCSFuncTrackAuto)
 // Auto track change
 void CFuncTrackAuto::UpdateAutoTargets(int toggleState)
 {
-	CPathTrack *pTarget, *pNextTarget;
+	CPathTrack* pTarget, * pNextTarget;
 
 	if (!m_trackTop || !m_trackBottom)
 		return;
@@ -1966,9 +1964,9 @@ void CFuncTrackAuto::UpdateAutoTargets(int toggleState)
 	}
 }
 
-void CFuncTrackAuto::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void CFuncTrackAuto::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
-	CPathTrack *pTarget;
+	CPathTrack* pTarget;
 
 	if (!UseEnabled())
 		return;
@@ -2057,7 +2055,7 @@ void CGunTarget::Spawn()
 
 void CGunTarget::Activate()
 {
-	CBaseEntity *pTarg;
+	CBaseEntity* pTarg;
 
 	// now find our next target
 	pTarg = GetNextTarget();
@@ -2079,7 +2077,7 @@ void CGunTarget::Next()
 	SetThink(nullptr);
 
 	m_hTargetEnt = GetNextTarget();
-	CBaseEntity *pTarget = m_hTargetEnt;
+	CBaseEntity* pTarget = m_hTargetEnt;
 
 	if (!pTarget)
 	{
@@ -2093,7 +2091,7 @@ void CGunTarget::Next()
 
 void CGunTarget::Wait()
 {
-	CBaseEntity *pTarget = m_hTargetEnt;
+	CBaseEntity* pTarget = m_hTargetEnt;
 
 	if (!pTarget)
 	{
@@ -2135,7 +2133,7 @@ void CGunTarget::Stop()
 	pev->takedamage = DAMAGE_NO;
 }
 
-BOOL CGunTarget::TakeDamage(entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType)
+BOOL CGunTarget::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
 {
 	if (pev->health > 0)
 	{
@@ -2156,7 +2154,7 @@ BOOL CGunTarget::TakeDamage(entvars_t *pevInflictor, entvars_t *pevAttacker, flo
 	return FALSE;
 }
 
-void CGunTarget::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void CGunTarget::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	if (!ShouldToggle(useType, m_on))
 		return;

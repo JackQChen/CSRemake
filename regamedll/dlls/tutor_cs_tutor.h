@@ -38,18 +38,18 @@ enum TutorMessageClass
 
 enum TutorMessageType
 {
-	TUTORMESSAGETYPE_DEFAULT      = BIT(0), // icon info  | color green
+	TUTORMESSAGETYPE_DEFAULT = BIT(0), // icon info  | color green
 	TUTORMESSAGETYPE_FRIEND_DEATH = BIT(1), // icon skull | color red
-	TUTORMESSAGETYPE_ENEMY_DEATH  = BIT(2), // icon skull | color blue
-	TUTORMESSAGETYPE_SCENARIO     = BIT(3), // icon info  | color yellow
-	TUTORMESSAGETYPE_BUY          = BIT(4), // icon info  | color green
-	TUTORMESSAGETYPE_CAREER       = BIT(5), // icon info  | color green
-	TUTORMESSAGETYPE_HINT         = BIT(6), // icon info  | color green
-	TUTORMESSAGETYPE_INGAME_HINT  = BIT(7), // icon info  | color green
-	TUTORMESSAGETYPE_END_GAME     = BIT(8), // icon info  | color yellow
+	TUTORMESSAGETYPE_ENEMY_DEATH = BIT(2), // icon skull | color blue
+	TUTORMESSAGETYPE_SCENARIO = BIT(3), // icon info  | color yellow
+	TUTORMESSAGETYPE_BUY = BIT(4), // icon info  | color green
+	TUTORMESSAGETYPE_CAREER = BIT(5), // icon info  | color green
+	TUTORMESSAGETYPE_HINT = BIT(6), // icon info  | color green
+	TUTORMESSAGETYPE_INGAME_HINT = BIT(7), // icon info  | color green
+	TUTORMESSAGETYPE_END_GAME = BIT(8), // icon info  | color yellow
 
 	TUTORMESSAGETYPE_LAST,
-	TUTORMESSAGETYPE_ALL          = (TUTORMESSAGETYPE_DEFAULT | TUTORMESSAGETYPE_FRIEND_DEATH | TUTORMESSAGETYPE_ENEMY_DEATH | TUTORMESSAGETYPE_SCENARIO | TUTORMESSAGETYPE_BUY | TUTORMESSAGETYPE_CAREER | TUTORMESSAGETYPE_HINT | TUTORMESSAGETYPE_INGAME_HINT | TUTORMESSAGETYPE_END_GAME)
+	TUTORMESSAGETYPE_ALL = (TUTORMESSAGETYPE_DEFAULT | TUTORMESSAGETYPE_FRIEND_DEATH | TUTORMESSAGETYPE_ENEMY_DEATH | TUTORMESSAGETYPE_SCENARIO | TUTORMESSAGETYPE_BUY | TUTORMESSAGETYPE_CAREER | TUTORMESSAGETYPE_HINT | TUTORMESSAGETYPE_INGAME_HINT | TUTORMESSAGETYPE_END_GAME)
 };
 
 enum TutorMessageInterruptFlag
@@ -67,7 +67,7 @@ enum TutorMessageKeepOldType
 
 struct TutorMessage
 {
-	char *m_text;
+	char* m_text;
 	unsigned char m_priority;
 	unsigned char m_duration;
 	TutorMessageKeepOldType m_keepOld;
@@ -86,8 +86,8 @@ struct TutorMessage
 
 struct TutorMessageEventParam
 {
-	char *m_data;
-	TutorMessageEventParam *m_next;
+	char* m_data;
+	TutorMessageEventParam* m_next;
 };
 
 enum TutorMessageID
@@ -231,8 +231,8 @@ enum TutorMessageID
 	HINT_51,
 	HINT_52,
 	HINT_53,
-	HINT_BOMB_START	= 139,
-	HINT_60	= 139,
+	HINT_BOMB_START = 139,
+	HINT_60 = 139,
 	HINT_61 = 140,
 	HINT_BOMB_END = 140,
 	HINT_HOSTAGE_START = 141,
@@ -249,7 +249,7 @@ enum TutorMessageID
 	TUTOR_NUM_MESSAGES
 };
 
-typedef std::map<std::string, TutorMessage *> TutorMessageMap;
+typedef std::map<std::string, TutorMessage*> TutorMessageMap;
 typedef TutorMessageMap::iterator TutorMessageMapIter;
 
 struct ClientCorpseStruct
@@ -258,10 +258,10 @@ struct ClientCorpseStruct
 	int m_team;
 };
 
-typedef std::vector<ClientCorpseStruct *> ClientCorpseList;
+typedef std::vector<ClientCorpseStruct*> ClientCorpseList;
 typedef ClientCorpseList::iterator ClientCorpseListIter;
 
-class CCSTutor: public CBaseTutor
+class CCSTutor : public CBaseTutor
 {
 public:
 	CCSTutor();
@@ -269,102 +269,102 @@ public:
 	struct PlayerDeathStruct
 	{
 		bool m_hasBeenShown;
-		TutorMessageEvent *m_event;
+		TutorMessageEvent* m_event;
 	};
 
 	virtual ~CCSTutor();
 	virtual void TutorThink(float time);
 	virtual void PurgeMessages();
-	virtual void CallEventHandler(GameEventType event, CBaseEntity *pEntity, CBaseEntity *pOther);
-	virtual void ShowTutorMessage(TutorMessageEvent *event);
+	virtual void CallEventHandler(GameEventType event, CBaseEntity* pEntity, CBaseEntity* pOther);
+	virtual void ShowTutorMessage(TutorMessageEvent* event);
 	virtual void HandleShotFired(Vector source, Vector target);
-	virtual TutorMessage *GetTutorMessageDefinition(int messageID);
+	virtual TutorMessage* GetTutorMessageDefinition(int messageID);
 
-	void CreateAndAddEventToList(TutorMessageID mid, CBaseEntity *pEntity = nullptr, CBaseEntity *pOther = nullptr);
-	TutorMessageEvent *CreateTutorMessageEvent(TutorMessageID mid, CBaseEntity *pEntity = nullptr, CBaseEntity *pOther = nullptr);
-	void AddToEventList(TutorMessageEvent *event);
-	void DeleteEventFromEventList(TutorMessageEvent *event);
+	void CreateAndAddEventToList(TutorMessageID mid, CBaseEntity* pEntity = nullptr, CBaseEntity* pOther = nullptr);
+	TutorMessageEvent* CreateTutorMessageEvent(TutorMessageID mid, CBaseEntity* pEntity = nullptr, CBaseEntity* pOther = nullptr);
+	void AddToEventList(TutorMessageEvent* event);
+	void DeleteEventFromEventList(TutorMessageEvent* event);
 	void ClearEventList();
 	void ClearCurrentEvent(bool closeWindow = true, bool processDeathsForEvent = true);
-	void DeleteEvent(TutorMessageEvent *event);
-	bool ShouldShowMessageEvent(TutorMessageEvent *event, float time);
+	void DeleteEvent(TutorMessageEvent* event);
+	bool ShouldShowMessageEvent(TutorMessageEvent* event, float time);
 	bool ShouldUpdateCurrentMessage(TutorMessageID messageID);
 	void ComputeDisplayTimesForMessage();
-	void UpdateCurrentMessage(TutorMessageEvent *event);
+	void UpdateCurrentMessage(TutorMessageEvent* event);
 	void ConstructMessageAndDisplay();
-	void LookupHotKey(TutorMessageID mid, int paramNum, wchar_t *buf, int buflen);
+	void LookupHotKey(TutorMessageID mid, int paramNum, wchar_t* buf, int buflen);
 	void CheckForWindowClose(float time);
 	void CheckForContentUpdate();
 	bool HasCurrentWindowBeenActiveLongEnough(float time);
 	void CheckForInterruptingMessageEvent(float time);
 	void CheckForInactiveEvents(float time);
 	void CancelEvent(TutorMessageID mid);
-	void ProcessShownDeathsForEvent(TutorMessageEvent *event);
-	void TransferDeathEvents(TutorMessageEvent *oldEvent, TutorMessageEvent *newEvent);
-	TutorMessageEvent *GetTutorMessageUpdateEvent();
-	bool GetDuplicateMessagesFromEventList(TutorMessageEvent *&event1, TutorMessageEvent *&event2);
+	void ProcessShownDeathsForEvent(TutorMessageEvent* event);
+	void TransferDeathEvents(TutorMessageEvent* oldEvent, TutorMessageEvent* newEvent);
+	TutorMessageEvent* GetTutorMessageUpdateEvent();
+	bool GetDuplicateMessagesFromEventList(TutorMessageEvent*& event1, TutorMessageEvent*& event2);
 	bool IsBombMap();
 	bool IsHostageMap();
 
 public:
-	void HandleWeaponFired(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleWeaponFiredOnEmpty(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleWeaponReloaded(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandlePlayerDied(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandlePlayerSpawned(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleClientCorpseSpawned(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandlePlayerTookDamage(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandlePlayerBlindedByFlashbang(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleBuyTimeStart(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandlePlayerLeftBuyZone(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleBombPlanted(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleRoundStart(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleBombDefused(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleBombExploded(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleHostageUsed(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleHostageRescued(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleHostageDamaged(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleHostageKilled(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleAllHostagesRescued(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleBeingShotAt(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleRoundDraw(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleCTWin(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleTWin(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleDeathCameraStart(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleBombDefusing(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleRadioCoverMe(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleRadioYouTakeThePoint(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleRadioHoldThisPosition(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleRadioRegroupTeam(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleRadioFollowMe(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleRadioTakingFire(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleRadioGoGoGo(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleRadioTeamFallBack(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleRadioStickTogetherTeam(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleRadioGetInPositionAndWait(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleRadioStormTheFront(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleRadioReportInTeam(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleRadioAffirmative(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleRadioEnemySpotted(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleRadioNeedBackup(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleRadioSectorClear(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleRadioInPosition(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleRadioReportingIn(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleRadioGetOutOfThere(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleRadioNegative(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleRadioEnemyDown(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleBuyMenuOpenned(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleAutoBuy(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleNotBuyingAnything(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleNeedToBuyPrimaryWeapon(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleNeedToBuyPrimaryAmmo(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleNeedToBuySecondaryAmmo(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleNeedToBuyArmor(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleNeedToBuyDefuseKit(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleNeedToBuyGrenade(CBaseEntity *pEntity, CBaseEntity *pOther);
-	void HandleCareerTaskDone(CBaseEntity *pEntity, CBaseEntity *pOther);
+	void HandleWeaponFired(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleWeaponFiredOnEmpty(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleWeaponReloaded(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandlePlayerDied(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandlePlayerSpawned(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleClientCorpseSpawned(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandlePlayerTookDamage(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandlePlayerBlindedByFlashbang(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleBuyTimeStart(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandlePlayerLeftBuyZone(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleBombPlanted(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleRoundStart(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleBombDefused(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleBombExploded(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleHostageUsed(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleHostageRescued(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleHostageDamaged(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleHostageKilled(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleAllHostagesRescued(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleBeingShotAt(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleRoundDraw(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleCTWin(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleTWin(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleDeathCameraStart(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleBombDefusing(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleRadioCoverMe(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleRadioYouTakeThePoint(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleRadioHoldThisPosition(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleRadioRegroupTeam(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleRadioFollowMe(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleRadioTakingFire(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleRadioGoGoGo(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleRadioTeamFallBack(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleRadioStickTogetherTeam(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleRadioGetInPositionAndWait(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleRadioStormTheFront(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleRadioReportInTeam(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleRadioAffirmative(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleRadioEnemySpotted(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleRadioNeedBackup(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleRadioSectorClear(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleRadioInPosition(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleRadioReportingIn(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleRadioGetOutOfThere(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleRadioNegative(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleRadioEnemyDown(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleBuyMenuOpenned(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleAutoBuy(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleNotBuyingAnything(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleNeedToBuyPrimaryWeapon(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleNeedToBuyPrimaryAmmo(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleNeedToBuySecondaryAmmo(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleNeedToBuyArmor(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleNeedToBuyDefuseKit(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleNeedToBuyGrenade(CBaseEntity* pEntity, CBaseEntity* pOther);
+	void HandleCareerTaskDone(CBaseEntity* pEntity, CBaseEntity* pOther);
 
-	void GetNumPlayersAliveOnTeams(int &numT, int &numCT);
+	void GetNumPlayersAliveOnTeams(int& numT, int& numCT);
 	void CheckForBombViewable();
 	void CheckForLooseWeaponViewable();
 	void CheckForLooseDefuserViewable();
@@ -380,16 +380,16 @@ public:
 	void CheckForNeedToReload(bool isPassiveCheck = false);
 	bool CanLocalPlayerBuyStuff();
 	void CheckBuyZoneMessages();
-	bool IsBombPlantedInBombsite(CBaseEntity *bombTarget);
-	bool IsBombPlantedInBombZone(const char *pszBombZone);
+	bool IsBombPlantedInBombsite(CBaseEntity* bombTarget);
+	bool IsBombPlantedInBombZone(const char* pszBombZone);
 	void ReadTutorMessageFile();
 	void ApplyPersistentDecay();
-	CBaseEntity *GetEntityForMessageID(int messageID, CBaseEntity *last = nullptr);
+	CBaseEntity* GetEntityForMessageID(int messageID, CBaseEntity* last = nullptr);
 	void ResetPlayerDeathInfo();
-	void ConstructRecentDeathsList(TeamName team, char *buf, int buflen, TutorMessageEvent *event);
+	void ConstructRecentDeathsList(TeamName team, char* buf, int buflen, TutorMessageEvent* event);
 
 private:
-	static const char *m_TutorIdentifierList[];
+	static const char* m_TutorIdentifierList[];
 
 	float m_nextViewableCheckTime;
 	TutorMessageMap m_messageMap;
@@ -397,8 +397,8 @@ private:
 	float m_currentlyShownMessageCloseTime;
 	float m_currentlyShownMessageStartTime;
 	float m_currentlyShownMessageMinimumCloseTime;
-	TutorMessageEvent *m_currentMessageEvent;
-	TutorMessageEvent *m_lastScenarioEvent;
+	TutorMessageEvent* m_currentMessageEvent;
+	TutorMessageEvent* m_lastScenarioEvent;
 	TutorMessageID m_lastHintShown;
 	TutorMessageID m_lastInGameHintShown;
 	ClientCorpseList m_clientCorpseList;
@@ -407,12 +407,12 @@ private:
 	PlayerDeathStruct m_playerDeathInfo[MAX_CLIENTS];
 };
 
-void ParseMessageParameters(char *&messageData, TutorMessage *ret);
-TutorMessage *ConstructTutorMessage(char *&messageData, TutorMessage *defaults);
-void ReadDefaultValues(char *&messageData, TutorMessage *defaults);
+void ParseMessageParameters(char*& messageData, TutorMessage* ret);
+TutorMessage* ConstructTutorMessage(char*& messageData, TutorMessage* defaults);
+void ReadDefaultValues(char*& messageData, TutorMessage* defaults);
 
 // custom operator++
-inline TutorMessageID operator++(TutorMessageID &iter, int)
+inline TutorMessageID operator++(TutorMessageID& iter, int)
 {
 	// bounds checking
 	if (iter == TUTOR_NUM_MESSAGES)

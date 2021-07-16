@@ -34,10 +34,10 @@
 #define MAX_HOOKS_IN_CHAIN 30
 
 template <typename t_ret, typename t_class, typename ...t_args>
-bool is_void(t_ret (t_class::*)(t_args...)) { return false; }
+bool is_void(t_ret(t_class::*)(t_args...)) { return false; }
 
 template <typename t_ret, typename ...t_args>
-bool is_void(t_ret (*)(t_args...)) { return false; }
+bool is_void(t_ret(*)(t_args...)) { return false; }
 
 template <typename t_class, typename ...t_args>
 bool is_void(void (t_class::*)(t_args...)) { return true; }
@@ -85,8 +85,8 @@ private:
 template <typename t_ret, typename t_class, typename ...t_args>
 class IHookChainClassImpl : public IHookChainClass<t_ret, t_class, t_args...> {
 public:
-	typedef t_ret(*hookfunc_t)(IHookChainClass<t_ret, t_class, t_args...>*, t_class *, t_args...);
-	typedef t_ret(t_class::*origfunc_t)(t_args...);
+	typedef t_ret(*hookfunc_t)(IHookChainClass<t_ret, t_class, t_args...>*, t_class*, t_args...);
+	typedef t_ret(t_class::* origfunc_t)(t_args...);
 
 	IHookChainClassImpl(void** hooks, origfunc_t orig) : m_Hooks(hooks), m_OriginalFunc(orig)
 	{
@@ -96,7 +96,7 @@ public:
 
 	virtual ~IHookChainClassImpl() {}
 
-	virtual t_ret callNext(t_class *object, t_args... args) {
+	virtual t_ret callNext(t_class* object, t_args... args) {
 		hookfunc_t nexthook = (hookfunc_t)m_Hooks[0];
 
 		if (nexthook)
@@ -108,7 +108,7 @@ public:
 		return m_OriginalFunc ? (object->*m_OriginalFunc)(args...) : GetDefaultValue<t_ret>();
 	}
 
-	virtual t_ret callOriginal(t_class *object, t_args... args)
+	virtual t_ret callOriginal(t_class* object, t_args... args)
 	{
 		return m_OriginalFunc ? (object->*m_OriginalFunc)(args...) : GetDefaultValue<t_ret>();
 	}
@@ -139,9 +139,9 @@ template <typename t_ret, typename t_class, typename ...t_args>
 class IHookChainClassEmptyImpl : public IHookChain<t_ret, t_args...> {
 public:
 	typedef t_ret(*hookfunc_t)(IHookChain<t_ret, t_args...>*, t_args...);
-	typedef t_ret(t_class::*origfunc_t)(t_args...);
+	typedef t_ret(t_class::* origfunc_t)(t_args...);
 
-	IHookChainClassEmptyImpl(void** hooks, origfunc_t orig, t_class *object) : m_Hooks(hooks), m_Object(object), m_OriginalFunc(orig)
+	IHookChainClassEmptyImpl(void** hooks, origfunc_t orig, t_class* object) : m_Hooks(hooks), m_Object(object), m_OriginalFunc(orig)
 	{
 		if (orig == nullptr && !is_void(orig))
 			Sys_Error("%s: Non-void HookChain without original function.", __FUNC__);
@@ -167,7 +167,7 @@ public:
 
 private:
 	void** m_Hooks;
-	t_class *m_Object;
+	t_class* m_Object;
 	origfunc_t m_OriginalFunc;
 };
 
@@ -210,12 +210,12 @@ public:
 template <typename t_ret, typename t_class, typename ...t_args>
 class IHookChainRegistryClassImpl : public IHookChainRegistryClass<t_ret, t_class, t_args...>, public AbstractHookChainRegistry {
 public:
-	typedef t_ret(*hookfunc_t)(IHookChainClass<t_ret, t_class, t_args...>*, t_class *, t_args...);
-	typedef t_ret(t_class::*origfunc_t)(t_args...);
+	typedef t_ret(*hookfunc_t)(IHookChainClass<t_ret, t_class, t_args...>*, t_class*, t_args...);
+	typedef t_ret(t_class::* origfunc_t)(t_args...);
 
 	virtual ~IHookChainRegistryClassImpl() { }
 
-	t_ret callChain(origfunc_t origFunc, t_class *object, t_args... args) {
+	t_ret callChain(origfunc_t origFunc, t_class* object, t_args... args) {
 		IHookChainClassImpl<t_ret, t_class, t_args...> chain(m_Hooks, origFunc);
 		return chain.callNext(object, args...);
 	}
@@ -232,11 +232,11 @@ template <typename t_ret, typename t_class, typename ...t_args>
 class IHookChainRegistryClassEmptyImpl : public IHookChainRegistry<t_ret, t_args...>, public AbstractHookChainRegistry {
 public:
 	typedef t_ret(*hookfunc_t)(IHookChain<t_ret, t_args...>*, t_args...);
-	typedef t_ret(t_class::*origfunc_t)(t_args...);
+	typedef t_ret(t_class::* origfunc_t)(t_args...);
 
 	virtual ~IHookChainRegistryClassEmptyImpl() { }
 
-	t_ret callChain(origfunc_t origFunc, t_class *object, t_args... args) {
+	t_ret callChain(origfunc_t origFunc, t_class* object, t_args... args) {
 		IHookChainClassEmptyImpl<t_ret, t_class, t_args...> chain(m_Hooks, origFunc, object);
 		return chain.callNext(args...);
 	}

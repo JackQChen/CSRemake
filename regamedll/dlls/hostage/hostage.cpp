@@ -29,15 +29,15 @@
 #include "precompiled.h"
 
 cvar_t cv_hostage_debug = { "hostage_debug", "0", FCVAR_SERVER, 0.0f, nullptr };
-cvar_t cv_hostage_stop  = { "hostage_stop", "0", FCVAR_SERVER, 0.0f, nullptr };
+cvar_t cv_hostage_stop = { "hostage_stop", "0", FCVAR_SERVER, 0.0f, nullptr };
 
-CHostageManager *g_pHostages = nullptr;
+CHostageManager* g_pHostages = nullptr;
 int g_iHostageNumber = 0;
 
 struct
 {
 	HostageChatterType type;
-	char *fileName;
+	char* fileName;
 } hostageSoundStruct[] = {
 	{ HOSTAGE_CHATTER_START_FOLLOW, "hostage/huse/getouttahere.wav" },
 	{ HOSTAGE_CHATTER_START_FOLLOW, "hostage/huse/illfollow.wav"    },
@@ -390,7 +390,7 @@ void CHostage::IdleThink()
 
 	if (m_hTargetEnt || m_improv)
 	{
-		CBasePlayer *pPlayer = nullptr;
+		CBasePlayer* pPlayer = nullptr;
 
 		if (m_improv)
 		{
@@ -399,7 +399,7 @@ void CHostage::IdleThink()
 		}
 		else
 		{
-			pPlayer = GetClassPtr<CCSPlayer>((CBasePlayer *)m_hTargetEnt->pev);
+			pPlayer = GetClassPtr<CCSPlayer>((CBasePlayer*)m_hTargetEnt->pev);
 		}
 
 		if (!pPlayer || pPlayer->m_iTeam == CT)
@@ -411,7 +411,7 @@ void CHostage::IdleThink()
 				if (UTIL_FindEntityByClassname(nullptr, "info_hostage_rescue"))
 					bResHostagePt = true;
 
-				CBaseEntity *pSpot = nullptr;
+				CBaseEntity* pSpot = nullptr;
 				while ((pSpot = UTIL_FindEntityByClassname(pSpot, "info_hostage_rescue")))
 				{
 					if ((pSpot->pev->origin - pev->origin).Length() < MAX_HOSTAGES_RESCUE_RADIUS)
@@ -462,11 +462,11 @@ void CHostage::IdleThink()
 #endif
 
 				MESSAGE_BEGIN(MSG_SPEC, SVC_DIRECTOR);
-					WRITE_BYTE(9);
-					WRITE_BYTE(DRC_CMD_EVENT);
-					WRITE_SHORT(pPlayer ? pPlayer->entindex() : 0);
-					WRITE_SHORT(entindex());
-					WRITE_LONG(15);
+				WRITE_BYTE(9);
+				WRITE_BYTE(DRC_CMD_EVENT);
+				WRITE_SHORT(pPlayer ? pPlayer->entindex() : 0);
+				WRITE_SHORT(entindex());
+				WRITE_LONG(15);
 				MESSAGE_END();
 
 				pev->effects |= EF_NODRAW;
@@ -583,12 +583,12 @@ void CHostage::RePosition()
 	m_flNextFullThink = gpGlobals->time + RANDOM_FLOAT(0.1, 0.2);
 }
 
-bool CHostage::CanTakeDamage(entvars_t *pevAttacker)
+bool CHostage::CanTakeDamage(entvars_t* pevAttacker)
 {
 	bool bCanTakeDmg = true; // default behaviour
 
 #ifdef REGAMEDLL_ADD
-	CBasePlayer *pAttacker = CBasePlayer::Instance(pevAttacker);
+	CBasePlayer* pAttacker = CBasePlayer::Instance(pevAttacker);
 	switch ((int)hostagehurtable.value)
 	{
 	case 0:
@@ -608,7 +608,7 @@ bool CHostage::CanTakeDamage(entvars_t *pevAttacker)
 	return bCanTakeDmg;
 }
 
-void CHostage::TraceAttack(entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType)
+void CHostage::TraceAttack(entvars_t* pevAttacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType)
 {
 	if (!CanTakeDamage(pevAttacker))
 		return;
@@ -616,7 +616,7 @@ void CHostage::TraceAttack(entvars_t *pevAttacker, float flDamage, Vector vecDir
 	CBaseMonster::TraceAttack(pevAttacker, flDamage, vecDir, ptr, bitsDamageType);
 }
 
-BOOL CHostage::TakeDamage(entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType)
+BOOL CHostage::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
 {
 #ifdef REGAMEDLL_ADD
 	if (!CanTakeDamage(pevAttacker))
@@ -637,13 +637,13 @@ BOOL CHostage::TakeDamage(entvars_t *pevInflictor, entvars_t *pevAttacker, float
 
 	PlayPainSound();
 
-	CBasePlayer *pAttacker = nullptr;
+	CBasePlayer* pAttacker = nullptr;
 	if (pevAttacker)
 	{
-		CBaseEntity *pAttackingEnt = GetClassPtr<CCSEntity>((CBaseEntity *)pevAttacker);
+		CBaseEntity* pAttackingEnt = GetClassPtr<CCSEntity>((CBaseEntity*)pevAttacker);
 		if (pAttackingEnt->Classify() == CLASS_VEHICLE)
 		{
-			CBaseEntity *pDriver = ((CFuncVehicle *)pAttackingEnt)->m_pDriver;
+			CBaseEntity* pDriver = ((CFuncVehicle*)pAttackingEnt)->m_pDriver;
 			if (pDriver)
 			{
 				pevAttacker = pDriver->pev;
@@ -652,7 +652,7 @@ BOOL CHostage::TakeDamage(entvars_t *pevInflictor, entvars_t *pevAttacker, float
 
 		if (pAttackingEnt->IsPlayer())
 		{
-			pAttacker = GetClassPtr<CCSPlayer>((CBasePlayer *)pevAttacker);
+			pAttacker = GetClassPtr<CCSPlayer>((CBasePlayer*)pevAttacker);
 		}
 	}
 
@@ -818,7 +818,7 @@ void CHostage::SetDeathActivity()
 	}
 }
 
-void CHostage::AnnounceDeath(CBasePlayer *pAttacker)
+void CHostage::AnnounceDeath(CBasePlayer* pAttacker)
 {
 	ClientPrint(pAttacker->pev, HUD_PRINTCENTER, "#Killed_Hostage");
 
@@ -837,15 +837,15 @@ void CHostage::AnnounceDeath(CBasePlayer *pAttacker)
 		GETPLAYERAUTHID(pAttacker->edict()), GetTeam(pAttacker->m_iTeam));
 
 	MESSAGE_BEGIN(MSG_SPEC, SVC_DIRECTOR);
-		WRITE_BYTE(9);
-		WRITE_BYTE(DRC_CMD_EVENT);
-		WRITE_SHORT(ENTINDEX(pAttacker->edict()));
-		WRITE_SHORT(ENTINDEX(edict()));
-		WRITE_LONG(15);
+	WRITE_BYTE(9);
+	WRITE_BYTE(DRC_CMD_EVENT);
+	WRITE_SHORT(ENTINDEX(pAttacker->edict()));
+	WRITE_SHORT(ENTINDEX(edict()));
+	WRITE_LONG(15);
 	MESSAGE_END();
 }
 
-void CHostage::ApplyHostagePenalty(CBasePlayer *pAttacker)
+void CHostage::ApplyHostagePenalty(CBasePlayer* pAttacker)
 {
 	if (pAttacker->m_iTeam != TERRORIST)
 		return;
@@ -868,7 +868,7 @@ void CHostage::ApplyHostagePenalty(CBasePlayer *pAttacker)
 	}
 }
 
-void CHostage::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void CHostage::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	if (!pActivator->IsPlayer())
 		return;
@@ -881,7 +881,7 @@ void CHostage::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useTy
 		return;
 #endif
 
-	CBasePlayer *pPlayer = (CBasePlayer *)pActivator;
+	CBasePlayer* pPlayer = (CBasePlayer*)pActivator;
 	if (pPlayer->m_iTeam != CT)
 	{
 		if (!(pPlayer->m_flDisplayHistory & DHF_HOSTAGE_CTMOVE))
@@ -929,7 +929,7 @@ void CHostage::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useTy
 			{
 				m_State = STAND;
 				m_hTargetEnt = nullptr;
-				m_hStoppedTargetEnt = static_cast<CBasePlayer *>(pActivator);
+				m_hStoppedTargetEnt = static_cast<CBasePlayer*>(pActivator);
 			}
 			else
 				m_State = FOLLOW;
@@ -961,7 +961,7 @@ void CHostage::PlayFollowRescueSound()
 	}
 }
 
-void CHostage::GiveCTTouchBonus(CBasePlayer *pPlayer)
+void CHostage::GiveCTTouchBonus(CBasePlayer* pPlayer)
 {
 	if (m_bTouched)
 		return;
@@ -978,7 +978,7 @@ int CHostage::ObjectCaps()
 	return (CBaseMonster::ObjectCaps() | FCAP_MUST_SPAWN | FCAP_ONOFF_USE);
 }
 
-void CHostage::Touch(CBaseEntity *pOther)
+void CHostage::Touch(CBaseEntity* pOther)
 {
 	Vector2D vPush;
 	const float pushForce = 50.0f;
@@ -989,7 +989,7 @@ void CHostage::Touch(CBaseEntity *pOther)
 		return;
 	}
 
-	CBasePlayer *pPlayer = (CBasePlayer *)pOther;
+	CBasePlayer* pPlayer = (CBasePlayer*)pOther;
 	if (pPlayer->IsPlayer())
 	{
 		if (pPlayer->m_iTeam != CT)
@@ -1016,7 +1016,7 @@ void CHostage::Touch(CBaseEntity *pOther)
 
 void CHostage::DoFollow()
 {
-	CBaseEntity *pFollowing;
+	CBaseEntity* pFollowing;
 	Vector vecDest;
 	float flRadius = 0;
 	float flDistToDest;
@@ -1032,7 +1032,7 @@ void CHostage::DoFollow()
 		return;
 	}
 
-	pFollowing = GetClassPtr<CCSEntity>((CBaseEntity *)m_hTargetEnt->pev);
+	pFollowing = GetClassPtr<CCSEntity>((CBaseEntity*)m_hTargetEnt->pev);
 	m_LocalNav->SetTargetEnt(pFollowing);
 
 	vecDest = pFollowing->pev->origin;
@@ -1109,22 +1109,22 @@ void CHostage::DoFollow()
 	}
 }
 
-void CHostage::PointAt(const Vector &vecLoc)
+void CHostage::PointAt(const Vector& vecLoc)
 {
 	pev->angles.x = 0;
 	pev->angles.y = UTIL_VecToAngles(vecLoc - pev->origin).y;
 	pev->angles.z = 0;
 }
 
-void CHostage::MoveToward(const Vector &vecLoc)
+void CHostage::MoveToward(const Vector& vecLoc)
 {
 	Vector vecFwd;
 	Vector vecbigDest;
 	Vector vecMove;
-	CBaseEntity *pFollowing;
+	CBaseEntity* pFollowing;
 	real_t flDist;
 
-	pFollowing = GetClassPtr<CCSEntity>((CBaseEntity *)m_hTargetEnt->pev);
+	pFollowing = GetClassPtr<CCSEntity>((CBaseEntity*)m_hTargetEnt->pev);
 	vecMove = vecLoc - pev->origin;
 
 	Vector vecAng(0, UTIL_VecToAngles(vecMove).y, 0);
@@ -1178,7 +1178,7 @@ BOOL CHostage::IsOnLadder()
 
 void CHostage::NavReady()
 {
-	CBaseEntity *pFollowing;
+	CBaseEntity* pFollowing;
 	Vector vecDest;
 	float flRadius = 40.0f;
 
@@ -1187,7 +1187,7 @@ void CHostage::NavReady()
 		return;
 	}
 
-	pFollowing = GetClassPtr<CCSEntity>((CBaseEntity *)m_hTargetEnt->pev);
+	pFollowing = GetClassPtr<CCSEntity>((CBaseEntity*)m_hTargetEnt->pev);
 	vecDest = pFollowing->pev->origin;
 
 	if (!(pFollowing->pev->flags & FL_ONGROUND))
@@ -1233,7 +1233,7 @@ void CHostage::NavReady()
 
 void CHostage::SendHostagePositionMsg()
 {
-	CBaseEntity *pEntity = nullptr;
+	CBaseEntity* pEntity = nullptr;
 	while ((pEntity = UTIL_FindEntityByClassname(pEntity, "player")))
 	{
 		if (FNullEnt(pEntity->edict()))
@@ -1245,16 +1245,16 @@ void CHostage::SendHostagePositionMsg()
 		if (pEntity->pev->flags == FL_DORMANT)
 			continue;
 
-		CBasePlayer *pTempPlayer = GetClassPtr<CCSPlayer>((CBasePlayer *)pEntity->pev);
+		CBasePlayer* pTempPlayer = GetClassPtr<CCSPlayer>((CBasePlayer*)pEntity->pev);
 
 		if (pTempPlayer->pev->deadflag == DEAD_NO && pTempPlayer->m_iTeam == CT)
 		{
 			MESSAGE_BEGIN(MSG_ONE, gmsgHostagePos, nullptr, pTempPlayer->pev);
-				WRITE_BYTE(0);
-				WRITE_BYTE(m_iHostageIndex);
-				WRITE_COORD(pev->origin.x);
-				WRITE_COORD(pev->origin.y);
-				WRITE_COORD(pev->origin.z);
+			WRITE_BYTE(0);
+			WRITE_BYTE(m_iHostageIndex);
+			WRITE_COORD(pev->origin.x);
+			WRITE_COORD(pev->origin.y);
+			WRITE_COORD(pev->origin.z);
 			MESSAGE_END();
 		}
 	}
@@ -1262,7 +1262,7 @@ void CHostage::SendHostagePositionMsg()
 
 void CHostage::SendHostageEventMsg()
 {
-	CBaseEntity *pEntity = nullptr;
+	CBaseEntity* pEntity = nullptr;
 	while ((pEntity = UTIL_FindEntityByClassname(pEntity, "player")))
 	{
 		if (FNullEnt(pEntity->edict()))
@@ -1274,12 +1274,12 @@ void CHostage::SendHostageEventMsg()
 		if (pEntity->pev->flags == FL_DORMANT)
 			continue;
 
-		CBasePlayer *pTempPlayer = GetClassPtr<CCSPlayer>((CBasePlayer *)pEntity->pev);
+		CBasePlayer* pTempPlayer = GetClassPtr<CCSPlayer>((CBasePlayer*)pEntity->pev);
 
 		if (pTempPlayer->pev->deadflag == DEAD_NO && pTempPlayer->m_iTeam == CT)
 		{
 			MESSAGE_BEGIN(MSG_ONE, gmsgHostageK, nullptr, pTempPlayer->pev);
-				WRITE_BYTE(m_iHostageIndex);
+			WRITE_BYTE(m_iHostageIndex);
 			MESSAGE_END();
 		}
 
@@ -1395,7 +1395,7 @@ void CHostage::PreThink()
 
 void Hostage_RegisterCVars()
 {
-// These cvars are only used in czero
+	// These cvars are only used in czero
 #ifdef REGAMEDLL_FIXES
 	if (!AreImprovAllowed())
 		return;
@@ -1426,7 +1426,7 @@ void CHostageManager::ServerActivate()
 {
 	m_hostageCount = 0;
 
-	CHostage *pHostage = nullptr;
+	CHostage* pHostage = nullptr;
 	while ((pHostage = UTIL_FindEntityByClassname(pHostage, "hostage_entity")))
 	{
 		AddHostage(pHostage);
@@ -1462,7 +1462,7 @@ void CHostageManager::RestartRound()
 	}
 }
 
-void CHostageManager::AddHostage(CHostage *hostage)
+void CHostageManager::AddHostage(CHostage* hostage)
 {
 	if (m_hostageCount >= MAX_HOSTAGES)
 		return;
@@ -1483,12 +1483,12 @@ void CHostageManager::AddHostage(CHostage *hostage)
 	}
 }
 
-bool CHostageManager::IsNearbyHostageTalking(CHostageImprov *improv)
+bool CHostageManager::IsNearbyHostageTalking(CHostageImprov* improv)
 {
 	for (int i = 0; i < m_hostageCount; i++)
 	{
 		const float closeRange = 500.0f;
-		const CHostageImprov *pHostage = m_hostage[i]->m_improv;
+		const CHostageImprov* pHostage = m_hostage[i]->m_improv;
 
 		if (!pHostage)
 			continue;
@@ -1505,11 +1505,11 @@ bool CHostageManager::IsNearbyHostageTalking(CHostageImprov *improv)
 	return false;
 }
 
-bool CHostageManager::IsNearbyHostageJumping(CHostageImprov *improv)
+bool CHostageManager::IsNearbyHostageJumping(CHostageImprov* improv)
 {
 	for (int i = 0; i < m_hostageCount; i++)
 	{
-		const CHostageImprov *pHostage = m_hostage[i]->m_improv;
+		const CHostageImprov* pHostage = m_hostage[i]->m_improv;
 
 		if (!pHostage)
 			continue;
@@ -1527,11 +1527,11 @@ bool CHostageManager::IsNearbyHostageJumping(CHostageImprov *improv)
 	return false;
 }
 
-void CHostageManager::OnEvent(GameEventType event, CBaseEntity *pEntity, CBaseEntity *pOther)
+void CHostageManager::OnEvent(GameEventType event, CBaseEntity* pEntity, CBaseEntity* pOther)
 {
 	for (int i = 0; i < m_hostageCount; i++)
 	{
-		CHostageImprov *improv = m_hostage[i]->m_improv;
+		CHostageImprov* improv = m_hostage[i]->m_improv;
 		if (improv)
 		{
 			improv->OnGameEvent(event, pEntity, pOther);
@@ -1561,7 +1561,7 @@ SimpleChatter::~SimpleChatter()
 	}
 }
 
-void SimpleChatter::AddSound(HostageChatterType type, char *filename)
+void SimpleChatter::AddSound(HostageChatterType type, char* filename)
 {
 	char actualFilename[128];
 	auto chatter = &m_chatter[type];
@@ -1577,7 +1577,7 @@ void SimpleChatter::AddSound(HostageChatterType type, char *filename)
 	PRECACHE_SOUND(filename);
 }
 
-void SimpleChatter::Shuffle(ChatterSet *chatter)
+void SimpleChatter::Shuffle(ChatterSet* chatter)
 {
 	if (!chatter->needsShuffle)
 		return;
@@ -1602,10 +1602,10 @@ void SimpleChatter::Shuffle(ChatterSet *chatter)
 	chatter->needsShuffle = false;
 }
 
-char *SimpleChatter::GetSound(HostageChatterType type, float *duration)
+char* SimpleChatter::GetSound(HostageChatterType type, float* duration)
 {
-	ChatterSet *chatter = &m_chatter[type];
-	char *sound;
+	ChatterSet* chatter = &m_chatter[type];
+	char* sound;
 
 	Shuffle(chatter);
 	sound = chatter->file[chatter->index].filename;
@@ -1619,11 +1619,11 @@ char *SimpleChatter::GetSound(HostageChatterType type, float *duration)
 	return sound;
 }
 
-float SimpleChatter::PlaySound(CBaseEntity *pEntity, HostageChatterType type)
+float SimpleChatter::PlaySound(CBaseEntity* pEntity, HostageChatterType type)
 {
 	float duration;
-	char *pszSoundName = GetSound(type, &duration);
-	CHostage *pHostage = static_cast<CHostage *>(pEntity);
+	char* pszSoundName = GetSound(type, &duration);
+	CHostage* pHostage = static_cast<CHostage*>(pEntity);
 
 	if (!pszSoundName)
 	{

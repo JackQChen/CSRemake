@@ -1,6 +1,6 @@
 #include "precompiled.h"
 
-const char *GameEventName[NUM_GAME_EVENTS + 1] =
+const char* GameEventName[NUM_GAME_EVENTS + 1] =
 {
 	"EVENT_INVALID",
 	"EVENT_WEAPON_FIRED",
@@ -107,7 +107,7 @@ const float smokeRadius = 115.0f;		// for smoke grenades
 
 // Convert name to GameEventType
 // TODO: Find more appropriate place for this function
-GameEventType NameToGameEvent(const char *name)
+GameEventType NameToGameEvent(const char* name)
 {
 	int index = 0;
 	for (auto event : GameEventName)
@@ -144,7 +144,7 @@ void CBotManager::StartFrame()
 		auto iter = m_activeGrenadeList.begin();
 		while (iter != m_activeGrenadeList.end())
 		{
-			ActiveGrenade *ag = (*iter);
+			ActiveGrenade* ag = (*iter);
 
 			// lazy validation
 			if (!ag->IsValid())
@@ -158,7 +158,7 @@ void CBotManager::StartFrame()
 				iter++;
 			}
 
-			const Vector *pos = ag->GetDetonationPosition();
+			const Vector* pos = ag->GetDetonationPosition();
 
 			UTIL_DrawBeamPoints(*pos, *pos + Vector(0, 0, 50), 1, 255, 100, 0);
 
@@ -192,21 +192,21 @@ void CBotManager::StartFrame()
 	// Process each active bot
 	for (int i = 1; i <= gpGlobals->maxClients; i++)
 	{
-		CBasePlayer *pPlayer = UTIL_PlayerByIndex(i);
+		CBasePlayer* pPlayer = UTIL_PlayerByIndex(i);
 
 		if (!pPlayer)
 			continue;
 
 		if (pPlayer->IsBot() && IsEntityValid(pPlayer))
 		{
-			CBot *pBot = static_cast<CBot *>(pPlayer);
+			CBot* pBot = static_cast<CBot*>(pPlayer);
 			pBot->BotThink();
 		}
 	}
 }
 
 // Return the filename for this map's "nav map" file
-const char *CBotManager::GetNavMapFilename() const
+const char* CBotManager::GetNavMapFilename() const
 {
 	static char filename[256];
 	Q_sprintf(filename, "maps\\%s.nav", STRING(gpGlobals->mapname));
@@ -216,12 +216,12 @@ const char *CBotManager::GetNavMapFilename() const
 // Invoked when given player does given event (some events have NULL player).
 // Events are propogated to all bots.
 // TODO: This has become the game-wide event dispatcher. We should restructure this.
-void CBotManager::OnEvent(GameEventType event, CBaseEntity *pEntity, CBaseEntity *pOther)
+void CBotManager::OnEvent(GameEventType event, CBaseEntity* pEntity, CBaseEntity* pOther)
 {
 	// propogate event to all bots
 	for (int i = 1; i <= gpGlobals->maxClients; i++)
 	{
-		CBasePlayer *pPlayer = UTIL_PlayerByIndex(i);
+		CBasePlayer* pPlayer = UTIL_PlayerByIndex(i);
 
 		if (!pPlayer)
 			continue;
@@ -239,7 +239,7 @@ void CBotManager::OnEvent(GameEventType event, CBaseEntity *pEntity, CBaseEntity
 		if (pEntity == pPlayer)
 			continue;
 
-		CBot *bot = static_cast<CBot *>(pPlayer);
+		CBot* bot = static_cast<CBot*>(pPlayer);
 		bot->OnEvent(event, pEntity, pOther);
 	}
 
@@ -255,15 +255,15 @@ void CBotManager::OnEvent(GameEventType event, CBaseEntity *pEntity, CBaseEntity
 }
 
 // Add an active grenade to the bot's awareness
-void CBotManager::AddGrenade(int type, CGrenade *grenade)
+void CBotManager::AddGrenade(int type, CGrenade* grenade)
 {
-	ActiveGrenade *ag = new ActiveGrenade(type, grenade);
+	ActiveGrenade* ag = new ActiveGrenade(type, grenade);
 
 	m_activeGrenadeList.push_back(ag);
 }
 
 // The grenade entity in the world is going away
-void CBotManager::RemoveGrenade(CGrenade *grenade)
+void CBotManager::RemoveGrenade(CGrenade* grenade)
 {
 	for (auto ag : m_activeGrenadeList)
 	{
@@ -281,7 +281,7 @@ NOXREF void CBotManager::ValidateActiveGrenades()
 	auto iter = m_activeGrenadeList.begin();
 	while (iter != m_activeGrenadeList.end())
 	{
-		ActiveGrenade *ag = (*iter);
+		ActiveGrenade* ag = (*iter);
 
 		if (!ag->IsValid())
 		{
@@ -304,12 +304,12 @@ void CBotManager::DestroyAllGrenades()
 }
 
 // Return true if position is inside a smoke cloud
-bool CBotManager::IsInsideSmokeCloud(const Vector *pos)
+bool CBotManager::IsInsideSmokeCloud(const Vector* pos)
 {
 	auto iter = m_activeGrenadeList.begin();
 	while (iter != m_activeGrenadeList.end())
 	{
-		ActiveGrenade *ag = (*iter);
+		ActiveGrenade* ag = (*iter);
 
 		// lazy validation
 		if (!ag->IsValid())
@@ -325,7 +325,7 @@ bool CBotManager::IsInsideSmokeCloud(const Vector *pos)
 
 		if (ag->GetID() == WEAPON_SMOKEGRENADE)
 		{
-			const Vector *smokeOrigin = ag->GetDetonationPosition();
+			const Vector* smokeOrigin = ag->GetDetonationPosition();
 
 			if ((*smokeOrigin - *pos).IsLengthLessThan(smokeRadius))
 				return true;
@@ -339,7 +339,7 @@ bool CBotManager::IsInsideSmokeCloud(const Vector *pos)
 // Determine the length of the line of sight covered by each smoke cloud,
 // and sum them (overlap is additive for obstruction).
 // If the overlap exceeds the threshold, the bot can't see through.
-bool CBotManager::IsLineBlockedBySmoke(const Vector *from, const Vector *to)
+bool CBotManager::IsLineBlockedBySmoke(const Vector* from, const Vector* to)
 {
 	const float smokeRadiusSq = smokeRadius * smokeRadius;
 
@@ -353,7 +353,7 @@ bool CBotManager::IsLineBlockedBySmoke(const Vector *from, const Vector *to)
 	auto iter = m_activeGrenadeList.begin();
 	while (iter != m_activeGrenadeList.end())
 	{
-		ActiveGrenade *ag = (*iter);
+		ActiveGrenade* ag = (*iter);
 
 		// lazy validation
 		if (!ag->IsValid())
@@ -369,7 +369,7 @@ bool CBotManager::IsLineBlockedBySmoke(const Vector *from, const Vector *to)
 
 		if (ag->GetID() == WEAPON_SMOKEGRENADE)
 		{
-			const Vector *smokeOrigin = ag->GetDetonationPosition();
+			const Vector* smokeOrigin = ag->GetDetonationPosition();
 
 			Vector toGrenade = *smokeOrigin - *from;
 

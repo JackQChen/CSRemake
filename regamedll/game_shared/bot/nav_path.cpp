@@ -13,8 +13,8 @@ bool CNavPath::ComputePathPositions()
 
 	for (int i = 1; i < m_segmentCount; i++)
 	{
-		const PathSegment *from = &m_path[i - 1];
-		PathSegment *to = &m_path[i];
+		const PathSegment* from = &m_path[i - 1];
+		PathSegment* to = &m_path[i];
 
 		// walk along the floor to the next area
 		if (to->how <= GO_WEST)
@@ -70,11 +70,11 @@ bool CNavPath::ComputePathPositions()
 		else if (to->how == GO_LADDER_UP)
 		{
 			// find our ladder
-			const NavLadderList *list = from->area->GetLadderList(LADDER_UP);
+			const NavLadderList* list = from->area->GetLadderList(LADDER_UP);
 			NavLadderList::const_iterator iter;
 			for (iter = list->begin(); iter != list->end(); iter++)
 			{
-				CNavLadder *ladder = (*iter);
+				CNavLadder* ladder = (*iter);
 
 				// can't use "behind" area when ascending...
 				if (ladder->m_topForwardArea == to->area || ladder->m_topLeftArea == to->area || ladder->m_topRightArea == to->area)
@@ -96,11 +96,11 @@ bool CNavPath::ComputePathPositions()
 		else if (to->how == GO_LADDER_DOWN)
 		{
 			// find our ladder
-			const NavLadderList *list = from->area->GetLadderList(LADDER_DOWN);
+			const NavLadderList* list = from->area->GetLadderList(LADDER_DOWN);
 			NavLadderList::const_iterator iter;
 			for (iter = list->begin(); iter != list->end(); iter++)
 			{
-				CNavLadder *ladder = (*iter);
+				CNavLadder* ladder = (*iter);
 
 				if (ladder->m_bottomArea == to->area)
 				{
@@ -122,7 +122,7 @@ bool CNavPath::ComputePathPositions()
 }
 
 // Return true if position is at the end of the path
-bool CNavPath::IsAtEnd(const Vector &pos) const
+bool CNavPath::IsAtEnd(const Vector& pos) const
 {
 	if (!IsValid())
 		return false;
@@ -145,7 +145,7 @@ float CNavPath::GetLength() const
 
 // Return point a given distance along the path - if distance is out of path bounds, point is clamped to start/end
 // TODO: Be careful of returning "positions" along one-way drops, ladders, etc.
-NOXREF bool CNavPath::GetPointAlongPath(float distAlong, Vector *pointOnPath) const
+NOXREF bool CNavPath::GetPointAlongPath(float distAlong, Vector* pointOnPath) const
 {
 	if (!IsValid() || !pointOnPath)
 		return false;
@@ -210,14 +210,14 @@ int CNavPath::GetSegmentIndexAlongPath(float distAlong) const
 
 // Compute closest point on path to given point
 // NOTE: This does not do line-of-sight tests, so closest point may be thru the floor, etc
-NOXREF bool CNavPath::FindClosestPointOnPath(const Vector *worldPos, int startIndex, int endIndex, Vector *close) const
+NOXREF bool CNavPath::FindClosestPointOnPath(const Vector* worldPos, int startIndex, int endIndex, Vector* close) const
 {
 	if (!IsValid() || !close)
 		return false;
 
 	Vector along, toWorldPos;
 	Vector pos;
-	const Vector *from, *to;
+	const Vector* from, * to;
 	float length;
 	float closeLength;
 	float closeDistSq = 9999999999.9;
@@ -262,15 +262,15 @@ NOXREF bool CNavPath::FindClosestPointOnPath(const Vector *worldPos, int startIn
 }
 
 // Build trivial path when start and goal are in the same nav area
-bool CNavPath::BuildTrivialPath(const Vector *start, const Vector *goal)
+bool CNavPath::BuildTrivialPath(const Vector* start, const Vector* goal)
 {
 	m_segmentCount = 0;
 
-	CNavArea *startArea = TheNavAreaGrid.GetNearestNavArea(start);
+	CNavArea* startArea = TheNavAreaGrid.GetNearestNavArea(start);
 	if (!startArea)
 		return false;
 
-	CNavArea *goalArea = TheNavAreaGrid.GetNearestNavArea(goal);
+	CNavArea* goalArea = TheNavAreaGrid.GetNearestNavArea(goal);
 	if (!goalArea)
 		return false;
 
@@ -322,15 +322,15 @@ int CNavPath::FindNextOccludedNode(int anchor)
 			return i;
 		}
 
-		Vector anchorPlusHalf =  m_path[anchor].pos + Vector(0, 0, HalfHumanHeight);
-		Vector iPlusHalf =  m_path[i].pos + Vector(0, 0, HalfHumanHeight);
+		Vector anchorPlusHalf = m_path[anchor].pos + Vector(0, 0, HalfHumanHeight);
+		Vector iPlusHalf = m_path[i].pos + Vector(0, 0, HalfHumanHeight);
 		if (!IsWalkableTraceLineClear(anchorPlusHalf, iPlusHalf))
 		{
 			// cant see this node from anchor node
 			return i;
 		}
 
-		Vector anchorPlusFull =  m_path[anchor].pos + Vector(0, 0, HumanHeight);
+		Vector anchorPlusFull = m_path[anchor].pos + Vector(0, 0, HumanHeight);
 		Vector iPlusFull = m_path[i].pos + Vector(0, 0, HumanHeight);
 		if (!IsWalkableTraceLineClear(anchorPlusFull, iPlusFull))
 		{
@@ -400,7 +400,7 @@ void CNavPathFollower::Update(float deltaT, bool avoidObstacles)
 	if (!m_path || m_path->IsValid() == false)
 		return;
 
-	const CNavPath::PathSegment *node = (*m_path)[m_segmentIndex];
+	const CNavPath::PathSegment* node = (*m_path)[m_segmentIndex];
 
 	if (!node)
 	{
@@ -412,8 +412,8 @@ void CNavPathFollower::Update(float deltaT, bool avoidObstacles)
 	// handle ladders
 	if (node->ladder)
 	{
-		const Vector *approachPos = nullptr;
-		const Vector *departPos = nullptr;
+		const Vector* approachPos = nullptr;
+		const Vector* departPos = nullptr;
 
 		if (m_segmentIndex)
 			approachPos = &(*m_path)[m_segmentIndex - 1]->pos;
@@ -480,7 +480,7 @@ void CNavPathFollower::Update(float deltaT, bool avoidObstacles)
 		bool didCrouch = false;
 		for (int i = m_segmentIndex; i < m_path->GetSegmentCount(); i++)
 		{
-			const CNavArea *to = (*m_path)[i]->area;
+			const CNavArea* to = (*m_path)[i]->area;
 
 			// if there is a jump area on the way to the crouch area, don't crouch as it messes up the jump
 			if (to->GetAttributes() & NAV_JUMP)
@@ -540,7 +540,7 @@ void CNavPathFollower::Update(float deltaT, bool avoidObstacles)
 		{
 			// we can't reach the goal position
 			// check if we can reach the next node, in case this was a "jump down" situation
-			const CNavPath::PathSegment *nextNode = (*m_path)[m_behindIndex + 1];
+			const CNavPath::PathSegment* nextNode = (*m_path)[m_behindIndex + 1];
 			if (m_behindIndex >= 0 && nextNode)
 			{
 				if (nextNode->pos.z - m_improv->GetFeet().z > JumpCrouchHeight)
@@ -583,13 +583,13 @@ void CNavPathFollower::Update(float deltaT, bool avoidObstacles)
 
 // Return the closest point to our current position on our current path
 // If "local" is true, only check the portion of the path surrounding m_pathIndex
-int CNavPathFollower::FindOurPositionOnPath(Vector *close, bool local) const
+int CNavPathFollower::FindOurPositionOnPath(Vector* close, bool local) const
 {
 	Vector along, toFeet;
 	Vector feet = m_improv->GetFeet();
 	Vector eyes = m_improv->GetEyes();
 	Vector pos;
-	const Vector *from, *to;
+	const Vector* from, * to;
 	real_t length;
 	float closeLength;
 	float closeDistSq = 1.0e10;
@@ -667,7 +667,7 @@ int CNavPathFollower::FindOurPositionOnPath(Vector *close, bool local) const
 
 // Compute a point a fixed distance ahead along our path
 // Returns path index just after point
-int CNavPathFollower::FindPathPoint(float aheadRange, Vector *point, int *prevIndex)
+int CNavPathFollower::FindPathPoint(float aheadRange, Vector* point, int* prevIndex)
 {
 	// find path index just past aheadRange
 	int afterIndex;
@@ -833,8 +833,8 @@ int CNavPathFollower::FindPathPoint(float aheadRange, Vector *point, int *prevIn
 	else
 	{
 		// interpolate point along path segment
-		const Vector *afterPoint = &(*m_path)[afterIndex]->pos;
-		const Vector *beforePoint = &(*m_path)[afterIndex - 1]->pos;
+		const Vector* afterPoint = &(*m_path)[afterIndex]->pos;
+		const Vector* beforePoint = &(*m_path)[afterIndex - 1]->pos;
 
 		Vector to = *afterPoint - *beforePoint;
 		float length = to.Length2D();
@@ -855,7 +855,7 @@ int CNavPathFollower::FindPathPoint(float aheadRange, Vector *point, int *prevIn
 			float dt = sightStepSize / length;
 
 			Vector probe = *point + Vector(0, 0, HalfHumanHeight);
-			while (t > 0.0f && !IsWalkableTraceLineClear(eyes,  probe, WALK_THRU_BREAKABLES))
+			while (t > 0.0f && !IsWalkableTraceLineClear(eyes, probe, WALK_THRU_BREAKABLES))
 			{
 				t -= dt;
 				*point = *beforePoint + t * to;
@@ -908,7 +908,7 @@ int CNavPathFollower::FindPathPoint(float aheadRange, Vector *point, int *prevIn
 
 // Do reflex avoidance movements if our "feelers" are touched
 // TODO: Parameterize feeler spacing
-void CNavPathFollower::FeelerReflexAdjustment(Vector *goalPosition, float height)
+void CNavPathFollower::FeelerReflexAdjustment(Vector* goalPosition, float height)
 {
 	// if we are in a "precise" area, do not do feeler adjustments
 	if (m_improv->GetLastKnownArea() && (m_improv->GetLastKnownArea()->GetAttributes() & NAV_PRECISE))
@@ -1022,7 +1022,7 @@ void CStuckMonitor::Reset()
 }
 
 // Test if the improv has become stuck
-void CStuckMonitor::Update(CImprov *improv)
+void CStuckMonitor::Update(CImprov* improv)
 {
 	if (m_isStuck)
 	{

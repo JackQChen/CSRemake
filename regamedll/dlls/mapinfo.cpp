@@ -1,6 +1,6 @@
 #include "precompiled.h"
 
-CMapInfo *g_pMapInfo = nullptr;
+CMapInfo* g_pMapInfo = nullptr;
 
 void CMapInfo::OnCreate()
 {
@@ -65,7 +65,7 @@ void CMapInfo::CheckMapInfo()
 	CSGameRules()->m_bTCantBuy = bTCantBuy;
 }
 
-void CMapInfo::KeyValue(KeyValueData *pkvd)
+void CMapInfo::KeyValue(KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "buying"))
 	{

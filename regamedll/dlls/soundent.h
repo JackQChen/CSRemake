@@ -69,7 +69,7 @@ public:
 // A single instance of this entity spawns when
 // the world spawns. The SoundEnt's job is to update the
 // world's Free and Active sound lists.
-class CSoundEnt: public CBaseEntity
+class CSoundEnt : public CBaseEntity
 {
 public:
 	virtual void Spawn();
@@ -80,7 +80,7 @@ public:
 public:
 	void Initialize();
 
-	static void InsertSound(int iType, const Vector &vecOrigin, int iVolume, float flDuration);
+	static void InsertSound(int iType, const Vector& vecOrigin, int iVolume, float flDuration);
 	static void FreeSound(int iSound, int iPrevious);
 
 	// return the head of the active list
@@ -90,8 +90,8 @@ public:
 	static int FreeList();
 
 	// return a pointer for this index in the sound list
-	static CSound *SoundPointerForIndex(int iIndex);
-	static int ClientSoundIndex(edict_t *pClient);
+	static CSound* SoundPointerForIndex(int iIndex);
+	static int ClientSoundIndex(edict_t* pClient);
 
 	BOOL IsEmpty() const { return m_iActiveSound == SOUNDLIST_EMPTY; }
 
@@ -108,4 +108,4 @@ private:
 	CSound m_SoundPool[MAX_WORLD_SOUNDS];
 };
 
-extern CSoundEnt *pSoundEnt;
+extern CSoundEnt* pSoundEnt;

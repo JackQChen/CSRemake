@@ -30,15 +30,15 @@
 
 #define SF_LIGHT_START_OFF BIT(0)
 
-class CLight: public CPointEntity
+class CLight : public CPointEntity
 {
 public:
 	virtual void Spawn();
 	virtual void Restart();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 	static TYPEDESCRIPTION m_SaveData[];
 
@@ -48,9 +48,9 @@ private:
 	BOOL m_iStartedOff;
 };
 
-class CEnvLight: public CLight
+class CEnvLight : public CLight
 {
 public:
 	virtual void Spawn();
-	virtual void KeyValue(KeyValueData *pkvd);
+	virtual void KeyValue(KeyValueData* pkvd);
 };

@@ -2,10 +2,10 @@
 
 NavDirType Opposite[NUM_DIRECTIONS] = { SOUTH, WEST, NORTH, EAST };
 
-CNavNode *CNavNode::m_list = nullptr;
+CNavNode* CNavNode::m_list = nullptr;
 unsigned int CNavNode::m_listLength = 0;
 
-CNavNode::CNavNode(const Vector *pos, const Vector *normal, CNavNode *parent)
+CNavNode::CNavNode(const Vector* pos, const Vector* normal, CNavNode* parent)
 {
 	m_pos = *pos;
 	m_normal = *normal;
@@ -30,17 +30,17 @@ CNavNode::CNavNode(const Vector *pos, const Vector *normal, CNavNode *parent)
 }
 
 // Create a connection FROM this node TO the given node, in the given direction
-void CNavNode::ConnectTo(CNavNode *node, NavDirType dir)
+void CNavNode::ConnectTo(CNavNode* node, NavDirType dir)
 {
 	m_to[dir] = node;
 }
 
 // Return node at given position
 // TODO: Need a hash table to make this lookup fast
-const CNavNode *CNavNode::GetNode(const Vector *pos)
+const CNavNode* CNavNode::GetNode(const Vector* pos)
 {
 	const float tolerance = 0.45f * GenerationStepSize;
-	for (const CNavNode *node = m_list; node; node = node->m_next)
+	for (const CNavNode* node = m_list; node; node = node->m_next)
 	{
 		float dx = Q_abs(node->m_pos.x - pos->x);
 		float dy = Q_abs(node->m_pos.y - pos->y);
@@ -57,7 +57,7 @@ const CNavNode *CNavNode::GetNode(const Vector *pos)
 // another node in the given direction
 BOOL CNavNode::IsBiLinked(NavDirType dir) const
 {
-	if (m_to[dir] &&  m_to[dir]->m_to[Opposite[dir]] == this)
+	if (m_to[dir] && m_to[dir]->m_to[Opposite[dir]] == this)
 		return true;
 
 	return false;

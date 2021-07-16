@@ -28,22 +28,22 @@
 
 #pragma once
 
-class CCycler: public CBaseMonster
+class CCycler : public CBaseMonster
 {
 public:
 	virtual void Spawn();
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
 	virtual int ObjectCaps() { return (CBaseEntity::ObjectCaps() | FCAP_IMPULSE_USE); }
-	virtual BOOL TakeDamage(entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType);
+	virtual BOOL TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType);
 
 	// Don't treat as a live target
 	virtual BOOL IsAlive() { return FALSE; }
 	virtual void Think();
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 protected:
-	void GenericCyclerSpawn(const char *szModel, Vector vecMin, Vector vecMax);
+	void GenericCyclerSpawn(const char* szModel, Vector vecMin, Vector vecMax);
 
 public:
 	static TYPEDESCRIPTION m_SaveData[];
@@ -52,30 +52,30 @@ public:
 };
 
 // We should get rid of all the other cyclers and replace them with this.
-class CGenericCycler: public CCycler
+class CGenericCycler : public CCycler
 {
 public:
 	virtual void Spawn();
 };
 
 // Probe droid imported for tech demo compatibility
-class CCyclerProbe: public CCycler
+class CCyclerProbe : public CCycler
 {
 public:
 	virtual void Spawn();
 };
 
-class CCyclerSprite: public CBaseEntity
+class CCyclerSprite : public CBaseEntity
 {
 public:
 	virtual void Spawn();
 	virtual void Restart();
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
 	virtual int ObjectCaps() { return (CBaseEntity::ObjectCaps() | FCAP_DONT_SAVE | FCAP_IMPULSE_USE); }
-	virtual BOOL TakeDamage(entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType);
+	virtual BOOL TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType);
 	virtual void Think();
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 public:
 	void Animate(float frames);
@@ -93,11 +93,11 @@ public:
 	vec3_t m_rendercolor;
 };
 
-class CWeaponCycler: public CBasePlayerWeapon
+class CWeaponCycler : public CBasePlayerWeapon
 {
 public:
 	virtual void Spawn();
-	virtual int GetItemInfo(ItemInfo *p) { return 0; }
+	virtual int GetItemInfo(ItemInfo* p) { return 0; }
 	virtual BOOL Deploy();
 	virtual void Holster(int skiplocal = 0);
 	virtual int iItemSlot() { return 1; }
@@ -110,13 +110,13 @@ public:
 };
 
 // Flaming Wreakage
-class CWreckage: public CBaseMonster
+class CWreckage : public CBaseMonster
 {
 public:
 	virtual void Spawn();
 	virtual void Precache();
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
 	virtual void Think();
 
 public:

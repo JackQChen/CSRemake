@@ -28,55 +28,55 @@
 
 #pragma once
 
-class CCSTutorStateSystem: public CBaseTutorStateSystem
+class CCSTutorStateSystem : public CBaseTutorStateSystem
 {
 public:
 	CCSTutorStateSystem();
 
 	virtual ~CCSTutorStateSystem();
-	virtual bool UpdateState(GameEventType event, CBaseEntity *pEntity, CBaseEntity *pOther);
-	virtual const char *GetCurrentStateString();
+	virtual bool UpdateState(GameEventType event, CBaseEntity* pEntity, CBaseEntity* pOther);
+	virtual const char* GetCurrentStateString();
 
 protected:
-	virtual CBaseTutorState *ConstructNewState(TutorStateType stateType);
+	virtual CBaseTutorState* ConstructNewState(TutorStateType stateType);
 };
 
-class CCSTutorUndefinedState: public CBaseTutorState
+class CCSTutorUndefinedState : public CBaseTutorState
 {
 public:
 	CCSTutorUndefinedState();
 
 	virtual ~CCSTutorUndefinedState();
-	virtual TutorStateType CheckForStateTransition(GameEventType event, CBaseEntity *pEntity, CBaseEntity *pOther);
-	virtual const char *GetStateString();
+	virtual TutorStateType CheckForStateTransition(GameEventType event, CBaseEntity* pEntity, CBaseEntity* pOther);
+	virtual const char* GetStateString();
 
 protected:
-	TutorStateType HandlePlayerSpawned(CBaseEntity *pEntity, CBaseEntity *pOther);
+	TutorStateType HandlePlayerSpawned(CBaseEntity* pEntity, CBaseEntity* pOther);
 };
 
-class CCSTutorWaitingForStartState: public CBaseTutorState
+class CCSTutorWaitingForStartState : public CBaseTutorState
 {
 public:
 	CCSTutorWaitingForStartState();
 
 	virtual ~CCSTutorWaitingForStartState();
-	virtual TutorStateType CheckForStateTransition(GameEventType event, CBaseEntity *pEntity, CBaseEntity *pOther);
-	virtual const char *GetStateString();
+	virtual TutorStateType CheckForStateTransition(GameEventType event, CBaseEntity* pEntity, CBaseEntity* pOther);
+	virtual const char* GetStateString();
 
 protected:
-	TutorStateType HandlePlayerSpawned(CBaseEntity *pEntity, CBaseEntity *pOther);
-	TutorStateType HandleBuyTimeStart(CBaseEntity *pEntity, CBaseEntity *pOther);
+	TutorStateType HandlePlayerSpawned(CBaseEntity* pEntity, CBaseEntity* pOther);
+	TutorStateType HandleBuyTimeStart(CBaseEntity* pEntity, CBaseEntity* pOther);
 };
 
-class CCSTutorBuyMenuState: public CBaseTutorState
+class CCSTutorBuyMenuState : public CBaseTutorState
 {
 public:
 	CCSTutorBuyMenuState();
 
 	virtual ~CCSTutorBuyMenuState();
-	virtual TutorStateType CheckForStateTransition(GameEventType event, CBaseEntity *pEntity, CBaseEntity *pOther);
-	virtual const char *GetStateString();
+	virtual TutorStateType CheckForStateTransition(GameEventType event, CBaseEntity* pEntity, CBaseEntity* pOther);
+	virtual const char* GetStateString();
 
 protected:
-	TutorStateType HandleRoundStart(CBaseEntity *pEntity, CBaseEntity *pOther);
+	TutorStateType HandleRoundStart(CBaseEntity* pEntity, CBaseEntity* pOther);
 };

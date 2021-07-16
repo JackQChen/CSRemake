@@ -4,70 +4,70 @@ WeaponStruct g_weaponStruct[MAX_WEAPONS] =
 {
 	{ 0, 0, 0, 0, 0 },
 
-	{ WEAPON_P228,      P228_PRICE,         TERRORIST|CT,   AUTOBUYCLASS_SECONDARY, AMMO_357SIG_PRICE   },
-	{ WEAPON_SCOUT,     SCOUT_PRICE,        TERRORIST|CT,   AUTOBUYCLASS_PRIMARY,   AMMO_762MM_PRICE    },
-	{ WEAPON_XM1014,    XM1014_PRICE,       TERRORIST|CT,   AUTOBUYCLASS_PRIMARY,   AMMO_BUCKSHOT_PRICE },
+	{ WEAPON_P228,      P228_PRICE,         TERRORIST | CT,   AUTOBUYCLASS_SECONDARY, AMMO_357SIG_PRICE   },
+	{ WEAPON_SCOUT,     SCOUT_PRICE,        TERRORIST | CT,   AUTOBUYCLASS_PRIMARY,   AMMO_762MM_PRICE    },
+	{ WEAPON_XM1014,    XM1014_PRICE,       TERRORIST | CT,   AUTOBUYCLASS_PRIMARY,   AMMO_BUCKSHOT_PRICE },
 	{ WEAPON_MAC10,     MAC10_PRICE,        CT,             AUTOBUYCLASS_PRIMARY,   AMMO_45ACP_PRICE    },
 	{ WEAPON_AUG,       AUG_PRICE,          TERRORIST,      AUTOBUYCLASS_PRIMARY,   AMMO_556MM_PRICE    },
 	{ WEAPON_ELITE,     ELITE_PRICE,        CT,             AUTOBUYCLASS_SECONDARY, AMMO_9MM_PRICE      },
-	{ WEAPON_FIVESEVEN, FIVESEVEN_PRICE,    TERRORIST|CT,   AUTOBUYCLASS_SECONDARY, AMMO_57MM_PRICE     },
+	{ WEAPON_FIVESEVEN, FIVESEVEN_PRICE,    TERRORIST | CT,   AUTOBUYCLASS_SECONDARY, AMMO_57MM_PRICE     },
 	{ WEAPON_UMP45,     UMP45_PRICE,        TERRORIST,      AUTOBUYCLASS_PRIMARY,   AMMO_45ACP_PRICE    },
 	{ WEAPON_SG550,     SG550_PRICE,        TERRORIST,      AUTOBUYCLASS_PRIMARY,   AMMO_556MM_PRICE    },
-	{ WEAPON_USP,       USP_PRICE,          TERRORIST|CT,   AUTOBUYCLASS_SECONDARY, AMMO_45ACP_PRICE    },
-	{ WEAPON_GLOCK18,   GLOCK18_PRICE,      TERRORIST|CT,   AUTOBUYCLASS_SECONDARY, AMMO_9MM_PRICE      },
-	{ WEAPON_MP5N,      MP5NAVY_PRICE,      TERRORIST|CT,   AUTOBUYCLASS_PRIMARY,   AMMO_9MM_PRICE      },
-	{ WEAPON_AWP,       AWP_PRICE,          TERRORIST|CT,   AUTOBUYCLASS_PRIMARY,   AMMO_338MAG_PRICE   },
-	{ WEAPON_M249,      M249_PRICE,         TERRORIST|CT,   AUTOBUYCLASS_PRIMARY,   AMMO_556MM_PRICE    },
-	{ WEAPON_M3,        M3_PRICE,           TERRORIST|CT,   AUTOBUYCLASS_PRIMARY,   AMMO_BUCKSHOT_PRICE },
+	{ WEAPON_USP,       USP_PRICE,          TERRORIST | CT,   AUTOBUYCLASS_SECONDARY, AMMO_45ACP_PRICE    },
+	{ WEAPON_GLOCK18,   GLOCK18_PRICE,      TERRORIST | CT,   AUTOBUYCLASS_SECONDARY, AMMO_9MM_PRICE      },
+	{ WEAPON_MP5N,      MP5NAVY_PRICE,      TERRORIST | CT,   AUTOBUYCLASS_PRIMARY,   AMMO_9MM_PRICE      },
+	{ WEAPON_AWP,       AWP_PRICE,          TERRORIST | CT,   AUTOBUYCLASS_PRIMARY,   AMMO_338MAG_PRICE   },
+	{ WEAPON_M249,      M249_PRICE,         TERRORIST | CT,   AUTOBUYCLASS_PRIMARY,   AMMO_556MM_PRICE    },
+	{ WEAPON_M3,        M3_PRICE,           TERRORIST | CT,   AUTOBUYCLASS_PRIMARY,   AMMO_BUCKSHOT_PRICE },
 	{ WEAPON_M4A1,      M4A1_PRICE,         TERRORIST,      AUTOBUYCLASS_PRIMARY,   AMMO_556MM_PRICE    },
 	{ WEAPON_TMP,       TMP_PRICE,          TERRORIST,      AUTOBUYCLASS_PRIMARY,   AMMO_9MM_PRICE      },
 	{ WEAPON_G3SG1,     G3SG1_PRICE,        CT,             AUTOBUYCLASS_PRIMARY,   AMMO_762MM_PRICE    },
-	{ WEAPON_DEAGLE,    DEAGLE_PRICE,       TERRORIST|CT,   AUTOBUYCLASS_SECONDARY, AMMO_50AE_PRICE     },
+	{ WEAPON_DEAGLE,    DEAGLE_PRICE,       TERRORIST | CT,   AUTOBUYCLASS_SECONDARY, AMMO_50AE_PRICE     },
 	{ WEAPON_SG552,     SG552_PRICE,        CT,             AUTOBUYCLASS_PRIMARY,   AMMO_556MM_PRICE    },
 	{ WEAPON_AK47,      AK47_PRICE,         CT,             AUTOBUYCLASS_PRIMARY,   AMMO_762MM_PRICE    },
-	{ WEAPON_P90,       P90_PRICE,          TERRORIST|CT,   AUTOBUYCLASS_PRIMARY,   AMMO_57MM_PRICE     },
+	{ WEAPON_P90,       P90_PRICE,          TERRORIST | CT,   AUTOBUYCLASS_PRIMARY,   AMMO_57MM_PRICE     },
 	{ WEAPON_FAMAS,     FAMAS_PRICE,        TERRORIST,      AUTOBUYCLASS_PRIMARY,   AMMO_556MM_PRICE    },
 	{ WEAPON_GALIL,     GALIL_PRICE,        CT,             AUTOBUYCLASS_PRIMARY,   AMMO_556MM_PRICE    },
-				// FIX: there is a bug, the cost of galil $2000 instead $2250
+	// FIX: there is a bug, the cost of galil $2000 instead $2250
 
-	{ WEAPON_SHIELDGUN, SHIELDGUN_PRICE,    TERRORIST,      AUTOBUYCLASS_PRIMARY,   0                   },
+{ WEAPON_SHIELDGUN, SHIELDGUN_PRICE,    TERRORIST,      AUTOBUYCLASS_PRIMARY,   0                   },
 
-	{ 0, 0, 0, 0, 0 },
-	{ 0, 0, 0, 0, 0 },
-	{ 0, 0, 0, 0, 0 },
-	{ 0, 0, 0, 0, 0 },
-	{ 0, 0, 0, 0, 0 },
-	{ 0, 0, 0, 0, 0 },
+{ 0, 0, 0, 0, 0 },
+{ 0, 0, 0, 0, 0 },
+{ 0, 0, 0, 0, 0 },
+{ 0, 0, 0, 0, 0 },
+{ 0, 0, 0, 0, 0 },
+{ 0, 0, 0, 0, 0 },
 };
 
 AutoBuyInfoStruct g_autoBuyInfo[] =
 {
-	{ AUTOBUYCLASS_PRIMARY|AUTOBUYCLASS_RIFLE,      "galil",    "weapon_galil"          },
-	{ AUTOBUYCLASS_PRIMARY|AUTOBUYCLASS_RIFLE,      "ak47",     "weapon_ak47"           },
-	{ AUTOBUYCLASS_PRIMARY|AUTOBUYCLASS_SNIPERRIFLE,"scout",    "weapon_scout"          },
-	{ AUTOBUYCLASS_PRIMARY|AUTOBUYCLASS_RIFLE,      "sg552",    "weapon_sg552"          },
-	{ AUTOBUYCLASS_PRIMARY|AUTOBUYCLASS_SNIPERRIFLE,"awp",      "weapon_awp"            },
-	{ AUTOBUYCLASS_PRIMARY|AUTOBUYCLASS_SNIPERRIFLE,"g3sg1",    "weapon_g3sg1"          },
-	{ AUTOBUYCLASS_PRIMARY|AUTOBUYCLASS_RIFLE,      "famas",    "weapon_famas"          },
-	{ AUTOBUYCLASS_PRIMARY|AUTOBUYCLASS_RIFLE,      "m4a1",     "weapon_m4a1"           },
-	{ AUTOBUYCLASS_PRIMARY|AUTOBUYCLASS_RIFLE,      "aug",      "weapon_aug"            },
-	{ AUTOBUYCLASS_PRIMARY|AUTOBUYCLASS_SNIPERRIFLE,"sg550",    "weapon_sg550"          },
-	{ AUTOBUYCLASS_SECONDARY|AUTOBUYCLASS_PISTOL,   "glock",    "weapon_glock18"        },
-	{ AUTOBUYCLASS_SECONDARY|AUTOBUYCLASS_PISTOL,   "usp",      "weapon_usp"            },
-	{ AUTOBUYCLASS_SECONDARY|AUTOBUYCLASS_PISTOL,   "p228",     "weapon_p228"           },
-	{ AUTOBUYCLASS_SECONDARY|AUTOBUYCLASS_PISTOL,   "deagle",   "weapon_deagle"         },
-	{ AUTOBUYCLASS_SECONDARY|AUTOBUYCLASS_PISTOL,   "elites",   "weapon_elite"          },
-	{ AUTOBUYCLASS_SECONDARY|AUTOBUYCLASS_PISTOL,   "fn57",     "weapon_fiveseven"      },
-	{ AUTOBUYCLASS_PRIMARY|AUTOBUYCLASS_SHOTGUN,    "m3",       "weapon_m3"             },
-	{ AUTOBUYCLASS_PRIMARY|AUTOBUYCLASS_SHOTGUN,    "xm1014",   "weapon_xm1014"         },
-	{ AUTOBUYCLASS_PRIMARY|AUTOBUYCLASS_SMG,        "mac10",    "weapon_mac10"          },
-	{ AUTOBUYCLASS_PRIMARY|AUTOBUYCLASS_SMG,        "tmp",      "weapon_tmp"            },
-	{ AUTOBUYCLASS_PRIMARY|AUTOBUYCLASS_SMG,        "mp5",      "weapon_mp5navy"        },
-	{ AUTOBUYCLASS_PRIMARY|AUTOBUYCLASS_SMG,        "ump45",    "weapon_ump45"          },
-	{ AUTOBUYCLASS_PRIMARY|AUTOBUYCLASS_SMG,        "p90",      "weapon_p90"            },
-	{ AUTOBUYCLASS_PRIMARY|AUTOBUYCLASS_MACHINEGUN, "m249",     "weapon_m249"           },
-	{ AUTOBUYCLASS_PRIMARY|AUTOBUYCLASS_AMMO,       "primammo", "primammo"              },
-	{ AUTOBUYCLASS_SECONDARY|AUTOBUYCLASS_AMMO,     "secammo",  "secammo"               },
+	{ AUTOBUYCLASS_PRIMARY | AUTOBUYCLASS_RIFLE,      "galil",    "weapon_galil"          },
+	{ AUTOBUYCLASS_PRIMARY | AUTOBUYCLASS_RIFLE,      "ak47",     "weapon_ak47"           },
+	{ AUTOBUYCLASS_PRIMARY | AUTOBUYCLASS_SNIPERRIFLE,"scout",    "weapon_scout"          },
+	{ AUTOBUYCLASS_PRIMARY | AUTOBUYCLASS_RIFLE,      "sg552",    "weapon_sg552"          },
+	{ AUTOBUYCLASS_PRIMARY | AUTOBUYCLASS_SNIPERRIFLE,"awp",      "weapon_awp"            },
+	{ AUTOBUYCLASS_PRIMARY | AUTOBUYCLASS_SNIPERRIFLE,"g3sg1",    "weapon_g3sg1"          },
+	{ AUTOBUYCLASS_PRIMARY | AUTOBUYCLASS_RIFLE,      "famas",    "weapon_famas"          },
+	{ AUTOBUYCLASS_PRIMARY | AUTOBUYCLASS_RIFLE,      "m4a1",     "weapon_m4a1"           },
+	{ AUTOBUYCLASS_PRIMARY | AUTOBUYCLASS_RIFLE,      "aug",      "weapon_aug"            },
+	{ AUTOBUYCLASS_PRIMARY | AUTOBUYCLASS_SNIPERRIFLE,"sg550",    "weapon_sg550"          },
+	{ AUTOBUYCLASS_SECONDARY | AUTOBUYCLASS_PISTOL,   "glock",    "weapon_glock18"        },
+	{ AUTOBUYCLASS_SECONDARY | AUTOBUYCLASS_PISTOL,   "usp",      "weapon_usp"            },
+	{ AUTOBUYCLASS_SECONDARY | AUTOBUYCLASS_PISTOL,   "p228",     "weapon_p228"           },
+	{ AUTOBUYCLASS_SECONDARY | AUTOBUYCLASS_PISTOL,   "deagle",   "weapon_deagle"         },
+	{ AUTOBUYCLASS_SECONDARY | AUTOBUYCLASS_PISTOL,   "elites",   "weapon_elite"          },
+	{ AUTOBUYCLASS_SECONDARY | AUTOBUYCLASS_PISTOL,   "fn57",     "weapon_fiveseven"      },
+	{ AUTOBUYCLASS_PRIMARY | AUTOBUYCLASS_SHOTGUN,    "m3",       "weapon_m3"             },
+	{ AUTOBUYCLASS_PRIMARY | AUTOBUYCLASS_SHOTGUN,    "xm1014",   "weapon_xm1014"         },
+	{ AUTOBUYCLASS_PRIMARY | AUTOBUYCLASS_SMG,        "mac10",    "weapon_mac10"          },
+	{ AUTOBUYCLASS_PRIMARY | AUTOBUYCLASS_SMG,        "tmp",      "weapon_tmp"            },
+	{ AUTOBUYCLASS_PRIMARY | AUTOBUYCLASS_SMG,        "mp5",      "weapon_mp5navy"        },
+	{ AUTOBUYCLASS_PRIMARY | AUTOBUYCLASS_SMG,        "ump45",    "weapon_ump45"          },
+	{ AUTOBUYCLASS_PRIMARY | AUTOBUYCLASS_SMG,        "p90",      "weapon_p90"            },
+	{ AUTOBUYCLASS_PRIMARY | AUTOBUYCLASS_MACHINEGUN, "m249",     "weapon_m249"           },
+	{ AUTOBUYCLASS_PRIMARY | AUTOBUYCLASS_AMMO,       "primammo", "primammo"              },
+	{ AUTOBUYCLASS_SECONDARY | AUTOBUYCLASS_AMMO,     "secammo",  "secammo"               },
 	{ AUTOBUYCLASS_ARMOR,                           "vest",     "item_kevlar"           },
 	{ AUTOBUYCLASS_ARMOR,                           "vesthelm", "item_assaultsuit"      },
 	{ AUTOBUYCLASS_GRENADE,                         "flash",    "weapon_flashbang"      },
@@ -75,7 +75,7 @@ AutoBuyInfoStruct g_autoBuyInfo[] =
 	{ AUTOBUYCLASS_GRENADE,                         "sgren",    "weapon_smokegrenade"   },
 	{ AUTOBUYCLASS_NIGHTVISION,                     "nvgs",     "nvgs"                  },
 	{ AUTOBUYCLASS_DEFUSER,                         "defuser",  "defuser"               },
-	{ AUTOBUYCLASS_PRIMARY|AUTOBUYCLASS_SHIELD,     "shield",   "shield"                },
+	{ AUTOBUYCLASS_PRIMARY | AUTOBUYCLASS_SHIELD,     "shield",   "shield"                },
 	{ AUTOBUYCLASS_NONE,                            nullptr,     nullptr                },
 };
 
@@ -223,49 +223,49 @@ WeaponInfoStruct g_weaponInfo_default[] =
 {
 	{ WEAPON_P228,      P228_PRICE,         AMMO_357SIG_PRICE,                           AMMO_357SIG_BUY,       P228_MAX_CLIP,      MAX_AMMO_357SIG,        AMMO_357SIG,        "weapon_p228",         "ammo_357sig",     "357SIG"       },
 
-// fix collision with glock18
-#ifdef REGAMEDLL_FIXES
-	{ WEAPON_GLOCK,     GLOCK18_PRICE,      AMMO_9MM_PRICE,                              AMMO_9MM_BUY,          GLOCK18_MAX_CLIP,   MAX_AMMO_9MM,           AMMO_9MM,           "weapon_glock",        "ammo_9mm",        "9mm"          },
-#else
-	{ WEAPON_GLOCK,     GLOCK18_PRICE,      AMMO_9MM_PRICE,                              AMMO_9MM_BUY,          GLOCK18_MAX_CLIP,   MAX_AMMO_9MM,           AMMO_9MM,           "weapon_glock18",      "ammo_9mm",        "9mm"          },
-#endif
+	// fix collision with glock18
+	#ifdef REGAMEDLL_FIXES
+		{ WEAPON_GLOCK,     GLOCK18_PRICE,      AMMO_9MM_PRICE,                              AMMO_9MM_BUY,          GLOCK18_MAX_CLIP,   MAX_AMMO_9MM,           AMMO_9MM,           "weapon_glock",        "ammo_9mm",        "9mm"          },
+	#else
+		{ WEAPON_GLOCK,     GLOCK18_PRICE,      AMMO_9MM_PRICE,                              AMMO_9MM_BUY,          GLOCK18_MAX_CLIP,   MAX_AMMO_9MM,           AMMO_9MM,           "weapon_glock18",      "ammo_9mm",        "9mm"          },
+	#endif
 
-	{ WEAPON_GLOCK18,   GLOCK18_PRICE,      AMMO_9MM_PRICE,                              AMMO_9MM_BUY,          GLOCK18_MAX_CLIP,   MAX_AMMO_9MM,           AMMO_9MM,           "weapon_glock18",      "ammo_9mm",        "9mm"          },
-	{ WEAPON_SCOUT,     SCOUT_PRICE,        AMMO_762MM_PRICE,                            AMMO_762NATO_BUY,      SCOUT_MAX_CLIP,     MAX_AMMO_762NATO,       AMMO_762NATO,       "weapon_scout",        "ammo_762nato",    "762Nato"      },
-	{ WEAPON_XM1014,    XM1014_PRICE,       AMMO_BUCKSHOT_PRICE,                         AMMO_BUCKSHOT_BUY,     XM1014_MAX_CLIP,    MAX_AMMO_BUCKSHOT,      AMMO_BUCKSHOT,      "weapon_xm1014",       "ammo_buckshot",   "buckshot"     },
-	{ WEAPON_MAC10,     MAC10_PRICE,        AMMO_45ACP_PRICE,                            AMMO_45ACP_BUY,        MAC10_MAX_CLIP,     MAX_AMMO_45ACP,         AMMO_45ACP,         "weapon_mac10",        "ammo_45acp",      "45acp"        },
-	{ WEAPON_AUG,       AUG_PRICE,          AMMO_556MM_PRICE,                            AMMO_556NATO_BUY,      AUG_MAX_CLIP,       MAX_AMMO_556NATO,       AMMO_556NATO,       "weapon_aug",          "ammo_556nato",    "556Nato"      },
-	{ WEAPON_ELITE,     ELITE_PRICE,        AMMO_9MM_PRICE,                              AMMO_9MM_BUY,          ELITE_MAX_CLIP,     MAX_AMMO_9MM,           AMMO_9MM,           "weapon_elite",        "ammo_9mm",        "9mm"          },
-	{ WEAPON_FIVESEVEN, FIVESEVEN_PRICE,    AMMO_57MM_PRICE,                             AMMO_57MM_BUY,         FIVESEVEN_MAX_CLIP, MAX_AMMO_57MM,          AMMO_57MM,          "weapon_fiveseven",    "ammo_57mm",       "57mm"         },
-	{ WEAPON_UMP45,     UMP45_PRICE,        AMMO_45ACP_PRICE,                            AMMO_45ACP_BUY,        UMP45_MAX_CLIP,     MAX_AMMO_45ACP,         AMMO_45ACP,         "weapon_ump45",        "ammo_45acp",      "45acp"        },
-	{ WEAPON_SG550,     SG550_PRICE,        AMMO_556MM_PRICE,                            AMMO_556NATO_BUY,      SG550_MAX_CLIP,     MAX_AMMO_556NATO,       AMMO_556NATO,       "weapon_sg550",        "ammo_556nato",    "556Nato"      },
-	{ WEAPON_GALIL,     GALIL_PRICE,        AMMO_556MM_PRICE,                            AMMO_556NATO_BUY,      GALIL_MAX_CLIP,     MAX_AMMO_556NATO,       AMMO_556NATO,       "weapon_galil",        "ammo_556nato",    "556Nato"      },
-	{ WEAPON_FAMAS,     FAMAS_PRICE,        AMMO_556MM_PRICE,                            AMMO_556NATO_BUY,      FAMAS_MAX_CLIP,     MAX_AMMO_556NATO,       AMMO_556NATO,       "weapon_famas",        "ammo_556nato",    "556Nato"      },
-	{ WEAPON_USP,       USP_PRICE,          AMMO_45ACP_PRICE,                            AMMO_45ACP_BUY,        USP_MAX_CLIP,       MAX_AMMO_45ACP,         AMMO_45ACP,         "weapon_usp",          "ammo_45acp",      "45acp"        },
-	{ WEAPON_AWP,       AWP_PRICE,          AMMO_338MAG_PRICE,                           AMMO_338MAG_BUY,       AWP_MAX_CLIP,       MAX_AMMO_338MAGNUM,     AMMO_338MAGNUM,     "weapon_awp",          "ammo_338magnum",  "338Magnum"    },
-	{ WEAPON_MP5N,      MP5NAVY_PRICE,      AMMO_9MM_PRICE,                              AMMO_9MM_BUY,          MP5N_MAX_CLIP,      MAX_AMMO_9MM,           AMMO_9MM,           "weapon_mp5navy",      "ammo_9mm",        "9mm"          },
-	{ WEAPON_M249,      M249_PRICE,         AMMO_556MM_PRICE,                            AMMO_556NATOBOX_BUY,   M249_MAX_CLIP,      MAX_AMMO_556NATOBOX,    AMMO_556NATOBOX,    "weapon_m249",         "ammo_556natobox", "556NatoBox"   },
-	{ WEAPON_M3,        M3_PRICE,           AMMO_BUCKSHOT_PRICE,                         AMMO_BUCKSHOT_BUY,     M3_MAX_CLIP,        MAX_AMMO_BUCKSHOT,      AMMO_BUCKSHOT,      "weapon_m3",           "ammo_buckshot",   "buckshot"     },
-	{ WEAPON_M4A1,      M4A1_PRICE,         AMMO_556MM_PRICE,                            AMMO_556NATO_BUY,      M4A1_MAX_CLIP,      MAX_AMMO_556NATO,       AMMO_556NATO,       "weapon_m4a1",         "ammo_556nato",    "556Nato"      },
-	{ WEAPON_TMP,       TMP_PRICE,          AMMO_9MM_PRICE,                              AMMO_9MM_BUY,          TMP_MAX_CLIP,       MAX_AMMO_9MM,           AMMO_9MM,           "weapon_tmp",          "ammo_9mm",        "9mm"          },
-	{ WEAPON_G3SG1,     G3SG1_PRICE,        AMMO_762MM_PRICE,                            AMMO_762NATO_BUY,      G3SG1_MAX_CLIP,     MAX_AMMO_762NATO,       AMMO_762NATO,       "weapon_g3sg1",        "ammo_762nato",    "762Nato"      },
-	{ WEAPON_DEAGLE,    DEAGLE_PRICE,       AMMO_50AE_PRICE,                             AMMO_50AE_BUY,         DEAGLE_MAX_CLIP,    MAX_AMMO_50AE,          AMMO_50AE,          "weapon_deagle",       "ammo_50ae",       "50AE"         },
-	{ WEAPON_SG552,     SG552_PRICE,        AMMO_556MM_PRICE,                            AMMO_556NATO_BUY,      SG552_MAX_CLIP,     MAX_AMMO_556NATO,       AMMO_556NATO,       "weapon_sg552",        "ammo_556nato",    "556Nato"      },
-	{ WEAPON_AK47,      AK47_PRICE,         AMMO_762MM_PRICE,                            AMMO_762NATO_BUY,      AK47_MAX_CLIP,      MAX_AMMO_762NATO,       AMMO_762NATO,       "weapon_ak47",         "ammo_762nato",    "762Nato"      },
-	{ WEAPON_P90,       P90_PRICE,          AMMO_57MM_PRICE,                             AMMO_57MM_BUY,         P90_MAX_CLIP,       MAX_AMMO_57MM,          AMMO_57MM,          "weapon_p90",          "ammo_57mm",       "57mm"         },
+		{ WEAPON_GLOCK18,   GLOCK18_PRICE,      AMMO_9MM_PRICE,                              AMMO_9MM_BUY,          GLOCK18_MAX_CLIP,   MAX_AMMO_9MM,           AMMO_9MM,           "weapon_glock18",      "ammo_9mm",        "9mm"          },
+		{ WEAPON_SCOUT,     SCOUT_PRICE,        AMMO_762MM_PRICE,                            AMMO_762NATO_BUY,      SCOUT_MAX_CLIP,     MAX_AMMO_762NATO,       AMMO_762NATO,       "weapon_scout",        "ammo_762nato",    "762Nato"      },
+		{ WEAPON_XM1014,    XM1014_PRICE,       AMMO_BUCKSHOT_PRICE,                         AMMO_BUCKSHOT_BUY,     XM1014_MAX_CLIP,    MAX_AMMO_BUCKSHOT,      AMMO_BUCKSHOT,      "weapon_xm1014",       "ammo_buckshot",   "buckshot"     },
+		{ WEAPON_MAC10,     MAC10_PRICE,        AMMO_45ACP_PRICE,                            AMMO_45ACP_BUY,        MAC10_MAX_CLIP,     MAX_AMMO_45ACP,         AMMO_45ACP,         "weapon_mac10",        "ammo_45acp",      "45acp"        },
+		{ WEAPON_AUG,       AUG_PRICE,          AMMO_556MM_PRICE,                            AMMO_556NATO_BUY,      AUG_MAX_CLIP,       MAX_AMMO_556NATO,       AMMO_556NATO,       "weapon_aug",          "ammo_556nato",    "556Nato"      },
+		{ WEAPON_ELITE,     ELITE_PRICE,        AMMO_9MM_PRICE,                              AMMO_9MM_BUY,          ELITE_MAX_CLIP,     MAX_AMMO_9MM,           AMMO_9MM,           "weapon_elite",        "ammo_9mm",        "9mm"          },
+		{ WEAPON_FIVESEVEN, FIVESEVEN_PRICE,    AMMO_57MM_PRICE,                             AMMO_57MM_BUY,         FIVESEVEN_MAX_CLIP, MAX_AMMO_57MM,          AMMO_57MM,          "weapon_fiveseven",    "ammo_57mm",       "57mm"         },
+		{ WEAPON_UMP45,     UMP45_PRICE,        AMMO_45ACP_PRICE,                            AMMO_45ACP_BUY,        UMP45_MAX_CLIP,     MAX_AMMO_45ACP,         AMMO_45ACP,         "weapon_ump45",        "ammo_45acp",      "45acp"        },
+		{ WEAPON_SG550,     SG550_PRICE,        AMMO_556MM_PRICE,                            AMMO_556NATO_BUY,      SG550_MAX_CLIP,     MAX_AMMO_556NATO,       AMMO_556NATO,       "weapon_sg550",        "ammo_556nato",    "556Nato"      },
+		{ WEAPON_GALIL,     GALIL_PRICE,        AMMO_556MM_PRICE,                            AMMO_556NATO_BUY,      GALIL_MAX_CLIP,     MAX_AMMO_556NATO,       AMMO_556NATO,       "weapon_galil",        "ammo_556nato",    "556Nato"      },
+		{ WEAPON_FAMAS,     FAMAS_PRICE,        AMMO_556MM_PRICE,                            AMMO_556NATO_BUY,      FAMAS_MAX_CLIP,     MAX_AMMO_556NATO,       AMMO_556NATO,       "weapon_famas",        "ammo_556nato",    "556Nato"      },
+		{ WEAPON_USP,       USP_PRICE,          AMMO_45ACP_PRICE,                            AMMO_45ACP_BUY,        USP_MAX_CLIP,       MAX_AMMO_45ACP,         AMMO_45ACP,         "weapon_usp",          "ammo_45acp",      "45acp"        },
+		{ WEAPON_AWP,       AWP_PRICE,          AMMO_338MAG_PRICE,                           AMMO_338MAG_BUY,       AWP_MAX_CLIP,       MAX_AMMO_338MAGNUM,     AMMO_338MAGNUM,     "weapon_awp",          "ammo_338magnum",  "338Magnum"    },
+		{ WEAPON_MP5N,      MP5NAVY_PRICE,      AMMO_9MM_PRICE,                              AMMO_9MM_BUY,          MP5N_MAX_CLIP,      MAX_AMMO_9MM,           AMMO_9MM,           "weapon_mp5navy",      "ammo_9mm",        "9mm"          },
+		{ WEAPON_M249,      M249_PRICE,         AMMO_556MM_PRICE,                            AMMO_556NATOBOX_BUY,   M249_MAX_CLIP,      MAX_AMMO_556NATOBOX,    AMMO_556NATOBOX,    "weapon_m249",         "ammo_556natobox", "556NatoBox"   },
+		{ WEAPON_M3,        M3_PRICE,           AMMO_BUCKSHOT_PRICE,                         AMMO_BUCKSHOT_BUY,     M3_MAX_CLIP,        MAX_AMMO_BUCKSHOT,      AMMO_BUCKSHOT,      "weapon_m3",           "ammo_buckshot",   "buckshot"     },
+		{ WEAPON_M4A1,      M4A1_PRICE,         AMMO_556MM_PRICE,                            AMMO_556NATO_BUY,      M4A1_MAX_CLIP,      MAX_AMMO_556NATO,       AMMO_556NATO,       "weapon_m4a1",         "ammo_556nato",    "556Nato"      },
+		{ WEAPON_TMP,       TMP_PRICE,          AMMO_9MM_PRICE,                              AMMO_9MM_BUY,          TMP_MAX_CLIP,       MAX_AMMO_9MM,           AMMO_9MM,           "weapon_tmp",          "ammo_9mm",        "9mm"          },
+		{ WEAPON_G3SG1,     G3SG1_PRICE,        AMMO_762MM_PRICE,                            AMMO_762NATO_BUY,      G3SG1_MAX_CLIP,     MAX_AMMO_762NATO,       AMMO_762NATO,       "weapon_g3sg1",        "ammo_762nato",    "762Nato"      },
+		{ WEAPON_DEAGLE,    DEAGLE_PRICE,       AMMO_50AE_PRICE,                             AMMO_50AE_BUY,         DEAGLE_MAX_CLIP,    MAX_AMMO_50AE,          AMMO_50AE,          "weapon_deagle",       "ammo_50ae",       "50AE"         },
+		{ WEAPON_SG552,     SG552_PRICE,        AMMO_556MM_PRICE,                            AMMO_556NATO_BUY,      SG552_MAX_CLIP,     MAX_AMMO_556NATO,       AMMO_556NATO,       "weapon_sg552",        "ammo_556nato",    "556Nato"      },
+		{ WEAPON_AK47,      AK47_PRICE,         AMMO_762MM_PRICE,                            AMMO_762NATO_BUY,      AK47_MAX_CLIP,      MAX_AMMO_762NATO,       AMMO_762NATO,       "weapon_ak47",         "ammo_762nato",    "762Nato"      },
+		{ WEAPON_P90,       P90_PRICE,          AMMO_57MM_PRICE,                             AMMO_57MM_BUY,         P90_MAX_CLIP,       MAX_AMMO_57MM,          AMMO_57MM,          "weapon_p90",          "ammo_57mm",       "57mm"         },
 
-#ifdef REGAMEDLL_FIXES
-	{ WEAPON_C4,            0,                                  0,                       0,                     0,                  MAX_AMMO_C4,            AMMO_C4,            "weapon_c4",           nullptr,           "C4"           },
-	{ WEAPON_KNIFE,         0,                                  0,                       0,                     0,                  0,                      AMMO_NONE,          "weapon_knife",        nullptr,           nullptr        },
-	{ WEAPON_HEGRENADE,     (WeaponCostType)HEGRENADE_PRICE,    AMMO_HEGRENADE_PRICE,    AMMO_HEGRENADE_BUY,    0,                  MAX_AMMO_HEGRENADE,     AMMO_HEGRENADE,     "weapon_hegrenade",    nullptr,           "HEGrenade"    },
-	{ WEAPON_SMOKEGRENADE,  (WeaponCostType)SMOKEGRENADE_PRICE, AMMO_SMOKEGRENADE_PRICE, AMMO_SMOKEGRENADE_BUY, 0,                  MAX_AMMO_SMOKEGRENADE,  AMMO_SMOKEGRENADE,  "weapon_smokegrenade", nullptr,           "SmokeGrenade" },
-	{ WEAPON_FLASHBANG,     (WeaponCostType)FLASHBANG_PRICE,    AMMO_FLASHBANG_PRICE,    AMMO_FLASHBANG_BUY,    0,                  MAX_AMMO_FLASHBANG,     AMMO_FLASHBANG,     "weapon_flashbang",    nullptr,           "Flashbang"    },
-#endif
+	#ifdef REGAMEDLL_FIXES
+		{ WEAPON_C4,            0,                                  0,                       0,                     0,                  MAX_AMMO_C4,            AMMO_C4,            "weapon_c4",           nullptr,           "C4"           },
+		{ WEAPON_KNIFE,         0,                                  0,                       0,                     0,                  0,                      AMMO_NONE,          "weapon_knife",        nullptr,           nullptr        },
+		{ WEAPON_HEGRENADE,     (WeaponCostType)HEGRENADE_PRICE,    AMMO_HEGRENADE_PRICE,    AMMO_HEGRENADE_BUY,    0,                  MAX_AMMO_HEGRENADE,     AMMO_HEGRENADE,     "weapon_hegrenade",    nullptr,           "HEGrenade"    },
+		{ WEAPON_SMOKEGRENADE,  (WeaponCostType)SMOKEGRENADE_PRICE, AMMO_SMOKEGRENADE_PRICE, AMMO_SMOKEGRENADE_BUY, 0,                  MAX_AMMO_SMOKEGRENADE,  AMMO_SMOKEGRENADE,  "weapon_smokegrenade", nullptr,           "SmokeGrenade" },
+		{ WEAPON_FLASHBANG,     (WeaponCostType)FLASHBANG_PRICE,    AMMO_FLASHBANG_PRICE,    AMMO_FLASHBANG_BUY,    0,                  MAX_AMMO_FLASHBANG,     AMMO_FLASHBANG,     "weapon_flashbang",    nullptr,           "Flashbang"    },
+	#endif
 
-	{ WEAPON_SHIELDGUN,      SHIELDGUN_PRICE,                   0,                       0,                     0,                  0,                      AMMO_NONE,          "weapon_shield",       nullptr,           nullptr        },
-#ifndef REGAMEDLL_FIXES
-	{ 0,                     0,                                 0,                       0,                     0,                  0,                      AMMO_NONE,          nullptr,               nullptr,           nullptr        },
-#endif
+		{ WEAPON_SHIELDGUN,      SHIELDGUN_PRICE,                   0,                       0,                     0,                  0,                      AMMO_NONE,          "weapon_shield",       nullptr,           nullptr        },
+	#ifndef REGAMEDLL_FIXES
+		{ 0,                     0,                                 0,                       0,                     0,                  0,                      AMMO_NONE,          nullptr,               nullptr,           nullptr        },
+	#endif
 };
 
 WeaponInfoStruct g_weaponInfo[ARRAYSIZE(g_weaponInfo_default)];
@@ -325,7 +325,7 @@ WeaponSlotInfo g_weaponSlotInfo[] = {
 };
 
 // Given an alias, return the associated weapon ID
-WeaponIdType AliasToWeaponID(const char *alias)
+WeaponIdType AliasToWeaponID(const char* alias)
 {
 	if (alias)
 	{
@@ -339,7 +339,7 @@ WeaponIdType AliasToWeaponID(const char *alias)
 	return WEAPON_NONE;
 }
 
-const char *BuyAliasToWeaponID(const char *alias, WeaponIdType &id)
+const char* BuyAliasToWeaponID(const char* alias, WeaponIdType& id)
 {
 	if (alias)
 	{
@@ -358,7 +358,7 @@ const char *BuyAliasToWeaponID(const char *alias, WeaponIdType &id)
 }
 
 // Given a weapon ID, return its alias
-const char *WeaponIDToAlias(int id)
+const char* WeaponIDToAlias(int id)
 {
 	for (int i = 0; g_weaponAliasInfo[i].alias; i++)
 	{
@@ -369,7 +369,7 @@ const char *WeaponIDToAlias(int id)
 	return nullptr;
 }
 
-WeaponClassType AliasToWeaponClass(const char *alias)
+WeaponClassType AliasToWeaponClass(const char* alias)
 {
 	if (alias)
 	{
@@ -507,7 +507,7 @@ bool IsGrenadeWeapon(int id)
 	return false;
 }
 
-WeaponInfoStruct *GetWeaponInfo(int weaponID)
+WeaponInfoStruct* GetWeaponInfo(int weaponID)
 {
 	for (auto& info : g_weaponInfo) {
 		if (info.id == weaponID) {
@@ -518,7 +518,7 @@ WeaponInfoStruct *GetWeaponInfo(int weaponID)
 	return nullptr;
 }
 
-WeaponInfoStruct *GetWeaponInfo(const char *weaponName)
+WeaponInfoStruct* GetWeaponInfo(const char* weaponName)
 {
 	for (auto& info : g_weaponInfo) {
 		if (!Q_stricmp(info.entityName, weaponName)) {
@@ -529,7 +529,7 @@ WeaponInfoStruct *GetWeaponInfo(const char *weaponName)
 	return nullptr;
 }
 
-AmmoInfoStruct *GetAmmoInfo(const char *ammoName)
+AmmoInfoStruct* GetAmmoInfo(const char* ammoName)
 {
 	for (auto& info : g_ammoInfo) {
 		if (!Q_stricmp(info.ammoName1, ammoName)) {
@@ -540,7 +540,7 @@ AmmoInfoStruct *GetAmmoInfo(const char *ammoName)
 	return nullptr;
 }
 
-AmmoInfoStruct *GetAmmoInfo(AmmoType ammoID)
+AmmoInfoStruct* GetAmmoInfo(AmmoType ammoID)
 {
 	for (auto& info : g_ammoInfo) {
 		if (info.ammoType == ammoID) {
@@ -557,7 +557,7 @@ void WeaponInfoReset()
 	Q_memcpy(g_ammoInfo, g_ammoInfo_default, sizeof(g_ammoInfo));
 }
 
-WeaponSlotInfo *GetWeaponSlot(WeaponIdType weaponID)
+WeaponSlotInfo* GetWeaponSlot(WeaponIdType weaponID)
 {
 	for (auto& infoSlot : g_weaponSlotInfo) {
 		if (infoSlot.id == weaponID) {
@@ -568,7 +568,7 @@ WeaponSlotInfo *GetWeaponSlot(WeaponIdType weaponID)
 	return nullptr;
 }
 
-WeaponSlotInfo *GetWeaponSlot(const char *weaponName)
+WeaponSlotInfo* GetWeaponSlot(const char* weaponName)
 {
 	for (auto& infoSlot : g_weaponSlotInfo) {
 		if (!Q_stricmp(infoSlot.weaponName, weaponName)) {

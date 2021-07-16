@@ -45,7 +45,7 @@ void CUSP::Precache()
 	m_usFireUSP = PRECACHE_EVENT(1, "events/usp.sc");
 }
 
-int CUSP::GetItemInfo(ItemInfo *p)
+int CUSP::GetItemInfo(ItemInfo* p)
 {
 	p->pszName = STRING(pev->classname);
 #ifdef REGAMEDLL_FIXES
@@ -230,7 +230,7 @@ void CUSP::USPFire(float flSpread, float flCycleTime, BOOL fUseSemi)
 	flag = 0;
 #endif // CLIENT_WEAPONS
 
-	PLAYBACK_EVENT_FULL(flag, m_pPlayer->edict(), m_usFireUSP, 0, (float *)&g_vecZero, (float *)&g_vecZero, vecDir.x, vecDir.y,
+	PLAYBACK_EVENT_FULL(flag, m_pPlayer->edict(), m_usFireUSP, 0, (float*)&g_vecZero, (float*)&g_vecZero, vecDir.x, vecDir.y,
 		(int)(m_pPlayer->pev->punchangle.x * 100), 0, m_iClip == 0, (m_iWeaponState & WPNSTATE_USP_SILENCED));
 
 	if (!m_iClip && m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] <= 0)
@@ -284,7 +284,7 @@ void CUSP::WeaponIdle()
 	}
 	else if (m_iClip)
 	{
-		int iAnim = (~m_iWeaponState & WPNSTATE_USP_SILENCED) ? USP_UNSIL_IDLE: USP_IDLE;
+		int iAnim = (~m_iWeaponState & WPNSTATE_USP_SILENCED) ? USP_UNSIL_IDLE : USP_IDLE;
 
 		m_flTimeWeaponIdle = UTIL_WeaponTimeBase() + 60.0f;
 		SendWeaponAnim(iAnim, UseDecrement());

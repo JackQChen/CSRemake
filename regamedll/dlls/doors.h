@@ -28,9 +28,9 @@
 
 #pragma once
 
-const float DOOR_SENTENCEWAIT   = 6.0f;
-const float DOOR_SOUNDWAIT      = 3.0f;
-const float BUTTON_SOUNDWAIT    = 0.5f;
+const float DOOR_SENTENCEWAIT = 6.0f;
+const float DOOR_SOUNDWAIT = 3.0f;
+const float BUTTON_SOUNDWAIT = 0.5f;
 
 #define SF_DOOR_START_OPEN          BIT(0)
 #define SF_DOOR_PASSABLE            BIT(3)
@@ -39,15 +39,15 @@ const float BUTTON_SOUNDWAIT    = 0.5f;
 #define SF_DOOR_TOUCH_ONLY_CLIENTS  BIT(10) // Only clients can touch
 #define SF_DOOR_ACTUALLY_WATER      BIT(31) // This bit marks that func_door are actually func_water
 
-class CBaseDoor: public CBaseToggle
+class CBaseDoor : public CBaseToggle
 {
 public:
 	virtual void Spawn();
 	virtual void Precache();
 	virtual void Restart();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
 	virtual int ObjectCaps()
 	{
 		if (pev->spawnflags & SF_DOOR_USE_ONLY)
@@ -56,14 +56,14 @@ public:
 			return (CBaseToggle::ObjectCaps() & ~FCAP_ACROSS_TRANSITION);
 	}
 	virtual void SetToggleState(int state);
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
-	virtual void Blocked(CBaseEntity *pOther);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
+	virtual void Blocked(CBaseEntity* pOther);
 
 public:
 	static TYPEDESCRIPTION m_SaveData[];
 
 	// used to selectivly override defaults
-	void EXPORT DoorTouch(CBaseEntity *pOther);
+	void EXPORT DoorTouch(CBaseEntity* pOther);
 	int DoorActivate();
 	void EXPORT DoorGoUp();
 	void EXPORT DoorGoDown();
@@ -90,7 +90,7 @@ public:
 #define SF_DOOR_ROTATE_Z         BIT(6)
 #define SF_DOOR_ROTATE_X         BIT(7)
 
-class CRotDoor: public CBaseDoor
+class CRotDoor : public CBaseDoor
 {
 public:
 	virtual void Spawn();
@@ -98,16 +98,16 @@ public:
 	virtual void SetToggleState(int state);
 };
 
-class CMomentaryDoor: public CBaseToggle
+class CMomentaryDoor : public CBaseToggle
 {
 public:
 	virtual void Spawn();
 	virtual void Precache();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
 	virtual int ObjectCaps() { return (CBaseToggle::ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 public:
 	static TYPEDESCRIPTION m_SaveData[];
@@ -115,4 +115,4 @@ public:
 	byte m_bMoveSnd; // sound a door makes while moving
 };
 
-void PlayLockSounds(entvars_t *pev, locksound_t *pls, int flocked, int fbutton);
+void PlayLockSounds(entvars_t* pev, locksound_t* pls, int flocked, int fbutton);

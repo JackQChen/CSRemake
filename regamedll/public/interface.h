@@ -27,8 +27,8 @@
 
 #endif // _WIN32
 
-void *Sys_GetProcAddress(const char *pModuleName, const char *pName);
-void *Sys_GetProcAddress(void *pModuleHandle, const char *pName);
+void* Sys_GetProcAddress(const char* pModuleName, const char* pName);
+void* Sys_GetProcAddress(void* pModuleHandle, const char* pName);
 
 // All interfaces derive from this.
 class IBaseInterface
@@ -39,22 +39,22 @@ public:
 
 #define CREATEINTERFACE_PROCNAME "CreateInterface"
 
-typedef IBaseInterface *(*CreateInterfaceFn)(const char *pName, int *pReturnCode);
-typedef IBaseInterface *(*InstantiateInterfaceFn)();
+typedef IBaseInterface* (*CreateInterfaceFn)(const char* pName, int* pReturnCode);
+typedef IBaseInterface* (*InstantiateInterfaceFn)();
 
 // Used internally to register classes.
 class InterfaceReg
 {
 public:
-	InterfaceReg(InstantiateInterfaceFn fn, const char *pName);
+	InterfaceReg(InstantiateInterfaceFn fn, const char* pName);
 
 public:
 
 	InstantiateInterfaceFn m_CreateFn;
-	const char             *m_pName;
+	const char* m_pName;
 
-	InterfaceReg           *m_pNext; // For the global list.
-	static InterfaceReg    *s_pInterfaceRegs;
+	InterfaceReg* m_pNext; // For the global list.
+	static InterfaceReg* s_pInterfaceRegs;
 };
 
 // Use this to expose an interface that can have multiple instances.
@@ -87,9 +87,9 @@ public:
 	EXPOSE_SINGLE_INTERFACE_GLOBALVAR(className, interfaceName, versionName, __g_##className##_singleton)
 
 #ifdef _WIN32
-	#define EXPORT_FUNCTION __declspec(dllexport) EXT_FUNC
+#define EXPORT_FUNCTION __declspec(dllexport) EXT_FUNC
 #else
-	#define EXPORT_FUNCTION __attribute__((visibility("default"))) EXT_FUNC
+#define EXPORT_FUNCTION __attribute__((visibility("default"))) EXT_FUNC
 #endif // _WIN32
 
 // This function is automatically exported and allows you to access any interfaces exposed with the above macros.
@@ -103,13 +103,13 @@ enum
 
 extern "C"
 {
-	EXPORT_FUNCTION IBaseInterface *CreateInterface(const char *pName, int *pReturnCode);
+	EXPORT_FUNCTION IBaseInterface* CreateInterface(const char* pName, int* pReturnCode);
 };
 
 extern CreateInterfaceFn Sys_GetFactoryThis();
 
 // UNDONE: This is obsolete, use the module load/unload/get instead!!!
-extern CreateInterfaceFn Sys_GetFactory(const char *pModuleName);
+extern CreateInterfaceFn Sys_GetFactory(const char* pModuleName);
 
 // load/unload components
 class CSysModule;
@@ -117,7 +117,7 @@ class CSysModule;
 // Load & Unload should be called in exactly one place for each module
 // The factory for that module should be passed on to dependent components for
 // proper versioning.
-extern CSysModule *Sys_LoadModule(const char *pModuleName);
-extern void Sys_UnloadModule(CSysModule *pModule);
-extern CreateInterfaceFn Sys_GetFactory(CSysModule *pModule);
-extern void *InitializeInterface(char const *interfaceName, CreateInterfaceFn *factoryList, int numFactories);
+extern CSysModule* Sys_LoadModule(const char* pModuleName);
+extern void Sys_UnloadModule(CSysModule* pModule);
+extern CreateInterfaceFn Sys_GetFactory(CSysModule* pModule);
+extern void* InitializeInterface(char const* interfaceName, CreateInterfaceFn* factoryList, int numFactories);

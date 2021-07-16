@@ -34,11 +34,11 @@ int EXT_FUNC Cmd_Argc_api() {
 	return CMD_ARGC_();
 }
 
-const char *EXT_FUNC Cmd_Argv_api(int i) {
+const char* EXT_FUNC Cmd_Argv_api(int i) {
 	return CMD_ARGV_(i);
 }
 
-CGrenade *PlantBomb_api(entvars_t *pevOwner, Vector &vecStart, Vector &vecVelocity) {
+CGrenade* PlantBomb_api(entvars_t* pevOwner, Vector& vecStart, Vector& vecVelocity) {
 	return CGrenade::ShootSatchelCharge(pevOwner, vecStart, vecVelocity);
 }
 
@@ -194,40 +194,40 @@ int CReGameApi::GetMinorVersion() {
 	return REGAMEDLL_API_VERSION_MINOR;
 }
 
-const ReGameFuncs_t *CReGameApi::GetFuncs() {
+const ReGameFuncs_t* CReGameApi::GetFuncs() {
 	return &g_ReGameApiFuncs;
 }
 
-IReGameHookchains *CReGameApi::GetHookchains() {
+IReGameHookchains* CReGameApi::GetHookchains() {
 	return &g_ReGameHookchains;
 }
 
-CGameRules *CReGameApi::GetGameRules() {
+CGameRules* CReGameApi::GetGameRules() {
 	return g_pGameRules;
 }
 
-WeaponInfoStruct *CReGameApi::GetWeaponInfo(int weaponID) {
+WeaponInfoStruct* CReGameApi::GetWeaponInfo(int weaponID) {
 	return ::GetWeaponInfo(weaponID);
 }
 
-WeaponInfoStruct *CReGameApi::GetWeaponInfo(const char *weaponName) {
+WeaponInfoStruct* CReGameApi::GetWeaponInfo(const char* weaponName) {
 	return ::GetWeaponInfo(weaponName);
 }
 
-playermove_t *CReGameApi::GetPlayerMove() {
+playermove_t* CReGameApi::GetPlayerMove() {
 	return pmove;
 }
 
-WeaponSlotInfo *CReGameApi::GetWeaponSlot(WeaponIdType weaponID) { return ::GetWeaponSlot(weaponID); }
-WeaponSlotInfo *CReGameApi::GetWeaponSlot(const char *weaponName) { return ::GetWeaponSlot(weaponName); }
+WeaponSlotInfo* CReGameApi::GetWeaponSlot(WeaponIdType weaponID) { return ::GetWeaponSlot(weaponID); }
+WeaponSlotInfo* CReGameApi::GetWeaponSlot(const char* weaponName) { return ::GetWeaponSlot(weaponName); }
 
-ItemInfo *CReGameApi::GetItemInfo(WeaponIdType weaponID) { return &CBasePlayerItem::m_ItemInfoArray[weaponID]; }
-AmmoInfo *CReGameApi::GetAmmoInfo(AmmoType ammoID) { return &CBasePlayerItem::m_AmmoInfoArray[ammoID]; }
+ItemInfo* CReGameApi::GetItemInfo(WeaponIdType weaponID) { return &CBasePlayerItem::m_ItemInfoArray[weaponID]; }
+AmmoInfo* CReGameApi::GetAmmoInfo(AmmoType ammoID) { return &CBasePlayerItem::m_AmmoInfoArray[ammoID]; }
 
-AmmoInfoStruct *CReGameApi::GetAmmoInfoEx(AmmoType ammoID) { return ::GetAmmoInfo(ammoID); }
-AmmoInfoStruct *CReGameApi::GetAmmoInfoEx(const char *ammoName) { return ::GetAmmoInfo(ammoName); }
+AmmoInfoStruct* CReGameApi::GetAmmoInfoEx(AmmoType ammoID) { return ::GetAmmoInfo(ammoID); }
+AmmoInfoStruct* CReGameApi::GetAmmoInfoEx(const char* ammoName) { return ::GetAmmoInfo(ammoName); }
 
-bool CReGameApi::BGetICSEntity(const char *pchVersion) const
+bool CReGameApi::BGetICSEntity(const char* pchVersion) const
 {
 	if (!Q_stricmp(pchVersion, CSENTITY_API_INTERFACE_VERSION))
 	{
@@ -237,7 +237,7 @@ bool CReGameApi::BGetICSEntity(const char *pchVersion) const
 	return false;
 }
 
-bool CReGameApi::BGetIGameRules(const char *pchVersion) const
+bool CReGameApi::BGetIGameRules(const char* pchVersion) const
 {
 	if (!Q_stricmp(pchVersion, GAMERULES_API_INTERFACE_VERSION))
 	{
@@ -247,18 +247,18 @@ bool CReGameApi::BGetIGameRules(const char *pchVersion) const
 	return false;
 }
 
-EXT_FUNC void Regamedll_ChangeString_api(char *&dest, const char *source)
+EXT_FUNC void Regamedll_ChangeString_api(char*& dest, const char* source)
 {
 	size_t len = Q_strlen(source);
 	if (dest == nullptr || Q_strlen(dest) != len) {
-		delete [] dest;
-		dest = new char [len + 1];
+		delete[] dest;
+		dest = new char[len + 1];
 	}
 
 	Q_strcpy(dest, source);
 }
 
-EXT_FUNC void RadiusDamage_api(Vector vecSrc, entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, float flRadius, int iClassIgnore, int bitsDamageType)
+EXT_FUNC void RadiusDamage_api(Vector vecSrc, entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, float flRadius, int iClassIgnore, int bitsDamageType)
 {
 	RadiusDamage(vecSrc, pevInflictor, pevAttacker, flDamage, flRadius, iClassIgnore, bitsDamageType);
 }
@@ -268,12 +268,12 @@ EXT_FUNC void ClearMultiDamage_api()
 	ClearMultiDamage();
 }
 
-EXT_FUNC void ApplyMultiDamage_api(entvars_t *pevInflictor, entvars_t *pevAttacker)
+EXT_FUNC void ApplyMultiDamage_api(entvars_t* pevInflictor, entvars_t* pevAttacker)
 {
 	ApplyMultiDamage(pevInflictor, pevAttacker);
 }
 
-EXT_FUNC void AddMultiDamage_api(entvars_t *pevInflictor, CBaseEntity *pEntity, float flDamage, int bitsDamageType)
+EXT_FUNC void AddMultiDamage_api(entvars_t* pevInflictor, CBaseEntity* pEntity, float flDamage, int bitsDamageType)
 {
 	AddMultiDamage(pevInflictor, pEntity, flDamage, bitsDamageType);
 }

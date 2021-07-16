@@ -36,7 +36,7 @@ void CXM1014::Precache()
 	m_usFireXM1014 = PRECACHE_EVENT(1, "events/xm1014.sc");
 }
 
-int CXM1014::GetItemInfo(ItemInfo *p)
+int CXM1014::GetItemInfo(ItemInfo* p)
 {
 	p->pszName = STRING(pev->classname);
 	p->pszAmmo1 = "buckshot";
@@ -142,7 +142,7 @@ void CXM1014::PrimaryAttack()
 		flag = 0;
 #endif
 
-	PLAYBACK_EVENT_FULL(flag, m_pPlayer->edict(), m_usFireXM1014, 0, (float *)&g_vecZero, (float *)&g_vecZero, m_vVecAiming.x, m_vVecAiming.y, 7,
+	PLAYBACK_EVENT_FULL(flag, m_pPlayer->edict(), m_usFireXM1014, 0, (float*)&g_vecZero, (float*)&g_vecZero, m_vVecAiming.x, m_vVecAiming.y, 7,
 		int(m_vVecAiming.x * 100), m_iClip == 0, FALSE);
 
 	if (!m_iClip && m_pPlayer->m_rgAmmo[m_iPrimaryAmmoType] <= 0)

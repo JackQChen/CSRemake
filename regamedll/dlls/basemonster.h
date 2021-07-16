@@ -58,14 +58,14 @@ enum MONSTERSTATE
 	MONSTERSTATE_DEAD
 };
 
-class CBaseMonster: public CBaseToggle
+class CBaseMonster : public CBaseToggle
 {
 public:
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual void TraceAttack(entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType);
-	virtual BOOL TakeDamage(entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual void TraceAttack(entvars_t* pevAttacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType);
+	virtual BOOL TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType);
 	virtual BOOL TakeHealth(float flHealth, int bitsDamageType);
-	virtual void Killed(entvars_t *pevAttacker, int iGib);
+	virtual void Killed(entvars_t* pevAttacker, int iGib);
 	virtual int BloodColor() { return m_bloodColor; }
 	virtual BOOL IsAlive() { return (pev->deadflag != DEAD_DEAD); }
 	virtual float ChangeYaw(int speed);
@@ -76,15 +76,15 @@ public:
 	virtual Activity GetDeathActivity();
 	virtual void BecomeDead();
 	virtual BOOL ShouldFadeOnDeath();
-	virtual int IRelationship(CBaseEntity *pTarget);
+	virtual int IRelationship(CBaseEntity* pTarget);
 	virtual void PainSound() {}
 	virtual void ResetMaxSpeed() {}
 	virtual void ReportAIState() {}
 	virtual void MonsterInitDead();
 	virtual void Look(int iDistance);
-	virtual CBaseEntity *BestVisibleEnemy();
-	virtual BOOL FInViewCone(CBaseEntity *pEntity);
-	virtual BOOL FInViewCone(const Vector *pOrigin);
+	virtual CBaseEntity* BestVisibleEnemy();
+	virtual BOOL FInViewCone(CBaseEntity* pEntity);
+	virtual BOOL FInViewCone(const Vector* pOrigin);
 
 public:
 	void MakeIdealYaw(Vector vecTarget);
@@ -92,11 +92,11 @@ public:
 	BOOL ShouldGibMonster(int iGib);
 	void CallGibMonster();
 	BOOL FCheckAITrigger();
-	BOOL DeadTakeDamage(entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType);
+	BOOL DeadTakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType);
 	float DamageForce(float damage);
-	void RadiusDamage(entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int iClassIgnore, int bitsDamageType);
-	void RadiusDamage(Vector vecSrc, entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int iClassIgnore, int bitsDamageType);
-	void RadiusDamage2(Vector vecSrc, entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int iClassIgnore, int bitsDamageType);
+	void RadiusDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int iClassIgnore, int bitsDamageType);
+	void RadiusDamage(Vector vecSrc, entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int iClassIgnore, int bitsDamageType);
+	void RadiusDamage2(Vector vecSrc, entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int iClassIgnore, int bitsDamageType);
 
 	void SetConditions(int iConditions) { m_afConditions |= iConditions; }
 	void ClearConditions(int iConditions) { m_afConditions &= ~iConditions; }
@@ -111,10 +111,10 @@ public:
 	void StopAnimation() { pev->framerate = 0.0f; }
 
 	void EXPORT CorpseFallThink();
-	CBaseEntity *CheckTraceHullAttack(float flDist, int iDamage, int iDmgType);
-	void MakeDamageBloodDecal(int cCount, float flNoise, TraceResult *ptr, Vector &vecDir);
-	void MonsterUse(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value) { m_IdealMonsterState = MONSTERSTATE_ALERT; }
-	void BloodSplat(const Vector &vecSrc, const Vector &vecDir, int HitLocation, int iVelocity);
+	CBaseEntity* CheckTraceHullAttack(float flDist, int iDamage, int iDmgType);
+	void MakeDamageBloodDecal(int cCount, float flNoise, TraceResult* ptr, Vector& vecDir);
+	void MonsterUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value) { m_IdealMonsterState = MONSTERSTATE_ALERT; }
+	void BloodSplat(const Vector& vecSrc, const Vector& vecDir, int HitLocation, int iVelocity);
 
 public:
 	Activity m_Activity;			// what the monster is doing (animation)

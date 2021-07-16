@@ -1,9 +1,9 @@
 #include "precompiled.h"
 
-BotProfileManager *TheBotProfiles = nullptr;
+BotProfileManager* TheBotProfiles = nullptr;
 
 // Generates a filename-decorated skin name
-const char *GetDecoratedSkinName(const char *name, const char *filename)
+const char* GetDecoratedSkinName(const char* name, const char* filename)
 {
 	const int BufLen = MAX_PATH + 64;
 	static char buf[BufLen];
@@ -11,7 +11,7 @@ const char *GetDecoratedSkinName(const char *name, const char *filename)
 	return buf;
 }
 
-const char *BotProfile::GetWeaponPreferenceAsString(int i) const
+const char* BotProfile::GetWeaponPreferenceAsString(int i) const
 {
 	if (i < 0 || i >= m_weaponPreferenceCount)
 		return nullptr;
@@ -27,10 +27,10 @@ bool BotProfile::HasPrimaryPreference() const
 		int weaponClass = AliasToWeaponClass(WeaponIDToAlias(m_weaponPreference[i]));
 
 		if (weaponClass == WEAPONCLASS_SUBMACHINEGUN ||
-				weaponClass == WEAPONCLASS_SHOTGUN ||
-				weaponClass == WEAPONCLASS_MACHINEGUN ||
-				weaponClass == WEAPONCLASS_RIFLE ||
-				weaponClass == WEAPONCLASS_SNIPERRIFLE)
+			weaponClass == WEAPONCLASS_SHOTGUN ||
+			weaponClass == WEAPONCLASS_MACHINEGUN ||
+			weaponClass == WEAPONCLASS_RIFLE ||
+			weaponClass == WEAPONCLASS_SNIPERRIFLE)
 			return true;
 	}
 
@@ -67,13 +67,13 @@ BotProfileManager::BotProfileManager()
 }
 
 // Load the bot profile database
-void BotProfileManager::Init(const char *filename, unsigned int *checksum)
+void BotProfileManager::Init(const char* filename, unsigned int* checksum)
 {
-	static const char *BotDifficultyName[] = { "EASY", "NORMAL", "HARD", "EXPERT", nullptr };
+	static const char* BotDifficultyName[] = { "EASY", "NORMAL", "HARD", "EXPERT", nullptr };
 
 	int dataLength;
-	char *dataPointer = (char *)LOAD_FILE_FOR_ME(const_cast<char *>(filename), &dataLength);
-	char *dataFile = dataPointer;
+	char* dataPointer = (char*)LOAD_FILE_FOR_ME(const_cast<char*>(filename), &dataLength);
+	char* dataFile = dataPointer;
 
 	if (!dataFile)
 	{
@@ -88,7 +88,7 @@ void BotProfileManager::Init(const char *filename, unsigned int *checksum)
 	// compute simple checksum
 	if (checksum)
 	{
-		*checksum = ComputeSimpleChecksum((const unsigned char *)dataPointer, dataLength);
+		*checksum = ComputeSimpleChecksum((const unsigned char*)dataPointer, dataLength);
 	}
 
 	// keep list of templates used for inheritance
@@ -102,7 +102,7 @@ void BotProfileManager::Init(const char *filename, unsigned int *checksum)
 		if (!dataFile)
 			break;
 
-		char *token = SharedGetToken();
+		char* token = SharedGetToken();
 
 		bool isDefault = (!Q_stricmp(token, "Default"));
 		bool isTemplate = (!Q_stricmp(token, "Template"));
@@ -170,7 +170,7 @@ void BotProfileManager::Init(const char *filename, unsigned int *checksum)
 
 			token = SharedGetToken();
 
-			const char *decoratedName = GetDecoratedSkinName(skinName, filename);
+			const char* decoratedName = GetDecoratedSkinName(skinName, filename);
 			bool skinExists = GetCustomSkinIndex(decoratedName) > 0;
 			if (m_nextSkin < NumCustomSkins && !skinExists)
 			{
@@ -206,7 +206,7 @@ void BotProfileManager::Init(const char *filename, unsigned int *checksum)
 		}
 
 		// encountered a new profile
-		BotProfile *profile;
+		BotProfile* profile;
 		if (isDefault)
 		{
 			profile = &defaultProfile;
@@ -221,12 +221,12 @@ void BotProfileManager::Init(const char *filename, unsigned int *checksum)
 		// do inheritance in order of appearance
 		if (!isTemplate && !isDefault)
 		{
-			const BotProfile *inherit = nullptr;
+			const BotProfile* inherit = nullptr;
 
 			// template names are separated by "+"
 			while (true)
 			{
-				char *c = Q_strchr(token, '+');
+				char* c = Q_strchr(token, '+');
 				if (c)
 					*c = '\0';
 
@@ -413,14 +413,14 @@ void BotProfileManager::Init(const char *filename, unsigned int *checksum)
 				// parse bit flags
 				while (true)
 				{
-					char *c = Q_strchr(token, '+');
+					char* c = Q_strchr(token, '+');
 					if (c)
 						*c = '\0';
 
 					for (int i = 0; i < NUM_DIFFICULTY_LEVELS; i++)
 					{
 						if (!Q_stricmp(BotDifficultyName[i], token))
-							profile->m_difficultyFlags |= (1<<i);
+							profile->m_difficultyFlags |= (1 << i);
 					}
 
 					if (c == nullptr)
@@ -513,7 +513,7 @@ void BotProfileManager::Reset()
 }
 
 // Returns custom skin name at a particular index
-const char *BotProfileManager::GetCustomSkin(int index)
+const char* BotProfileManager::GetCustomSkin(int index)
 {
 	if (index < FirstCustomSkin || index > LastCustomSkin)
 	{
@@ -524,7 +524,7 @@ const char *BotProfileManager::GetCustomSkin(int index)
 }
 
 // Returns custom skin filename at a particular index
-const char *BotProfileManager::GetCustomSkinFname(int index)
+const char* BotProfileManager::GetCustomSkinFname(int index)
 {
 	if (index < FirstCustomSkin || index > LastCustomSkin)
 	{
@@ -535,7 +535,7 @@ const char *BotProfileManager::GetCustomSkinFname(int index)
 }
 
 // Returns custom skin modelname at a particular index
-const char *BotProfileManager::GetCustomSkinModelname(int index)
+const char* BotProfileManager::GetCustomSkinModelname(int index)
 {
 	if (index < FirstCustomSkin || index > LastCustomSkin)
 	{
@@ -546,9 +546,9 @@ const char *BotProfileManager::GetCustomSkinModelname(int index)
 }
 
 // Looks up a custom skin index by filename-decorated name (will decorate the name if filename is given)
-int BotProfileManager::GetCustomSkinIndex(const char *name, const char *filename)
+int BotProfileManager::GetCustomSkinIndex(const char* name, const char* filename)
 {
-	const char *skinName = name;
+	const char* skinName = name;
 	if (filename)
 	{
 		skinName = GetDecoratedSkinName(name, filename);
@@ -569,7 +569,7 @@ int BotProfileManager::GetCustomSkinIndex(const char *name, const char *filename
 }
 
 // return index of the (custom) bot phrase db, inserting it if needed
-int BotProfileManager::FindVoiceBankIndex(const char *filename)
+int BotProfileManager::FindVoiceBankIndex(const char* filename)
 {
 	int index = 0;
 	for (auto phrase : m_voiceBanks)
@@ -585,7 +585,7 @@ int BotProfileManager::FindVoiceBankIndex(const char *filename)
 }
 
 // Return random unused profile that matches the given difficulty level
-const BotProfile *BotProfileManager::GetRandomProfile(BotDifficultyType difficulty, BotProfileTeamType team) const
+const BotProfile* BotProfileManager::GetRandomProfile(BotDifficultyType difficulty, BotProfileTeamType team) const
 {
 #ifdef RANDOM_LONG
 	BotProfileList::const_iterator iter;

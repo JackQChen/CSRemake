@@ -33,14 +33,14 @@ NavAreaList TheNavAreaList;
 // The singleton for accessing the grid
 CNavAreaGrid TheNavAreaGrid;
 
-CNavArea *CNavArea::m_openList = nullptr;
+CNavArea* CNavArea::m_openList = nullptr;
 bool CNavArea::m_isReset = false;
 
 float lastDrawTimestamp = 0.0f;
 NavAreaList goodSizedAreaList;
 
-CNavArea *markedArea = nullptr;
-CNavArea *lastSelectedArea = nullptr;
+CNavArea* markedArea = nullptr;
+CNavArea* lastSelectedArea = nullptr;
 NavCornerType markedCorner = NUM_CORNERS;
 
 bool isCreatingNavArea = false;
@@ -62,7 +62,7 @@ NOXREF void buildGoodSizedList()
 	for (auto area : TheNavAreaList)
 	{
 		// skip the small areas
-		const Extent *extent = area->GetExtent();
+		const Extent* extent = area->GetExtent();
 		if (extent->SizeX() < minSize || extent->SizeY() < minSize)
 			continue;
 
@@ -96,7 +96,7 @@ HidingSpot::HidingSpot()
 }
 
 // For use when generating - assigns unique ID
-HidingSpot::HidingSpot(const Vector *pos, unsigned char flags)
+HidingSpot::HidingSpot(const Vector* pos, unsigned char flags)
 {
 	m_pos = *pos;
 	m_id = m_nextID++;
@@ -112,7 +112,7 @@ void HidingSpot::Save(int fd, unsigned int version) const
 	_write(fd, &m_flags, sizeof(unsigned char));
 }
 
-void HidingSpot::Load(SteamFile *file, unsigned int version)
+void HidingSpot::Load(SteamFile* file, unsigned int version)
 {
 	file->Read(&m_id, sizeof(unsigned int));
 	file->Read(&m_pos, 3 * sizeof(float));
@@ -125,11 +125,11 @@ void HidingSpot::Load(SteamFile *file, unsigned int version)
 }
 
 // Given a HidingSpot ID, return the associated HidingSpot
-HidingSpot *GetHidingSpotByID(unsigned int id)
+HidingSpot* GetHidingSpotByID(unsigned int id)
 {
 	for (HidingSpotList::iterator iter = TheHidingSpotList.begin(); iter != TheHidingSpotList.end(); iter++)
 	{
-		HidingSpot *spot = (*iter);
+		HidingSpot* spot = (*iter);
 
 		if (spot->GetID() == id)
 			return spot;
@@ -170,7 +170,7 @@ CNavArea::CNavArea()
 }
 
 // Assumes Z is flat
-CNavArea::CNavArea(const Vector *corner, const Vector *otherCorner)
+CNavArea::CNavArea(const Vector* corner, const Vector* otherCorner)
 {
 	Initialize();
 
@@ -208,7 +208,7 @@ CNavArea::CNavArea(const Vector *corner, const Vector *otherCorner)
 }
 
 // Constructor used during generation phase
-CNavArea::CNavArea(const Vector *nwCorner, const Vector *neCorner, const Vector *seCorner, const Vector *swCorner)
+CNavArea::CNavArea(const Vector* nwCorner, const Vector* neCorner, const Vector* seCorner, const Vector* swCorner)
 {
 	Initialize();
 
@@ -223,7 +223,7 @@ CNavArea::CNavArea(const Vector *nwCorner, const Vector *neCorner, const Vector 
 	m_swZ = swCorner->z;
 }
 
-CNavArea::CNavArea(CNavNode *nwNode, class CNavNode *neNode, class CNavNode *seNode, class CNavNode *swNode)
+CNavArea::CNavArea(CNavNode* nwNode, class CNavNode* neNode, class CNavNode* seNode, class CNavNode* swNode)
 {
 	Initialize();
 
@@ -257,7 +257,7 @@ CNavArea::~CNavArea()
 	NavAreaList::iterator iter;
 	for (iter = TheNavAreaList.begin(); iter != TheNavAreaList.end(); iter++)
 	{
-		CNavArea *area = (*iter);
+		CNavArea* area = (*iter);
 
 		if (area == this)
 			continue;
@@ -270,7 +270,7 @@ CNavArea::~CNavArea()
 	{
 		for (NavLadderList::iterator liter = m_ladder[i].begin(); liter != m_ladder[i].end(); liter++)
 		{
-			CNavLadder *ladder = *liter;
+			CNavLadder* ladder = *liter;
 			ladder->OnDestroyNotify(this);
 		}
 	}
@@ -281,7 +281,7 @@ CNavArea::~CNavArea()
 
 // This is invoked when an area is going away.
 // Remove any references we have to it.
-void CNavArea::OnDestroyNotify(CNavArea *dead)
+void CNavArea::OnDestroyNotify(CNavArea* dead)
 {
 	NavConnect con;
 	con.area = dead;
@@ -292,7 +292,7 @@ void CNavArea::OnDestroyNotify(CNavArea *dead)
 }
 
 // Connect this area to given area in given direction
-void CNavArea::ConnectTo(CNavArea *area, NavDirType dir)
+void CNavArea::ConnectTo(CNavArea* area, NavDirType dir)
 {
 	// check if already connected
 	for (NavConnectList::iterator iter = m_connect[dir].begin(); iter != m_connect[dir].end(); iter++)
@@ -310,7 +310,7 @@ void CNavArea::ConnectTo(CNavArea *area, NavDirType dir)
 }
 
 // Disconnect this area from given area
-void CNavArea::Disconnect(CNavArea *area)
+void CNavArea::Disconnect(CNavArea* area)
 {
 	NavConnect connect;
 	connect.area = area;
@@ -321,7 +321,7 @@ void CNavArea::Disconnect(CNavArea *area)
 
 // Recompute internal data once nodes have been adjusted during merge
 // Destroy adjArea.
-void CNavArea::FinishMerge(CNavArea *adjArea)
+void CNavArea::FinishMerge(CNavArea* adjArea)
 {
 	// update extent
 	m_extent.lo = *m_node[NORTH_WEST]->GetPosition();
@@ -346,7 +346,7 @@ void CNavArea::FinishMerge(CNavArea *adjArea)
 }
 
 // For merging with "adjArea" - pick up all of "adjArea"s connections
-void CNavArea::MergeAdjacentConnections(CNavArea *adjArea)
+void CNavArea::MergeAdjacentConnections(CNavArea* adjArea)
 {
 	// merge adjacency links - we gain all the connections that adjArea had
 	NavConnectList::iterator iter;
@@ -379,7 +379,7 @@ void CNavArea::MergeAdjacentConnections(CNavArea *adjArea)
 	// a single connection to us.
 	for (NavAreaList::iterator areaIter = TheNavAreaList.begin(); areaIter != TheNavAreaList.end(); areaIter++)
 	{
-		CNavArea *area = *areaIter;
+		CNavArea* area = *areaIter;
 
 		if (area == this || area == adjArea)
 			continue;
@@ -420,12 +420,12 @@ void CNavArea::MergeAdjacentConnections(CNavArea *adjArea)
 
 // Assign internal nodes to the given area
 // NOTE: "internal" nodes do not include the east or south border nodes
-void CNavArea::AssignNodes(CNavArea *area)
+void CNavArea::AssignNodes(CNavArea* area)
 {
-	CNavNode *horizLast = m_node[NORTH_EAST];
-	for (CNavNode *vertNode = m_node[NORTH_WEST]; vertNode != m_node[SOUTH_WEST]; vertNode = vertNode->GetConnectedNode(SOUTH))
+	CNavNode* horizLast = m_node[NORTH_EAST];
+	for (CNavNode* vertNode = m_node[NORTH_WEST]; vertNode != m_node[SOUTH_WEST]; vertNode = vertNode->GetConnectedNode(SOUTH))
 	{
-		for (CNavNode *horizNode = vertNode; horizNode != horizLast; horizNode = horizNode->GetConnectedNode(EAST))
+		for (CNavNode* horizNode = vertNode; horizNode != horizLast; horizNode = horizNode->GetConnectedNode(EAST))
 		{
 			horizNode->AssignArea(area);
 		}
@@ -437,10 +437,10 @@ void CNavArea::AssignNodes(CNavArea *area)
 // Split this area into two areas at the given edge.
 // Preserve all adjacency connections.
 // NOTE: This does not update node connections, only areas.
-bool CNavArea::SplitEdit(bool splitAlongX, float splitEdge, CNavArea **outAlpha, CNavArea **outBeta)
+bool CNavArea::SplitEdit(bool splitAlongX, float splitEdge, CNavArea** outAlpha, CNavArea** outBeta)
 {
-	CNavArea *alpha = nullptr;
-	CNavArea *beta = nullptr;
+	CNavArea* alpha = nullptr;
+	CNavArea* beta = nullptr;
 
 	if (splitAlongX)
 	{
@@ -542,7 +542,7 @@ bool CNavArea::SplitEdit(bool splitAlongX, float splitEdge, CNavArea **outAlpha,
 // Return true if given area is connected in given direction
 // if dir == NUM_DIRECTIONS, check all directions (direction is unknown)
 // TODO: Formalize "asymmetric" flag on connections
-bool CNavArea::IsConnected(const CNavArea *area, NavDirType dir) const
+bool CNavArea::IsConnected(const CNavArea* area, NavDirType dir) const
 {
 	// we are connected to ourself
 	if (area == this)
@@ -566,7 +566,7 @@ bool CNavArea::IsConnected(const CNavArea *area, NavDirType dir) const
 		NavLadderList::const_iterator liter;
 		for (liter = m_ladder[LADDER_UP].begin(); liter != m_ladder[LADDER_UP].end(); liter++)
 		{
-			CNavLadder *ladder = *liter;
+			CNavLadder* ladder = *liter;
 
 			if (ladder->m_topBehindArea == area || ladder->m_topForwardArea == area || ladder->m_topLeftArea == area || ladder->m_topRightArea == area)
 				return true;
@@ -574,7 +574,7 @@ bool CNavArea::IsConnected(const CNavArea *area, NavDirType dir) const
 
 		for (liter = m_ladder[LADDER_DOWN].begin(); liter != m_ladder[LADDER_DOWN].end(); liter++)
 		{
-			CNavLadder *ladder = *liter;
+			CNavLadder* ladder = *liter;
 
 			if (ladder->m_bottomArea == area)
 				return true;
@@ -595,7 +595,7 @@ bool CNavArea::IsConnected(const CNavArea *area, NavDirType dir) const
 
 // Compute change in height from this area to given area
 // TODO: This is approximate for now
-float CNavArea::ComputeHeightChange(const CNavArea *area)
+float CNavArea::ComputeHeightChange(const CNavArea* area)
 {
 	float ourZ = GetZ(GetCenter());
 	float areaZ = area->GetZ(area->GetCenter());
@@ -605,7 +605,7 @@ float CNavArea::ComputeHeightChange(const CNavArea *area)
 
 // Given the portion of the original area, update its internal data
 // The "ignoreEdge" direction defines the side of the original area that the new area does not include
-void CNavArea::FinishSplitEdit(CNavArea *newArea, NavDirType ignoreEdge)
+void CNavArea::FinishSplitEdit(CNavArea* newArea, NavDirType ignoreEdge)
 {
 	newArea->m_center.x = (newArea->m_extent.lo.x + newArea->m_extent.hi.x) / 2.0f;
 	newArea->m_center.y = (newArea->m_extent.lo.y + newArea->m_extent.hi.y) / 2.0f;
@@ -623,7 +623,7 @@ void CNavArea::FinishSplitEdit(CNavArea *newArea, NavDirType ignoreEdge)
 		int count = GetAdjacentCount((NavDirType)d);
 		for (int a = 0; a < count; a++)
 		{
-			CNavArea *adj = GetAdjacentArea((NavDirType)d, a);
+			CNavArea* adj = GetAdjacentArea((NavDirType)d, a);
 
 			switch (d)
 			{
@@ -659,9 +659,9 @@ void CNavArea::FinishSplitEdit(CNavArea *newArea, NavDirType ignoreEdge)
 }
 
 // Create a new area between this area and given area
-bool CNavArea::SpliceEdit(CNavArea *other)
+bool CNavArea::SpliceEdit(CNavArea* other)
 {
-	CNavArea *newArea = nullptr;
+	CNavArea* newArea = nullptr;
 	Vector nw, ne, se, sw;
 
 	if (m_extent.lo.x > other->m_extent.hi.x)
@@ -821,7 +821,7 @@ bool CNavArea::SpliceEdit(CNavArea *other)
 }
 
 // Merge this area and given adjacent area
-bool CNavArea::MergeEdit(CNavArea *adj)
+bool CNavArea::MergeEdit(CNavArea* adj)
 {
 	// can only merge if attributes of both areas match
 	// check that these areas can be merged
@@ -847,9 +847,9 @@ bool CNavArea::MergeEdit(CNavArea *adj)
 	if (m_extent.hi.x < adj->m_extent.hi.x || m_extent.hi.y < adj->m_extent.hi.y)
 		m_extent.hi = adj->m_extent.hi;
 
-	m_center.x = (m_extent.lo.x + m_extent.hi.x)/2.0f;
-	m_center.y = (m_extent.lo.y + m_extent.hi.y)/2.0f;
-	m_center.z = (m_extent.lo.z + m_extent.hi.z)/2.0f;
+	m_center.x = (m_extent.lo.x + m_extent.hi.x) / 2.0f;
+	m_center.y = (m_extent.lo.y + m_extent.hi.y) / 2.0f;
+	m_center.z = (m_extent.lo.z + m_extent.hi.z) / 2.0f;
 
 	if (m_extent.hi.x > origExtent.hi.x || m_extent.lo.y < origExtent.lo.y)
 		m_neZ = adj->GetZ(m_extent.hi.x, m_extent.lo.y);
@@ -887,7 +887,7 @@ void DestroyLadders()
 {
 	while (!TheNavLadderList.empty())
 	{
-		CNavLadder *ladder = TheNavLadderList.front();
+		CNavLadder* ladder = TheNavLadderList.front();
 		TheNavLadderList.pop_front();
 		delete ladder;
 	}
@@ -901,7 +901,7 @@ void DestroyNavigationMap()
 	// remove each element of the list and delete them
 	while (!TheNavAreaList.empty())
 	{
-		CNavArea *area = TheNavAreaList.front();
+		CNavArea* area = TheNavAreaList.front();
 		TheNavAreaList.pop_front();
 		delete area;
 	}
@@ -915,7 +915,7 @@ void DestroyNavigationMap()
 	DestroyHidingSpots();
 
 	// destroy navigation nodes created during map learning
-	CNavNode *node, *next;
+	CNavNode* node, * next;
 	for (node = CNavNode::m_list; node; node = next)
 	{
 		next = node->m_next;
@@ -934,7 +934,7 @@ void StripNavigationAreas()
 {
 	for (NavAreaList::iterator iter = TheNavAreaList.begin(); iter != TheNavAreaList.end(); iter++)
 	{
-		CNavArea *area = (*iter);
+		CNavArea* area = (*iter);
 		area->Strip();
 	}
 }
@@ -947,9 +947,9 @@ void CNavArea::Strip()
 }
 
 // Start at given position and find first area in given direction
-inline CNavArea *FindFirstAreaInDirection(const Vector *start, NavDirType dir, float range, float beneathLimit, CBaseEntity *traceIgnore = nullptr, Vector *closePos = nullptr)
+inline CNavArea* FindFirstAreaInDirection(const Vector* start, NavDirType dir, float range, float beneathLimit, CBaseEntity* traceIgnore = nullptr, Vector* closePos = nullptr)
 {
-	CNavArea *area = nullptr;
+	CNavArea* area = nullptr;
 	Vector pos = *start;
 	int end = int((range / GenerationStepSize) + 0.5f);
 
@@ -987,7 +987,7 @@ inline CNavArea *FindFirstAreaInDirection(const Vector *start, NavDirType dir, f
 }
 
 // Determine if we can "jump down" from given point
-inline bool testJumpDown(const Vector *fromPos, const Vector *toPos)
+inline bool testJumpDown(const Vector* fromPos, const Vector* toPos)
 {
 	float dz = fromPos->z - toPos->z;
 
@@ -1022,13 +1022,13 @@ inline bool testJumpDown(const Vector *fromPos, const Vector *toPos)
 	return true;
 }
 
-inline CNavArea *findJumpDownArea(const Vector *fromPos, NavDirType dir)
+inline CNavArea* findJumpDownArea(const Vector* fromPos, NavDirType dir)
 {
 	Vector start(fromPos->x, fromPos->y, fromPos->z + HalfHumanHeight);
 	AddDirectionVector(&start, dir, GenerationStepSize / 2.0f);
 
 	Vector toPos;
-	CNavArea *downArea = FindFirstAreaInDirection(&start, dir, 4.0f * GenerationStepSize, DeathDrop, nullptr, &toPos);
+	CNavArea* downArea = FindFirstAreaInDirection(&start, dir, 4.0f * GenerationStepSize, DeathDrop, nullptr, &toPos);
 
 	if (downArea && testJumpDown(fromPos, &toPos))
 		return downArea;
@@ -1043,16 +1043,16 @@ void ConnectGeneratedAreas()
 
 	for (NavAreaList::iterator iter = TheNavAreaList.begin(); iter != TheNavAreaList.end(); iter++)
 	{
-		CNavArea *area = (*iter);
+		CNavArea* area = (*iter);
 
 		// scan along edge nodes, stepping one node over into the next area
 		// for now, only use bi-directional connections
 
 		// north edge
-		CNavNode *node;
+		CNavNode* node;
 		for (node = area->m_node[NORTH_WEST]; node != area->m_node[NORTH_EAST]; node = node->GetConnectedNode(EAST))
 		{
-			CNavNode *adj = node->GetConnectedNode(NORTH);
+			CNavNode* adj = node->GetConnectedNode(NORTH);
 
 			if (adj && adj->GetArea() && adj->GetConnectedNode(SOUTH) == node)
 			{
@@ -1060,7 +1060,7 @@ void ConnectGeneratedAreas()
 			}
 			else
 			{
-				CNavArea *downArea = findJumpDownArea(node->GetPosition(), NORTH);
+				CNavArea* downArea = findJumpDownArea(node->GetPosition(), NORTH);
 				if (downArea && downArea != area)
 					area->ConnectTo(downArea, NORTH);
 			}
@@ -1069,7 +1069,7 @@ void ConnectGeneratedAreas()
 		// west edge
 		for (node = area->m_node[NORTH_WEST]; node != area->m_node[SOUTH_WEST]; node = node->GetConnectedNode(SOUTH))
 		{
-			CNavNode *adj = node->GetConnectedNode(WEST);
+			CNavNode* adj = node->GetConnectedNode(WEST);
 
 			if (adj && adj->GetArea() && adj->GetConnectedNode(EAST) == node)
 			{
@@ -1077,7 +1077,7 @@ void ConnectGeneratedAreas()
 			}
 			else
 			{
-				CNavArea *downArea = findJumpDownArea(node->GetPosition(), WEST);
+				CNavArea* downArea = findJumpDownArea(node->GetPosition(), WEST);
 				if (downArea && downArea != area)
 					area->ConnectTo(downArea, WEST);
 			}
@@ -1090,11 +1090,11 @@ void ConnectGeneratedAreas()
 		node = node->GetConnectedNode(NORTH);
 		if (node)
 		{
-			CNavNode *end = area->m_node[SOUTH_EAST]->GetConnectedNode(NORTH);
+			CNavNode* end = area->m_node[SOUTH_EAST]->GetConnectedNode(NORTH);
 			// TODO: Figure out why cs_backalley gets a NULL node in here...
 			for (; node && node != end; node = node->GetConnectedNode(EAST))
 			{
-				CNavNode *adj = node->GetConnectedNode(SOUTH);
+				CNavNode* adj = node->GetConnectedNode(SOUTH);
 
 				if (adj && adj->GetArea() && adj->GetConnectedNode(NORTH) == node)
 				{
@@ -1102,7 +1102,7 @@ void ConnectGeneratedAreas()
 				}
 				else
 				{
-					CNavArea *downArea = findJumpDownArea(node->GetPosition(), SOUTH);
+					CNavArea* downArea = findJumpDownArea(node->GetPosition(), SOUTH);
 					if (downArea && downArea != area)
 						area->ConnectTo(downArea, SOUTH);
 				}
@@ -1114,10 +1114,10 @@ void ConnectGeneratedAreas()
 		node = node->GetConnectedNode(WEST);
 		if (node)
 		{
-			CNavNode *end = area->m_node[SOUTH_EAST]->GetConnectedNode(WEST);
+			CNavNode* end = area->m_node[SOUTH_EAST]->GetConnectedNode(WEST);
 			for (; node && node != end; node = node->GetConnectedNode(SOUTH))
 			{
-				CNavNode *adj = node->GetConnectedNode(EAST);
+				CNavNode* adj = node->GetConnectedNode(EAST);
 
 				if (adj && adj->GetArea() && adj->GetConnectedNode(WEST) == node)
 				{
@@ -1125,7 +1125,7 @@ void ConnectGeneratedAreas()
 				}
 				else
 				{
-					CNavArea *downArea = findJumpDownArea(node->GetPosition(), EAST);
+					CNavArea* downArea = findJumpDownArea(node->GetPosition(), EAST);
 					if (downArea && downArea != area)
 						area->ConnectTo(downArea, EAST);
 				}
@@ -1148,18 +1148,18 @@ void MergeGeneratedAreas()
 
 		for (NavAreaList::iterator iter = TheNavAreaList.begin(); iter != TheNavAreaList.end(); iter++)
 		{
-			CNavArea *area = (*iter);
+			CNavArea* area = (*iter);
 
 			// north edge
 			NavConnectList::iterator citer;
 			for (citer = area->m_connect[NORTH].begin(); citer != area->m_connect[NORTH].end(); citer++)
 			{
-				CNavArea *adjArea = (*citer).area;
+				CNavArea* adjArea = (*citer).area;
 
 				if (area->m_node[NORTH_WEST] == adjArea->m_node[SOUTH_WEST] &&
-						area->m_node[NORTH_EAST] == adjArea->m_node[SOUTH_EAST] &&
-						area->GetAttributes() == adjArea->GetAttributes() &&
-						area->IsCoplanar(adjArea))
+					area->m_node[NORTH_EAST] == adjArea->m_node[SOUTH_EAST] &&
+					area->GetAttributes() == adjArea->GetAttributes() &&
+					area->IsCoplanar(adjArea))
 				{
 					// merge vertical
 					area->m_node[NORTH_WEST] = adjArea->m_node[NORTH_WEST];
@@ -1181,12 +1181,12 @@ void MergeGeneratedAreas()
 			// south edge
 			for (citer = area->m_connect[SOUTH].begin(); citer != area->m_connect[SOUTH].end(); citer++)
 			{
-				CNavArea *adjArea = (*citer).area;
+				CNavArea* adjArea = (*citer).area;
 
 				if (adjArea->m_node[NORTH_WEST] == area->m_node[SOUTH_WEST] &&
-						adjArea->m_node[NORTH_EAST] == area->m_node[SOUTH_EAST] &&
-						area->GetAttributes() == adjArea->GetAttributes() &&
-						area->IsCoplanar(adjArea))
+					adjArea->m_node[NORTH_EAST] == area->m_node[SOUTH_EAST] &&
+					area->GetAttributes() == adjArea->GetAttributes() &&
+					area->IsCoplanar(adjArea))
 				{
 					// merge vertical
 					area->m_node[SOUTH_WEST] = adjArea->m_node[SOUTH_WEST];
@@ -1209,12 +1209,12 @@ void MergeGeneratedAreas()
 			// west edge
 			for (citer = area->m_connect[WEST].begin(); citer != area->m_connect[WEST].end(); citer++)
 			{
-				CNavArea *adjArea = (*citer).area;
+				CNavArea* adjArea = (*citer).area;
 
 				if (area->m_node[NORTH_WEST] == adjArea->m_node[NORTH_EAST] &&
-						area->m_node[SOUTH_WEST] == adjArea->m_node[SOUTH_EAST] &&
-						area->GetAttributes() == adjArea->GetAttributes() &&
-						area->IsCoplanar(adjArea))
+					area->m_node[SOUTH_WEST] == adjArea->m_node[SOUTH_EAST] &&
+					area->GetAttributes() == adjArea->GetAttributes() &&
+					area->IsCoplanar(adjArea))
 				{
 					// merge horizontal
 					area->m_node[NORTH_WEST] = adjArea->m_node[NORTH_WEST];
@@ -1237,12 +1237,12 @@ void MergeGeneratedAreas()
 			// east edge
 			for (citer = area->m_connect[EAST].begin(); citer != area->m_connect[EAST].end(); citer++)
 			{
-				CNavArea *adjArea = (*citer).area;
+				CNavArea* adjArea = (*citer).area;
 
 				if (adjArea->m_node[NORTH_WEST] == area->m_node[NORTH_EAST] &&
-						adjArea->m_node[SOUTH_WEST] == area->m_node[SOUTH_EAST] &&
-						area->GetAttributes() == adjArea->GetAttributes() &&
-						area->IsCoplanar(adjArea))
+					adjArea->m_node[SOUTH_WEST] == area->m_node[SOUTH_EAST] &&
+					area->GetAttributes() == adjArea->GetAttributes() &&
+					area->IsCoplanar(adjArea))
 				{
 					// merge horizontal
 					area->m_node[NORTH_EAST] = adjArea->m_node[NORTH_EAST];
@@ -1261,13 +1261,12 @@ void MergeGeneratedAreas()
 			if (merged)
 				break;
 		}
-	}
-	while (merged);
+	} while (merged);
 }
 
 // Return true if area is more or less square.
 // This is used when merging to prevent long, thin, areas being created.
-inline bool IsAreaRoughlySquare(const class CNavArea *area)
+inline bool IsAreaRoughlySquare(const class CNavArea* area)
 {
 	float aspect = area->GetSizeX() / area->GetSizeY();
 
@@ -1280,7 +1279,7 @@ inline bool IsAreaRoughlySquare(const class CNavArea *area)
 }
 
 // Recursively chop area in half along X until child areas are roughly square
-void SplitX(CNavArea *area)
+void SplitX(CNavArea* area)
 {
 	if (IsAreaRoughlySquare(area))
 		return;
@@ -1298,7 +1297,7 @@ void SplitX(CNavArea *area)
 		return;
 	}
 
-	CNavArea *alpha, *beta;
+	CNavArea* alpha, * beta;
 	if (area->SplitEdit(false, split, &alpha, &beta))
 	{
 		// split each new area until square
@@ -1307,7 +1306,7 @@ void SplitX(CNavArea *area)
 	}
 }
 
-void SplitY(CNavArea *area)
+void SplitY(CNavArea* area)
 {
 	if (IsAreaRoughlySquare(area))
 		return;
@@ -1326,7 +1325,7 @@ void SplitY(CNavArea *area)
 		return;
 	}
 
-	CNavArea *alpha, *beta;
+	CNavArea* alpha, * beta;
 	if (area->SplitEdit(true, split, &alpha, &beta))
 	{
 		// split each new area until square
@@ -1341,7 +1340,7 @@ void SquareUpAreas()
 	auto iter = TheNavAreaList.begin();
 	while (iter != TheNavAreaList.end())
 	{
-		CNavArea *area = (*iter);
+		CNavArea* area = (*iter);
 		iter++;
 
 		if (!IsAreaRoughlySquare(area))
@@ -1361,14 +1360,14 @@ void SquareUpAreas()
 // All of the nodes within the test area must have the same attributes.
 // All of the nodes must be approximately co-planar w.r.t the NW node's normal, with the
 // exception of 1x1 areas which can be any angle.
-bool TestArea(CNavNode *node, int width, int height)
+bool TestArea(CNavNode* node, int width, int height)
 {
 	Vector normal = *node->GetNormal();
 	float d = -DotProduct(normal, *node->GetPosition());
 
 	const float offPlaneTolerance = 5.0f;
 
-	CNavNode *vertNode, *horizNode;
+	CNavNode* vertNode, * horizNode;
 
 	vertNode = node;
 	for (int y = 0; y < height; y++)
@@ -1437,17 +1436,17 @@ bool TestArea(CNavNode *node, int width, int height)
 // Create a nav area, and mark all nodes it overlaps as "covered"
 // NOTE: Nodes on the east and south edges are not included.
 // Returns number of nodes covered by this area, or -1 for error;
-int BuildArea(CNavNode *node, int width, int height)
+int BuildArea(CNavNode* node, int width, int height)
 {
 	//CONSOLE_ECHO("BuildArea(#%d, %d, %d)\n", node->GetID(), width, height);
 
-	CNavNode *nwNode = node;
-	CNavNode *neNode = nullptr;
-	CNavNode *swNode = nullptr;
-	CNavNode *seNode = nullptr;
+	CNavNode* nwNode = node;
+	CNavNode* neNode = nullptr;
+	CNavNode* swNode = nullptr;
+	CNavNode* seNode = nullptr;
 
-	CNavNode *vertNode = node;
-	CNavNode *horizNode;
+	CNavNode* vertNode = node;
+	CNavNode* horizNode;
 
 	int coveredNodes = 0;
 	for (int y = 0; y < height; y++)
@@ -1483,7 +1482,7 @@ int BuildArea(CNavNode *node, int width, int height)
 		return -1;
 	}
 
-	CNavArea *area = new CNavArea(nwNode, neNode, seNode, swNode);
+	CNavArea* area = new CNavArea(nwNode, neNode, seNode, swNode);
 	TheNavAreaList.push_back(area);
 
 	// since all internal nodes have the same attributes, set this area's attributes
@@ -1500,10 +1499,10 @@ void BuildLadders()
 	DestroyLadders();
 
 	TraceResult result;
-	CBaseEntity *pEntity = UTIL_FindEntityByClassname(nullptr, "func_ladder");
+	CBaseEntity* pEntity = UTIL_FindEntityByClassname(nullptr, "func_ladder");
 	while (pEntity && !FNullEnt(pEntity->edict()))
 	{
-		CNavLadder *ladder = new CNavLadder;
+		CNavLadder* ladder = new CNavLadder;
 
 		// compute top & bottom of ladder
 		ladder->m_top.x = (pEntity->pev->absmin.x + pEntity->pev->absmax.x) / 2.0f;
@@ -1660,7 +1659,7 @@ void BuildLadders()
 		float topZ = -99999.9f;
 		bool topAdjusted = false;
 
-		CNavArea *topAreaList[NUM_CORNERS];
+		CNavArea* topAreaList[NUM_CORNERS];
 		topAreaList[NORTH_WEST] = ladder->m_topForwardArea;
 		topAreaList[NORTH_EAST] = ladder->m_topLeftArea;
 		topAreaList[SOUTH_EAST] = ladder->m_topRightArea;
@@ -1668,7 +1667,7 @@ void BuildLadders()
 
 		for (int a = 0; a < NUM_CORNERS; a++)
 		{
-			CNavArea *topArea = topAreaList[a];
+			CNavArea* topArea = topAreaList[a];
 			if (!topArea)
 				continue;
 
@@ -1707,7 +1706,7 @@ void MarkJumpAreas()
 {
 	for (NavAreaList::iterator iter = TheNavAreaList.begin(); iter != TheNavAreaList.end(); iter++)
 	{
-		CNavArea *area = (*iter);
+		CNavArea* area = (*iter);
 		Vector u, v;
 
 		// compute our unit surface normal
@@ -1743,7 +1742,7 @@ void GenerateNavigationAreaMesh()
 
 	while (uncoveredNodes > 0)
 	{
-		for (CNavNode *node = CNavNode::GetFirst(); node; node = node->GetNext())
+		for (CNavNode* node = CNavNode::GetFirst(); node; node = node->GetNext())
 		{
 			if (node->IsCovered())
 				continue;
@@ -1779,7 +1778,7 @@ void GenerateNavigationAreaMesh()
 	// compute total extent
 	for (auto area : TheNavAreaList)
 	{
-		const Extent *areaExtent = area->GetExtent();
+		const Extent* areaExtent = area->GetExtent();
 
 		if (areaExtent->lo.x < extent.lo.x)
 			extent.lo.x = areaExtent->lo.x;
@@ -1806,7 +1805,7 @@ void GenerateNavigationAreaMesh()
 }
 
 // Return true if 'pos' is within 2D extents of area.
-bool CNavArea::IsOverlapping(const Vector *pos) const
+bool CNavArea::IsOverlapping(const Vector* pos) const
 {
 	if (pos->x >= m_extent.lo.x && pos->x <= m_extent.hi.x &&
 		pos->y >= m_extent.lo.y && pos->y <= m_extent.hi.y)
@@ -1816,7 +1815,7 @@ bool CNavArea::IsOverlapping(const Vector *pos) const
 }
 
 // Return true if 'area' overlaps our 2D extents
-bool CNavArea::IsOverlapping(const CNavArea *area) const
+bool CNavArea::IsOverlapping(const CNavArea* area) const
 {
 	if (area->m_extent.lo.x < m_extent.hi.x && area->m_extent.hi.x > m_extent.lo.x &&
 		area->m_extent.lo.y < m_extent.hi.y && area->m_extent.hi.y > m_extent.lo.y)
@@ -1826,7 +1825,7 @@ bool CNavArea::IsOverlapping(const CNavArea *area) const
 }
 
 // Return true if 'area' overlaps our X extent
-bool CNavArea::IsOverlappingX(const CNavArea *area) const
+bool CNavArea::IsOverlappingX(const CNavArea* area) const
 {
 	if (area->m_extent.lo.x < m_extent.hi.x && area->m_extent.hi.x > m_extent.lo.x)
 		return true;
@@ -1835,7 +1834,7 @@ bool CNavArea::IsOverlappingX(const CNavArea *area) const
 }
 
 // Return true if 'area' overlaps our Y extent
-bool CNavArea::IsOverlappingY(const CNavArea *area) const
+bool CNavArea::IsOverlappingY(const CNavArea* area) const
 {
 	if (area->m_extent.lo.y < m_extent.hi.y && area->m_extent.hi.y > m_extent.lo.y)
 		return true;
@@ -1844,7 +1843,7 @@ bool CNavArea::IsOverlappingY(const CNavArea *area) const
 }
 
 // Return true if given point is on or above this area, but no others
-bool CNavArea::Contains(const Vector *pos) const
+bool CNavArea::Contains(const Vector* pos) const
 {
 	// check 2D overlap
 	if (!IsOverlapping(pos))
@@ -1859,7 +1858,7 @@ bool CNavArea::Contains(const Vector *pos) const
 
 	for (NavAreaList::const_iterator iter = m_overlapList.begin(); iter != m_overlapList.end(); iter++)
 	{
-		const CNavArea *area = (*iter);
+		const CNavArea* area = (*iter);
 
 		// skip self
 		if (area == this)
@@ -1887,7 +1886,7 @@ bool CNavArea::Contains(const Vector *pos) const
 }
 
 // Return true if this area and given area are approximately co-planar
-bool CNavArea::IsCoplanar(const CNavArea *area) const
+bool CNavArea::IsCoplanar(const CNavArea* area) const
 {
 	Vector u, v;
 
@@ -1926,7 +1925,7 @@ bool CNavArea::IsCoplanar(const CNavArea *area) const
 // Return Z of area at (x,y) of 'pos'
 // Trilinear interpolation of Z values at quad edges.
 // NOTE: pos->z is not used.
-float CNavArea::GetZ(const Vector *pos) const
+float CNavArea::GetZ(const Vector* pos) const
 {
 	float dx = m_extent.hi.x - m_extent.lo.x;
 	float dy = m_extent.hi.y - m_extent.lo.y;
@@ -1963,9 +1962,9 @@ float CNavArea::GetZ(float x, float y) const
 
 // Return closest point to 'pos' on 'area'.
 // Returned point is in 'close'.
-void CNavArea::GetClosestPointOnArea(const Vector *pos, Vector *close) const
+void CNavArea::GetClosestPointOnArea(const Vector* pos, Vector* close) const
 {
-	const Extent *extent = GetExtent();
+	const Extent* extent = GetExtent();
 	if (pos->x < extent->lo.x)
 	{
 		if (pos->y < extent->lo.y)
@@ -2028,9 +2027,9 @@ void CNavArea::GetClosestPointOnArea(const Vector *pos, Vector *close) const
 }
 
 // Return shortest distance squared between point and this area
-float CNavArea::GetDistanceSquaredToPoint(const Vector *pos) const
+float CNavArea::GetDistanceSquaredToPoint(const Vector* pos) const
 {
-	const Extent *extent = GetExtent();
+	const Extent* extent = GetExtent();
 
 	if (pos->x < extent->lo.x)
 	{
@@ -2099,7 +2098,7 @@ float CNavArea::GetDistanceSquaredToPoint(const Vector *pos) const
 	}
 }
 
-CNavArea *CNavArea::GetRandomAdjacentArea(NavDirType dir) const
+CNavArea* CNavArea::GetRandomAdjacentArea(NavDirType dir) const
 {
 	int count = m_connect[dir].size();
 	int which = RANDOM_LONG(0, count - 1);
@@ -2120,7 +2119,7 @@ CNavArea *CNavArea::GetRandomAdjacentArea(NavDirType dir) const
 // Compute "portal" between to adjacent areas.
 // Return center of portal opening, and half-width defining sides of portal from center.
 // NOTE: center->z is unset.
-void CNavArea::ComputePortal(const CNavArea *to, NavDirType dir, Vector *center, float *halfWidth) const
+void CNavArea::ComputePortal(const CNavArea* to, NavDirType dir, Vector* center, float* halfWidth) const
 {
 	if (dir == NORTH || dir == SOUTH)
 	{
@@ -2173,7 +2172,7 @@ void CNavArea::ComputePortal(const CNavArea *to, NavDirType dir, Vector *center,
 }
 
 // Compute closest point within the "portal" between to adjacent areas.
-void CNavArea::ComputeClosestPointInPortal(const CNavArea *to, NavDirType dir, const Vector *fromPos, Vector *closePos) const
+void CNavArea::ComputeClosestPointInPortal(const CNavArea* to, NavDirType dir, const Vector* fromPos, Vector* closePos) const
 {
 	const float margin = GenerationStepSize / 2.0f;
 
@@ -2261,7 +2260,7 @@ bool CNavArea::IsEdge(NavDirType dir) const
 }
 
 // Return direction from this area to the given point
-NavDirType CNavArea::ComputeDirection(Vector *point) const
+NavDirType CNavArea::ComputeDirection(Vector* point) const
 {
 	if (point->x >= m_extent.lo.x && point->x <= m_extent.hi.x)
 	{
@@ -2428,7 +2427,7 @@ void CNavArea::AddToOpenList()
 	}
 
 	// insert self in ascending cost order
-	CNavArea *area, *last = nullptr;
+	CNavArea* area, * last = nullptr;
 	for (area = m_openList; area; area = area->m_nextOpen)
 	{
 		if (this->GetTotalCost() < area->GetTotalCost())
@@ -2467,9 +2466,9 @@ void CNavArea::UpdateOnOpenList()
 	while (m_prevOpen && this->GetTotalCost() < m_prevOpen->GetTotalCost())
 	{
 		// swap position with predecessor
-		CNavArea *other = m_prevOpen;
-		CNavArea *before = other->m_prevOpen;
-		CNavArea *after  = this->m_nextOpen;
+		CNavArea* other = m_prevOpen;
+		CNavArea* before = other->m_prevOpen;
+		CNavArea* after = this->m_nextOpen;
 
 		this->m_nextOpen = other;
 		this->m_prevOpen = before;
@@ -2510,7 +2509,7 @@ void CNavArea::ClearSearchLists()
 
 // Return the coordinates of the area's corner.
 // NOTE: Do not retain the returned pointer - it is temporary.
-const Vector *CNavArea::GetCorner(NavCornerType corner) const
+const Vector* CNavArea::GetCorner(NavCornerType corner) const
 {
 	static Vector pos;
 
@@ -2539,13 +2538,13 @@ const Vector *CNavArea::GetCorner(NavCornerType corner) const
 }
 
 // Returns true if an existing hiding spot is too close to given position
-bool CNavArea::IsHidingSpotCollision(const Vector *pos) const
+bool CNavArea::IsHidingSpotCollision(const Vector* pos) const
 {
 	const float collisionRange = 30.0f;
 
 	for (HidingSpotList::const_iterator iter = m_hidingSpotList.begin(); iter != m_hidingSpotList.end(); iter++)
 	{
-		const HidingSpot *spot = (*iter);
+		const HidingSpot* spot = (*iter);
 
 		if ((*spot->GetPosition() - *pos).IsLengthLessThan(collisionRange))
 			return true;
@@ -2554,7 +2553,7 @@ bool CNavArea::IsHidingSpotCollision(const Vector *pos) const
 	return false;
 }
 
-bool IsHidingSpotInCover(const Vector *spot)
+bool IsHidingSpotInCover(const Vector* spot)
 {
 	int coverCount = 0;
 	TraceResult result;
@@ -2617,7 +2616,7 @@ void CNavArea::ComputeHidingSpots()
 		extent.hi = -999999.9f;
 
 		bool isHoriz = (d == NORTH || d == SOUTH) ? true : false;
-		for (auto &connect : m_connect[d])
+		for (auto& connect : m_connect[d])
 		{
 			// if connection is only one-way, it's a "jump down" connection (ie: a discontinuity that may mean cover)
 			// ignore it
@@ -2687,13 +2686,13 @@ void CNavArea::ComputeHidingSpots()
 
 	if (cornerCount[NORTH_WEST] == 2)
 	{
-		Vector pos = *GetCorner(NORTH_WEST) + Vector(offset,  offset, 0.0f);
+		Vector pos = *GetCorner(NORTH_WEST) + Vector(offset, offset, 0.0f);
 
 		m_hidingSpotList.push_back(new HidingSpot(&pos, (IsHidingSpotInCover(&pos)) ? HidingSpot::IN_COVER : 0));
 	}
 	if (cornerCount[NORTH_EAST] == 2)
 	{
-		Vector pos = *GetCorner(NORTH_EAST) + Vector(-offset,  offset, 0.0f);
+		Vector pos = *GetCorner(NORTH_EAST) + Vector(-offset, offset, 0.0f);
 		if (!IsHidingSpotCollision(&pos))
 			m_hidingSpotList.push_back(new HidingSpot(&pos, (IsHidingSpotInCover(&pos)) ? HidingSpot::IN_COVER : 0));
 	}
@@ -2712,7 +2711,7 @@ void CNavArea::ComputeHidingSpots()
 }
 
 // Determine how much walkable area we can see from the spot, and how far away we can see.
-void ClassifySniperSpot(HidingSpot *spot)
+void ClassifySniperSpot(HidingSpot* spot)
 {
 	// assume we are crouching
 	Vector eye = *spot->GetPosition() + Vector(0, 0, HalfHumanHeight);
@@ -2726,9 +2725,9 @@ void ClassifySniperSpot(HidingSpot *spot)
 
 	for (NavAreaList::iterator iter = TheNavAreaList.begin(); iter != TheNavAreaList.end(); iter++)
 	{
-		CNavArea *area = (*iter);
+		CNavArea* area = (*iter);
 
-		const Extent *extent = area->GetExtent();
+		const Extent* extent = area->GetExtent();
 
 		// scan this area
 		for (walkable.y = extent->lo.y + GenerationStepSize / 2.0f; walkable.y < extent->hi.y; walkable.y += GenerationStepSize)
@@ -2802,17 +2801,17 @@ void CNavArea::ComputeSniperSpots()
 
 	for (HidingSpotList::iterator iter = m_hidingSpotList.begin(); iter != m_hidingSpotList.end(); iter++)
 	{
-		HidingSpot *spot = (*iter);
+		HidingSpot* spot = (*iter);
 		ClassifySniperSpot(spot);
 	}
 }
 
 // Given the areas we are moving between, return the spots we will encounter
-SpotEncounter *CNavArea::GetSpotEncounter(const CNavArea *from, const CNavArea *to)
+SpotEncounter* CNavArea::GetSpotEncounter(const CNavArea* from, const CNavArea* to)
 {
 	if (from && to)
 	{
-		SpotEncounter *e;
+		SpotEncounter* e;
 
 		for (SpotEncounterList::iterator iter = m_spotEncounterList.begin(); iter != m_spotEncounterList.end(); iter++)
 		{
@@ -2827,14 +2826,14 @@ SpotEncounter *CNavArea::GetSpotEncounter(const CNavArea *from, const CNavArea *
 }
 
 // Add spot encounter data when moving from area to area
-void CNavArea::AddSpotEncounters(const class CNavArea *from, NavDirType fromDir, const CNavArea *to, NavDirType toDir)
+void CNavArea::AddSpotEncounters(const class CNavArea* from, NavDirType fromDir, const CNavArea* to, NavDirType toDir)
 {
 	SpotEncounter e;
 
-	e.from.area = const_cast<CNavArea *>(from);
+	e.from.area = const_cast<CNavArea*>(from);
 	e.fromDir = fromDir;
 
-	e.to.area = const_cast<CNavArea *>(to);
+	e.to.area = const_cast<CNavArea*>(to);
 	e.toDir = toDir;
 
 	float halfWidth;
@@ -2857,7 +2856,7 @@ void CNavArea::AddSpotEncounters(const class CNavArea *from, NavDirType fromDir,
 	TraceResult result;
 
 	Vector eye, delta;
-	HidingSpot *spot;
+	HidingSpot* spot;
 	SpotOrder spotOrder;
 
 	// step along path thru this area
@@ -2886,7 +2885,7 @@ void CNavArea::AddSpotEncounters(const class CNavArea *from, NavDirType fromDir,
 			if (spot->IsMarked())
 				continue;
 
-			const Vector *spotPos = spot->GetPosition();
+			const Vector* spotPos = spot->GetPosition();
 
 			delta.x = spotPos->x - eye.x;
 			delta.y = spotPos->y - eye.y;
@@ -2940,14 +2939,14 @@ void CNavArea::ComputeSpotEncounters()
 	{
 		for (NavConnectList::iterator fromIter = m_connect[fromDir].begin(); fromIter != m_connect[fromDir].end(); fromIter++)
 		{
-			NavConnect *fromCon = &(*fromIter);
+			NavConnect* fromCon = &(*fromIter);
 
 			// compute encounter data for path to each adjacent area
 			for (int toDir = 0; toDir < NUM_DIRECTIONS; toDir++)
 			{
 				for (NavConnectList::iterator toIter = m_connect[toDir].begin(); toIter != m_connect[toDir].end(); toIter++)
 				{
-					NavConnect *toCon = &(*toIter);
+					NavConnect* toCon = &(*toIter);
 
 					if (toCon == fromCon)
 						continue;
@@ -2998,7 +2997,7 @@ float CNavArea::GetDanger(int teamID)
 }
 
 // Increase the danger of nav areas containing and near the given position
-void IncreaseDangerNearby(int teamID, float amount, class CNavArea *startArea, const Vector *pos, float maxRadius)
+void IncreaseDangerNearby(int teamID, float amount, class CNavArea* startArea, const Vector* pos, float maxRadius)
 {
 	if (!startArea)
 		return;
@@ -3014,7 +3013,7 @@ void IncreaseDangerNearby(int teamID, float amount, class CNavArea *startArea, c
 	while (!CNavArea::IsOpenListEmpty())
 	{
 		// get next area to check
-		CNavArea *area = CNavArea::PopOpenList();
+		CNavArea* area = CNavArea::PopOpenList();
 
 		// area has no hiding spots, explore adjacent areas
 		for (int dir = 0; dir < NUM_DIRECTIONS; dir++)
@@ -3022,7 +3021,7 @@ void IncreaseDangerNearby(int teamID, float amount, class CNavArea *startArea, c
 			int count = area->GetAdjacentCount((NavDirType)dir);
 			for (int i = 0; i < count; i++)
 			{
-				CNavArea *adjArea = area->GetAdjacentArea((NavDirType)dir, i);
+				CNavArea* adjArea = area->GetAdjacentArea((NavDirType)dir, i);
 
 				if (!adjArea->IsMarked())
 				{
@@ -3033,7 +3032,7 @@ void IncreaseDangerNearby(int teamID, float amount, class CNavArea *startArea, c
 						adjArea->AddToOpenList();
 						adjArea->SetTotalCost(cost);
 						adjArea->Mark();
-						adjArea->IncreaseDanger(teamID, amount * cost/maxRadius);
+						adjArea->IncreaseDanger(teamID, amount * cost / maxRadius);
 					}
 				}
 			}
@@ -3046,7 +3045,7 @@ void DrawDanger()
 {
 	for (NavAreaList::iterator iter = TheNavAreaList.begin(); iter != TheNavAreaList.end(); iter++)
 	{
-		CNavArea *area = (*iter);
+		CNavArea* area = (*iter);
 
 		Vector center = *area->GetCenter();
 		Vector top;
@@ -3073,13 +3072,13 @@ void DrawDanger()
 }
 
 // If a player is at the given spot, return true
-bool IsSpotOccupied(CBaseEntity *pEntity, const Vector *pos)
+bool IsSpotOccupied(CBaseEntity* pEntity, const Vector* pos)
 {
 	const float closeRange = 75.0f;
 
 	// is there a player in this spot
 	float range;
-	CBasePlayer *pClosest = UTIL_GetClosestPlayer(pos, &range);
+	CBasePlayer* pClosest = UTIL_GetClosestPlayer(pos, &range);
 
 	if (pEntity != pClosest)
 	{
@@ -3090,7 +3089,7 @@ bool IsSpotOccupied(CBaseEntity *pEntity, const Vector *pos)
 	// is there is a hostage in this spot
 	if (g_pHostages)
 	{
-		CHostage *pHostage = g_pHostages->GetClosestHostage(*pos, &range);
+		CHostage* pHostage = g_pHostages->GetClosestHostage(*pos, &range);
 		if (pHostage && pEntity != pHostage && range < closeRange)
 			return true;
 	}
@@ -3101,7 +3100,7 @@ bool IsSpotOccupied(CBaseEntity *pEntity, const Vector *pos)
 class CollectHidingSpotsFunctor
 {
 public:
-	CollectHidingSpotsFunctor(CBaseEntity *me, const Vector *origin, float range, unsigned char flags, Place place = UNDEFINED_PLACE, bool useCrouchAreas = true)
+	CollectHidingSpotsFunctor(CBaseEntity* me, const Vector* origin, float range, unsigned char flags, Place place = UNDEFINED_PLACE, bool useCrouchAreas = true)
 	{
 		m_me = me;
 		m_count = 0;
@@ -3113,21 +3112,21 @@ public:
 	}
 	enum { MAX_SPOTS = 256 };
 
-	bool operator()(CNavArea *area)
+	bool operator()(CNavArea* area)
 	{
 		// if a place is specified, only consider hiding spots from areas in that place
 		if (m_place != UNDEFINED_PLACE && area->GetPlace() != m_place)
 			return true;
 
 		// collect all the hiding spots in this area
-		const HidingSpotList *list = area->GetHidingSpotList();
+		const HidingSpotList* list = area->GetHidingSpotList();
 
 		for (HidingSpotList::const_iterator iter = list->begin(); iter != list->end() && m_count < MAX_SPOTS; iter++)
 		{
-			const HidingSpot *spot = (*iter);
+			const HidingSpot* spot = (*iter);
 			if (m_useCrouchAreas == false)
 			{
-				CNavArea *area = TheNavAreaGrid.GetNavArea(spot->GetPosition());
+				CNavArea* area = TheNavAreaGrid.GetNavArea(spot->GetPosition());
 				if (area && (area->GetAttributes() & NAV_CROUCH))
 					continue;
 			}
@@ -3172,11 +3171,11 @@ public:
 		m_count--;
 	}
 
-	CBaseEntity *m_me;
-	const Vector *m_origin;
+	CBaseEntity* m_me;
+	const Vector* m_origin;
 	float m_range;
 
-	const Vector *m_hidingSpot[MAX_SPOTS];
+	const Vector* m_hidingSpot[MAX_SPOTS];
 	int m_count;
 
 	unsigned char m_flags;
@@ -3187,7 +3186,7 @@ public:
 // Do a breadth-first search to find a nearby hiding spot and return it.
 // Don't pick a hiding spot that a Player is currently occupying.
 // TODO: Clean up this mess
-const Vector *FindNearbyHidingSpot(CBaseEntity *me, const Vector *pos, CNavArea *startArea, float maxRange, bool isSniper, bool useNearest)
+const Vector* FindNearbyHidingSpot(CBaseEntity* me, const Vector* pos, CNavArea* startArea, float maxRange, bool isSniper, bool useNearest)
 {
 	if (!startArea)
 		return nullptr;
@@ -3229,7 +3228,7 @@ const Vector *FindNearbyHidingSpot(CBaseEntity *me, const Vector *pos, CNavArea 
 	if (useNearest)
 	{
 		// return closest hiding spot
-		const Vector *closest = nullptr;
+		const Vector* closest = nullptr;
 		float closeRangeSq = 9999999999.9f;
 		for (int i = 0; i < collector.m_count; i++)
 		{
@@ -3252,11 +3251,11 @@ const Vector *FindNearbyHidingSpot(CBaseEntity *me, const Vector *pos, CNavArea 
 // Return true if moving from "start" to "finish" will cross a player's line of fire
 // The path from "start" to "finish" is assumed to be a straight line
 // "start" and "finish" are assumed to be points on the ground
-bool IsCrossingLineOfFire(const Vector &start, const Vector &finish, CBaseEntity *pEntIgnore, int ignoreTeam)
+bool IsCrossingLineOfFire(const Vector& start, const Vector& finish, CBaseEntity* pEntIgnore, int ignoreTeam)
 {
 	for (int i = 1; i <= gpGlobals->maxClients; i++)
 	{
-		CBasePlayer *pPlayer = UTIL_PlayerByIndex(i);
+		CBasePlayer* pPlayer = UTIL_PlayerByIndex(i);
 
 		if (!IsEntityValid(pPlayer))
 			continue;
@@ -3299,7 +3298,7 @@ bool IsCrossingLineOfFire(const Vector &start, const Vector &finish, CBaseEntity
 }
 
 // Select a random hiding spot among the nav areas that are tagged with the given place
-const Vector *FindRandomHidingSpot(CBaseEntity *me, Place place, bool isSniper)
+const Vector* FindRandomHidingSpot(CBaseEntity* me, Place place, bool isSniper)
 {
 	// collect set of nearby hiding spots
 	if (isSniper)
@@ -3343,7 +3342,7 @@ const Vector *FindRandomHidingSpot(CBaseEntity *me, Place place, bool isSniper)
 // Select a nearby retreat spot.
 // Don't pick a hiding spot that a Player is currently occupying.
 // If "avoidTeam" is nonzero, avoid getting close to members of that team.
-const Vector *FindNearbyRetreatSpot(CBaseEntity *me, const Vector *start, CNavArea *startArea, float maxRange, int avoidTeam, bool useCrouchAreas)
+const Vector* FindNearbyRetreatSpot(CBaseEntity* me, const Vector* start, CNavArea* startArea, float maxRange, int avoidTeam, bool useCrouchAreas)
 {
 	if (!startArea)
 		return nullptr;
@@ -3397,12 +3396,12 @@ const Vector *FindNearbyRetreatSpot(CBaseEntity *me, const Vector *start, CNavAr
 
 // Return number of players with given teamID in this area (teamID == 0 means any/all)
 // TODO: Keep pointers to contained Players to make this a zero-time query
-int CNavArea::GetPlayerCount(int teamID, CBasePlayer *pEntIgnore) const
+int CNavArea::GetPlayerCount(int teamID, CBasePlayer* pEntIgnore) const
 {
 	int nCount = 0;
 	for (int i = 1; i <= gpGlobals->maxClients; i++)
 	{
-		CBasePlayer *pPlayer = UTIL_PlayerByIndex(i);
+		CBasePlayer* pPlayer = UTIL_PlayerByIndex(i);
 
 		if (pPlayer == pEntIgnore)
 			continue;
@@ -3426,7 +3425,7 @@ int CNavArea::GetPlayerCount(int teamID, CBasePlayer *pEntIgnore) const
 	return nCount;
 }
 
-CNavArea *GetMarkedArea()
+CNavArea* GetMarkedArea()
 {
 	return markedArea;
 }
@@ -3442,12 +3441,12 @@ void EditNavAreasReset()
 	lastDrawTimestamp = 0.0f;
 }
 
-void DrawHidingSpots(const class CNavArea *area)
+void DrawHidingSpots(const class CNavArea* area)
 {
-	const HidingSpotList *list = area->GetHidingSpotList();
+	const HidingSpotList* list = area->GetHidingSpotList();
 	for (HidingSpotList::const_iterator iter = list->begin(); iter != list->end(); iter++)
 	{
-		const HidingSpot *spot = (*iter);
+		const HidingSpot* spot = (*iter);
 		int r, g, b;
 
 		if (spot->IsIdealSniperSpot())
@@ -3474,7 +3473,7 @@ void DrawHidingSpots(const class CNavArea *area)
 // Draw ourselves and adjacent areas
 void CNavArea::DrawConnectedAreas()
 {
-	CBasePlayer *pLocalPlayer = UTIL_GetLocalPlayer();
+	CBasePlayer* pLocalPlayer = UTIL_GetLocalPlayer();
 	if (!pLocalPlayer)
 		return;
 
@@ -3524,7 +3523,7 @@ void CNavArea::DrawConnectedAreas()
 		int count = GetAdjacentCount(dir);
 		for (int a = 0; a < count; a++)
 		{
-			CNavArea *adj = GetAdjacentArea(dir, a);
+			CNavArea* adj = GetAdjacentArea(dir, a);
 
 			if (isPlaceMode)
 			{
@@ -3639,11 +3638,11 @@ void CNavArea::RaiseCorner(NavCornerType corner, int amount)
 class PlaceFloodFillFunctor
 {
 public:
-	PlaceFloodFillFunctor(CNavArea *area)
+	PlaceFloodFillFunctor(CNavArea* area)
 	{
 		m_initialPlace = area->GetPlace();
 	}
-	bool operator()(CNavArea *area)
+	bool operator()(CNavArea* area)
 	{
 		if (area->GetPlace() != m_initialPlace)
 			return false;
@@ -3659,7 +3658,7 @@ private:
 // Draw navigation areas and edit them
 void EditNavAreas(NavEditCmdType cmd)
 {
-	CBasePlayer *pLocalPlayer = UTIL_GetLocalPlayer();
+	CBasePlayer* pLocalPlayer = UTIL_GetLocalPlayer();
 	if (!pLocalPlayer)
 		return;
 
@@ -3686,11 +3685,11 @@ void EditNavAreas(NavEditCmdType cmd)
 		// show ladder connections
 		for (NavLadderList::iterator iter = TheNavLadderList.begin(); iter != TheNavLadderList.end(); iter++)
 		{
-			CNavLadder *ladder = (*iter);
+			CNavLadder* ladder = (*iter);
 
 			float dx = pLocalPlayer->pev->origin.x - ladder->m_bottom.x;
 			float dy = pLocalPlayer->pev->origin.y - ladder->m_bottom.y;
-			if (dx * dx + dy * dy > maxRange*maxRange)
+			if (dx * dx + dy * dy > maxRange * maxRange)
 				continue;
 
 			UTIL_DrawBeamPoints(ladder->m_top, ladder->m_bottom, beamTime, 255, 0, 255);
@@ -3726,7 +3725,7 @@ void EditNavAreas(NavEditCmdType cmd)
 			float halfWidth;
 			for (int i = 0; i < markedArea->GetApproachInfoCount(); i++)
 			{
-				const CNavArea::ApproachInfo *info = markedArea->GetApproachInfo(i);
+				const CNavArea::ApproachInfo* info = markedArea->GetApproachInfo(i);
 
 				// compute approach point
 				if (info->hereToNextHow <= GO_WEST)
@@ -3797,7 +3796,7 @@ void EditNavAreas(NavEditCmdType cmd)
 		}
 
 		// find the area the player is pointing at
-		CNavArea *area = TheNavAreaGrid.GetNearestNavArea(&result.vecEndPos);
+		CNavArea* area = TheNavAreaGrid.GetNearestNavArea(&result.vecEndPos);
 
 		if (area)
 		{
@@ -3812,7 +3811,7 @@ void EditNavAreas(NavEditCmdType cmd)
 
 				if (area->GetPlace())
 				{
-					const char *name = TheBotPhrases->IDToName(area->GetPlace());
+					const char* name = TheBotPhrases->IDToName(area->GetPlace());
 					if (name)
 						Q_strcpy(locName, name);
 					else
@@ -3830,8 +3829,8 @@ void EditNavAreas(NavEditCmdType cmd)
 				else
 				{
 					Q_snprintf(attrib, sizeof(attrib), "%s%s%s%s",
-						(area->GetAttributes() & NAV_CROUCH)  ? "CROUCH "  : "",
-						(area->GetAttributes() & NAV_JUMP)    ? "JUMP "    : "",
+						(area->GetAttributes() & NAV_CROUCH) ? "CROUCH " : "",
+						(area->GetAttributes() & NAV_JUMP) ? "JUMP " : "",
 						(area->GetAttributes() & NAV_PRECISE) ? "PRECISE " : "",
 						(area->GetAttributes() & NAV_NO_JUMP) ? "NO_JUMP " : "");
 				}
@@ -3905,7 +3904,7 @@ void EditNavAreas(NavEditCmdType cmd)
 				}
 
 				// draw split line
-				const Extent *extent = area->GetExtent();
+				const Extent* extent = area->GetExtent();
 
 				float yaw = pLocalPlayer->pev->v_angle.y;
 				while (yaw > 360.0f)
@@ -3956,61 +3955,98 @@ void EditNavAreas(NavEditCmdType cmd)
 				// do area-dependant edit commands, if any
 				switch (cmd)
 				{
-					case EDIT_TOGGLE_PLACE_MODE:
-						EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/blip1.wav", 1, ATTN_NORM, 0, 100);
-						isPlaceMode = true;
-						return;
-					case EDIT_DELETE:
-						EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/blip1.wav", 1, ATTN_NORM, 0, 100);
-						TheNavAreaList.remove(area);
-						delete area;
-						return;
-					case EDIT_ATTRIB_CROUCH:
-						EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/bell1.wav", 1, ATTN_NORM, 0, 100);
-						area->SetAttributes(area->GetAttributes() ^ NAV_CROUCH);
-						break;
-					case EDIT_ATTRIB_JUMP:
-						EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/bell1.wav", 1, ATTN_NORM, 0, 100);
-						area->SetAttributes(area->GetAttributes() ^ NAV_JUMP);
-						break;
-					case EDIT_ATTRIB_PRECISE:
-						EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/bell1.wav", 1, ATTN_NORM, 0, 100);
-						area->SetAttributes(area->GetAttributes() ^ NAV_PRECISE);
-						break;
-					case EDIT_ATTRIB_NO_JUMP:
-						EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/bell1.wav", 1, ATTN_NORM, 0, 100);
-						area->SetAttributes(area->GetAttributes() ^ NAV_NO_JUMP);
-						break;
-					case EDIT_SPLIT:
-						if (area->SplitEdit(splitAlongX, splitEdge))
-							EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "weapons/knife_hitwall1.wav", 1, ATTN_NORM, 0, 100);
+				case EDIT_TOGGLE_PLACE_MODE:
+					EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/blip1.wav", 1, ATTN_NORM, 0, 100);
+					isPlaceMode = true;
+					return;
+				case EDIT_DELETE:
+					EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/blip1.wav", 1, ATTN_NORM, 0, 100);
+					TheNavAreaList.remove(area);
+					delete area;
+					return;
+				case EDIT_ATTRIB_CROUCH:
+					EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/bell1.wav", 1, ATTN_NORM, 0, 100);
+					area->SetAttributes(area->GetAttributes() ^ NAV_CROUCH);
+					break;
+				case EDIT_ATTRIB_JUMP:
+					EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/bell1.wav", 1, ATTN_NORM, 0, 100);
+					area->SetAttributes(area->GetAttributes() ^ NAV_JUMP);
+					break;
+				case EDIT_ATTRIB_PRECISE:
+					EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/bell1.wav", 1, ATTN_NORM, 0, 100);
+					area->SetAttributes(area->GetAttributes() ^ NAV_PRECISE);
+					break;
+				case EDIT_ATTRIB_NO_JUMP:
+					EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/bell1.wav", 1, ATTN_NORM, 0, 100);
+					area->SetAttributes(area->GetAttributes() ^ NAV_NO_JUMP);
+					break;
+				case EDIT_SPLIT:
+					if (area->SplitEdit(splitAlongX, splitEdge))
+						EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "weapons/knife_hitwall1.wav", 1, ATTN_NORM, 0, 100);
+					else
+						EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/button11.wav", 1, ATTN_NORM, 0, 100);
+					break;
+				case EDIT_MERGE:
+					if (markedArea)
+					{
+						if (area->MergeEdit(markedArea))
+							EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/blip1.wav", 1, ATTN_NORM, 0, 100);
 						else
 							EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/button11.wav", 1, ATTN_NORM, 0, 100);
-						break;
-					case EDIT_MERGE:
-						if (markedArea)
+					}
+					else
+					{
+						HintMessageToAllPlayers("To merge, mark an area, highlight a second area, then invoke the merge command");
+						EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/button11.wav", 1, ATTN_NORM, 0, 100);
+					}
+					break;
+				case EDIT_MARK:
+					if (markedArea)
+					{
+						EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/blip1.wav", 1, ATTN_NORM, 0, 100);
+						markedArea = nullptr;
+					}
+					else
+					{
+						EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/blip2.wav", 1, ATTN_NORM, 0, 100);
+						markedArea = area;
+
+						int connected = 0;
+						connected += markedArea->GetAdjacentCount(NORTH);
+						connected += markedArea->GetAdjacentCount(SOUTH);
+						connected += markedArea->GetAdjacentCount(EAST);
+						connected += markedArea->GetAdjacentCount(WEST);
+
+						char buffer[190];
+						Q_snprintf(buffer, sizeof(buffer), "Marked Area is connected to %d other Areas\n", connected);
+						UTIL_SayTextAll(buffer, pLocalPlayer);
+					}
+					break;
+				case EDIT_MARK_UNNAMED:
+					if (markedArea)
+					{
+						EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/blip1.wav", 1, ATTN_NORM, 0, 100);
+						markedArea = nullptr;
+					}
+					else
+					{
+						markedArea = nullptr;
+						for (NavAreaList::iterator iter = TheNavAreaList.begin(); iter != TheNavAreaList.end(); iter++)
 						{
-							if (area->MergeEdit(markedArea))
-								EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/blip1.wav", 1, ATTN_NORM, 0, 100);
-							else
-								EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/button11.wav", 1, ATTN_NORM, 0, 100);
+							CNavArea* area = (*iter);
+							if (area->GetPlace() == 0)
+							{
+								markedArea = area;
+								break;
+							}
 						}
-						else
-						{
-							HintMessageToAllPlayers("To merge, mark an area, highlight a second area, then invoke the merge command");
-							EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/button11.wav", 1, ATTN_NORM, 0, 100);
-						}
-						break;
-					case EDIT_MARK:
-						if (markedArea)
+						if (!markedArea)
 						{
 							EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/blip1.wav", 1, ATTN_NORM, 0, 100);
-							markedArea = nullptr;
 						}
 						else
 						{
 							EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/blip2.wav", 1, ATTN_NORM, 0, 100);
-							markedArea = area;
 
 							int connected = 0;
 							connected += markedArea->GetAdjacentCount(NORTH);
@@ -4018,154 +4054,117 @@ void EditNavAreas(NavEditCmdType cmd)
 							connected += markedArea->GetAdjacentCount(EAST);
 							connected += markedArea->GetAdjacentCount(WEST);
 
-							char buffer[190];
-							Q_snprintf(buffer, sizeof(buffer), "Marked Area is connected to %d other Areas\n", connected);
-							UTIL_SayTextAll(buffer, pLocalPlayer);
-						}
-						break;
-					case EDIT_MARK_UNNAMED:
-						if (markedArea)
-						{
-							EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/blip1.wav", 1, ATTN_NORM, 0, 100);
-							markedArea = nullptr;
-						}
-						else
-						{
-							markedArea = nullptr;
+							int totalUnnamedAreas = 0;
 							for (NavAreaList::iterator iter = TheNavAreaList.begin(); iter != TheNavAreaList.end(); iter++)
 							{
-								CNavArea *area = (*iter);
+								CNavArea* area = (*iter);
 								if (area->GetPlace() == 0)
 								{
-									markedArea = area;
-									break;
+									totalUnnamedAreas++;
 								}
 							}
-							if (!markedArea)
-							{
-								EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/blip1.wav", 1, ATTN_NORM, 0, 100);
-							}
-							else
-							{
-								EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/blip2.wav", 1, ATTN_NORM, 0, 100);
 
-								int connected = 0;
-								connected += markedArea->GetAdjacentCount(NORTH);
-								connected += markedArea->GetAdjacentCount(SOUTH);
-								connected += markedArea->GetAdjacentCount(EAST);
-								connected += markedArea->GetAdjacentCount(WEST);
-
-								int totalUnnamedAreas = 0;
-								for (NavAreaList::iterator iter = TheNavAreaList.begin(); iter != TheNavAreaList.end(); iter++)
-								{
-									CNavArea *area = (*iter);
-									if (area->GetPlace() == 0)
-									{
-										totalUnnamedAreas++;
-									}
-								}
-
-								char buffer[190];
-								Q_snprintf(buffer, sizeof(buffer), "Marked Area is connected to %d other Areas - there are %d total unnamed areas\n", connected, totalUnnamedAreas);
-								UTIL_SayTextAll(buffer, pLocalPlayer);
-							}
+							char buffer[190];
+							Q_snprintf(buffer, sizeof(buffer), "Marked Area is connected to %d other Areas - there are %d total unnamed areas\n", connected, totalUnnamedAreas);
+							UTIL_SayTextAll(buffer, pLocalPlayer);
 						}
-						break;
-					case EDIT_WARP_TO_MARK:
-						if (markedArea)
+					}
+					break;
+				case EDIT_WARP_TO_MARK:
+					if (markedArea)
+					{
+						if (pLocalPlayer->m_iTeam == SPECTATOR && pLocalPlayer->pev->iuser1 == OBS_ROAMING)
 						{
-							if (pLocalPlayer->m_iTeam == SPECTATOR && pLocalPlayer->pev->iuser1 == OBS_ROAMING)
-							{
-								Vector origin = *markedArea->GetCenter() + Vector(0, 0, 0.75f * HumanHeight);
-								UTIL_SetOrigin(pLocalPlayer->pev, origin);
-							}
+							Vector origin = *markedArea->GetCenter() + Vector(0, 0, 0.75f * HumanHeight);
+							UTIL_SetOrigin(pLocalPlayer->pev, origin);
 						}
-						else
+					}
+					else
+					{
+						EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/button11.wav", 1, ATTN_NORM, 0, 100);
+					}
+					break;
+				case EDIT_CONNECT:
+					if (markedArea)
+					{
+						NavDirType dir = markedArea->ComputeDirection(&cursor);
+						if (dir == NUM_DIRECTIONS)
 						{
 							EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/button11.wav", 1, ATTN_NORM, 0, 100);
 						}
-						break;
-					case EDIT_CONNECT:
-						if (markedArea)
-						{
-							NavDirType dir = markedArea->ComputeDirection(&cursor);
-							if (dir == NUM_DIRECTIONS)
-							{
-								EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/button11.wav", 1, ATTN_NORM, 0, 100);
-							}
-							else
-							{
-								markedArea->ConnectTo(area, dir);
-								EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/blip1.wav", 1, ATTN_NORM, 0, 100);
-							}
-						}
 						else
 						{
-							HintMessageToAllPlayers("To connect areas, mark an area, highlight a second area, then invoke the connect command. Make sure the cursor is directly north, south, east, or west of the marked area.");
-							EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/button11.wav", 1, ATTN_NORM, 0, 100);
-						}
-						break;
-					case EDIT_DISCONNECT:
-						if (markedArea)
-						{
-							markedArea->Disconnect(area);
-							area->Disconnect(markedArea);
+							markedArea->ConnectTo(area, dir);
 							EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/blip1.wav", 1, ATTN_NORM, 0, 100);
 						}
-						else
-						{
-							HintMessageToAllPlayers("To disconnect areas, mark an area, highlight a second area, then invoke the disconnect command. This will remove all connections between the two areas.");
-							EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/button11.wav", 1, ATTN_NORM, 0, 100);
-						}
-						break;
-					case EDIT_SPLICE:
-						if (markedArea)
-						{
-							if (area->SpliceEdit(markedArea))
-								EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/blip1.wav", 1, ATTN_NORM, 0, 100);
-							else
-								EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/button11.wav", 1, ATTN_NORM, 0, 100);
-						}
-						else
-						{
-							HintMessageToAllPlayers("To splice, mark an area, highlight a second area, then invoke the splice command to create an area between them");
-							EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/button11.wav", 1, ATTN_NORM, 0, 100);
-						}
-						break;
-					case EDIT_SELECT_CORNER:
-						if (markedArea)
-						{
-							int corner = (markedCorner + 1) % (NUM_CORNERS + 1);
-							markedCorner = (NavCornerType)corner;
+					}
+					else
+					{
+						HintMessageToAllPlayers("To connect areas, mark an area, highlight a second area, then invoke the connect command. Make sure the cursor is directly north, south, east, or west of the marked area.");
+						EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/button11.wav", 1, ATTN_NORM, 0, 100);
+					}
+					break;
+				case EDIT_DISCONNECT:
+					if (markedArea)
+					{
+						markedArea->Disconnect(area);
+						area->Disconnect(markedArea);
+						EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/blip1.wav", 1, ATTN_NORM, 0, 100);
+					}
+					else
+					{
+						HintMessageToAllPlayers("To disconnect areas, mark an area, highlight a second area, then invoke the disconnect command. This will remove all connections between the two areas.");
+						EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/button11.wav", 1, ATTN_NORM, 0, 100);
+					}
+					break;
+				case EDIT_SPLICE:
+					if (markedArea)
+					{
+						if (area->SpliceEdit(markedArea))
 							EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/blip1.wav", 1, ATTN_NORM, 0, 100);
-						}
 						else
-						{
 							EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/button11.wav", 1, ATTN_NORM, 0, 100);
-						}
-						break;
-					case EDIT_RAISE_CORNER:
-						if (markedArea)
-						{
-							markedArea->RaiseCorner(markedCorner, 1);
-							EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/blip1.wav", 1, ATTN_NORM, 0, 100);
-						}
-						else
-						{
-							EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/button11.wav", 1, ATTN_NORM, 0, 100);
-						}
-						break;
-					case EDIT_LOWER_CORNER:
-						if (markedArea)
-						{
-							markedArea->RaiseCorner(markedCorner, -1);
-							EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/blip1.wav", 1, ATTN_NORM, 0, 100);
-						}
-						else
-						{
-							EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/button11.wav", 1, ATTN_NORM, 0, 100);
-						}
-						break;
+					}
+					else
+					{
+						HintMessageToAllPlayers("To splice, mark an area, highlight a second area, then invoke the splice command to create an area between them");
+						EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/button11.wav", 1, ATTN_NORM, 0, 100);
+					}
+					break;
+				case EDIT_SELECT_CORNER:
+					if (markedArea)
+					{
+						int corner = (markedCorner + 1) % (NUM_CORNERS + 1);
+						markedCorner = (NavCornerType)corner;
+						EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/blip1.wav", 1, ATTN_NORM, 0, 100);
+					}
+					else
+					{
+						EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/button11.wav", 1, ATTN_NORM, 0, 100);
+					}
+					break;
+				case EDIT_RAISE_CORNER:
+					if (markedArea)
+					{
+						markedArea->RaiseCorner(markedCorner, 1);
+						EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/blip1.wav", 1, ATTN_NORM, 0, 100);
+					}
+					else
+					{
+						EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/button11.wav", 1, ATTN_NORM, 0, 100);
+					}
+					break;
+				case EDIT_LOWER_CORNER:
+					if (markedArea)
+					{
+						markedArea->RaiseCorner(markedCorner, -1);
+						EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/blip1.wav", 1, ATTN_NORM, 0, 100);
+					}
+					else
+					{
+						EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/button11.wav", 1, ATTN_NORM, 0, 100);
+					}
+					break;
 				}
 			}
 		}
@@ -4173,80 +4172,80 @@ void EditNavAreas(NavEditCmdType cmd)
 		// do area-independant edit commands, if any
 		switch (cmd)
 		{
-			case EDIT_BEGIN_AREA:
+		case EDIT_BEGIN_AREA:
+		{
+			if (isCreatingNavArea)
 			{
-				if (isCreatingNavArea)
-				{
-					isCreatingNavArea = false;
-					EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/button11.wav", 1, ATTN_NORM, 0, 100);
-				}
-				else
-				{
-					EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/blip2.wav", 1, ATTN_NORM, 0, 100);
-					isCreatingNavArea = true;
-					isAnchored = false;
-				}
-				break;
+				isCreatingNavArea = false;
+				EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/button11.wav", 1, ATTN_NORM, 0, 100);
 			}
-			case EDIT_END_AREA:
+			else
 			{
-				if (isCreatingNavArea)
-				{
-					// create the new nav area
-					CNavArea *newArea = new CNavArea(&anchor, &cursor);
+				EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/blip2.wav", 1, ATTN_NORM, 0, 100);
+				isCreatingNavArea = true;
+				isAnchored = false;
+			}
+			break;
+		}
+		case EDIT_END_AREA:
+		{
+			if (isCreatingNavArea)
+			{
+				// create the new nav area
+				CNavArea* newArea = new CNavArea(&anchor, &cursor);
 
 #ifdef REGAMEDLL_FIXES
-					if (TheNavAreaList.empty())
-					{
-						// first add the areas to the grid
-						TheNavAreaGrid.Initialize(8192.0f, -8192.0f, 8192.0f, -8192.0f);
-					}
+				if (TheNavAreaList.empty())
+				{
+					// first add the areas to the grid
+					TheNavAreaGrid.Initialize(8192.0f, -8192.0f, 8192.0f, -8192.0f);
+				}
 #endif
 
-					TheNavAreaList.push_back(newArea);
-					TheNavAreaGrid.AddNavArea(newArea);
+				TheNavAreaList.push_back(newArea);
+				TheNavAreaGrid.AddNavArea(newArea);
 
-					EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/blip1.wav", 1, ATTN_NORM, 0, 100);
+				EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/blip1.wav", 1, ATTN_NORM, 0, 100);
 
-					// if we have a marked area, inter-connect the two
-					if (markedArea)
+				// if we have a marked area, inter-connect the two
+				if (markedArea)
+				{
+					const Extent* extent = markedArea->GetExtent();
+
+					if (anchor.x > extent->hi.x && cursor.x > extent->hi.x)
 					{
-						const Extent *extent = markedArea->GetExtent();
-
-						if (anchor.x > extent->hi.x && cursor.x > extent->hi.x)
-						{
-							markedArea->ConnectTo(newArea, EAST);
-							newArea->ConnectTo(markedArea, WEST);
-						}
-						else if (anchor.x < extent->lo.x && cursor.x < extent->lo.x)
-						{
-							markedArea->ConnectTo(newArea, WEST);
-							newArea->ConnectTo(markedArea, EAST);
-						}
-						else if (anchor.y > extent->hi.y && cursor.y > extent->hi.y)
-						{
-							markedArea->ConnectTo(newArea, SOUTH);
-							newArea->ConnectTo(markedArea, NORTH);
-						}
-						else if (anchor.y < extent->lo.y && cursor.y < extent->lo.y)
-						{
-							markedArea->ConnectTo(newArea, NORTH);
-							newArea->ConnectTo(markedArea, SOUTH);
-						}
-
-						// propogate marked area to new area
-						markedArea = newArea;
+						markedArea->ConnectTo(newArea, EAST);
+						newArea->ConnectTo(markedArea, WEST);
+					}
+					else if (anchor.x < extent->lo.x && cursor.x < extent->lo.x)
+					{
+						markedArea->ConnectTo(newArea, WEST);
+						newArea->ConnectTo(markedArea, EAST);
+					}
+					else if (anchor.y > extent->hi.y && cursor.y > extent->hi.y)
+					{
+						markedArea->ConnectTo(newArea, SOUTH);
+						newArea->ConnectTo(markedArea, NORTH);
+					}
+					else if (anchor.y < extent->lo.y && cursor.y < extent->lo.y)
+					{
+						markedArea->ConnectTo(newArea, NORTH);
+						newArea->ConnectTo(markedArea, SOUTH);
 					}
 
-					isCreatingNavArea = false;
-				}
-				else
-				{
-					EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/button11.wav", 1, ATTN_NORM, 0, 100);
+					// propogate marked area to new area
+					markedArea = newArea;
 				}
 
-				break;
+				isCreatingNavArea = false;
 			}
+			else
+			{
+				EMIT_SOUND_DYN(ENT(pLocalPlayer->pev), CHAN_ITEM, "buttons/button11.wav", 1, ATTN_NORM, 0, 100);
+			}
+
+			break;
+		}
 		}
 	}
 
@@ -4265,7 +4264,7 @@ void EditNavAreas(NavEditCmdType cmd)
 		isCreatingNavArea = false;
 }
 
-bool GetGroundHeight(const Vector *pos, float *height, Vector *normal)
+bool GetGroundHeight(const Vector* pos, float* height, Vector* normal)
 {
 	Vector to;
 	to.x = pos->x;
@@ -4275,7 +4274,7 @@ bool GetGroundHeight(const Vector *pos, float *height, Vector *normal)
 	float offset;
 	Vector from;
 	TraceResult result;
-	edict_t *ignore = nullptr;
+	edict_t* ignore = nullptr;
 	float ground = 0.0f;
 
 	const float maxOffset = 100.0f;
@@ -4344,7 +4343,7 @@ bool GetGroundHeight(const Vector *pos, float *height, Vector *normal)
 // Return the "simple" ground height below this point in "height".
 // This function is much faster, but less tolerant. Make sure the give position is "well behaved".
 // Return false if position is invalid (outside of map, in a solid area, etc).
-bool GetSimpleGroundHeight(const Vector *pos, float *height, Vector *normal)
+bool GetSimpleGroundHeight(const Vector* pos, float* height, Vector* normal)
 {
 	Vector to;
 	to.x = pos->x;
@@ -4372,7 +4371,7 @@ bool GetSimpleGroundHeight(const Vector *pos, float *height, Vector *normal)
 class ApproachAreaCost
 {
 public:
-	float operator()(CNavArea *area, CNavArea *fromArea, const CNavLadder *ladder)
+	float operator()(CNavArea* area, CNavArea* fromArea, const CNavLadder* ladder)
 	{
 		// check if this area is "blocked"
 		for (int i = 0; i < BlockedIDCount; i++)
@@ -4402,7 +4401,7 @@ public:
 // Can we see this area?
 // For now, if we can see any corner, we can see the area
 // TODO: Need to check LOS to more than the corners for large and/or long areas
-inline bool IsAreaVisible(const Vector *pos, const CNavArea *area)
+inline bool IsAreaVisible(const Vector* pos, const CNavArea* area)
 {
 	Vector corner;
 	TraceResult result;
@@ -4445,7 +4444,7 @@ void CNavArea::ComputeApproachAreas()
 		eye.z += 0.9f * HumanHeight;
 
 	enum { MAX_PATH_LENGTH = 256 };
-	CNavArea *path[MAX_PATH_LENGTH];
+	CNavArea* path[MAX_PATH_LENGTH];
 
 	// In order to enumerate all of the approach areas, we need to
 	// run the algorithm many times, once for each "far away" area
@@ -4472,7 +4471,7 @@ void CNavArea::ComputeApproachAreas()
 		{
 			// find number of areas on path
 			int count = 0;
-			CNavArea *area;
+			CNavArea* area;
 			for (area = farArea; area; area = area->GetParent())
 				count++;
 
@@ -4518,7 +4517,7 @@ void CNavArea::ComputeApproachAreas()
 
 				if (a == m_approachCount)
 				{
-					m_approach[m_approachCount].prev.area = (block >= 2) ? path[block-2] : nullptr;
+					m_approach[m_approachCount].prev.area = (block >= 2) ? path[block - 2] : nullptr;
 					m_approach[m_approachCount].here.area = path[block - 1];
 					m_approach[m_approachCount].prevToHereHow = path[block - 1]->GetParentHow();
 					m_approach[m_approachCount].next.area = path[block];
@@ -4591,10 +4590,10 @@ void CNavAreaGrid::Initialize(float minX, float maxX, float minY, float maxY)
 }
 
 // Add an area to the grid
-void CNavAreaGrid::AddNavArea(CNavArea *area)
+void CNavAreaGrid::AddNavArea(CNavArea* area)
 {
 	// add to grid
-	const Extent *extent = area->GetExtent();
+	const Extent* extent = area->GetExtent();
 
 	int loX = WorldToGridX(extent->lo.x);
 	int loY = WorldToGridY(extent->lo.y);
@@ -4604,7 +4603,7 @@ void CNavAreaGrid::AddNavArea(CNavArea *area)
 	for (int y = loY; y <= hiY; y++)
 	{
 		for (int x = loX; x <= hiX; x++)
-			m_grid[x + y * m_gridSizeX].push_back(const_cast<CNavArea *>(area));
+			m_grid[x + y * m_gridSizeX].push_back(const_cast<CNavArea*>(area));
 	}
 
 	// add to hash table
@@ -4630,10 +4629,10 @@ void CNavAreaGrid::AddNavArea(CNavArea *area)
 }
 
 // Remove an area from the grid
-void CNavAreaGrid::RemoveNavArea(CNavArea *area)
+void CNavAreaGrid::RemoveNavArea(CNavArea* area)
 {
 	// add to grid
-	const Extent *extent = area->GetExtent();
+	const Extent* extent = area->GetExtent();
 
 	int loX = WorldToGridX(extent->lo.x);
 	int loY = WorldToGridY(extent->lo.y);
@@ -4673,7 +4672,7 @@ void CNavAreaGrid::RemoveNavArea(CNavArea *area)
 }
 
 // Given a position, return the nav area that IsOverlapping and is *immediately* beneath it
-CNavArea *CNavAreaGrid::GetNavArea(const Vector *pos, float beneathLimit) const
+CNavArea* CNavAreaGrid::GetNavArea(const Vector* pos, float beneathLimit) const
 {
 	if (!m_grid)
 		return nullptr;
@@ -4681,16 +4680,16 @@ CNavArea *CNavAreaGrid::GetNavArea(const Vector *pos, float beneathLimit) const
 	// get list in cell that contains position
 	int x = WorldToGridX(pos->x);
 	int y = WorldToGridY(pos->y);
-	NavAreaList *list = &m_grid[x + y * m_gridSizeX];
+	NavAreaList* list = &m_grid[x + y * m_gridSizeX];
 
 	// search cell list to find correct area
-	CNavArea *use = nullptr;
+	CNavArea* use = nullptr;
 	float useZ = -99999999.9f;
 	Vector testPos = *pos + Vector(0, 0, 5);
 
 	for (NavAreaList::iterator iter = list->begin(); iter != list->end(); iter++)
 	{
-		CNavArea *area = (*iter);
+		CNavArea* area = (*iter);
 
 		// check if position is within 2D boundaries of this area
 		if (area->IsOverlapping(&testPos))
@@ -4721,12 +4720,12 @@ CNavArea *CNavAreaGrid::GetNavArea(const Vector *pos, float beneathLimit) const
 // Given a position in the world, return the nav area that is closest
 // and at the same height, or beneath it.
 // Used to find initial area if we start off of the mesh.
-CNavArea *CNavAreaGrid::GetNearestNavArea(const Vector *pos, bool anyZ) const
+CNavArea* CNavAreaGrid::GetNearestNavArea(const Vector* pos, bool anyZ) const
 {
 	if (!m_grid)
 		return nullptr;
 
-	CNavArea *close = nullptr;
+	CNavArea* close = nullptr;
 	float closeDistSq = 100000000.0f;
 
 	// quick check
@@ -4749,7 +4748,7 @@ CNavArea *CNavAreaGrid::GetNearestNavArea(const Vector *pos, bool anyZ) const
 	// find closest nav area
 	for (NavAreaList::iterator iter = TheNavAreaList.begin(); iter != TheNavAreaList.end(); iter++)
 	{
-		CNavArea *area = (*iter);
+		CNavArea* area = (*iter);
 
 		Vector areaPos;
 		area->GetClosestPointOnArea(&source, &areaPos);
@@ -4777,13 +4776,13 @@ CNavArea *CNavAreaGrid::GetNearestNavArea(const Vector *pos, bool anyZ) const
 }
 
 // Given an ID, return the associated area
-CNavArea *CNavAreaGrid::GetNavAreaByID(unsigned int id) const
+CNavArea* CNavAreaGrid::GetNavAreaByID(unsigned int id) const
 {
 	if (id == 0)
 		return nullptr;
 
 	int key = ComputeHashKey(id);
-	for (CNavArea *area = m_hashTable[key]; area; area = area->m_nextHash)
+	for (CNavArea* area = m_hashTable[key]; area; area = area->m_nextHash)
 	{
 		if (area->GetID() == id)
 			return area;
@@ -4793,9 +4792,9 @@ CNavArea *CNavAreaGrid::GetNavAreaByID(unsigned int id) const
 }
 
 // Return radio chatter place for given coordinate
-Place CNavAreaGrid::GetPlace(const Vector *pos) const
+Place CNavAreaGrid::GetPlace(const Vector* pos) const
 {
-	CNavArea *area = GetNearestNavArea(pos, true);
+	CNavArea* area = GetNearestNavArea(pos, true);
 	if (area)
 	{
 		return area->GetPlace();

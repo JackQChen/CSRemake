@@ -15,7 +15,7 @@ void CGib::LimitVelocity()
 	}
 }
 
-NOXREF void CGib::SpawnStickyGibs(entvars_t *pevVictim, Vector vecOrigin, int cGibs)
+NOXREF void CGib::SpawnStickyGibs(entvars_t* pevVictim, Vector vecOrigin, int cGibs)
 {
 	if (g_Language == LANGUAGE_GERMAN)
 	{
@@ -25,7 +25,7 @@ NOXREF void CGib::SpawnStickyGibs(entvars_t *pevVictim, Vector vecOrigin, int cG
 
 	for (int i = 0; i < cGibs; i++)
 	{
-		CGib *pGib = GetClassPtr<CCSGib>((CGib *)nullptr);
+		CGib* pGib = GetClassPtr<CCSGib>((CGib*)nullptr);
 
 		pGib->Spawn("models/stickygib.mdl");
 		pGib->pev->body = RANDOM_LONG(0, 2);
@@ -67,7 +67,7 @@ NOXREF void CGib::SpawnStickyGibs(entvars_t *pevVictim, Vector vecOrigin, int cG
 
 			pGib->pev->movetype = MOVETYPE_TOSS;
 			pGib->pev->solid = SOLID_BBOX;
-			UTIL_SetSize(pGib->pev, Vector(0, 0,0), Vector(0, 0, 0));
+			UTIL_SetSize(pGib->pev, Vector(0, 0, 0), Vector(0, 0, 0));
 			pGib->SetTouch(&CGib::StickyGibTouch);
 			pGib->SetThink(nullptr);
 		}
@@ -76,11 +76,11 @@ NOXREF void CGib::SpawnStickyGibs(entvars_t *pevVictim, Vector vecOrigin, int cG
 	}
 }
 
-LINK_HOOK_GLOB_CLASS_CHAIN(CGib *, CGib, SpawnHeadGib, (entvars_t *pevVictim), pevVictim)
+LINK_HOOK_GLOB_CLASS_CHAIN(CGib*, CGib, SpawnHeadGib, (entvars_t* pevVictim), pevVictim)
 
-CGib *CGib::__API_HOOK(SpawnHeadGib)(entvars_t *pevVictim)
+CGib* CGib::__API_HOOK(SpawnHeadGib)(entvars_t* pevVictim)
 {
-	CGib *pGib = GetClassPtr<CCSGib>((CGib *)nullptr);
+	CGib* pGib = GetClassPtr<CCSGib>((CGib*)nullptr);
 
 	if (g_Language == LANGUAGE_GERMAN)
 	{
@@ -99,12 +99,12 @@ CGib *CGib::__API_HOOK(SpawnHeadGib)(entvars_t *pevVictim)
 	{
 		pGib->pev->origin = pevVictim->origin + pevVictim->view_ofs;
 
-		edict_t *pentPlayer = FIND_CLIENT_IN_PVS(pGib->edict());
+		edict_t* pentPlayer = FIND_CLIENT_IN_PVS(pGib->edict());
 
 		if (RANDOM_LONG(0, 100) <= 5 && pentPlayer)
 		{
 			// 5% chance head will be thrown at player's face.
-			entvars_t *pevPlayer = VARS(pentPlayer);
+			entvars_t* pevPlayer = VARS(pentPlayer);
 
 			pGib->pev->velocity = ((pevPlayer->origin + pevPlayer->view_ofs) - pGib->pev->origin).Normalize() * 300;
 			pGib->pev->velocity.z += 100;
@@ -140,13 +140,13 @@ CGib *CGib::__API_HOOK(SpawnHeadGib)(entvars_t *pevVictim)
 	return pGib;
 }
 
-LINK_HOOK_GLOB_CLASS_VOID_CHAIN(CGib, SpawnRandomGibs, (entvars_t *pevVictim, int cGibs, int human), pevVictim, cGibs, human)
+LINK_HOOK_GLOB_CLASS_VOID_CHAIN(CGib, SpawnRandomGibs, (entvars_t* pevVictim, int cGibs, int human), pevVictim, cGibs, human)
 
-void CGib::__API_HOOK(SpawnRandomGibs)(entvars_t *pevVictim, int cGibs, int human)
+void CGib::__API_HOOK(SpawnRandomGibs)(entvars_t* pevVictim, int cGibs, int human)
 {
 	for (int cSplat = 0; cSplat < cGibs; cSplat++)
 	{
-		CGib *pGib = GetClassPtr<CCSGib>((CGib *)nullptr);
+		CGib* pGib = GetClassPtr<CCSGib>((CGib*)nullptr);
 
 		if (g_Language == LANGUAGE_GERMAN)
 		{
@@ -211,9 +211,9 @@ void CGib::__API_HOOK(SpawnRandomGibs)(entvars_t *pevVictim, int cGibs, int huma
 	}
 }
 
-LINK_HOOK_CLASS_VOID_CHAIN(CGib, BounceGibTouch, (CBaseEntity *pOther), pOther)
+LINK_HOOK_CLASS_VOID_CHAIN(CGib, BounceGibTouch, (CBaseEntity* pOther), pOther)
 
-void CGib::__API_HOOK(BounceGibTouch)(CBaseEntity *pOther)
+void CGib::__API_HOOK(BounceGibTouch)(CBaseEntity* pOther)
 {
 	if (pev->flags & FL_ONGROUND)
 	{
@@ -245,7 +245,7 @@ void CGib::__API_HOOK(BounceGibTouch)(CBaseEntity *pOther)
 }
 
 // Sticky gib puts blood on the wall and stays put.
-void CGib::StickyGibTouch(CBaseEntity *pOther)
+void CGib::StickyGibTouch(CBaseEntity* pOther)
 {
 	Vector vecSpot;
 	TraceResult tr;
@@ -271,9 +271,9 @@ void CGib::StickyGibTouch(CBaseEntity *pOther)
 	pev->movetype = MOVETYPE_NONE;
 }
 
-LINK_HOOK_CLASS_VOID_CHAIN(CGib, Spawn, (const char *szGibModel), szGibModel)
+LINK_HOOK_CLASS_VOID_CHAIN(CGib, Spawn, (const char* szGibModel), szGibModel)
 
-void CGib::__API_HOOK(Spawn)(const char *szGibModel)
+void CGib::__API_HOOK(Spawn)(const char* szGibModel)
 {
 	pev->movetype = MOVETYPE_BOUNCE;
 

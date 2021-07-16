@@ -3,7 +3,7 @@
 char s_shared_token[1500];
 char s_shared_quote = '\"';
 
-NOXREF wchar_t *SharedWVarArgs(wchar_t *format, ...)
+NOXREF wchar_t* SharedWVarArgs(wchar_t* format, ...)
 {
 	va_list argptr;
 	const int BufLen = 1024;
@@ -20,7 +20,7 @@ NOXREF wchar_t *SharedWVarArgs(wchar_t *format, ...)
 	return string[curstring];
 }
 
-char *SharedVarArgs(char *format, ...)
+char* SharedVarArgs(char* format, ...)
 {
 	va_list argptr;
 	const int BufLen = 1024;
@@ -38,7 +38,7 @@ char *SharedVarArgs(char *format, ...)
 	return string[curstring];
 }
 
-char *BufPrintf(char *buf, int &len, const char *fmt, ...)
+char* BufPrintf(char* buf, int& len, const char* fmt, ...)
 {
 	va_list argptr;
 	if (len > 0)
@@ -54,7 +54,7 @@ char *BufPrintf(char *buf, int &len, const char *fmt, ...)
 	return nullptr;
 }
 
-wchar_t *BufWPrintf(wchar_t *buf, int &len, const wchar_t *fmt, ...)
+wchar_t* BufWPrintf(wchar_t* buf, int& len, const wchar_t* fmt, ...)
 {
 	if (len <= 0)
 		return nullptr;
@@ -69,7 +69,7 @@ wchar_t *BufWPrintf(wchar_t *buf, int &len, const wchar_t *fmt, ...)
 	return buf + wcslen(buf);
 }
 
-NOXREF const wchar_t *NumAsWString(int val)
+NOXREF const wchar_t* NumAsWString(int val)
 {
 	const int BufLen = 16;
 	const int NumBuffers = 4;
@@ -83,7 +83,7 @@ NOXREF const wchar_t *NumAsWString(int val)
 	return string[curstring];
 }
 
-const char *NumAsString(int val)
+const char* NumAsString(int val)
 {
 	const int BufLen = 16;
 	const int NumBuffers = 4;
@@ -100,7 +100,7 @@ const char *NumAsString(int val)
 }
 
 // Returns the token parsed by SharedParse()
-char *SharedGetToken()
+char* SharedGetToken()
 {
 	return s_shared_token;
 }
@@ -112,7 +112,7 @@ NOXREF void SharedSetQuoteChar(char c)
 }
 
 // Parse a token out of a string
-char *SharedParse(char *data)
+char* SharedParse(char* data)
 {
 	int c;
 	int len;
@@ -123,7 +123,7 @@ char *SharedParse(char *data)
 	if (!data)
 		return nullptr;
 
-// skip whitespace
+	// skip whitespace
 skipwhite:
 	while ((c = *data) <= ' ')
 	{
@@ -167,7 +167,7 @@ skipwhite:
 	}
 
 	// parse single characters
-	if (c == '{' || c == '}'|| c == ')'|| c == '(' || c == '\'' || c == ',')
+	if (c == '{' || c == '}' || c == ')' || c == '(' || c == '\'' || c == ',')
 	{
 		s_shared_token[len++] = c;
 		s_shared_token[len] = '\0';
@@ -182,20 +182,19 @@ skipwhite:
 		len++;
 		c = *data;
 
-		if (c == '{' || c == '}'|| c == ')'|| c == '(' || c == '\'' || c == ',')
+		if (c == '{' || c == '}' || c == ')' || c == '(' || c == '\'' || c == ',')
 			break;
 
-	}
-	while (c > 32);
+	} while (c > 32);
 
 	s_shared_token[len] = '\0';
 	return data;
 }
 
 // Returns true if additional data is waiting to be processed on this line
-bool SharedTokenWaiting(const char *buffer)
+bool SharedTokenWaiting(const char* buffer)
 {
-	const char *p;
+	const char* p;
 
 	p = buffer;
 	while (*p && *p != '\n')

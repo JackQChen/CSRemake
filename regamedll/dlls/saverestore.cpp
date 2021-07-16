@@ -118,11 +118,11 @@ TYPEDESCRIPTION g_EntvarsDescription[] =
 	DEFINE_ENTITY_FIELD(radsuit_finished, FIELD_TIME),
 };
 
-void EntvarsKeyvalue(entvars_t *pev, KeyValueData *pkvd)
+void EntvarsKeyvalue(entvars_t* pev, KeyValueData* pkvd)
 {
 	for (int i = 0; i < ARRAYSIZE(g_EntvarsDescription); i++)
 	{
-		TYPEDESCRIPTION *pField = &g_EntvarsDescription[i];
+		TYPEDESCRIPTION* pField = &g_EntvarsDescription[i];
 
 		if (!Q_stricmp(pField->fieldName, pkvd->szKeyName))
 		{
@@ -131,18 +131,18 @@ void EntvarsKeyvalue(entvars_t *pev, KeyValueData *pkvd)
 			case FIELD_STRING:
 			case FIELD_MODELNAME:
 			case FIELD_SOUNDNAME:
-				*(string_t *)((char *)pev + pField->fieldOffset) = ALLOC_STRING(pkvd->szValue);
+				*(string_t*)((char*)pev + pField->fieldOffset) = ALLOC_STRING(pkvd->szValue);
 				break;
 			case FIELD_FLOAT:
 			case FIELD_TIME:
-				*(float *)((char *)pev + pField->fieldOffset) = Q_atof(pkvd->szValue);
+				*(float*)((char*)pev + pField->fieldOffset) = Q_atof(pkvd->szValue);
 				break;
 			case FIELD_INTEGER:
-				*(string_t *)((char *)pev + pField->fieldOffset) = Q_atoi(pkvd->szValue);
+				*(string_t*)((char*)pev + pField->fieldOffset) = Q_atoi(pkvd->szValue);
 				break;
 			case FIELD_VECTOR:
 			case FIELD_POSITION_VECTOR:
-				UTIL_StringToVector((float *)((char *)pev + pField->fieldOffset), pkvd->szValue);
+				UTIL_StringToVector((float*)((char*)pev + pField->fieldOffset), pkvd->szValue);
 				break;
 
 			default:
@@ -171,9 +171,9 @@ const int CSaveRestoreBuffer::m_Sizes[] =
 	sizeof(int),       // FIELD_EDICT
 	sizeof(float) * 3, // FIELD_VECTOR
 	sizeof(float) * 3, // FIELD_POSITION_VECTOR
-	sizeof(int *),     // FIELD_POINTER
+	sizeof(int*),     // FIELD_POINTER
 	sizeof(int),       // FIELD_INTEGER
-	sizeof(int *),     // FIELD_FUNCTION
+	sizeof(int*),     // FIELD_FUNCTION
 	sizeof(int),       // FIELD_BOOLEAN
 	sizeof(short),     // FIELD_SHORT
 	sizeof(char),      // FIELD_CHARACTER
@@ -187,7 +187,7 @@ CSaveRestoreBuffer::CSaveRestoreBuffer()
 	m_pData = nullptr;
 }
 
-CSaveRestoreBuffer::CSaveRestoreBuffer(SAVERESTOREDATA *pdata)
+CSaveRestoreBuffer::CSaveRestoreBuffer(SAVERESTOREDATA* pdata)
 {
 	m_pData = pdata;
 }
@@ -197,7 +197,7 @@ CSaveRestoreBuffer::~CSaveRestoreBuffer()
 	;
 }
 
-int CSaveRestoreBuffer::EntityIndex(CBaseEntity *pEntity)
+int CSaveRestoreBuffer::EntityIndex(CBaseEntity* pEntity)
 {
 	if (!pEntity)
 		return -1;
@@ -205,7 +205,7 @@ int CSaveRestoreBuffer::EntityIndex(CBaseEntity *pEntity)
 	return EntityIndex(pEntity->pev);
 }
 
-int CSaveRestoreBuffer::EntityIndex(entvars_t *pevLookup)
+int CSaveRestoreBuffer::EntityIndex(entvars_t* pevLookup)
 {
 	if (!pevLookup)
 		return -1;
@@ -218,14 +218,14 @@ int CSaveRestoreBuffer::EntityIndex(EOFFSET eoLookup)
 	return EntityIndex(ENT(eoLookup));
 }
 
-int CSaveRestoreBuffer::EntityIndex(edict_t *pentLookup)
+int CSaveRestoreBuffer::EntityIndex(edict_t* pentLookup)
 {
 	if (!m_pData || !pentLookup)
 		return -1;
 
 	for (int i = 0; i < m_pData->tableCount; i++)
 	{
-		ENTITYTABLE *pTable = &m_pData->pTable[i];
+		ENTITYTABLE* pTable = &m_pData->pTable[i];
 		if (pTable->pent == pentLookup)
 			return i;
 	}
@@ -233,14 +233,14 @@ int CSaveRestoreBuffer::EntityIndex(edict_t *pentLookup)
 	return -1;
 }
 
-edict_t *CSaveRestoreBuffer::EntityFromIndex(int entityIndex)
+edict_t* CSaveRestoreBuffer::EntityFromIndex(int entityIndex)
 {
 	if (!m_pData || entityIndex < 0)
 		return nullptr;
 
 	for (int i = 0; i < m_pData->tableCount; i++)
 	{
-		ENTITYTABLE *pTable = &m_pData->pTable[i];
+		ENTITYTABLE* pTable = &m_pData->pTable[i];
 		if (pTable->id == entityIndex)
 			return pTable->pent;
 	}
@@ -300,7 +300,7 @@ extern "C"
 }
 #endif // _WIN32
 
-unsigned int CSaveRestoreBuffer::HashString(const char *pszToken)
+unsigned int CSaveRestoreBuffer::HashString(const char* pszToken)
 {
 	unsigned int hash = 0;
 	while (*pszToken)
@@ -309,7 +309,7 @@ unsigned int CSaveRestoreBuffer::HashString(const char *pszToken)
 	return hash;
 }
 
-unsigned short CSaveRestoreBuffer::TokenHash(const char *pszToken)
+unsigned short CSaveRestoreBuffer::TokenHash(const char* pszToken)
 {
 	unsigned short hash = (unsigned short)(HashString(pszToken) % (unsigned)m_pData->tokenCount);
 	for (int i = 0; i < m_pData->tokenCount; i++)
@@ -320,7 +320,7 @@ unsigned short CSaveRestoreBuffer::TokenHash(const char *pszToken)
 
 		if (!m_pData->pTokens[index] || !Q_strcmp(pszToken, m_pData->pTokens[index]))
 		{
-			m_pData->pTokens[index] = (char *)pszToken;
+			m_pData->pTokens[index] = (char*)pszToken;
 			return index;
 		}
 	}
@@ -330,27 +330,27 @@ unsigned short CSaveRestoreBuffer::TokenHash(const char *pszToken)
 }
 
 
-void CSave::WriteData(const char *pname, int size, const char *pdata)
+void CSave::WriteData(const char* pname, int size, const char* pdata)
 {
 	BufferField(pname, size, pdata);
 }
 
-NOXREF void CSave::WriteShort(const char *pname, const short *data, int count)
+NOXREF void CSave::WriteShort(const char* pname, const short* data, int count)
 {
-	BufferField(pname, sizeof(short) * count, (const char *)data);
+	BufferField(pname, sizeof(short) * count, (const char*)data);
 }
 
-void CSave::WriteInt(const char *pname, const int *data, int count)
+void CSave::WriteInt(const char* pname, const int* data, int count)
 {
-	BufferField(pname, sizeof(int) * count, (const char *)data);
+	BufferField(pname, sizeof(int) * count, (const char*)data);
 }
 
-void CSave::WriteFloat(const char *pname, const float *data, int count)
+void CSave::WriteFloat(const char* pname, const float* data, int count)
 {
-	BufferField(pname, sizeof(float) * count, (const char *)data);
+	BufferField(pname, sizeof(float) * count, (const char*)data);
 }
 
-void CSave::WriteTime(const char *pname, const float *data, int count)
+void CSave::WriteTime(const char* pname, const float* data, int count)
 {
 	BufferHeader(pname, sizeof(float) * count);
 
@@ -361,17 +361,17 @@ void CSave::WriteTime(const char *pname, const float *data, int count)
 			tmp -= m_pData->time;
 		}
 
-		BufferData((const char *)&tmp, sizeof(float));
+		BufferData((const char*)&tmp, sizeof(float));
 		data++;
 	}
 }
 
-NOXREF void CSave::WriteString(const char *pname, const char *pdata)
+NOXREF void CSave::WriteString(const char* pname, const char* pdata)
 {
 	BufferField(pname, Q_strlen(pdata) + 1, pdata);
 }
 
-void CSave::WriteString(const char *pname, const int *stringId, int count)
+void CSave::WriteString(const char* pname, const int* stringId, int count)
 {
 	int i;
 	int size = 0;
@@ -383,23 +383,23 @@ void CSave::WriteString(const char *pname, const int *stringId, int count)
 	BufferHeader(pname, size);
 	for (i = 0; i < count; i++)
 	{
-		const char *pString = STRING(stringId[i]);
+		const char* pString = STRING(stringId[i]);
 		BufferData(pString, Q_strlen(pString) + 1);
 	}
 }
 
-void CSave::WriteVector(const char *pname, const Vector &value)
+void CSave::WriteVector(const char* pname, const Vector& value)
 {
 	WriteVector(pname, &value.x, 1);
 }
 
-void CSave::WriteVector(const char *pname, const float *value, int count)
+void CSave::WriteVector(const char* pname, const float* value, int count)
 {
 	BufferHeader(pname, sizeof(float) * 3 * count);
-	BufferData((const char *)value, sizeof(float) * 3 * count);
+	BufferData((const char*)value, sizeof(float) * 3 * count);
 }
 
-NOXREF void CSave::WritePositionVector(const char *pname, const Vector &value)
+NOXREF void CSave::WritePositionVector(const char* pname, const Vector& value)
 {
 	if (m_pData && m_pData->fUseLandmark)
 	{
@@ -409,7 +409,7 @@ NOXREF void CSave::WritePositionVector(const char *pname, const Vector &value)
 	WriteVector(pname, value);
 }
 
-void CSave::WritePositionVector(const char *pname, const float *value, int count)
+void CSave::WritePositionVector(const char* pname, const float* value, int count)
 {
 	BufferHeader(pname, sizeof(float) * 3 * count);
 	for (int i = 0; i < count; i++)
@@ -419,14 +419,14 @@ void CSave::WritePositionVector(const char *pname, const float *value, int count
 			tmp -= m_pData->vecLandmarkOffset;
 		}
 
-		BufferData((const char *)&tmp.x, sizeof(float) * 3);
+		BufferData((const char*)&tmp.x, sizeof(float) * 3);
 		value += 3;
 	}
 }
 
-void CSave::WriteFunction(const char *pname, void **data, int count)
+void CSave::WriteFunction(const char* pname, void** data, int count)
 {
-	const char *functionName = NAME_FOR_FUNCTION((uint32)*data);
+	const char* functionName = NAME_FOR_FUNCTION((uint32)*data);
 
 	if (functionName)
 		BufferField(pname, Q_strlen(functionName) + 1, functionName);
@@ -434,20 +434,20 @@ void CSave::WriteFunction(const char *pname, void **data, int count)
 		ALERT(at_error, "Invalid function pointer in entity!");
 }
 
-int CSave::WriteEntVars(const char *pname, entvars_t *pev)
+int CSave::WriteEntVars(const char* pname, entvars_t* pev)
 {
 	return WriteFields(pname, pev, g_EntvarsDescription, ARRAYSIZE(g_EntvarsDescription));
 }
 
-int CSave::WriteFields(const char *pname, void *pBaseData, TYPEDESCRIPTION *pFields, int fieldCount)
+int CSave::WriteFields(const char* pname, void* pBaseData, TYPEDESCRIPTION* pFields, int fieldCount)
 {
 	int i;
 	int emptyCount = 0;
 
 	for (i = 0; i < fieldCount; i++)
 	{
-		void *pOutputData = ((char *)pBaseData + pFields[i].fieldOffset);
-		if (DataEmpty((const char *)pOutputData, pFields[i].fieldSize * m_Sizes[pFields[i].fieldType]))
+		void* pOutputData = ((char*)pBaseData + pFields[i].fieldOffset);
+		if (DataEmpty((const char*)pOutputData, pFields[i].fieldSize * m_Sizes[pFields[i].fieldType]))
 			emptyCount++;
 	}
 
@@ -457,26 +457,26 @@ int CSave::WriteFields(const char *pname, void *pBaseData, TYPEDESCRIPTION *pFie
 	WriteInt(pname, &actualCount, 1);
 	for (i = 0; i < fieldCount; i++)
 	{
-		TYPEDESCRIPTION *pTest = &pFields[i];
-		void *pOutputData = ((char *)pBaseData + pTest->fieldOffset);
+		TYPEDESCRIPTION* pTest = &pFields[i];
+		void* pOutputData = ((char*)pBaseData + pTest->fieldOffset);
 
-		if (DataEmpty((const char *)pOutputData, pTest->fieldSize * m_Sizes[pTest->fieldType]))
+		if (DataEmpty((const char*)pOutputData, pTest->fieldSize * m_Sizes[pTest->fieldType]))
 			continue;
 
 		switch (pTest->fieldType)
 		{
 		case FIELD_FLOAT:
-			WriteFloat(pTest->fieldName, (float *)pOutputData, pTest->fieldSize);
+			WriteFloat(pTest->fieldName, (float*)pOutputData, pTest->fieldSize);
 			break;
 
 		case FIELD_TIME:
-			WriteTime(pTest->fieldName, (float *)pOutputData, pTest->fieldSize);
+			WriteTime(pTest->fieldName, (float*)pOutputData, pTest->fieldSize);
 			break;
 
 		case FIELD_MODELNAME:
 		case FIELD_SOUNDNAME:
 		case FIELD_STRING:
-			WriteString(pTest->fieldName, (int *)pOutputData, pTest->fieldSize);
+			WriteString(pTest->fieldName, (int*)pOutputData, pTest->fieldSize);
 			break;
 
 		case FIELD_CLASSPTR:
@@ -493,19 +493,19 @@ int CSave::WriteFields(const char *pname, void *pBaseData, TYPEDESCRIPTION *pFie
 				switch (pTest->fieldType)
 				{
 				case FIELD_EVARS:
-					entityArray[j] = EntityIndex(((entvars_t **)pOutputData)[j]);
+					entityArray[j] = EntityIndex(((entvars_t**)pOutputData)[j]);
 					break;
 				case FIELD_CLASSPTR:
-					entityArray[j] = EntityIndex(((CBaseEntity **)pOutputData)[j]);
+					entityArray[j] = EntityIndex(((CBaseEntity**)pOutputData)[j]);
 					break;
 				case FIELD_EDICT:
-					entityArray[j] = EntityIndex(((edict_t **)pOutputData)[j]);
+					entityArray[j] = EntityIndex(((edict_t**)pOutputData)[j]);
 					break;
 				case FIELD_ENTITY:
-					entityArray[j] = EntityIndex(((EOFFSET *)pOutputData)[j]);
+					entityArray[j] = EntityIndex(((EOFFSET*)pOutputData)[j]);
 					break;
 				case FIELD_EHANDLE:
-					entityArray[j] = EntityIndex((CBaseEntity *)(((EHANDLE *)pOutputData)[j]));
+					entityArray[j] = EntityIndex((CBaseEntity*)(((EHANDLE*)pOutputData)[j]));
 					break;
 				default:
 					break;
@@ -515,23 +515,23 @@ int CSave::WriteFields(const char *pname, void *pBaseData, TYPEDESCRIPTION *pFie
 			break;
 		}
 		case FIELD_POSITION_VECTOR:
-			WritePositionVector(pTest->fieldName, (float *)pOutputData, pTest->fieldSize);
+			WritePositionVector(pTest->fieldName, (float*)pOutputData, pTest->fieldSize);
 			break;
 		case FIELD_VECTOR:
-			WriteVector(pTest->fieldName, (float *)pOutputData, pTest->fieldSize);
+			WriteVector(pTest->fieldName, (float*)pOutputData, pTest->fieldSize);
 			break;
 		case FIELD_BOOLEAN:
 		case FIELD_INTEGER:
-			WriteInt(pTest->fieldName, (int *)pOutputData, pTest->fieldSize);
+			WriteInt(pTest->fieldName, (int*)pOutputData, pTest->fieldSize);
 			break;
 		case FIELD_SHORT:
-			WriteData(pTest->fieldName, 2 * pTest->fieldSize, ((char *)pOutputData));
+			WriteData(pTest->fieldName, 2 * pTest->fieldSize, ((char*)pOutputData));
 			break;
 		case FIELD_CHARACTER:
-			WriteData(pTest->fieldName, pTest->fieldSize, ((char *)pOutputData));
+			WriteData(pTest->fieldName, pTest->fieldSize, ((char*)pOutputData));
 			break;
 		case FIELD_POINTER:
-			WriteInt(pTest->fieldName, (int *)(char *)pOutputData, pTest->fieldSize);
+			WriteInt(pTest->fieldName, (int*)(char*)pOutputData, pTest->fieldSize);
 			break;
 		case FIELD_FUNCTION:
 			WriteFunction(pTest->fieldName, &pOutputData, pTest->fieldSize);
@@ -545,14 +545,14 @@ int CSave::WriteFields(const char *pname, void *pBaseData, TYPEDESCRIPTION *pFie
 	return 1;
 }
 
-NOXREF void CSave::BufferString(char *pdata, int len)
+NOXREF void CSave::BufferString(char* pdata, int len)
 {
 	char c = 0;
 	BufferData(pdata, len);
 	BufferData(&c, 1);
 }
 
-int CSave::DataEmpty(const char *pdata, int size)
+int CSave::DataEmpty(const char* pdata, int size)
 {
 	for (int i = 0; i < size; i++)
 	{
@@ -563,23 +563,23 @@ int CSave::DataEmpty(const char *pdata, int size)
 	return 1;
 }
 
-void CSave::BufferField(const char *pname, int size, const char *pdata)
+void CSave::BufferField(const char* pname, int size, const char* pdata)
 {
 	BufferHeader(pname, size);
 	BufferData(pdata, size);
 }
 
-void CSave::BufferHeader(const char *pname, int size)
+void CSave::BufferHeader(const char* pname, int size)
 {
 	short hashvalue = TokenHash(pname);
 	if (size > (1 << (sizeof(short) * 8)))
 		ALERT(at_error, "CSave :: BufferHeader() size parameter exceeds 'short'!");
 
-	BufferData((const char *)&size, sizeof(short));
-	BufferData((const char *)&hashvalue, sizeof(short));
+	BufferData((const char*)&size, sizeof(short));
+	BufferData((const char*)&hashvalue, sizeof(short));
 }
 
-void CSave::BufferData(const char *pdata, int size)
+void CSave::BufferData(const char* pdata, int size)
 {
 	if (!m_pData)
 		return;
@@ -596,7 +596,7 @@ void CSave::BufferData(const char *pdata, int size)
 	m_pData->size += size;
 }
 
-int CRestore::ReadField(void *pBaseData, TYPEDESCRIPTION *pFields, int fieldCount, int startField, int size, char *pName, void *pData)
+int CRestore::ReadField(void* pBaseData, TYPEDESCRIPTION* pFields, int fieldCount, int startField, int size, char* pName, void* pData)
 {
 	float time = 0.0f;
 	Vector position(0, 0, 0);
@@ -611,7 +611,7 @@ int CRestore::ReadField(void *pBaseData, TYPEDESCRIPTION *pFields, int fieldCoun
 	for (int i = 0; i < fieldCount; i++)
 	{
 		int fieldNumber = (i + startField) % fieldCount;
-		TYPEDESCRIPTION *pTest = &pFields[fieldNumber];
+		TYPEDESCRIPTION* pTest = &pFields[fieldNumber];
 
 		if (!Q_stricmp(pTest->fieldName, pName))
 		{
@@ -619,24 +619,24 @@ int CRestore::ReadField(void *pBaseData, TYPEDESCRIPTION *pFields, int fieldCoun
 			{
 				for (int j = 0; j < pTest->fieldSize; j++)
 				{
-					void *pOutputData = ((char *)pBaseData + pTest->fieldOffset + (j * m_Sizes[pTest->fieldType]));
-					void *pInputData = (char *)pData + j * m_Sizes[pTest->fieldType];
+					void* pOutputData = ((char*)pBaseData + pTest->fieldOffset + (j * m_Sizes[pTest->fieldType]));
+					void* pInputData = (char*)pData + j * m_Sizes[pTest->fieldType];
 
 					switch (pTest->fieldType)
 					{
 					case FIELD_TIME:
 					{
-						float timeData = *(float *)pInputData;
+						float timeData = *(float*)pInputData;
 						timeData += time;
-						*((float *)pOutputData) = timeData;
+						*((float*)pOutputData) = timeData;
 						break;
 					}
-					case FIELD_FLOAT: *((float *)pOutputData) = *(float *)pInputData; break;
+					case FIELD_FLOAT: *((float*)pOutputData) = *(float*)pInputData; break;
 					case FIELD_MODELNAME:
 					case FIELD_SOUNDNAME:
 					case FIELD_STRING:
 					{
-						char *pString = (char *)pData;
+						char* pString = (char*)pData;
 						for (int stringCount = 0; stringCount < j; stringCount++)
 						{
 							while (*pString)
@@ -646,112 +646,112 @@ int CRestore::ReadField(void *pBaseData, TYPEDESCRIPTION *pFields, int fieldCoun
 						}
 
 						pInputData = pString;
-						if (!Q_strlen((char *)pInputData))
-							*((int *)pOutputData) = 0;
+						if (!Q_strlen((char*)pInputData))
+							*((int*)pOutputData) = 0;
 						else
 						{
-							int string = ALLOC_STRING((char *)pInputData);
-							*((int *)pOutputData) = string;
+							int string = ALLOC_STRING((char*)pInputData);
+							*((int*)pOutputData) = string;
 
 							if (!FStringNull(string) && m_precache)
 							{
 								if (pTest->fieldType == FIELD_MODELNAME)
-									PRECACHE_MODEL((char *)STRING(string));
+									PRECACHE_MODEL((char*)STRING(string));
 								else if (pTest->fieldType == FIELD_SOUNDNAME)
-									PRECACHE_SOUND((char *)STRING(string));
+									PRECACHE_SOUND((char*)STRING(string));
 							}
 						}
 						break;
 					}
 					case FIELD_EVARS:
 					{
-						int entityIndex = *(int *)pInputData;
-						edict_t *pent = EntityFromIndex(entityIndex);
+						int entityIndex = *(int*)pInputData;
+						edict_t* pent = EntityFromIndex(entityIndex);
 
 						if (pent)
-							*((entvars_t **)pOutputData) = VARS(pent);
+							*((entvars_t**)pOutputData) = VARS(pent);
 						else
-							*((entvars_t **)pOutputData) = nullptr;
+							*((entvars_t**)pOutputData) = nullptr;
 
 						break;
 					}
 					case FIELD_CLASSPTR:
 					{
-						int entityIndex = *(int *)pInputData;
-						edict_t *pent = EntityFromIndex(entityIndex);
+						int entityIndex = *(int*)pInputData;
+						edict_t* pent = EntityFromIndex(entityIndex);
 
 						if (pent)
-							*((CBaseEntity **)pOutputData) = CBaseEntity::Instance(pent);
+							*((CBaseEntity**)pOutputData) = CBaseEntity::Instance(pent);
 						else
-							*((CBaseEntity **)pOutputData) = nullptr;
+							*((CBaseEntity**)pOutputData) = nullptr;
 
 						break;
 					}
 					case FIELD_EDICT:
 					{
-						int entityIndex = *(int *)pInputData;
-						edict_t *pent = EntityFromIndex(entityIndex);
-						*((edict_t **)pOutputData) = pent;
+						int entityIndex = *(int*)pInputData;
+						edict_t* pent = EntityFromIndex(entityIndex);
+						*((edict_t**)pOutputData) = pent;
 						break;
 					}
 					case FIELD_EHANDLE:
 					{
-						pOutputData = (char *)pOutputData + j * (sizeof(EHANDLE) - m_Sizes[pTest->fieldType]);
-						int entityIndex = *(int *)pInputData;
-						edict_t *pent = EntityFromIndex(entityIndex);
+						pOutputData = (char*)pOutputData + j * (sizeof(EHANDLE) - m_Sizes[pTest->fieldType]);
+						int entityIndex = *(int*)pInputData;
+						edict_t* pent = EntityFromIndex(entityIndex);
 
 						if (pent)
-							*((EHANDLE *)pOutputData) = CBaseEntity::Instance(pent);
+							*((EHANDLE*)pOutputData) = CBaseEntity::Instance(pent);
 						else
-							*((EHANDLE *)pOutputData) = nullptr;
+							*((EHANDLE*)pOutputData) = nullptr;
 
 						break;
 					}
 					case FIELD_ENTITY:
 					{
-						int entityIndex = *(int *)pInputData;
-						edict_t *pent = EntityFromIndex(entityIndex);
+						int entityIndex = *(int*)pInputData;
+						edict_t* pent = EntityFromIndex(entityIndex);
 
 						if (pent)
-							*((EOFFSET *)pOutputData) = OFFSET(pent);
+							*((EOFFSET*)pOutputData) = OFFSET(pent);
 						else
-							*((EOFFSET *)pOutputData) = 0;
+							*((EOFFSET*)pOutputData) = 0;
 
 						break;
 					}
 					case FIELD_VECTOR:
 					{
-						((float *)pOutputData)[0] = ((float *)pInputData)[0];
-						((float *)pOutputData)[1] = ((float *)pInputData)[1];
-						((float *)pOutputData)[2] = ((float *)pInputData)[2];
+						((float*)pOutputData)[0] = ((float*)pInputData)[0];
+						((float*)pOutputData)[1] = ((float*)pInputData)[1];
+						((float*)pOutputData)[2] = ((float*)pInputData)[2];
 						break;
 					}
 					case FIELD_POSITION_VECTOR:
 					{
-						((float *)pOutputData)[0] = ((float *)pInputData)[0] + position.x;
-						((float *)pOutputData)[1] = ((float *)pInputData)[1] + position.y;
-						((float *)pOutputData)[2] = ((float *)pInputData)[2] + position.z;
+						((float*)pOutputData)[0] = ((float*)pInputData)[0] + position.x;
+						((float*)pOutputData)[1] = ((float*)pInputData)[1] + position.y;
+						((float*)pOutputData)[2] = ((float*)pInputData)[2] + position.z;
 						break;
 					}
 					case FIELD_BOOLEAN:
 					case FIELD_INTEGER:
-						*((int *)pOutputData) = *(int *)pInputData;
+						*((int*)pOutputData) = *(int*)pInputData;
 						break;
 					case FIELD_SHORT:
-						*((short *)pOutputData) = *(short *)pInputData;
+						*((short*)pOutputData) = *(short*)pInputData;
 						break;
 					case FIELD_CHARACTER:
-						*((char *)pOutputData) = *(char *)pInputData;
+						*((char*)pOutputData) = *(char*)pInputData;
 						break;
 					case FIELD_POINTER:
-						*((int *)pOutputData) = *(int *)pInputData;
+						*((int*)pOutputData) = *(int*)pInputData;
 						break;
 					case FIELD_FUNCTION:
 					{
-						if (!Q_strlen((char *)pInputData))
-							*((int *)pOutputData) = 0;
+						if (!Q_strlen((char*)pInputData))
+							*((int*)pOutputData) = 0;
 						else
-							*((int *)pOutputData) = FUNCTION_FROM_NAME((char *)pInputData);
+							*((int*)pOutputData) = FUNCTION_FROM_NAME((char*)pInputData);
 
 						break;
 					}
@@ -767,12 +767,12 @@ int CRestore::ReadField(void *pBaseData, TYPEDESCRIPTION *pFields, int fieldCoun
 	return -1;
 }
 
-int CRestore::ReadEntVars(const char *pname, entvars_t *pev)
+int CRestore::ReadEntVars(const char* pname, entvars_t* pev)
 {
 	return ReadFields(pname, pev, g_EntvarsDescription, ARRAYSIZE(g_EntvarsDescription));
 }
 
-int CRestore::ReadFields(const char *pname, void *pBaseData, TYPEDESCRIPTION *pFields, int fieldCount)
+int CRestore::ReadFields(const char* pname, void* pBaseData, TYPEDESCRIPTION* pFields, int fieldCount)
 {
 	unsigned short i = ReadShort();
 	unsigned short token = ReadShort();
@@ -789,7 +789,7 @@ int CRestore::ReadFields(const char *pname, void *pBaseData, TYPEDESCRIPTION *pF
 	for (i = 0; i < fieldCount; i++)
 	{
 		if (!m_global || !(pFields[i].flags & FTYPEDESC_GLOBAL))
-			Q_memset(((char *)pBaseData + pFields[i].fieldOffset), 0, pFields[i].fieldSize * m_Sizes[pFields[i].fieldType]);
+			Q_memset(((char*)pBaseData + pFields[i].fieldOffset), 0, pFields[i].fieldSize * m_Sizes[pFields[i].fieldType]);
 	}
 
 	for (i = 0; i < fileCount; i++)
@@ -804,7 +804,7 @@ int CRestore::ReadFields(const char *pname, void *pBaseData, TYPEDESCRIPTION *pF
 	return 1;
 }
 
-void CRestore::BufferReadHeader(HEADER *pheader)
+void CRestore::BufferReadHeader(HEADER* pheader)
 {
 	pheader->size = ReadShort();
 	pheader->token = ReadShort();
@@ -816,32 +816,32 @@ void CRestore::BufferReadHeader(HEADER *pheader)
 short CRestore::ReadShort()
 {
 	short tmp = 0;
-	BufferReadBytes((char *)&tmp, sizeof(short));
+	BufferReadBytes((char*)&tmp, sizeof(short));
 	return tmp;
 }
 
 int CRestore::ReadInt()
 {
 	int tmp = 0;
-	BufferReadBytes((char *)&tmp, sizeof(int));
+	BufferReadBytes((char*)&tmp, sizeof(int));
 	return tmp;
 }
 
-NOXREF int CRestore::ReadNamedInt(const char *pName)
+NOXREF int CRestore::ReadNamedInt(const char* pName)
 {
 	HEADER header;
 	BufferReadHeader(&header);
-	return ((int *)header.pData)[0];
+	return ((int*)header.pData)[0];
 }
 
-NOXREF char *CRestore::ReadNamedString(const char *pName)
+NOXREF char* CRestore::ReadNamedString(const char* pName)
 {
 	HEADER header;
 	BufferReadHeader(&header);
-	return (char *)header.pData;
+	return (char*)header.pData;
 }
 
-char *CRestore::BufferPointer()
+char* CRestore::BufferPointer()
 {
 	if (!m_pData)
 		return nullptr;
@@ -849,7 +849,7 @@ char *CRestore::BufferPointer()
 	return m_pData->pCurrentData;
 }
 
-void CRestore::BufferReadBytes(char *pOutput, int size)
+void CRestore::BufferReadBytes(char* pOutput, int size)
 {
 	if (!m_pData || Empty())
 		return;
@@ -880,7 +880,7 @@ NOXREF int CRestore::BufferSkipZString()
 
 	int maxLen = m_pData->bufferSize - m_pData->size;
 	int len = 0;
-	char *pszSearch = m_pData->pCurrentData;
+	char* pszSearch = m_pData->pCurrentData;
 
 	while (*pszSearch++ && len < maxLen)
 		len++;
@@ -890,7 +890,7 @@ NOXREF int CRestore::BufferSkipZString()
 	return len;
 }
 
-NOXREF int CRestore::BufferCheckZString(const char *string)
+NOXREF int CRestore::BufferCheckZString(const char* string)
 {
 	if (!m_pData)
 		return 0;
@@ -918,13 +918,13 @@ void CGlobalState::Reset()
 	m_listCount = 0;
 }
 
-globalentity_t *CGlobalState::Find(string_t globalname)
+globalentity_t* CGlobalState::Find(string_t globalname)
 {
 	if (!globalname)
 		return nullptr;
 
-	globalentity_t *pTest = m_pList;
-	const char *pEntityName = STRING(globalname);
+	globalentity_t* pTest = m_pList;
+	const char* pEntityName = STRING(globalname);
 
 	while (pTest)
 	{
@@ -940,8 +940,8 @@ globalentity_t *CGlobalState::Find(string_t globalname)
 // This is available all the time now on impulse 104, remove later
 void CGlobalState::DumpGlobals()
 {
-	static char *estates[] = { "Off", "On", "Dead" };
-	globalentity_t *pTest;
+	static char* estates[] = { "Off", "On", "Dead" };
+	globalentity_t* pTest;
 
 	ALERT(at_console, "-- Globals --\n");
 	pTest = m_pList;
@@ -957,7 +957,7 @@ void CGlobalState::EntityAdd(string_t globalname, string_t mapName, GLOBALESTATE
 {
 	assert(!Find(globalname));
 
-	globalentity_t *pNewEntity = (globalentity_t *)calloc(sizeof(globalentity_t), 1);
+	globalentity_t* pNewEntity = (globalentity_t*)calloc(sizeof(globalentity_t), 1);
 	assert(pNewEntity != nullptr);
 
 	pNewEntity->pNext = m_pList;
@@ -971,23 +971,23 @@ void CGlobalState::EntityAdd(string_t globalname, string_t mapName, GLOBALESTATE
 
 void CGlobalState::EntitySetState(string_t globalname, GLOBALESTATE state)
 {
-	globalentity_t *pEnt = Find(globalname);
+	globalentity_t* pEnt = Find(globalname);
 	if (pEnt)
 	{
 		pEnt->state = state;
 	}
 }
 
-const globalentity_t *CGlobalState::EntityFromTable(string_t globalname)
+const globalentity_t* CGlobalState::EntityFromTable(string_t globalname)
 {
-	globalentity_t *pEnt = Find(globalname);
+	globalentity_t* pEnt = Find(globalname);
 
 	return pEnt;
 }
 
 GLOBALESTATE CGlobalState::EntityGetState(string_t globalname)
 {
-	globalentity_t *pEnt = Find(globalname);
+	globalentity_t* pEnt = Find(globalname);
 	if (pEnt)
 	{
 		return pEnt->state;
@@ -1008,10 +1008,10 @@ TYPEDESCRIPTION CGlobalState::m_GlobalEntitySaveData[] =
 	DEFINE_FIELD(globalentity_t, state, FIELD_INTEGER)
 };
 
-int CGlobalState::Save(CSave &save)
+int CGlobalState::Save(CSave& save)
 {
 	int i;
-	globalentity_t *pEntity;
+	globalentity_t* pEntity;
 
 	if (!save.WriteFields("GLOBAL", this, m_SaveData, ARRAYSIZE(m_SaveData)))
 	{
@@ -1032,7 +1032,7 @@ int CGlobalState::Save(CSave &save)
 	return 1;
 }
 
-int CGlobalState::Restore(CRestore &restore)
+int CGlobalState::Restore(CRestore& restore)
 {
 	int i, listCount;
 	globalentity_t tmpEntity;
@@ -1065,7 +1065,7 @@ int CGlobalState::Restore(CRestore &restore)
 
 void CGlobalState::EntityUpdate(string_t globalname, string_t mapname)
 {
-	globalentity_t *pEnt = Find(globalname);
+	globalentity_t* pEnt = Find(globalname);
 	if (pEnt)
 	{
 		Q_strcpy(pEnt->levelName, STRING(mapname));
@@ -1074,10 +1074,10 @@ void CGlobalState::EntityUpdate(string_t globalname, string_t mapname)
 
 void CGlobalState::ClearStates()
 {
-	globalentity_t *pFree = m_pList;
+	globalentity_t* pFree = m_pList;
 	while (pFree)
 	{
-		globalentity_t *pNext = pFree->pNext;
+		globalentity_t* pNext = pFree->pNext;
 
 		free(pFree);
 		pFree = pNext;
@@ -1086,13 +1086,13 @@ void CGlobalState::ClearStates()
 	Reset();
 }
 
-void EXT_FUNC SaveGlobalState(SAVERESTOREDATA *pSaveData)
+void EXT_FUNC SaveGlobalState(SAVERESTOREDATA* pSaveData)
 {
 	CSave saveHelper(pSaveData);
 	gGlobalState.Save(saveHelper);
 }
 
-void EXT_FUNC RestoreGlobalState(SAVERESTOREDATA *pSaveData)
+void EXT_FUNC RestoreGlobalState(SAVERESTOREDATA* pSaveData)
 {
 	CRestore restoreHelper(pSaveData);
 	gGlobalState.Restore(restoreHelper);

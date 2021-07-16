@@ -38,18 +38,18 @@
 
 int IsSoundEvent(int eventNumber);
 
-int LookupActivity(void *pmodel, entvars_t *pev, int activity);
-int LookupActivityHeaviest(void *pmodel, entvars_t *pev, int activity);
-int LookupSequence(void *pmodel, const char *label);
-void GetSequenceInfo(void *pmodel, entvars_t *pev, float *pflFrameRate, float *pflGroundSpeed);
-int GetSequenceFlags(void *pmodel, entvars_t *pev);
-float SetController(void *pmodel, entvars_t *pev, int iController, float flValue);
-float SetBlending(void *pmodel, entvars_t *pev, int iBlender, float flValue);
-void GetEyePosition(void *pmodel, float *vecEyePosition);
-void SequencePrecache(void *pmodel, const char *pSequenceName);
-int FindTransition(void *pmodel, int iEndingAnim, int iGoalAnim, int *piDir);
-void SetBodygroup(void *pmodel, entvars_t *pev, int iGroup, int iValue);
-int GetBodygroup(void *pmodel, entvars_t *pev, int iGroup);
+int LookupActivity(void* pmodel, entvars_t* pev, int activity);
+int LookupActivityHeaviest(void* pmodel, entvars_t* pev, int activity);
+int LookupSequence(void* pmodel, const char* label);
+void GetSequenceInfo(void* pmodel, entvars_t* pev, float* pflFrameRate, float* pflGroundSpeed);
+int GetSequenceFlags(void* pmodel, entvars_t* pev);
+float SetController(void* pmodel, entvars_t* pev, int iController, float flValue);
+float SetBlending(void* pmodel, entvars_t* pev, int iBlender, float flValue);
+void GetEyePosition(void* pmodel, float* vecEyePosition);
+void SequencePrecache(void* pmodel, const char* pSequenceName);
+int FindTransition(void* pmodel, int iEndingAnim, int iGoalAnim, int* piDir);
+void SetBodygroup(void* pmodel, entvars_t* pev, int iGroup, int iValue);
+int GetBodygroup(void* pmodel, entvars_t* pev, int iGroup);
 
-int GetAnimationEvent(void *pmodel, entvars_t *pev, MonsterEvent_t *pMonsterEvent, float flStart, float flEnd, int index);
-int ExtractBbox(void *pmodel, int sequence, float *mins, float *maxs);
+int GetAnimationEvent(void* pmodel, entvars_t* pev, MonsterEvent_t* pMonsterEvent, float flStart, float flEnd, int index);
+int ExtractBbox(void* pmodel, int sequence, float* mins, float* maxs);

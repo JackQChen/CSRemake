@@ -1,7 +1,7 @@
 #include "precompiled.h"
 
 // Nasty Hack.  See client.cpp/ClientCommand()
-const char *BotArgs[4] = {};
+const char* BotArgs[4] = {};
 bool UseBotArgs = false;
 
 CBot::CBot()
@@ -21,7 +21,7 @@ CBot::CBot()
 }
 
 // Prepare bot for action
-bool CBot::Initialize(const BotProfile *profile)
+bool CBot::Initialize(const BotProfile* profile)
 {
 	m_profile = profile;
 	return true;
@@ -207,7 +207,7 @@ void CBot::Reload()
 // Returns ratio of ammo left to max ammo (1 = full clip, 0 = empty)
 float CBot::GetActiveWeaponAmmoRatio() const
 {
-	CBasePlayerWeapon *pCurrentWeapon = GetActiveWeapon();
+	CBasePlayerWeapon* pCurrentWeapon = GetActiveWeapon();
 	if (!pCurrentWeapon)
 		return 0.0f;
 
@@ -221,7 +221,7 @@ float CBot::GetActiveWeaponAmmoRatio() const
 // Return true if active weapon has an empty clip
 bool CBot::IsActiveWeaponClipEmpty() const
 {
-	CBasePlayerWeapon *pCurrentWeapon = GetActiveWeapon();
+	CBasePlayerWeapon* pCurrentWeapon = GetActiveWeapon();
 	if (pCurrentWeapon && pCurrentWeapon->m_iClip == 0)
 		return true;
 
@@ -231,7 +231,7 @@ bool CBot::IsActiveWeaponClipEmpty() const
 // Return true if active weapon has no ammo at all
 bool CBot::IsActiveWeaponOutOfAmmo() const
 {
-	CBasePlayerWeapon *pCurrentWeapon = GetActiveWeapon();
+	CBasePlayerWeapon* pCurrentWeapon = GetActiveWeapon();
 	if (!pCurrentWeapon)
 		return true;
 
@@ -311,7 +311,7 @@ byte CBot::ThrottledMsec() const
 
 #ifndef REGAMEDLL_FIXES
 // Do a "client command" - useful for invoking menu choices, etc.
-void CBot::ClientCommand(const char *cmd, const char *arg1, const char *arg2, const char *arg3)
+void CBot::ClientCommand(const char* cmd, const char* arg1, const char* arg2, const char* arg3)
 {
 	BotArgs[0] = cmd;
 	BotArgs[1] = arg1;
@@ -325,7 +325,7 @@ void CBot::ClientCommand(const char *cmd, const char *arg1, const char *arg2, co
 #endif
 
 // Returns TRUE if given entity is our enemy
-bool CBot::IsEnemy(CBaseEntity *pEntity) const
+bool CBot::IsEnemy(CBaseEntity* pEntity) const
 {
 	// only Players (real and AI) can be enemies
 	if (!pEntity->IsPlayer())
@@ -335,7 +335,7 @@ bool CBot::IsEnemy(CBaseEntity *pEntity) const
 	if (!pEntity->IsAlive())
 		return false;
 
-	CBasePlayer *pPlayer = static_cast<CBasePlayer *>(pEntity);
+	CBasePlayer* pPlayer = static_cast<CBasePlayer*>(pEntity);
 
 	// if they are on our team, they are our friends
 	if (BotRelationship(pPlayer) == BOT_TEAMMATE)
@@ -351,7 +351,7 @@ int CBot::GetEnemiesRemaining() const
 	int count = 0;
 	for (int i = 1; i <= gpGlobals->maxClients; i++)
 	{
-		CBaseEntity *pPlayer = UTIL_PlayerByIndex(i);
+		CBaseEntity* pPlayer = UTIL_PlayerByIndex(i);
 		if (!pPlayer)
 			continue;
 
@@ -379,7 +379,7 @@ int CBot::GetFriendsRemaining() const
 	int count = 0;
 	for (int i = 1; i <= gpGlobals->maxClients; i++)
 	{
-		CBaseEntity *pPlayer = UTIL_PlayerByIndex(i);
+		CBaseEntity* pPlayer = UTIL_PlayerByIndex(i);
 		if (!pPlayer)
 			continue;
 
@@ -395,7 +395,7 @@ int CBot::GetFriendsRemaining() const
 		if (!pPlayer->IsAlive())
 			continue;
 
-		if (pPlayer == static_cast<CBaseEntity *>(const_cast<CBot *>(this)))
+		if (pPlayer == static_cast<CBaseEntity*>(const_cast<CBot*>(this)))
 			continue;
 
 		count++;
@@ -410,9 +410,9 @@ bool CBot::IsLocalPlayerWatchingMe() const
 	if (!pev)
 		return false;
 
-	int myIndex = const_cast<CBot *>(this)->entindex();
+	int myIndex = const_cast<CBot*>(this)->entindex();
 
-	CBasePlayer *pPlayer = UTIL_GetLocalPlayer();
+	CBasePlayer* pPlayer = UTIL_GetLocalPlayer();
 	if (!pPlayer)
 		return false;
 
@@ -430,7 +430,7 @@ bool CBot::IsLocalPlayerWatchingMe() const
 	return false;
 }
 
-NOXREF void CBot::Print(char *format, ...) const
+NOXREF void CBot::Print(char* format, ...) const
 {
 	va_list varg;
 	char buffer[1024];
@@ -446,7 +446,7 @@ NOXREF void CBot::Print(char *format, ...) const
 	SERVER_PRINT(buffer);
 }
 
-void CBot::PrintIfWatched(char *format, ...) const
+void CBot::PrintIfWatched(char* format, ...) const
 {
 	if (!cv_bot_debug.value)
 		return;
@@ -458,7 +458,7 @@ void CBot::PrintIfWatched(char *format, ...) const
 		char buffer[1024];
 
 		// prefix the message with the bot's name (this can be NULL if bot was just added)
-		const char *name = pev ? STRING(pev->netname) : "(NULL pev)";
+		const char* name = pev ? STRING(pev->netname) : "(NULL pev)";
 		Q_sprintf(buffer, "%s: ", name ? name : "(NULL netname)");
 
 		SERVER_PRINT(buffer);
@@ -471,7 +471,7 @@ void CBot::PrintIfWatched(char *format, ...) const
 	}
 }
 
-ActiveGrenade::ActiveGrenade(int weaponID, CGrenade *grenadeEntity)
+ActiveGrenade::ActiveGrenade(int weaponID, CGrenade* grenadeEntity)
 {
 	m_id = weaponID;
 	m_entity = grenadeEntity;
@@ -502,7 +502,7 @@ bool ActiveGrenade::IsValid() const
 	return true;
 }
 
-const Vector *ActiveGrenade::GetPosition() const
+const Vector* ActiveGrenade::GetPosition() const
 {
 	return &m_entity->pev->origin;
 }

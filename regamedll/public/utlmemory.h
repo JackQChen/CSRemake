@@ -43,7 +43,7 @@ class CUtlMemory
 public:
 	// constructor, destructor
 	CUtlMemory(int nGrowSize = 0, int nInitSize = 0);
-	CUtlMemory(T *pMemory, int numElements);
+	CUtlMemory(T* pMemory, int numElements);
 	~CUtlMemory();
 
 	// Set the size by which the memory grows
@@ -59,17 +59,17 @@ public:
 		bool operator!=(const Iterator_t it) const { return m_index != it.m_index; }
 	};
 
-	Iterator_t First() const                         { return Iterator_t(IsIdxValid(0) ? 0 : InvalidIndex()); }
-	Iterator_t Next(const Iterator_t &it) const      { return Iterator_t(IsIdxValid(it.index + 1) ? it.index + 1 : InvalidIndex()); }
-	I GetIndex(const Iterator_t &it) const           { return it.index; }
-	bool IsIdxAfter(I i, const Iterator_t &it) const { return i > it.index; }
-	bool IsValidIterator(const Iterator_t &it) const { return IsIdxValid(it.index); }
-	Iterator_t InvalidIterator() const               { return Iterator_t(InvalidIndex()); }
+	Iterator_t First() const { return Iterator_t(IsIdxValid(0) ? 0 : InvalidIndex()); }
+	Iterator_t Next(const Iterator_t& it) const { return Iterator_t(IsIdxValid(it.index + 1) ? it.index + 1 : InvalidIndex()); }
+	I GetIndex(const Iterator_t& it) const { return it.index; }
+	bool IsIdxAfter(I i, const Iterator_t& it) const { return i > it.index; }
+	bool IsValidIterator(const Iterator_t& it) const { return IsIdxValid(it.index); }
+	Iterator_t InvalidIterator() const { return Iterator_t(InvalidIndex()); }
 
 	// element access
-	T&       Element(I i);
+	T& Element(I i);
 	T const& Element(I i) const;
-	T&       operator[](I i);
+	T& operator[](I i);
 	T const& operator[](I i) const;
 
 	// Can we use this index?
@@ -80,11 +80,11 @@ public:
 	static I InvalidIndex() { return INVALID_INDEX; }
 
 	// Gets the base address (can change when adding elements!)
-	T *Base();
-	T const *Base() const;
+	T* Base();
+	T const* Base() const;
 
 	// Attaches the buffer to external memory....
-	void SetExternalBuffer(T *pMemory, int numElements);
+	void SetExternalBuffer(T* pMemory, int numElements);
 
 	// Size
 	int NumAllocated() const;
@@ -111,7 +111,7 @@ private:
 		EXTERNAL_BUFFER_MARKER = -1,
 	};
 
-	T *m_pMemory;
+	T* m_pMemory;
 	int m_nAllocationCount;
 	int m_nGrowSize;
 };
@@ -124,12 +124,12 @@ m_nAllocationCount(nInitSize), m_nGrowSize(nGrowSize)
 	Assert((nGrowSize >= 0) && (nGrowSize != EXTERNAL_BUFFER_MARKER));
 	if (m_nAllocationCount)
 	{
-		m_pMemory = (T *)malloc(m_nAllocationCount * sizeof(T));
+		m_pMemory = (T*)malloc(m_nAllocationCount * sizeof(T));
 	}
 }
 
 template <class T, class I>
-CUtlMemory<T, I>::CUtlMemory(T *pMemory, int numElements) : m_pMemory(pMemory),
+CUtlMemory<T, I>::CUtlMemory(T* pMemory, int numElements) : m_pMemory(pMemory),
 m_nAllocationCount(numElements)
 {
 	// Special marker indicating externally supplied memory
@@ -143,7 +143,7 @@ CUtlMemory<T, I>::~CUtlMemory()
 }
 
 template <class T, class I>
-void CUtlMemory<T,I>::Init(int nGrowSize, int nInitSize)
+void CUtlMemory<T, I>::Init(int nGrowSize, int nInitSize)
 {
 	Purge();
 
@@ -152,13 +152,13 @@ void CUtlMemory<T,I>::Init(int nGrowSize, int nInitSize)
 	Assert(nGrowSize >= 0);
 	if (m_nAllocationCount)
 	{
-		m_pMemory = (T *)malloc(m_nAllocationCount * sizeof(T));
+		m_pMemory = (T*)malloc(m_nAllocationCount * sizeof(T));
 	}
 }
 
 // Attaches the buffer to external memory....
 template <class T, class I>
-void CUtlMemory<T, I>::SetExternalBuffer(T *pMemory, int numElements)
+void CUtlMemory<T, I>::SetExternalBuffer(T* pMemory, int numElements)
 {
 	// Blow away any existing allocated memory
 	Purge();
@@ -215,13 +215,13 @@ void CUtlMemory<T, I>::SetGrowSize(int nSize)
 
 // Gets the base address (can change when adding elements!)
 template <class T, class I>
-inline T *CUtlMemory<T, I>::Base()
+inline T* CUtlMemory<T, I>::Base()
 {
 	return m_pMemory;
 }
 
 template <class T, class I>
-inline T const *CUtlMemory<T, I>::Base() const
+inline T const* CUtlMemory<T, I>::Base() const
 {
 	return m_pMemory;
 }
@@ -243,7 +243,7 @@ inline int CUtlMemory<T, I>::Count() const
 template <class T, class I>
 inline bool CUtlMemory<T, I>::IsIdxValid(I i) const
 {
-	return (((int)i) >= 0) && (((int) i) < m_nAllocationCount);
+	return (((int)i) >= 0) && (((int)i) < m_nAllocationCount);
 }
 
 // Grows the memory
@@ -287,11 +287,11 @@ void CUtlMemory<T, I>::Grow(int num)
 
 	if (m_pMemory && needToReallocate)
 	{
-		m_pMemory = (T *)realloc(m_pMemory, m_nAllocationCount * sizeof(T));
+		m_pMemory = (T*)realloc(m_pMemory, m_nAllocationCount * sizeof(T));
 	}
 	else if (!m_pMemory)
 	{
-		m_pMemory = (T *)malloc(m_nAllocationCount * sizeof(T));
+		m_pMemory = (T*)malloc(m_nAllocationCount * sizeof(T));
 	}
 }
 
@@ -312,11 +312,11 @@ inline void CUtlMemory<T, I>::EnsureCapacity(int num)
 	m_nAllocationCount = num;
 	if (m_pMemory)
 	{
-		m_pMemory = (T *)realloc(m_pMemory, m_nAllocationCount * sizeof(T));
+		m_pMemory = (T*)realloc(m_pMemory, m_nAllocationCount * sizeof(T));
 	}
 	else
 	{
-		m_pMemory = (T *)malloc(m_nAllocationCount * sizeof(T));
+		m_pMemory = (T*)malloc(m_nAllocationCount * sizeof(T));
 	}
 }
 
@@ -328,7 +328,7 @@ void CUtlMemory<T, I>::Purge()
 	{
 		if (m_pMemory)
 		{
-			free((void *)m_pMemory);
+			free((void*)m_pMemory);
 			m_pMemory = 0;
 		}
 

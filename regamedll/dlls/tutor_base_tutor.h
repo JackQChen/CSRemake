@@ -40,11 +40,11 @@ public:
 	void SetActivationTime(float time);
 	int GetID();
 	int GetDuplicateID();
-	void AddParameter(char *str);
-	char *GetNextParameter(char *buf, int buflen);
+	void AddParameter(char* str);
+	char* GetNextParameter(char* buf, int buflen);
 	int GetNumParameters();
-	void SetNext(TutorMessageEvent *next);
-	TutorMessageEvent *GetNext();
+	void SetNext(TutorMessageEvent* next);
+	TutorMessageEvent* GetNext();
 
 private:
 	int m_messageID;
@@ -53,8 +53,8 @@ private:
 	float m_lifetime;
 	int m_priority;
 	int m_numParameters;
-	struct TutorMessageEventParam *m_paramList;
-	TutorMessageEvent *m_next;
+	struct TutorMessageEventParam* m_paramList;
+	TutorMessageEvent* m_next;
 };
 
 class CBaseTutor
@@ -65,36 +65,36 @@ public:
 	virtual ~CBaseTutor();
 	virtual void TutorThink(float time) = 0;
 	virtual void PurgeMessages() = 0;
-	virtual void CallEventHandler(GameEventType event, CBaseEntity *pEntity, CBaseEntity *pOther) = 0;
-	virtual void ShowTutorMessage(TutorMessageEvent *event) = 0;
+	virtual void CallEventHandler(GameEventType event, CBaseEntity* pEntity, CBaseEntity* pOther) = 0;
+	virtual void ShowTutorMessage(TutorMessageEvent* event) = 0;
 
-	virtual bool IsEntityInViewOfPlayer(CBaseEntity *pEntity, CBasePlayer *pPlayer);
-	virtual bool IsBombsiteInViewOfPlayer(CBaseEntity *pEntity, CBasePlayer *pPlayer);
-	virtual bool IsEntityInBombsite(CBaseEntity *bombsite, CBaseEntity *pEntity);
-	virtual bool IsPlayerLookingAtPosition(Vector *origin, CBasePlayer *pPlayer);
-	virtual bool IsPlayerLookingAtEntity(CBaseEntity *pEntity, CBasePlayer *pPlayer);
+	virtual bool IsEntityInViewOfPlayer(CBaseEntity* pEntity, CBasePlayer* pPlayer);
+	virtual bool IsBombsiteInViewOfPlayer(CBaseEntity* pEntity, CBasePlayer* pPlayer);
+	virtual bool IsEntityInBombsite(CBaseEntity* bombsite, CBaseEntity* pEntity);
+	virtual bool IsPlayerLookingAtPosition(Vector* origin, CBasePlayer* pPlayer);
+	virtual bool IsPlayerLookingAtEntity(CBaseEntity* pEntity, CBasePlayer* pPlayer);
 
 	virtual void HandleShotFired(Vector source, Vector target) = 0;
-	virtual struct TutorMessage *GetTutorMessageDefinition(int messageID) = 0;
+	virtual struct TutorMessage* GetTutorMessageDefinition(int messageID) = 0;
 
 public:
 	void StartFrame(float time);
-	void OnEvent(GameEventType event, CBaseEntity *pEntity = nullptr, CBaseEntity *pOther = nullptr);
+	void OnEvent(GameEventType event, CBaseEntity* pEntity = nullptr, CBaseEntity* pOther = nullptr);
 
 	void ShotFired(Vector source, Vector target);
-	void DisplayMessageToPlayer(CBasePlayer *pPlayer, int id, const char *szMessage, TutorMessageEvent *event);
-	void DrawLineToEntity(CBasePlayer *pPlayer, int entindex, int id);
+	void DisplayMessageToPlayer(CBasePlayer* pPlayer, int id, const char* szMessage, TutorMessageEvent* event);
+	void DrawLineToEntity(CBasePlayer* pPlayer, int entindex, int id);
 	void DisplayNewStateDescriptionToPlayer();
 	void CloseCurrentWindow();
-	void CheckForStateTransition(GameEventType event, CBaseEntity *pEntity, CBaseEntity *pOther);
-	void CalculatePathForObjective(CBaseEntity *pPlayer);
+	void CheckForStateTransition(GameEventType event, CBaseEntity* pEntity, CBaseEntity* pOther);
+	void CalculatePathForObjective(CBaseEntity* pPlayer);
 	bool DoMessagesHaveSameID(int id1, int id2);
 
 protected:
-	CBaseTutorStateSystem *m_stateSystem;
-	TutorMessageEvent *m_eventList;
+	CBaseTutorStateSystem* m_stateSystem;
+	TutorMessageEvent* m_eventList;
 	float m_deadAirStartTime;
 	float m_roundStartTime;
 };
 
-extern CBaseTutor *TheTutor;
+extern CBaseTutor* TheTutor;

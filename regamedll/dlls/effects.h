@@ -32,14 +32,14 @@
 #define SF_SPRITE_ONCE      BIT(1)
 #define SF_SPRITE_TEMPORARY BIT(15)
 
-class CSprite: public CPointEntity
+class CSprite : public CPointEntity
 {
 public:
 	virtual void Spawn();
 	virtual void Precache();
 	virtual void Restart();
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
 	virtual int ObjectCaps()
 	{
 		int flags = 0;
@@ -48,7 +48,7 @@ public:
 
 		return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | flags;
 	}
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 public:
 	void EXPORT AnimateThink();
@@ -56,9 +56,9 @@ public:
 
 	void Animate(float frames);
 	void Expand(float scaleSpeed, float fadeSpeed);
-	void SpriteInit(const char *pSpriteName, const Vector &origin);
+	void SpriteInit(const char* pSpriteName, const Vector& origin);
 
-	void SetAttachment(edict_t *pEntity, int attachment)
+	void SetAttachment(edict_t* pEntity, int attachment)
 	{
 		if (pEntity)
 		{
@@ -97,7 +97,7 @@ public:
 	}
 
 	void EXPORT AnimateUntilDead();
-	static CSprite *SpriteCreate(const char *pSpriteName, const Vector &origin, BOOL animate);
+	static CSprite* SpriteCreate(const char* pSpriteName, const Vector& origin, BOOL animate);
 
 	static TYPEDESCRIPTION m_SaveData[];
 
@@ -117,7 +117,7 @@ private:
 #define SF_BEAM_SHADEOUT   BIT(8)
 #define SF_BEAM_TEMPORARY  BIT(15)
 
-class CBeam: public CBaseEntity
+class CBeam : public CBaseEntity
 {
 public:
 	virtual void Spawn();
@@ -133,12 +133,12 @@ public:
 	virtual Vector Center() { return (GetStartPos() + GetEndPos()) * 0.5f; }
 
 public:
-	void EXPORT TriggerTouch(CBaseEntity *pOther);
+	void EXPORT TriggerTouch(CBaseEntity* pOther);
 
 	void SetType(int type) { pev->rendermode = (pev->rendermode & 0xF0) | (type & 0x0F); }
 	void SetFlags(int flags) { pev->rendermode = (pev->rendermode & 0x0F) | (flags & 0xF0); }
-	void SetStartPos(const Vector &pos) { pev->origin = pos; }
-	void SetEndPos(const Vector &pos) { pev->angles = pos; }
+	void SetStartPos(const Vector& pos) { pev->origin = pos; }
+	void SetEndPos(const Vector& pos) { pev->angles = pos; }
 
 	void SetStartEntity(int entityIndex);
 	void SetEndEntity(int entityIndex);
@@ -157,8 +157,8 @@ public:
 	int GetStartEntity() const { return pev->sequence & 0xFFF; }
 	int GetEndEntity() const { return pev->skin & 0xFFF; }
 
-	const Vector &GetStartPos();
-	const Vector &GetEndPos();
+	const Vector& GetStartPos();
+	const Vector& GetEndPos();
 
 	int GetTexture() const { return pev->modelindex; }
 	int GetWidth() const { return pev->scale; }
@@ -168,23 +168,23 @@ public:
 	int GetScrollRate() const { return pev->animtime; }
 
 	void RelinkBeam();
-	void DoSparks(const Vector &start, const Vector &end);
-	CBaseEntity *RandomTargetname(const char *szName);
-	void BeamDamage(TraceResult *ptr);
-	void BeamInit(const char *pSpriteName, int width);
-	void PointsInit(const Vector &start, const Vector &end);
-	void PointEntInit(const Vector &start, int endIndex);
+	void DoSparks(const Vector& start, const Vector& end);
+	CBaseEntity* RandomTargetname(const char* szName);
+	void BeamDamage(TraceResult* ptr);
+	void BeamInit(const char* pSpriteName, int width);
+	void PointsInit(const Vector& start, const Vector& end);
+	void PointEntInit(const Vector& start, int endIndex);
 	void EntsInit(int startIndex, int endIndex);
-	void HoseInit(const Vector &start, const Vector &direction);
+	void HoseInit(const Vector& start, const Vector& direction);
 
-	static CBeam *BeamCreate(const char *pSpriteName, int width);
+	static CBeam* BeamCreate(const char* pSpriteName, int width);
 
 	void LiveForTime(float time)
 	{
 		SetThink(&CBeam::SUB_Remove);
 		pev->nextthink = gpGlobals->time + time;
 	}
-	void BeamDamageInstant(TraceResult *ptr, float damage)
+	void BeamDamageInstant(TraceResult* ptr, float damage)
 	{
 		pev->dmg = damage;
 		pev->dmgtime = gpGlobals->time - 1;
@@ -192,15 +192,15 @@ public:
 	}
 };
 
-class CLaser: public CBeam
+class CLaser : public CBeam
 {
 public:
 	virtual void Spawn();
 	virtual void Precache();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 #ifdef REGAMEDLL_FIXES
 	virtual void Restart();
@@ -211,29 +211,29 @@ public:
 	void TurnOff();
 	int IsOn();
 
-	void FireAtPoint(TraceResult &point);
+	void FireAtPoint(TraceResult& point);
 	void EXPORT StrikeThink();
 
 public:
 	static TYPEDESCRIPTION m_SaveData[];
 
-	CSprite *m_pSprite;
+	CSprite* m_pSprite;
 	string_t m_iszSpriteName;
 	Vector m_firePosition;
 };
 
 #define SF_BUBBLES_STARTOFF BIT(0)
 
-class CBubbling: public CBaseEntity
+class CBubbling : public CBaseEntity
 {
 public:
 	virtual void Spawn();
 	virtual void Precache();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
 	virtual int ObjectCaps() { return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 public:
 	void EXPORT FizzThink();
@@ -247,14 +247,14 @@ public:
 	int m_state;
 };
 
-class CLightning: public CBeam
+class CLightning : public CBeam
 {
 public:
 	virtual void Spawn();
 	virtual void Precache();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
 	virtual void Activate();
 
 #ifdef REGAMEDLL_FIXES
@@ -265,10 +265,10 @@ public:
 	void EXPORT StrikeThink();
 	void EXPORT DamageThink();
 	void RandomArea();
-	void RandomPoint(Vector &vecSrc);
-	void Zap(const Vector &vecSrc, const Vector &vecDest);
-	void EXPORT StrikeUse(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
-	void EXPORT ToggleUse(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	void RandomPoint(Vector& vecSrc);
+	void Zap(const Vector& vecSrc, const Vector& vecDest);
+	void EXPORT StrikeUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
+	void EXPORT ToggleUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 	inline BOOL ServerSide() const
 	{
@@ -297,12 +297,12 @@ public:
 	float m_radius;
 };
 
-class CGlow: public CPointEntity
+class CGlow : public CPointEntity
 {
 public:
 	virtual void Spawn();
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
 	virtual void Think();
 
 	void Animate(float frames);
@@ -314,7 +314,7 @@ public:
 	float m_maxFrame;
 };
 
-class CBombGlow: public CSprite
+class CBombGlow : public CSprite
 {
 public:
 	virtual void Spawn();
@@ -328,16 +328,16 @@ public:
 
 #define SF_GIBSHOOTER_REPEATABLE BIT(0) // Allows a gibshooter to be refired
 
-class CGibShooter: public CBaseDelay
+class CGibShooter : public CBaseDelay
 {
 public:
 	virtual void Spawn();
 	virtual void Precache();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
-	virtual CGib *CreateGib();
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
+	virtual CGib* CreateGib();
 
 public:
 	void EXPORT ShootThink();
@@ -355,22 +355,22 @@ public:
 	float m_flGibLife;
 };
 
-class CEnvShooter: public CGibShooter
+class CEnvShooter : public CGibShooter
 {
 public:
 	virtual void Precache();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual CGib *CreateGib();
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual CGib* CreateGib();
 };
 
 const int MAX_BEAM = 24;
 
-class CTestEffect: public CBaseDelay
+class CTestEffect : public CBaseDelay
 {
 public:
 	virtual void Spawn();
 	virtual void Precache();
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 public:
 	void EXPORT TestThink();
@@ -379,7 +379,7 @@ public:
 	int m_iLoop;
 	int m_iBeam;
 
-	CBeam *m_pBeam[MAX_BEAM];
+	CBeam* m_pBeam[MAX_BEAM];
 
 	float m_flBeamTime[MAX_BEAM];
 	float m_flStartTime;
@@ -390,12 +390,12 @@ public:
 #define SF_BLOOD_PLAYER BIT(2)
 #define SF_BLOOD_DECAL  BIT(3)
 
-class CBlood: public CPointEntity
+class CBlood : public CPointEntity
 {
 public:
 	virtual void Spawn();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 public:
 	int Color() const { return pev->impulse; }
@@ -406,19 +406,19 @@ public:
 
 public:
 	Vector Direction();
-	Vector BloodPosition(CBaseEntity *pActivator);
+	Vector BloodPosition(CBaseEntity* pActivator);
 };
 
 #define SF_SHAKE_EVERYONE BIT(0) // Don't check radius
 #define SF_SHAKE_DISRUPT  BIT(1) // Disrupt controls
 #define SF_SHAKE_INAIR    BIT(2) // Shake players in air
 
-class CShake: public CPointEntity
+class CShake : public CPointEntity
 {
 public:
 	virtual void Spawn();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 public:
 	float Amplitude() const { return pev->scale; }
@@ -436,12 +436,12 @@ public:
 #define SF_FADE_MODULATE BIT(1) // Modulate, don't blend
 #define SF_FADE_ONLYONE  BIT(2)
 
-class CFade: public CPointEntity
+class CFade : public CPointEntity
 {
 public:
 	virtual void Spawn();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 public:
 	float Duration() const { return pev->dmg_take; }
@@ -454,37 +454,37 @@ public:
 #define SF_MESSAGE_ONCE BIT(0) // Fade in, not out
 #define SF_MESSAGE_ALL  BIT(1) // Send to all clients
 
-class CMessage: public CPointEntity
+class CMessage : public CPointEntity
 {
 public:
 	virtual void Spawn();
 	virtual void Precache();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 };
 
 #define SF_FUNNEL_REVERSE BIT(0) // Funnel effect repels particles instead of attracting them
 
-class CEnvFunnel: public CBaseDelay
+class CEnvFunnel : public CBaseDelay
 {
 public:
 	virtual void Spawn();
 	virtual void Precache();
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 public:
 	int m_iSprite;
 };
 
-class CEnvBeverage: public CBaseDelay
+class CEnvBeverage : public CBaseDelay
 {
 public:
 	virtual void Spawn();
 	virtual void Precache();
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 };
 
-class CItemSoda: public CBaseEntity
+class CItemSoda : public CBaseEntity
 {
 public:
 	virtual void Spawn();
@@ -492,15 +492,15 @@ public:
 
 public:
 	void EXPORT CanThink();
-	void EXPORT CanTouch(CBaseEntity *pOther);
+	void EXPORT CanTouch(CBaseEntity* pOther);
 };
 
 // Multiplayer intermission spots.
-class CInfoIntermission: public CPointEntity
+class CInfoIntermission : public CPointEntity
 {
 public:
 	virtual void Spawn();
 	virtual void Think();
 };
 
-int IsPointEntity(CBaseEntity *pEnt);
+int IsPointEntity(CBaseEntity* pEnt);

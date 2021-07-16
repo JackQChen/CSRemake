@@ -16,17 +16,17 @@ class TestResult;
 class TestRegistry
 {
 public:
-	static void addTest (Test *test);
-	static void runAllTests (TestResult& result);
+	static void addTest(Test* test);
+	static void runAllTests(TestResult& result);
 
 	static Test* getFirstTest();
 private:
 
-	static TestRegistry&	instance ();
-	void					add (Test *test);
-	void					run (TestResult& result);
+	static TestRegistry& instance();
+	void					add(Test* test);
+	void					run(TestResult& result);
 
-	
-	Test					*tests;
+
+	Test* tests;
 
 };

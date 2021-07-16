@@ -30,34 +30,34 @@
 
 enum DebugOutputType
 {
-	DEBUG_NONE    = 0,
-	DEBUG_BOT     = BIT(0),
-	DEBUG_CAREER  = BIT(1),
-	DEBUG_TUTOR   = BIT(2),
-	DEBUG_STATS   = BIT(3),
+	DEBUG_NONE = 0,
+	DEBUG_BOT = BIT(0),
+	DEBUG_CAREER = BIT(1),
+	DEBUG_TUTOR = BIT(2),
+	DEBUG_STATS = BIT(3),
 	DEBUG_HOSTAGE = BIT(4),
-	DEBUG_ALL     = 0xFFFFFFFF,
+	DEBUG_ALL = 0xFFFFFFFF,
 };
 
 struct DebugOutputLevel
 {
-	const char *name;
+	const char* name;
 	DebugOutputType value;
 };
 
 const int MAX_DEBUG_BUFF_SIZE = 1024;
 
 bool IsDeveloper();
-void UTIL_DPrintf(DebugOutputType outputType, char *pszMsg, ...);
-void UTIL_DPrintf(char *pszMsg, ...);
+void UTIL_DPrintf(DebugOutputType outputType, char* pszMsg, ...);
+void UTIL_DPrintf(char* pszMsg, ...);
 void PrintDebugFlags();
 
-void SetDebugFlag(const char *flagStr, bool state);
-void PrintDebugFlag(const char *flagStr);
-void UTIL_SetDprintfFlags(const char *flagStr);
+void SetDebugFlag(const char* flagStr, bool state);
+void PrintDebugFlag(const char* flagStr);
+void UTIL_SetDprintfFlags(const char* flagStr);
 
-void UTIL_BotDPrintf(char *pszMsg, ...);
-void UTIL_CareerDPrintf(char *pszMsg, ...);
-void UTIL_TutorDPrintf(char *pszMsg, ...);
-void UTIL_StatsDPrintf(char *pszMsg, ...);
-void UTIL_HostageDPrintf(char *pszMsg, ...);
+void UTIL_BotDPrintf(char* pszMsg, ...);
+void UTIL_CareerDPrintf(char* pszMsg, ...);
+void UTIL_TutorDPrintf(char* pszMsg, ...);
+void UTIL_StatsDPrintf(char* pszMsg, ...);
+void UTIL_HostageDPrintf(char* pszMsg, ...);

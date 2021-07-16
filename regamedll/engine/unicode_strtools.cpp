@@ -375,7 +375,7 @@ bool Q_IsUnprintableW(uchar16 c)
 }
 
 // Returns false if UTF-8 string contains invalid sequences.
-bool Q_UnicodeValidate(const char *pUTF8)
+bool Q_UnicodeValidate(const char* pUTF8)
 {
 	bool bError = false;
 	while (*pUTF8)
@@ -398,12 +398,12 @@ bool Q_UnicodeValidate(const char *pUTF8)
 // bAggressive = true causes this function to also check for "mean" spaces,
 // which we don't want in persona names or chat strings as they're disruptive
 // to the user experience.
-static uchar16 *StripWhitespaceWorker(uchar16 *pwch, int cchLength, bool *pbStrippedWhitespace, bool bAggressive)
+static uchar16* StripWhitespaceWorker(uchar16* pwch, int cchLength, bool* pbStrippedWhitespace, bool bAggressive)
 {
 	// walk backwards from the end of the string, killing any whitespace
 	*pbStrippedWhitespace = false;
 
-	uchar16 *pwchEnd = pwch + cchLength;
+	uchar16* pwchEnd = pwch + cchLength;
 	while (--pwchEnd >= pwch)
 	{
 		if (!iswspace(*pwchEnd) && (!bAggressive || !Q_IsMeanSpaceW(*pwchEnd)))
@@ -426,13 +426,13 @@ static uchar16 *StripWhitespaceWorker(uchar16 *pwch, int cchLength, bool *pbStri
 	return pwch;
 }
 
-static uchar16 *StripUnprintableWorker(uchar16 *pwch, bool *pStripped)
+static uchar16* StripUnprintableWorker(uchar16* pwch, bool* pStripped)
 {
-	uchar16 *rPos = pwch;
-	uchar16 *wPos = pwch;
+	uchar16* rPos = pwch;
+	uchar16* wPos = pwch;
 	*pStripped = false;
 
-	while(*rPos)
+	while (*rPos)
 	{
 		uchar16 cc = *rPos;
 		if (*rPos >= 0x20u && !Q_IsUnprintableW(cc) && cc != 0x2026)
@@ -450,7 +450,7 @@ static uchar16 *StripUnprintableWorker(uchar16 *pwch, bool *pStripped)
 }
 
 // Strips leading and trailing whitespace
-bool Q_StripPrecedingAndTrailingWhitespace(char *pch)
+bool Q_StripPrecedingAndTrailingWhitespace(char* pch)
 {
 	int cch = Q_strlen(pch);
 
@@ -460,8 +460,8 @@ bool Q_StripPrecedingAndTrailingWhitespace(char *pch)
 
 	// convert to unicode
 	int cubDest = (cch + 1) * sizeof(uchar16);
-	uchar16 *pwch = (uchar16 *)alloca(cubDest);
-	int cwch = (unsigned int)Q_UTF8ToUTF16(pch, (uchar16 *)pwch, cubDest, _STRINGCONVERTFLAG_ASSERT) >> 1;
+	uchar16* pwch = (uchar16*)alloca(cubDest);
+	int cwch = (unsigned int)Q_UTF8ToUTF16(pch, (uchar16*)pwch, cubDest, _STRINGCONVERTFLAG_ASSERT) >> 1;
 
 	bool bStrippedWhitespace = false;
 	pwch = StripWhitespaceWorker(pwch, cwch - 1, &bStrippedWhitespace, false /* not aggressive */);
@@ -477,13 +477,13 @@ bool Q_StripPrecedingAndTrailingWhitespace(char *pch)
 
 // Strips leading and trailing whitespace,
 // also all non-printable characters (ie. zero-width no-break space) from a string.
-bool Q_StripUnprintableAndSpace(char *pch)
+bool Q_StripUnprintableAndSpace(char* pch)
 {
 	// duplicate on stack
 	int cch = Q_strlen(pch);
 	int cubDest = (cch + 1) * sizeof(uchar16);
-	uchar16 *pwch = (uchar16 *)alloca(cubDest);
-	int cwch = (unsigned int)Q_UTF8ToUTF16(pch, (uchar16 *)pwch, cubDest, _STRINGCONVERTFLAG_ASSERT) >> 1;
+	uchar16* pwch = (uchar16*)alloca(cubDest);
+	int cwch = (unsigned int)Q_UTF8ToUTF16(pch, (uchar16*)pwch, cubDest, _STRINGCONVERTFLAG_ASSERT) >> 1;
 
 	bool bStrippedAny = false;
 	pwch = StripUnprintableWorker(pwch, &bStrippedAny);
@@ -500,7 +500,7 @@ bool Q_StripUnprintableAndSpace(char *pch)
 	return bStrippedAny;
 }
 
-int Q_UChar32ToUTF32(uchar32 uVal, uchar32 *pUTF32)
+int Q_UChar32ToUTF32(uchar32 uVal, uchar32* pUTF32)
 {
 	if (uVal <= 0xFFFF)
 	{
@@ -522,7 +522,7 @@ int Q_UChar32ToUTF32Len(uchar32 uVal)
 }
 
 // Encode Unicode code point as UTF-16, returns number of elements written
-int Q_UChar32ToUTF16(uchar32 uVal, uchar16 *pUTF16Out)
+int Q_UChar32ToUTF16(uchar32 uVal, uchar16* pUTF16Out)
 {
 	if (uVal <= 0xFFFF)
 	{
@@ -545,7 +545,7 @@ int Q_UChar32ToUTF16Len(uchar32 uVal)
 }
 
 // Encode Unicode code point as UTF-8, returns number of bytes written
-int Q_UChar32ToUTF8(uchar32 uVal, char *pUTF8Out)
+int Q_UChar32ToUTF8(uchar32 uVal, char* pUTF8Out)
 {
 	if (uVal <= 0x7F)
 	{
@@ -592,9 +592,9 @@ int Q_UChar32ToUTF8Len(uchar32 uVal)
 
 // Decode one character from a UTF-8 encoded string. Treats 6-byte CESU-8 sequences
 // as a single character, as if they were a correctly-encoded 4-byte UTF-8 sequence.
-int Q_UTF8ToUChar32(const char *pUTF8_, uchar32 &uValueOut, bool &bErrorOut)
+int Q_UTF8ToUChar32(const char* pUTF8_, uchar32& uValueOut, bool& bErrorOut)
 {
-	const uint8 *pUTF8 = (const uint8 *)pUTF8_;
+	const uint8* pUTF8 = (const uint8*)pUTF8_;
 
 	int nBytes = 1;
 	uint32 uValue = pUTF8[0];
@@ -640,7 +640,7 @@ int Q_UTF8ToUChar32(const char *pUTF8_, uchar32 &uValueOut, bool &bErrorOut)
 decodeFinished:
 	if (uValue >= uMinValue && Q_IsValidUChar32(uValue))
 	{
-decodeFinishedNoCheck:
+	decodeFinishedNoCheck:
 		uValueOut = uValue;
 		bErrorOut = false;
 		return nBytes;
@@ -665,7 +665,7 @@ decodeFinishedMaybeCESU8:
 }
 
 // Decode one character from a UTF-16 encoded string
-int Q_UTF16ToUChar32(const uchar16 *pUTF16, uchar32 &uValueOut, bool &bErrorOut)
+int Q_UTF16ToUChar32(const uchar16* pUTF16, uchar32& uValueOut, bool& bErrorOut)
 {
 	if (Q_IsValidUChar32(pUTF16[0]))
 	{
@@ -700,7 +700,7 @@ int Q_UTF16ToUChar32(const uchar16 *pUTF16, uchar32 &uValueOut, bool &bErrorOut)
 }
 
 // Decode one character from a UTF-32 encoded string
-int Q_UTF32ToUChar32(const uchar32 *pUTF32, uchar32 &uValueOut, bool &bErrorOut)
+int Q_UTF32ToUChar32(const uchar32* pUTF32, uchar32& uValueOut, bool& bErrorOut)
 {
 	if (Q_IsValidUChar32(pUTF32[0]))
 	{
@@ -735,10 +735,10 @@ int Q_UTF32ToUChar32(const uchar32 *pUTF32, uchar32 &uValueOut, bool &bErrorOut)
 
 // A generic Unicode processing loop: decode one character from input to uchar32, handle errors, encode uchar32 to output
 template <typename SrcType, typename DstType, bool bStopAtNull,
-	qboolean (*DecodeSrc)(const SrcType *pUTF8, uchar32 &uValueOut, bool &bErrorOut),
+	qboolean(*DecodeSrc)(const SrcType* pUTF8, uchar32& uValueOut, bool& bErrorOut),
 	int (EncodeDstLen)(uchar32 uVal),
-	int (EncodeDst)(uchar32 uVal, DstType *pUTF8Out)>
-int Q_UnicodeConvertT(const SrcType *pIn, int nInChars, DstType *pOut, int nOutBytes, EStringConvertErrorPolicy ePolicy)
+	int (EncodeDst)(uchar32 uVal, DstType* pUTF8Out)>
+	int Q_UnicodeConvertT(const SrcType* pIn, int nInChars, DstType* pOut, int nOutBytes, EStringConvertErrorPolicy ePolicy)
 {
 	if (nOutBytes == 0)
 		return 0;
@@ -816,49 +816,49 @@ int Q_UnicodeConvertT(const SrcType *pIn, int nInChars, DstType *pOut, int nOutB
 }
 
 // Perform conversion. Returns number of *bytes* required if output pointer is NULL.
-int Q_UTF8ToUTF16(const char *pUTF8, uchar16 *pUTF16, int cubDestSizeInBytes, EStringConvertErrorPolicy ePolicy)
+int Q_UTF8ToUTF16(const char* pUTF8, uchar16* pUTF16, int cubDestSizeInBytes, EStringConvertErrorPolicy ePolicy)
 {
 	return Q_UnicodeConvertT<char, uchar16, true, Q_UTF8ToUChar32, Q_UChar32ToUTF16Len, Q_UChar32ToUTF16>(pUTF8, 0, pUTF16, cubDestSizeInBytes, ePolicy);
 }
 
 // Perform conversion. Returns number of *bytes* required if output pointer is NULL.
-int Q_UTF8ToUTF32(const char *pUTF8, uchar32 *pUTF32, int cubDestSizeInBytes, EStringConvertErrorPolicy ePolicy)
+int Q_UTF8ToUTF32(const char* pUTF8, uchar32* pUTF32, int cubDestSizeInBytes, EStringConvertErrorPolicy ePolicy)
 {
 	return Q_UnicodeConvertT<char, uchar32, true, Q_UTF8ToUChar32, Q_UChar32ToUTF32Len, Q_UChar32ToUTF32>(pUTF8, 0, pUTF32, cubDestSizeInBytes, ePolicy);
 }
 
 // Perform conversion. Returns number of *bytes* required if output pointer is NULL.
-int Q_UTF16ToUTF8(const uchar16 *pUTF16, char *pUTF8, int cubDestSizeInBytes, EStringConvertErrorPolicy ePolicy)
+int Q_UTF16ToUTF8(const uchar16* pUTF16, char* pUTF8, int cubDestSizeInBytes, EStringConvertErrorPolicy ePolicy)
 {
 	return Q_UnicodeConvertT<uchar16, char, true, Q_UTF16ToUChar32, Q_UChar32ToUTF8Len, Q_UChar32ToUTF8>(pUTF16, 0, pUTF8, cubDestSizeInBytes, ePolicy);
 }
 
 // Perform conversion. Returns number of *bytes* required if output pointer is NULL.
-int Q_UTF16ToUTF32(const uchar16 *pUTF16, uchar32 *pUTF32, int cubDestSizeInBytes, EStringConvertErrorPolicy ePolicy)
+int Q_UTF16ToUTF32(const uchar16* pUTF16, uchar32* pUTF32, int cubDestSizeInBytes, EStringConvertErrorPolicy ePolicy)
 {
 	return Q_UnicodeConvertT<uchar16, uchar32, true, Q_UTF16ToUChar32, Q_UChar32ToUTF32Len, Q_UChar32ToUTF32>(pUTF16, 0, pUTF32, cubDestSizeInBytes, ePolicy);
 }
 
 // Perform conversion. Returns number of *bytes* required if output pointer is NULL.
-int Q_UTF32ToUTF8(const uchar32 *pUTF32, char *pUTF8, int cubDestSizeInBytes, EStringConvertErrorPolicy ePolicy)
+int Q_UTF32ToUTF8(const uchar32* pUTF32, char* pUTF8, int cubDestSizeInBytes, EStringConvertErrorPolicy ePolicy)
 {
 	return Q_UnicodeConvertT<uchar32, char, true, Q_UTF32ToUChar32, Q_UChar32ToUTF8Len, Q_UChar32ToUTF8>(pUTF32, 0, pUTF8, cubDestSizeInBytes, ePolicy);
 }
 
 // Perform conversion. Returns number of *bytes* required if output pointer is NULL.
-int Q_UTF32ToUTF16(const uchar32 *pUTF32, uchar16 *pUTF16, int cubDestSizeInBytes, EStringConvertErrorPolicy ePolicy)
+int Q_UTF32ToUTF16(const uchar32* pUTF32, uchar16* pUTF16, int cubDestSizeInBytes, EStringConvertErrorPolicy ePolicy)
 {
 	return Q_UnicodeConvertT<uchar32, uchar16, true, Q_UTF32ToUChar32, Q_UChar32ToUTF16Len, Q_UChar32ToUTF16>(pUTF32, 0, pUTF16, cubDestSizeInBytes, ePolicy);
 }
 
 // Repair a UTF-8 string by removing or replacing invalid seqeuences. Returns non-zero on success.
-int Q_UnicodeRepair(char *pUTF8)
+int Q_UnicodeRepair(char* pUTF8)
 {
 	return Q_UnicodeConvertT<char, char, true, Q_UTF8ToUChar32, Q_UChar32ToUTF8Len, Q_UChar32ToUTF8>(pUTF8, 0, pUTF8, 65535, STRINGCONVERT_SKIP);
 }
 
 // Returns number of Unicode code points (aka glyphs / characters) encoded in the UTF-8 string
-int Q_UnicodeLength(const char *pUTF8)
+int Q_UnicodeLength(const char* pUTF8)
 {
 	int nChars = 0;
 	while (*pUTF8)
@@ -873,7 +873,7 @@ int Q_UnicodeLength(const char *pUTF8)
 }
 
 // Advance a UTF-8 string pointer by a certain number of Unicode code points, stopping at end of string
-char *Q_UnicodeAdvance(char *pUTF8, int nChars)
+char* Q_UnicodeAdvance(char* pUTF8, int nChars)
 {
 	while (nChars > 0 && *pUTF8)
 	{

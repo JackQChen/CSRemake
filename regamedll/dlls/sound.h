@@ -28,15 +28,15 @@
 
 #pragma once
 
-const int MAX_SENTENCE_NAME      = 16;
-const int MAX_SENTENCE_VOXFILE   = 1536;	// Max number of sentences in game. NOTE: this must match CVOXFILESENTENCEMAX in engine\sound.h
+const int MAX_SENTENCE_NAME = 16;
+const int MAX_SENTENCE_VOXFILE = 1536;	// Max number of sentences in game. NOTE: this must match CVOXFILESENTENCEMAX in engine\sound.h
 
-const int MAX_SENTENCE_GROUPS    = 200;		// Max number of sentence groups
-const int MAX_SENTENCE_LRU       = 32;		// Max number of elements per sentence group
+const int MAX_SENTENCE_GROUPS = 200;		// Max number of sentence groups
+const int MAX_SENTENCE_LRU = 32;		// Max number of elements per sentence group
 const int MAX_SENTENCE_DPV_RESET = 27;		// Max number of dynamic pitch volumes
 
-const float MAX_ANNOUNCE_MINS    = 2.25f;
-const float MIN_ANNOUNCE_MINS    = 0.25f;
+const float MAX_ANNOUNCE_MINS = 2.25f;
+const float MIN_ANNOUNCE_MINS = 0.25f;
 
 enum
 {
@@ -105,19 +105,19 @@ typedef struct dynpitchvol
 #define SF_AMBIENT_SOUND_START_SILENT   BIT(4)
 #define SF_AMBIENT_SOUND_NOT_LOOPING    BIT(5)
 
-class CAmbientGeneric: public CBaseEntity
+class CAmbientGeneric : public CBaseEntity
 {
 public:
 	virtual void Spawn();
 	virtual void Precache();
 	virtual void Restart();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
 	virtual int ObjectCaps() { return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
 
 public:
-	void EXPORT ToggleUse(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	void EXPORT ToggleUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 	void EXPORT RampThink();
 	void InitModulationParms();
 
@@ -130,13 +130,13 @@ public:
 	BOOL m_fLooping;		// TRUE when the sound played will loop
 };
 
-class CEnvSound: public CPointEntity
+class CEnvSound : public CPointEntity
 {
 public:
 	virtual void Spawn();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
 	virtual void Think();
 
 public:
@@ -148,18 +148,18 @@ public:
 
 #define SF_SPEAKER_START_SILENT	BIT(0) // Wait for trigger 'on' to start announcements
 
-class CSpeaker: public CBaseEntity
+class CSpeaker : public CBaseEntity
 {
 public:
 	virtual void Spawn();
 	virtual void Precache();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
 	virtual int ObjectCaps() { return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
 
 public:
-	void EXPORT ToggleUse(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	void EXPORT ToggleUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 	void EXPORT SpeakerThink();
 
 public:
@@ -168,25 +168,25 @@ public:
 	int m_preset; // Preset number
 };
 
-BOOL FEnvSoundInRange(entvars_t *pev, entvars_t *pevTarget, float *pflRange);
-void USENTENCEG_InitLRU(unsigned char *plru, int count);
-int USENTENCEG_PickSequential(int isentenceg, char *szfound, int ipick, int freset);
-int USENTENCEG_Pick(int isentenceg, char *szfound);
-int SENTENCEG_GetIndex(const char *szgroupname);
-int SENTENCEG_PlayRndI(edict_t *entity, int isentenceg, float volume, float attenuation, int flags, int pitch);
-int SENTENCEG_PlayRndSz(edict_t *entity, const char *szgroupname, float volume, float attenuation, int flags, int pitch);
-int SENTENCEG_PlaySequentialSz(edict_t *entity, const char *szgroupname, float volume, float attenuation, int flags, int pitch, int ipick, int freset);
-void SENTENCEG_Stop(edict_t *entity, int isentenceg, int ipick);
+BOOL FEnvSoundInRange(entvars_t* pev, entvars_t* pevTarget, float* pflRange);
+void USENTENCEG_InitLRU(unsigned char* plru, int count);
+int USENTENCEG_PickSequential(int isentenceg, char* szfound, int ipick, int freset);
+int USENTENCEG_Pick(int isentenceg, char* szfound);
+int SENTENCEG_GetIndex(const char* szgroupname);
+int SENTENCEG_PlayRndI(edict_t* entity, int isentenceg, float volume, float attenuation, int flags, int pitch);
+int SENTENCEG_PlayRndSz(edict_t* entity, const char* szgroupname, float volume, float attenuation, int flags, int pitch);
+int SENTENCEG_PlaySequentialSz(edict_t* entity, const char* szgroupname, float volume, float attenuation, int flags, int pitch, int ipick, int freset);
+void SENTENCEG_Stop(edict_t* entity, int isentenceg, int ipick);
 void SENTENCEG_Init();
-int SENTENCEG_Lookup(const char *sample, char *sentencenum);
-void EMIT_SOUND_DYN(edict_t *entity, int channel, const char *sample, float volume, float attenuation, int flags, int pitch);
-void EMIT_SOUND_SUIT(edict_t *entity, const char *sample);
-void EMIT_GROUPID_SUIT(edict_t *entity, int isentenceg);
-void EMIT_GROUPNAME_SUIT(edict_t *entity, const char *groupname);
-char *memfgets(byte *pMemFile, int fileSize, int &filePos, char *pBuffer, int bufferSize);
+int SENTENCEG_Lookup(const char* sample, char* sentencenum);
+void EMIT_SOUND_DYN(edict_t* entity, int channel, const char* sample, float volume, float attenuation, int flags, int pitch);
+void EMIT_SOUND_SUIT(edict_t* entity, const char* sample);
+void EMIT_GROUPID_SUIT(edict_t* entity, int isentenceg);
+void EMIT_GROUPNAME_SUIT(edict_t* entity, const char* groupname);
+char* memfgets(byte* pMemFile, int fileSize, int& filePos, char* pBuffer, int bufferSize);
 void TEXTURETYPE_Init();
-char TEXTURETYPE_Find(char *name);
-float TEXTURETYPE_PlaySound(TraceResult *ptr, Vector vecSrc, Vector vecEnd, int iBulletType);
+char TEXTURETYPE_Find(char* name);
+float TEXTURETYPE_PlaySound(TraceResult* ptr, Vector vecSrc, Vector vecEnd, int iBulletType);
 
 extern char gszallsentencenames[MAX_SENTENCE_VOXFILE][MAX_SENTENCE_NAME];
 extern int gcTextures;

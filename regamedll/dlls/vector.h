@@ -35,22 +35,22 @@ public:
 	// Construction/destruction
 	Vector2D() : x(), y() {}
 	Vector2D(float X, float Y) : x(X), y(Y) {}
-	Vector2D(const Vector2D &v) { *(int *)&x = *(int *)&v.x; *(int *)&y = *(int *)&v.y; }
+	Vector2D(const Vector2D& v) { *(int*)&x = *(int*)&v.x; *(int*)&y = *(int*)&v.y; }
 
 	// Operators
 	decltype(auto) operator-()         const { return Vector2D(-x, -y); }
-	bool operator==(const Vector2D &v) const { return x == v.x && y == v.y; }
-	bool operator!=(const Vector2D &v) const { return !(*this == v); }
+	bool operator==(const Vector2D& v) const { return x == v.x && y == v.y; }
+	bool operator!=(const Vector2D& v) const { return !(*this == v); }
 
-	decltype(auto) operator+(const Vector2D &v)  const { return Vector2D(x + v.x, y + v.y); }
-	decltype(auto) operator-(const Vector2D &v)  const { return Vector2D(x - v.x, y - v.y); }
-	decltype(auto) operator*(const Vector2D &v)  const { return Vector2D(x * v.x, y * v.y); }
-	decltype(auto) operator/(const Vector2D &v)  const { return Vector2D(x / v.x, y / v.y); }
+	decltype(auto) operator+(const Vector2D& v)  const { return Vector2D(x + v.x, y + v.y); }
+	decltype(auto) operator-(const Vector2D& v)  const { return Vector2D(x - v.x, y - v.y); }
+	decltype(auto) operator*(const Vector2D& v)  const { return Vector2D(x * v.x, y * v.y); }
+	decltype(auto) operator/(const Vector2D& v)  const { return Vector2D(x / v.x, y / v.y); }
 
-	decltype(auto) operator+=(const Vector2D &v) { return (*this = *this + v); }
-	decltype(auto) operator-=(const Vector2D &v) { return (*this = *this - v); }
-	decltype(auto) operator*=(const Vector2D &v) { return (*this = *this * v); }
-	decltype(auto) operator/=(const Vector2D &v) { return (*this = *this / v); }
+	decltype(auto) operator+=(const Vector2D& v) { return (*this = *this + v); }
+	decltype(auto) operator-=(const Vector2D& v) { return (*this = *this - v); }
+	decltype(auto) operator*=(const Vector2D& v) { return (*this = *this * v); }
+	decltype(auto) operator/=(const Vector2D& v) { return (*this = *this / v); }
 
 	decltype(auto) operator+(float fl) const { return Vector2D(x + fl, y + fl); }
 	decltype(auto) operator-(float fl) const { return Vector2D(x - fl, y - fl); }
@@ -72,12 +72,12 @@ public:
 
 	// Methods
 	inline void Clear() { x = 0; y = 0; }
-	inline void CopyToArray(float *rgfl) const { *(int *)&rgfl[0] = *(int *)&x; *(int *)&rgfl[1] = *(int *)&y; }
+	inline void CopyToArray(float* rgfl) const { *(int*)&rgfl[0] = *(int*)&x; *(int*)&rgfl[1] = *(int*)&y; }
 	inline real_t Length() const { return Q_sqrt(real_t(x * x + y * y)); }		// Get the vector's magnitude
 	inline float LengthSquared() const { return (x * x + y * y); }				// Get the vector's magnitude squared
 
-	operator float*()             { return &x; } // Vectors will now automatically convert to float * when needed
-	operator const float*() const { return &x; } // Vectors will now automatically convert to float * when needed
+	operator float* () { return &x; } // Vectors will now automatically convert to float * when needed
+	operator const float* () const { return &x; } // Vectors will now automatically convert to float * when needed
 
 	Vector2D Normalize() const
 	{
@@ -93,7 +93,7 @@ public:
 		return Vector2D(x * flLen, y * flLen);
 #endif // PLAY_GAMEDLL
 	}
-	inline bool IsLengthLessThan   (float length) const { return (LengthSquared() < length * length); }
+	inline bool IsLengthLessThan(float length) const { return (LengthSquared() < length * length); }
 	inline bool IsLengthGreaterThan(float length) const { return (LengthSquared() > length * length); }
 	real_t NormalizeInPlace()
 	{
@@ -112,7 +112,7 @@ public:
 	}
 	bool IsZero(float tolerance = 0.01f) const
 	{
-		return (x > -tolerance && x < tolerance &&
+		return (x > -tolerance && x < tolerance&&
 			y > -tolerance && y < tolerance);
 	}
 
@@ -120,12 +120,12 @@ public:
 	vec_t x, y;
 };
 
-inline real_t DotProduct(const Vector2D &a, const Vector2D &b)
+inline real_t DotProduct(const Vector2D& a, const Vector2D& b)
 {
 	return (a.x * b.x + a.y * b.y);
 }
 
-inline Vector2D operator*(float fl, const Vector2D &v)
+inline Vector2D operator*(float fl, const Vector2D& v)
 {
 	return v * fl;
 }
@@ -138,23 +138,23 @@ public:
 	// Construction/destruction
 	Vector() : x(), y(), z() {}
 	Vector(float X, float Y, float Z) : x(X), y(Y), z(Z) {}
-	Vector(const Vector &v) { *(int *)&x = *(int *)&v.x; *(int *)&y = *(int *)&v.y; *(int *)&z = *(int *)&v.z; }
-	Vector(const float rgfl[3]) { *(int *)&x = *(int *)&rgfl[0]; *(int *)&y = *(int *)&rgfl[1]; *(int *)&z = *(int *)&rgfl[2]; }
+	Vector(const Vector& v) { *(int*)&x = *(int*)&v.x; *(int*)&y = *(int*)&v.y; *(int*)&z = *(int*)&v.z; }
+	Vector(const float rgfl[3]) { *(int*)&x = *(int*)&rgfl[0]; *(int*)&y = *(int*)&rgfl[1]; *(int*)&z = *(int*)&rgfl[2]; }
 
 	// Operators
 	decltype(auto) operator-()       const { return Vector(-x, -y, -z); }
-	bool operator==(const Vector &v) const { return x == v.x && y == v.y && z == v.z; }
-	bool operator!=(const Vector &v) const { return !(*this == v); }
+	bool operator==(const Vector& v) const { return x == v.x && y == v.y && z == v.z; }
+	bool operator!=(const Vector& v) const { return !(*this == v); }
 
-	decltype(auto) operator+(const Vector &v) const { return Vector(x + v.x, y + v.y, z + v.z); }
-	decltype(auto) operator-(const Vector &v) const { return Vector(x - v.x, y - v.y, z - v.z); }
-	decltype(auto) operator*(const Vector &v) const { return Vector(x * v.x, y * v.y, z * v.z); }
-	decltype(auto) operator/(const Vector &v) const { return Vector(x / v.x, y / v.y, z / v.z); }
+	decltype(auto) operator+(const Vector& v) const { return Vector(x + v.x, y + v.y, z + v.z); }
+	decltype(auto) operator-(const Vector& v) const { return Vector(x - v.x, y - v.y, z - v.z); }
+	decltype(auto) operator*(const Vector& v) const { return Vector(x * v.x, y * v.y, z * v.z); }
+	decltype(auto) operator/(const Vector& v) const { return Vector(x / v.x, y / v.y, z / v.z); }
 
-	decltype(auto) operator+=(const Vector &v) { return (*this = *this + v); }
-	decltype(auto) operator-=(const Vector &v) { return (*this = *this - v); }
-	decltype(auto) operator*=(const Vector &v) { return (*this = *this * v); }
-	decltype(auto) operator/=(const Vector &v) { return (*this = *this / v); }
+	decltype(auto) operator+=(const Vector& v) { return (*this = *this + v); }
+	decltype(auto) operator-=(const Vector& v) { return (*this = *this - v); }
+	decltype(auto) operator*=(const Vector& v) { return (*this = *this * v); }
+	decltype(auto) operator/=(const Vector& v) { return (*this = *this / v); }
 
 	decltype(auto) operator+(float fl) const { return Vector(x + fl, y + fl, z + fl); }
 	decltype(auto) operator-(float fl) const { return Vector(x - fl, y - fl, z - fl); }
@@ -182,11 +182,11 @@ public:
 		z = 0;
 	}
 
-	void CopyToArray(float *rgfl) const
+	void CopyToArray(float* rgfl) const
 	{
-		*(int *)&rgfl[0] = *(int *)&x;
-		*(int *)&rgfl[1] = *(int *)&y;
-		*(int *)&rgfl[2] = *(int *)&z;
+		*(int*)&rgfl[0] = *(int*)&x;
+		*(int*)&rgfl[1] = *(int*)&y;
+		*(int*)&rgfl[2] = *(int*)&z;
 	}
 
 	// Get the vector's magnitude
@@ -202,8 +202,8 @@ public:
 	// Get the vector's magnitude squared
 	real_t LengthSquared() const { return (x * x + y * y + z * z); }
 
-	operator float*()             { return &x; } // Vectors will now automatically convert to float * when needed
-	operator const float*() const { return &x; } // Vectors will now automatically convert to float * when needed
+	operator float* () { return &x; } // Vectors will now automatically convert to float * when needed
+	operator const float* () const { return &x; } // Vectors will now automatically convert to float * when needed
 
 #ifndef PLAY_GAMEDLL
 	Vector Normalize() const
@@ -243,14 +243,14 @@ public:
 	Vector2D Make2D() const
 	{
 		Vector2D Vec2;
-		*(int *)&Vec2.x = *(int *)&x;
-		*(int *)&Vec2.y = *(int *)&y;
+		*(int*)&Vec2.x = *(int*)&x;
+		*(int*)&Vec2.y = *(int*)&y;
 		return Vec2;
 	}
 
 	real_t Length2D() const { return Q_sqrt(real_t(x * x + y * y)); }
 
-	inline bool IsLengthLessThan   (float length) const { return (LengthSquared() < length * length); }
+	inline bool IsLengthLessThan(float length) const { return (LengthSquared() < length * length); }
 	inline bool IsLengthGreaterThan(float length) const { return (LengthSquared() > length * length); }
 
 #ifdef PLAY_GAMEDLL
@@ -295,8 +295,8 @@ public:
 #endif // PLAY_GAMEDLL
 	bool IsZero(float tolerance = 0.01f) const
 	{
-		return (x > -tolerance && x < tolerance &&
-			y > -tolerance && y < tolerance &&
+		return (x > -tolerance && x < tolerance&&
+			y > -tolerance && y < tolerance&&
 			z > -tolerance && z < tolerance);
 	}
 
@@ -304,22 +304,22 @@ public:
 	vec_t x, y, z;
 };
 
-inline Vector operator*(float fl, const Vector &v)
+inline Vector operator*(float fl, const Vector& v)
 {
 	return v * fl;
 }
 
-inline real_t DotProduct(const Vector &a, const Vector &b)
+inline real_t DotProduct(const Vector& a, const Vector& b)
 {
 	return (a.x * b.x + a.y * b.y + a.z * b.z);
 }
 
-inline real_t DotProduct2D(const Vector &a, const Vector &b)
+inline real_t DotProduct2D(const Vector& a, const Vector& b)
 {
 	return (a.x * b.x + a.y * b.y);
 }
 
-inline Vector CrossProduct(const Vector &a, const Vector &b)
+inline Vector CrossProduct(const Vector& a, const Vector& b)
 {
 	return Vector(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);
 }

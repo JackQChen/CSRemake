@@ -28,7 +28,7 @@
 
 #pragma once
 
-class CHalfLifeTraining: public CHalfLifeMultiplay
+class CHalfLifeTraining : public CHalfLifeMultiplay
 {
 public:
 	CHalfLifeTraining();
@@ -36,19 +36,19 @@ public:
 
 	virtual BOOL IsMultiplayer() { return FALSE; }
 	virtual BOOL IsDeathmatch();
-	virtual void InitHUD(CBasePlayer *pl);
-	virtual void PlayerSpawn(CBasePlayer *pPlayer);
-	virtual void PlayerThink(CBasePlayer *pPlayer);
-	virtual BOOL FPlayerCanRespawn(CBasePlayer *pPlayer);
-	virtual edict_t *GetPlayerSpawnSpot(CBasePlayer *pPlayer);
-	virtual void PlayerKilled(CBasePlayer *pVictim, entvars_t *pKiller, entvars_t *pInflictor);
-	virtual int ItemShouldRespawn(CItem *pItem);
+	virtual void InitHUD(CBasePlayer* pl);
+	virtual void PlayerSpawn(CBasePlayer* pPlayer);
+	virtual void PlayerThink(CBasePlayer* pPlayer);
+	virtual BOOL FPlayerCanRespawn(CBasePlayer* pPlayer);
+	virtual edict_t* GetPlayerSpawnSpot(CBasePlayer* pPlayer);
+	virtual void PlayerKilled(CBasePlayer* pVictim, entvars_t* pKiller, entvars_t* pInflictor);
+	virtual int ItemShouldRespawn(CItem* pItem);
 	virtual void CheckMapConditions() {};
 	virtual void CheckWinConditions();
 
 public:
 	static void HostageDied();
-	static bool PlayerCanBuy(CBasePlayer *pPlayer);
+	static bool PlayerCanBuy(CBasePlayer* pPlayer);
 
 	float FillAccountTime;
 	float ServerRestartTime;
@@ -59,21 +59,21 @@ public:
 
 enum GrenCatchType : int
 {
-	GRENADETYPE_NONE  = 0,
+	GRENADETYPE_NONE = 0,
 	GRENADETYPE_SMOKE,
 	GRENADETYPE_FLASH,
 };
 
-class CBaseGrenCatch: public CBaseEntity
+class CBaseGrenCatch : public CBaseEntity
 {
 public:
 	virtual void Spawn();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
 	virtual int ObjectCaps() { return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION); }
 	virtual void Think();
-	virtual void Touch(CBaseEntity *pOther);
+	virtual void Touch(CBaseEntity* pOther);
 
 public:
 	static TYPEDESCRIPTION m_SaveData[];
@@ -87,14 +87,14 @@ public:
 
 const int MAX_ITEM_COUNTS = 32;
 
-class CFuncWeaponCheck: public CBaseEntity
+class CFuncWeaponCheck : public CBaseEntity
 {
 public:
 	virtual void Spawn();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
-	virtual void Touch(CBaseEntity *pOther);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
+	virtual void Touch(CBaseEntity* pOther);
 
 public:
 	static TYPEDESCRIPTION m_SaveData[];

@@ -41,7 +41,7 @@ void CShower::Think()
 	pev->flags &= ~FL_ONGROUND;
 }
 
-void CShower::Touch(CBaseEntity *pOther)
+void CShower::Touch(CBaseEntity* pOther)
 {
 	if (pev->flags & FL_ONGROUND)
 		pev->velocity = pev->velocity * 0.1f;
@@ -63,7 +63,7 @@ TYPEDESCRIPTION CEnvExplosion::m_SaveData[] =
 IMPLEMENT_SAVERESTORE(CEnvExplosion, CBaseMonster)
 LINK_ENTITY_TO_CLASS(env_explosion, CEnvExplosion, CCSEnvExplosion)
 
-void CEnvExplosion::KeyValue(KeyValueData *pkvd)
+void CEnvExplosion::KeyValue(KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "iMagnitude"))
 	{
@@ -92,7 +92,7 @@ void CEnvExplosion::Spawn()
 	m_spriteScale = int(flSpriteScale);
 }
 
-void CEnvExplosion::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void CEnvExplosion::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	TraceResult tr;
 
@@ -128,27 +128,27 @@ void CEnvExplosion::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE 
 	if (!(pev->spawnflags & SF_ENVEXPLOSION_NOFIREBALL))
 	{
 		MESSAGE_BEGIN(MSG_PAS, SVC_TEMPENTITY, pev->origin);
-			WRITE_BYTE(TE_EXPLOSION);
-			WRITE_COORD(pev->origin.x);
-			WRITE_COORD(pev->origin.y);
-			WRITE_COORD(pev->origin.z);
-			WRITE_SHORT(g_sModelIndexFireball);
-			WRITE_BYTE(byte(m_spriteScale)); // scale * 10
-			WRITE_BYTE(15); // framerate
-			WRITE_BYTE(TE_EXPLFLAG_NONE);
+		WRITE_BYTE(TE_EXPLOSION);
+		WRITE_COORD(pev->origin.x);
+		WRITE_COORD(pev->origin.y);
+		WRITE_COORD(pev->origin.z);
+		WRITE_SHORT(g_sModelIndexFireball);
+		WRITE_BYTE(byte(m_spriteScale)); // scale * 10
+		WRITE_BYTE(15); // framerate
+		WRITE_BYTE(TE_EXPLFLAG_NONE);
 		MESSAGE_END();
 	}
 	else
 	{
 		MESSAGE_BEGIN(MSG_PAS, SVC_TEMPENTITY, pev->origin);
-			WRITE_BYTE(TE_EXPLOSION);
-			WRITE_COORD(pev->origin.x);
-			WRITE_COORD(pev->origin.y);
-			WRITE_COORD(pev->origin.z);
-			WRITE_SHORT(g_sModelIndexFireball);
-			WRITE_BYTE(0); // no sprite
-			WRITE_BYTE(15); // framerate
-			WRITE_BYTE(TE_EXPLFLAG_NONE);
+		WRITE_BYTE(TE_EXPLOSION);
+		WRITE_COORD(pev->origin.x);
+		WRITE_COORD(pev->origin.y);
+		WRITE_COORD(pev->origin.z);
+		WRITE_SHORT(g_sModelIndexFireball);
+		WRITE_BYTE(0); // no sprite
+		WRITE_BYTE(15); // framerate
+		WRITE_BYTE(TE_EXPLFLAG_NONE);
 		MESSAGE_END();
 	}
 
@@ -177,13 +177,13 @@ void CEnvExplosion::Smoke()
 	if (!(pev->spawnflags & SF_ENVEXPLOSION_NOSMOKE))
 	{
 		MESSAGE_BEGIN(MSG_PAS, SVC_TEMPENTITY, pev->origin);
-			WRITE_BYTE(TE_SMOKE);
-			WRITE_COORD(pev->origin.x);
-			WRITE_COORD(pev->origin.y);
-			WRITE_COORD(pev->origin.z);
-			WRITE_SHORT(g_sModelIndexSmoke);
-			WRITE_BYTE(byte(m_spriteScale)); // scale * 10
-			WRITE_BYTE(12); // framerate
+		WRITE_BYTE(TE_SMOKE);
+		WRITE_COORD(pev->origin.x);
+		WRITE_COORD(pev->origin.y);
+		WRITE_COORD(pev->origin.z);
+		WRITE_SHORT(g_sModelIndexSmoke);
+		WRITE_BYTE(byte(m_spriteScale)); // scale * 10
+		WRITE_BYTE(12); // framerate
 		MESSAGE_END();
 	}
 
@@ -194,12 +194,12 @@ void CEnvExplosion::Smoke()
 }
 
 // HACKHACK: create one of these and fake a keyvalue to get the right explosion setup
-void ExplosionCreate(const Vector &center, Vector &angles, edict_t *pOwner, int magnitude, BOOL doDamage)
+void ExplosionCreate(const Vector& center, Vector& angles, edict_t* pOwner, int magnitude, BOOL doDamage)
 {
 	KeyValueData kvd;
 	char buf[128];
 
-	CBaseEntity *pExplosion = CBaseEntity::Create("env_explosion", center, angles, pOwner);
+	CBaseEntity* pExplosion = CBaseEntity::Create("env_explosion", center, angles, pOwner);
 
 	Q_sprintf(buf, "%3d", magnitude);
 

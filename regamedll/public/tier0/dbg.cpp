@@ -42,7 +42,7 @@ struct SpewGroup_t
 
 
 // Templates to assist in validating pointers:
-void _AssertValidReadPtr(void *ptr, int count)
+void _AssertValidReadPtr(void* ptr, int count)
 {
 #ifdef _WIN32
 	Assert(!IsBadReadPtr(ptr, count));
@@ -52,7 +52,7 @@ void _AssertValidReadPtr(void *ptr, int count)
 
 }
 
-void _AssertValidWritePtr(void *ptr, int count)
+void _AssertValidWritePtr(void* ptr, int count)
 {
 #ifdef _WIN32
 	Assert(!IsBadWritePtr(ptr, count));
@@ -61,7 +61,7 @@ void _AssertValidWritePtr(void *ptr, int count)
 #endif
 }
 
-void _AssertValidReadWritePtr(void *ptr, int count)
+void _AssertValidReadWritePtr(void* ptr, int count)
 {
 #ifdef _WIN32
 	Assert(!(IsBadWritePtr(ptr, count) || IsBadReadPtr(ptr, count)));
@@ -70,7 +70,7 @@ void _AssertValidReadWritePtr(void *ptr, int count)
 #endif
 }
 
-void AssertValidStringPtr(const char *ptr, int maxchar)
+void AssertValidStringPtr(const char* ptr, int maxchar)
 {
 #ifdef _WIN32
 	Assert(!IsBadStringPtr(ptr, maxchar));
@@ -80,7 +80,7 @@ void AssertValidStringPtr(const char *ptr, int maxchar)
 }
 
 // Globals
-SpewRetval_t DefaultSpewFunc(SpewType_t type, const char *pMsg)
+SpewRetval_t DefaultSpewFunc(SpewType_t type, const char* pMsg)
 {
 	printf("%s", pMsg);
 	if (type == SPEW_ASSERT)
@@ -93,11 +93,11 @@ SpewRetval_t DefaultSpewFunc(SpewType_t type, const char *pMsg)
 
 static SpewOutputFunc_t s_SpewOutputFunc = DefaultSpewFunc;
 
-static const char *s_pFileName;
+static const char* s_pFileName;
 static int         s_Line;
 static SpewType_t  s_SpewType;
 
-static SpewGroup_t *s_pSpewGroups = 0;
+static SpewGroup_t* s_pSpewGroups = 0;
 static int          s_GroupCount = 0;
 static int          s_DefaultLevel = 0;
 
@@ -120,11 +120,11 @@ SpewOutputFunc_t GetSpewOutputFunc()
 }
 
 // Spew functions
-void _SpewInfo(SpewType_t type, const char *pFile, int line)
+void _SpewInfo(SpewType_t type, const char* pFile, int line)
 {
 	// Only grab the file name. Ignore the path.
-	const char *pSlash = strrchr(pFile, '\\');
-	const char *pSlash2 = strrchr(pFile, '/');
+	const char* pSlash = strrchr(pFile, '\\');
+	const char* pSlash2 = strrchr(pFile, '/');
 	if (pSlash < pSlash2) pSlash = pSlash2;
 
 	s_pFileName = pSlash ? pSlash + 1 : pFile;
@@ -132,7 +132,7 @@ void _SpewInfo(SpewType_t type, const char *pFile, int line)
 	s_SpewType = type;
 }
 
-SpewRetval_t _SpewMessage(SpewType_t spewType, const char *pMsgFormat, va_list args)
+SpewRetval_t _SpewMessage(SpewType_t spewType, const char* pMsgFormat, va_list args)
 {
 	char pTempBuffer[1024];
 
@@ -159,10 +159,10 @@ SpewRetval_t _SpewMessage(SpewType_t spewType, const char *pMsgFormat, va_list a
 	SpewRetval_t ret = s_SpewOutputFunc(spewType, pTempBuffer);
 	switch (ret)
 	{
-	// Put the break into the macro so it would occur in the right place
-	//case SPEW_DEBUGGER:
-	//	DebuggerBreak();
-	//	break;
+		// Put the break into the macro so it would occur in the right place
+		//case SPEW_DEBUGGER:
+		//	DebuggerBreak();
+		//	break;
 
 	case SPEW_ABORT:
 		// MessageBox(nullptr, "Error in _SpewMessage", "Error", MB_OK);
@@ -174,7 +174,7 @@ SpewRetval_t _SpewMessage(SpewType_t spewType, const char *pMsgFormat, va_list a
 	return ret;
 }
 
-SpewRetval_t _SpewMessage(const char *pMsgFormat, ...)
+SpewRetval_t _SpewMessage(const char* pMsgFormat, ...)
 {
 	va_list args;
 	va_start(args, pMsgFormat);
@@ -183,7 +183,7 @@ SpewRetval_t _SpewMessage(const char *pMsgFormat, ...)
 	return ret;
 }
 
-SpewRetval_t _DSpewMessage(const char *pGroupName, int level, const char *pMsgFormat, ...)
+SpewRetval_t _DSpewMessage(const char* pGroupName, int level, const char* pMsgFormat, ...)
 {
 	if (!IsSpewActive(pGroupName, level))
 		return SPEW_CONTINUE;
@@ -195,7 +195,7 @@ SpewRetval_t _DSpewMessage(const char *pGroupName, int level, const char *pMsgFo
 	return ret;
 }
 
-void Msg(const char *pMsgFormat, ...)
+void Msg(const char* pMsgFormat, ...)
 {
 	va_list args;
 	va_start(args, pMsgFormat);
@@ -203,7 +203,7 @@ void Msg(const char *pMsgFormat, ...)
 	va_end(args);
 }
 
-void DMsg(const char *pGroupName, int level, const char *pMsgFormat, ...)
+void DMsg(const char* pGroupName, int level, const char* pMsgFormat, ...)
 {
 	if (!IsSpewActive(pGroupName, level))
 		return;
@@ -214,7 +214,7 @@ void DMsg(const char *pGroupName, int level, const char *pMsgFormat, ...)
 	va_end(args);
 }
 
-void Warning(const char *pMsgFormat, ...)
+void Warning(const char* pMsgFormat, ...)
 {
 	va_list args;
 	va_start(args, pMsgFormat);
@@ -222,7 +222,7 @@ void Warning(const char *pMsgFormat, ...)
 	va_end(args);
 }
 
-void DWarning(const char *pGroupName, int level, const char *pMsgFormat, ...)
+void DWarning(const char* pGroupName, int level, const char* pMsgFormat, ...)
 {
 	if (!IsSpewActive(pGroupName, level))
 		return;
@@ -233,7 +233,7 @@ void DWarning(const char *pGroupName, int level, const char *pMsgFormat, ...)
 	va_end(args);
 }
 
-void Log(const char *pMsgFormat, ...)
+void Log(const char* pMsgFormat, ...)
 {
 	va_list args;
 	va_start(args, pMsgFormat);
@@ -241,7 +241,7 @@ void Log(const char *pMsgFormat, ...)
 	va_end(args);
 }
 
-void DLog(const char *pGroupName, int level, const char *pMsgFormat, ...)
+void DLog(const char* pGroupName, int level, const char* pMsgFormat, ...)
 {
 	if (!IsSpewActive(pGroupName, level))
 		return;
@@ -252,7 +252,7 @@ void DLog(const char *pGroupName, int level, const char *pMsgFormat, ...)
 	va_end(args);
 }
 
-void Error(const char *pMsgFormat, ...)
+void Error(const char* pMsgFormat, ...)
 {
 	va_list args;
 	va_start(args, pMsgFormat);
@@ -262,7 +262,7 @@ void Error(const char *pMsgFormat, ...)
 
 // A couple of super-common dynamic spew messages, here for convenience 
 // These looked at the "developer" group, print if it's level 1 or higher 
-void DevMsg(int level, char const *pMsgFormat, ...)
+void DevMsg(int level, char const* pMsgFormat, ...)
 {
 	if (!IsSpewActive("developer", level))
 		return;
@@ -273,7 +273,7 @@ void DevMsg(int level, char const *pMsgFormat, ...)
 	va_end(args);
 }
 
-void DevWarning(int level, const char *pMsgFormat, ...)
+void DevWarning(int level, const char* pMsgFormat, ...)
 {
 	if (!IsSpewActive("developer", level))
 		return;
@@ -284,7 +284,7 @@ void DevWarning(int level, const char *pMsgFormat, ...)
 	va_end(args);
 }
 
-void DevLog(int level, const char *pMsgFormat, ...)
+void DevLog(int level, const char* pMsgFormat, ...)
 {
 	if (!IsSpewActive("developer", level))
 		return;
@@ -295,7 +295,7 @@ void DevLog(int level, const char *pMsgFormat, ...)
 	va_end(args);
 }
 
-void DevMsg(const char *pMsgFormat, ...)
+void DevMsg(const char* pMsgFormat, ...)
 {
 	if (!IsSpewActive("developer", 1))
 		return;
@@ -306,7 +306,7 @@ void DevMsg(const char *pMsgFormat, ...)
 	va_end(args);
 }
 
-void DevWarning(const char *pMsgFormat, ...)
+void DevWarning(const char* pMsgFormat, ...)
 {
 	va_list args;
 	va_start(args, pMsgFormat);
@@ -314,7 +314,7 @@ void DevWarning(const char *pMsgFormat, ...)
 	va_end(args);
 }
 
-void DevLog(const char *pMsgFormat, ...)
+void DevLog(const char* pMsgFormat, ...)
 {
 	va_list args;
 	va_start(args, pMsgFormat);
@@ -325,7 +325,7 @@ void DevLog(const char *pMsgFormat, ...)
 // Find a group, return true if found, false if not. Return in ind the
 // index of the found group, or the index of the group right before where the
 // group should be inserted into the list to maintain sorted order.
-bool FindSpewGroup(const char *pGroupName, int *pInd)
+bool FindSpewGroup(const char* pGroupName, int* pInd)
 {
 	int s = 0;
 	if (s_GroupCount)
@@ -353,7 +353,7 @@ bool FindSpewGroup(const char *pGroupName, int *pInd)
 }
 
 // Sets the priority level for a spew group
-void SpewActivate(const char *pGroupName, int level)
+void SpewActivate(const char* pGroupName, int level)
 {
 	Assert(pGroupName);
 
@@ -374,14 +374,14 @@ void SpewActivate(const char *pGroupName, int level)
 		s_GroupCount++;
 		if (s_pSpewGroups)
 		{
-			s_pSpewGroups = (SpewGroup_t *)realloc(s_pSpewGroups, s_GroupCount * sizeof(SpewGroup_t));
+			s_pSpewGroups = (SpewGroup_t*)realloc(s_pSpewGroups, s_GroupCount * sizeof(SpewGroup_t));
 
 			// shift elements down to preserve order
 			int numToMove = s_GroupCount - ind - 1;
 			memmove(&s_pSpewGroups[ind + 1], &s_pSpewGroups[ind], numToMove * sizeof(SpewGroup_t));
 		}
 		else
-			s_pSpewGroups = (SpewGroup_t *)malloc(s_GroupCount * sizeof(SpewGroup_t));
+			s_pSpewGroups = (SpewGroup_t*)malloc(s_GroupCount * sizeof(SpewGroup_t));
 
 		Assert(strlen(pGroupName) < MAX_GROUP_NAME_LENGTH);
 		strcpy(s_pSpewGroups[ind].m_GroupName, pGroupName);
@@ -390,7 +390,7 @@ void SpewActivate(const char *pGroupName, int level)
 }
 
 // Tests to see if a particular spew is active
-bool IsSpewActive(const char *pGroupName, int level)
+bool IsSpewActive(const char* pGroupName, int level)
 {
 	// If we don't find the spew group, use the default level.
 	int ind;

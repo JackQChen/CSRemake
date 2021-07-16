@@ -37,7 +37,7 @@ TYPEDESCRIPTION CRevertSaved::m_SaveData[] =
 LINK_ENTITY_TO_CLASS(player_loadsaved, CRevertSaved, CCSRevertSaved)
 IMPLEMENT_SAVERESTORE(CRevertSaved, CPointEntity)
 
-void CRevertSaved::KeyValue(KeyValueData *pkvd)
+void CRevertSaved::KeyValue(KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "duration"))
 	{
@@ -65,7 +65,7 @@ void CRevertSaved::KeyValue(KeyValueData *pkvd)
 	}
 }
 
-void CRevertSaved::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void CRevertSaved::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	UTIL_ScreenFadeAll(pev->rendercolor, Duration(), HoldTime(), int(pev->renderamt), FFADE_OUT);
 	pev->nextthink = gpGlobals->time + MessageTime();

@@ -180,7 +180,7 @@ void CCSBot::RespondToRadioCommands()
 		{
 			if (m_iTeam == CT && TheCSBots()->IsBombPlanted())
 			{
-				const CCSBotManager::Zone *zone = TheCSBots()->GetClosestZone(m_radioSubject);
+				const CCSBotManager::Zone* zone = TheCSBots()->GetClosestZone(m_radioSubject);
 				if (zone)
 				{
 					GetGameState()->ClearBombsite(zone->m_index);
@@ -222,12 +222,12 @@ void CCSBot::StartVoiceFeedback(float duration)
 	m_voiceFeedbackStartTimestamp = gpGlobals->time;
 	m_voiceFeedbackEndTimestamp = duration + gpGlobals->time;
 
-	CBasePlayer *pPlayer = nullptr;
+	CBasePlayer* pPlayer = nullptr;
 	while ((pPlayer = GetNextRadioRecipient(pPlayer)))
 	{
 		MESSAGE_BEGIN(MSG_ONE, gmsgBotVoice, nullptr, pPlayer->pev);
-			WRITE_BYTE(1);				// active is talking
-			WRITE_BYTE(entindex());		// client index speaking
+		WRITE_BYTE(1);				// active is talking
+		WRITE_BYTE(entindex());		// client index speaking
 		MESSAGE_END();
 	}
 }
@@ -240,13 +240,13 @@ void CCSBot::EndVoiceFeedback(bool force)
 	m_voiceFeedbackEndTimestamp = 0;
 
 	MESSAGE_BEGIN(MSG_ALL, gmsgBotVoice);
-		WRITE_BYTE(0);
-		WRITE_BYTE(ENTINDEX(edict()));
+	WRITE_BYTE(0);
+	WRITE_BYTE(ENTINDEX(edict()));
 	MESSAGE_END();
 }
 
 // Decide if we should move to help the player, return true if we will
-bool CCSBot::RespondToHelpRequest(CBasePlayer *them, Place place, float maxRange)
+bool CCSBot::RespondToHelpRequest(CBasePlayer* them, Place place, float maxRange)
 {
 	if (IsRogue())
 		return false;
@@ -288,7 +288,7 @@ bool CCSBot::RespondToHelpRequest(CBasePlayer *them, Place place, float maxRange
 			return true;
 
 		// go to where help is needed
-		const Vector *pos = GetRandomSpotAtPlace(place);
+		const Vector* pos = GetRandomSpotAtPlace(place);
 		if (pos)
 		{
 			MoveTo(pos, FASTEST_ROUTE);

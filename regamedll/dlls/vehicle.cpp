@@ -19,7 +19,7 @@ TYPEDESCRIPTION CFuncVehicle::m_SaveData[] =
 IMPLEMENT_SAVERESTORE(CFuncVehicle, CBaseEntity)
 LINK_ENTITY_TO_CLASS(func_vehicle, CFuncVehicle, CCSFuncVehicle)
 
-void CFuncVehicle::KeyValue(KeyValueData *pkvd)
+void CFuncVehicle::KeyValue(KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "length"))
 	{
@@ -87,9 +87,9 @@ void CFuncVehicle::NextThink(float thinkTime, BOOL alwaysThink)
 	pev->nextthink = thinkTime;
 }
 
-void CFuncVehicle::Blocked(CBaseEntity *pOther)
+void CFuncVehicle::Blocked(CBaseEntity* pOther)
 {
-	entvars_t *pevOther = pOther->pev;
+	entvars_t* pevOther = pOther->pev;
 
 	if ((pevOther->flags & FL_ONGROUND) && VARS(pevOther->groundentity) == pev)
 	{
@@ -118,7 +118,7 @@ void CFuncVehicle::Blocked(CBaseEntity *pOther)
 
 	float minz = pev->origin.z;
 #ifdef REGAMEDLL_FIXES
-	float maxz = pev->origin.z + (2 * Q_abs(pev->mins.z - pev->maxs.z));	
+	float maxz = pev->origin.z + (2 * Q_abs(pev->mins.z - pev->maxs.z));
 #else
 	float maxz = pev->origin.z + (2 * Q_abs(int(pev->mins.z - pev->maxs.z)));
 #endif
@@ -134,7 +134,7 @@ void CFuncVehicle::Blocked(CBaseEntity *pOther)
 	}
 }
 
-void CFuncVehicle::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void CFuncVehicle::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	float delta = value;
 
@@ -196,7 +196,7 @@ void CFuncVehicle::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE u
 		{
 			flSpeedRatio = pev->speed / m_speed;
 
-										// TODO: fix test demo
+			// TODO: fix test demo
 			if (flSpeedRatio > 0)					flSpeedRatio = float(flSpeedRatio) - 0.0125;
 			else if (flSpeedRatio <= 0 && flSpeedRatio > -0.05)	flSpeedRatio = float(flSpeedRatio) - 0.0075;
 			else if (flSpeedRatio <= 0.05 && flSpeedRatio > -0.1)	flSpeedRatio = float(flSpeedRatio) - 0.01;
@@ -254,7 +254,7 @@ void CFuncVehicle::StopSound()
 		unsigned short us_sound = ((unsigned short)m_sounds & 0x0007) << 12;
 		unsigned short us_encode = us_sound;
 
-		PLAYBACK_EVENT_FULL(FEV_RELIABLE | FEV_UPDATE, edict(), m_usAdjustPitch, 0, (float *)&g_vecZero, (float *)&g_vecZero, 0, 0, us_encode, 0, 1, 0);
+		PLAYBACK_EVENT_FULL(FEV_RELIABLE | FEV_UPDATE, edict(), m_usAdjustPitch, 0, (float*)&g_vecZero, (float*)&g_vecZero, 0, 0, us_encode, 0, 1, 0);
 	}
 
 	m_soundPlaying = 0;
@@ -281,7 +281,7 @@ void CFuncVehicle::UpdateSound()
 			EMIT_SOUND_DYN(ENT(pev), CHAN_ITEM, "plats/vehicle_brake1.wav", m_flVolume, ATTN_NORM, 0, 100);
 		}
 
-		EMIT_SOUND_DYN(ENT(pev), CHAN_STATIC, (char *)STRING(pev->noise), m_flVolume, ATTN_NORM, 0, int(flpitch));
+		EMIT_SOUND_DYN(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noise), m_flVolume, ATTN_NORM, 0, int(flpitch));
 		m_soundPlaying = 1;
 	}
 	else
@@ -291,7 +291,7 @@ void CFuncVehicle::UpdateSound()
 		unsigned short us_volume = ((unsigned short)(m_flVolume * 40) & 0x003F);
 		unsigned short us_encode = us_sound | us_pitch | us_volume;
 
-		PLAYBACK_EVENT_FULL(FEV_UPDATE, edict(), m_usAdjustPitch, 0.0, (float *)&g_vecZero, (float *)&g_vecZero, 0.0, 0.0, us_encode, 0, 0, 0);
+		PLAYBACK_EVENT_FULL(FEV_UPDATE, edict(), m_usAdjustPitch, 0.0, (float*)&g_vecZero, (float*)&g_vecZero, 0.0, 0.0, us_encode, 0, 0, 0);
 	}
 }
 
@@ -432,7 +432,7 @@ void CFuncVehicle::CollisionDetection()
 				m_vSurfaceNormal = tr.vecPlaneNormal;
 			}
 
-			CBaseEntity *pHit = CBaseEntity::Instance(tr.pHit);
+			CBaseEntity* pHit = CBaseEntity::Instance(tr.pHit);
 
 			if (pHit && pHit->Classify() == CLASS_VEHICLE)
 			{
@@ -649,12 +649,12 @@ void CFuncVehicle::Next()
 
 void CFuncVehicle::DeadEnd()
 {
-	CPathTrack *pTrack = m_ppath;
+	CPathTrack* pTrack = m_ppath;
 	ALERT(at_aiconsole, "TRAIN(%s): Dead end ", STRING(pev->targetname));
 
 	if (pTrack)
 	{
-		CPathTrack *pNext;
+		CPathTrack* pNext;
 
 		if (m_oldSpeed < 0)
 		{
@@ -665,8 +665,7 @@ void CFuncVehicle::DeadEnd()
 				{
 					pTrack = pNext;
 				}
-			}
-			while (pNext);
+			} while (pNext);
 		}
 		else
 		{
@@ -677,8 +676,7 @@ void CFuncVehicle::DeadEnd()
 				{
 					pTrack = pNext;
 				}
-			}
-			while (pNext);
+			} while (pNext);
 		}
 	}
 
@@ -698,14 +696,14 @@ void CFuncVehicle::DeadEnd()
 		ALERT(at_aiconsole, "\n");
 }
 
-void CFuncVehicle::SetControls(entvars_t *pevControls)
+void CFuncVehicle::SetControls(entvars_t* pevControls)
 {
 	Vector offset = pevControls->origin - pev->oldorigin;
 	m_controlMins = pevControls->mins + offset;
 	m_controlMaxs = pevControls->maxs + offset;
 }
 
-BOOL CFuncVehicle::OnControls(entvars_t *pevTest)
+BOOL CFuncVehicle::OnControls(entvars_t* pevTest)
 {
 	Vector offset = pevTest->origin - pev->origin;
 
@@ -730,7 +728,7 @@ void CFuncVehicle::Find()
 	if (!m_ppath)
 		return;
 
-	entvars_t *pevTarget = m_ppath->pev;
+	entvars_t* pevTarget = m_ppath->pev;
 
 	if (!FClassnameIs(pevTarget, "path_track"))
 	{
@@ -764,8 +762,8 @@ void CFuncVehicle::Find()
 
 void CFuncVehicle::NearestPath()
 {
-	CPathTrack *pTrack = nullptr;
-	CPathTrack *pNearest = nullptr;
+	CPathTrack* pTrack = nullptr;
+	CPathTrack* pNearest = nullptr;
 	real_t dist;
 	float closest = 1024.0f;
 
@@ -819,7 +817,7 @@ void CFuncVehicle::OverrideReset()
 	SetThink(&CFuncVehicle::NearestPath);
 }
 
-CFuncVehicle *CFuncVehicle::Instance(edict_t *pEdict)
+CFuncVehicle* CFuncVehicle::Instance(edict_t* pEdict)
 {
 	if (FClassnameIs(pEdict, "func_vehicle"))
 	{
@@ -906,7 +904,7 @@ void CFuncVehicle::Restart()
 	}
 
 	UTIL_SetOrigin(pev, pev->oldorigin);
-	STOP_SOUND(ENT(pev), CHAN_STATIC, (char *)STRING(pev->noise));
+	STOP_SOUND(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noise));
 
 	NextThink(pev->ltime + 0.1f, FALSE);
 	SetThink(&CFuncVehicle::Find);
@@ -937,7 +935,7 @@ LINK_ENTITY_TO_CLASS(func_vehiclecontrols, CFuncVehicleControls, CCSFuncVehicleC
 
 void CFuncVehicleControls::Find()
 {
-	CFuncVehicle *pVehicle = nullptr;
+	CFuncVehicle* pVehicle = nullptr;
 	while ((pVehicle = UTIL_FindEntityByTargetname(pVehicle, pev->target)))
 	{
 		if (FClassnameIs(pVehicle->pev, "func_vehicle"))

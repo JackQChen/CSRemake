@@ -73,18 +73,18 @@
 // Only allow bunny jumping up to 1.2x server / player maxspeed setting
 #define BUNNYJUMP_MAX_SPEED_FACTOR      1.2f
 
-void PM_Init(struct playermove_s *ppmove);
-void PM_Move(struct playermove_s *ppmove, int server);
-char PM_FindTextureType(char *name);
+void PM_Init(struct playermove_s* ppmove);
+void PM_Move(struct playermove_s* ppmove, int server);
+char PM_FindTextureType(char* name);
 void PM_AirMove_internal();
 
 #ifdef REGAMEDLL_API
-void PM_Init_OrigFunc(struct playermove_s *ppmove);
-void PM_Move_OrigFunc(struct playermove_s *ppmove, int server);
+void PM_Init_OrigFunc(struct playermove_s* ppmove);
+void PM_Move_OrigFunc(struct playermove_s* ppmove, int server);
 void PM_AirMove_OrigFunc(int playerIndex = 0);
 void PM_UpdateStepSound_OrigFunc();
 #else
 void PM_AirMove(int playerIndex = 0);
 #endif
 
-extern struct playermove_s *pmove;
+extern struct playermove_s* pmove;

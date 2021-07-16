@@ -34,7 +34,7 @@ void CSmokeGrenade::Precache()
 	m_usCreateSmoke = PRECACHE_EVENT(1, "events/createsmoke.sc");
 }
 
-int CSmokeGrenade::GetItemInfo(ItemInfo *p)
+int CSmokeGrenade::GetItemInfo(ItemInfo* p)
 {
 	auto info = GetWeaponInfo(WEAPON_SMOKEGRENADE);
 

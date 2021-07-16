@@ -32,13 +32,13 @@
 #define SF_CORNER_TELEPORT    BIT(1)
 #define SF_CORNER_FIREONCE    BIT(2)
 
-class CPathCorner: public CPointEntity
+class CPathCorner : public CPointEntity
 {
 public:
 	virtual void Spawn();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
 	virtual float GetDelay() { return m_flWait; }
 
 public:

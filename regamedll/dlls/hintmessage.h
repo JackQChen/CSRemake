@@ -57,17 +57,17 @@
 class CHintMessage
 {
 public:
-	CHintMessage(const char *hintString, bool isHint, CUtlVector<const char *> *args, float duration);
+	CHintMessage(const char* hintString, bool isHint, CUtlVector<const char*>* args, float duration);
 	~CHintMessage();
 
 public:
 	float GetDuration() const { return m_duration; }
-	void Send(CBaseEntity *client);
+	void Send(CBaseEntity* client);
 
 private:
-	char *m_hintString;
+	char* m_hintString;
 	bool m_isHint;
-	CUtlVector<char *> m_args;
+	CUtlVector<char*> m_args;
 	float m_duration;
 };
 
@@ -75,11 +75,11 @@ class CHintMessageQueue
 {
 public:
 	void Reset();
-	void Update(CBaseEntity *client);
-	bool AddMessage(const char *message, float duration, bool isHint, CUtlVector<const char *> *args);
+	void Update(CBaseEntity* client);
+	bool AddMessage(const char* message, float duration, bool isHint, CUtlVector<const char*>* args);
 	bool IsEmpty() const { return m_messages.Count() == 0; }
 
 private:
 	float m_tmMessageEnd;
-	CUtlVector<CHintMessage *> m_messages;
+	CUtlVector<CHintMessage*> m_messages;
 };

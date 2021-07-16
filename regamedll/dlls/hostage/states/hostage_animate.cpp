@@ -34,11 +34,11 @@ void HostageAnimateState::Reset()
 	m_performance = None;
 }
 
-void HostageAnimateState::StartSequence(CHostageImprov *improv, const SeqInfo *seqInfo)
+void HostageAnimateState::StartSequence(CHostageImprov* improv, const SeqInfo* seqInfo)
 {
 	if (seqInfo->seqID >= 0)
 	{
-		CHostage *hostage = improv->GetEntity();
+		CHostage* hostage = improv->GetEntity();
 
 		hostage->pev->sequence = seqInfo->seqID;
 		hostage->ResetSequenceInfo();
@@ -50,10 +50,10 @@ void HostageAnimateState::StartSequence(CHostageImprov *improv, const SeqInfo *s
 	m_isHolding = false;
 }
 
-void HostageAnimateState::AddSequence(CHostageImprov *improv, const char *seqName, float holdTime, float rate)
+void HostageAnimateState::AddSequence(CHostageImprov* improv, const char* seqName, float holdTime, float rate)
 {
 	int seqIndex;
-	CHostage *hostage = improv->GetEntity();
+	CHostage* hostage = improv->GetEntity();
 
 	if (m_sequenceCount >= MAX_SEQUENCES)
 		return;
@@ -73,11 +73,11 @@ void HostageAnimateState::AddSequence(CHostageImprov *improv, const char *seqNam
 	StartSequence(improv, m_sequence);
 }
 
-void HostageAnimateState::AddSequence(CHostageImprov *improv, int activity, float holdTime, float rate)
+void HostageAnimateState::AddSequence(CHostageImprov* improv, int activity, float holdTime, float rate)
 {
-	CHostage *hostage = improv->GetEntity();
+	CHostage* hostage = improv->GetEntity();
 
-	void *model = GET_MODEL_PTR(hostage->edict());
+	void* model = GET_MODEL_PTR(hostage->edict());
 	if (model)
 	{
 		m_sequence[m_sequenceCount].seqID = LookupActivity(model, hostage->pev, activity);
@@ -104,12 +104,12 @@ bool HostageAnimateState::IsDoneHolding()
 	return false;
 }
 
-void HostageAnimateState::OnEnter(CHostageImprov *improv)
+void HostageAnimateState::OnEnter(CHostageImprov* improv)
 {
 	;
 }
 
-void HostageAnimateState::OnUpdate(CHostageImprov *improv)
+void HostageAnimateState::OnUpdate(CHostageImprov* improv)
 {
 	if (m_sequenceCount <= 0)
 		return;
@@ -135,15 +135,15 @@ void HostageAnimateState::OnUpdate(CHostageImprov *improv)
 	StartSequence(improv, &m_sequence[m_currentSequence]);
 }
 
-void HostageAnimateState::OnExit(CHostageImprov *improv)
+void HostageAnimateState::OnExit(CHostageImprov* improv)
 {
 	;
 }
 
-NOXREF bool HostageAnimateState::IsPlaying(CHostageImprov *improv, const char *seqName) const
+NOXREF bool HostageAnimateState::IsPlaying(CHostageImprov* improv, const char* seqName) const
 {
 	int id = 0;
-	CHostage *hostage = improv->GetEntity();
+	CHostage* hostage = improv->GetEntity();
 
 	if (m_sequenceCount > 0)
 	{

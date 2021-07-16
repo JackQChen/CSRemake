@@ -28,7 +28,7 @@
 
 #include "precompiled.h"
 
-inline void DrawAxes(const Vector &origin, int red, int green, int blue)
+inline void DrawAxes(const Vector& origin, int red, int green, int blue)
 {
 	float size = 10;
 
@@ -40,10 +40,10 @@ inline void DrawAxes(const Vector &origin, int red, int green, int blue)
 	UTIL_DrawBeamPoints(origin + Vector(0, 0, size), origin - Vector(0, 0, size), 2, red, green, blue);
 }
 
-CHostageImprov::CHostageImprov(CBaseEntity *pEntity)
+CHostageImprov::CHostageImprov(CBaseEntity* pEntity)
 {
 	m_animateState.Reset();
-	m_hostage = static_cast<CHostage *>(pEntity);
+	m_hostage = static_cast<CHostage*>(pEntity);
 	OnReset();
 }
 
@@ -52,7 +52,7 @@ bool CHostageImprov::IsAlive() const
 	return m_hostage->pev->deadflag != DEAD_DEAD;
 }
 
-void CHostageImprov::MoveTo(const Vector &goal)
+void CHostageImprov::MoveTo(const Vector& goal)
 {
 	m_moveGoal = goal;
 	m_path.Invalidate();
@@ -65,7 +65,7 @@ void CHostageImprov::MoveTo(const Vector &goal)
 }
 
 // Find "simple" ground height, treating current nav area as part of the floor
-bool CHostageImprov::GetSimpleGroundHeightWithFloor(const Vector *pos, float *height, Vector *normal)
+bool CHostageImprov::GetSimpleGroundHeightWithFloor(const Vector* pos, float* height, Vector* normal)
 {
 	if (GetSimpleGroundHeight(pos, height, normal))
 	{
@@ -102,7 +102,7 @@ bool CHostageImprov::DiscontinuityJump(float ground, bool onlyJumpDown, bool mus
 	return false;
 }
 
-void CHostageImprov::LookAt(const Vector &target)
+void CHostageImprov::LookAt(const Vector& target)
 {
 	m_isLookingAt = true;
 	m_viewGoal = target;
@@ -113,7 +113,7 @@ void CHostageImprov::ClearLookAt()
 	m_isLookingAt = false;
 }
 
-void CHostageImprov::FaceTo(const Vector &goal)
+void CHostageImprov::FaceTo(const Vector& goal)
 {
 	m_isFacingTo = true;
 	m_faceGoal = goal;
@@ -124,7 +124,7 @@ void CHostageImprov::ClearFaceTo()
 	m_isFacingTo = false;
 }
 
-void CHostageImprov::MoveTowards(const Vector &pos, float deltaT)
+void CHostageImprov::MoveTowards(const Vector& pos, float deltaT)
 {
 	Vector move;
 	real_t accelRate;
@@ -222,7 +222,7 @@ void CHostageImprov::MoveTowards(const Vector &pos, float deltaT)
 	m_vel.y = move.y * accelRate * deltaT + m_vel.y;
 }
 
-bool CHostageImprov::FaceTowards(const Vector &target, float deltaT)
+bool CHostageImprov::FaceTowards(const Vector& target, float deltaT)
 {
 	bool bError = false;
 	Vector2D to = (target - GetFeet()).Make2D();
@@ -293,9 +293,9 @@ void CHostageImprov::FaceOutwards()
 	static Vector corner[] =
 	{
 		Vector(-1000,  1000, 0),
-		Vector( 1000,  1000, 0),
+		Vector(1000,  1000, 0),
 		Vector(-1000, -1000, 0),
-		Vector( 1000, -1000, 0)
+		Vector(1000, -1000, 0)
 	};
 
 	const int cornerCount = ARRAYSIZE(corner);
@@ -330,7 +330,7 @@ bool CHostageImprov::IsAtFaceGoal() const
 }
 
 // Return true if a friend is between us and the given position
-bool CHostageImprov::IsFriendInTheWay(const Vector &goalPos) const
+bool CHostageImprov::IsFriendInTheWay(const Vector& goalPos) const
 {
 	// do this check less often to ease CPU burden
 	if (!m_avoidFriendTimer.IsElapsed())
@@ -356,7 +356,7 @@ bool CHostageImprov::IsFriendInTheWay(const Vector &goalPos) const
 	// check if any CT are overlapping this linear path
 	for (int i = 1; i <= gpGlobals->maxClients; i++)
 	{
-		CBasePlayer *pPlayer = UTIL_PlayerByIndex(i);
+		CBasePlayer* pPlayer = UTIL_PlayerByIndex(i);
 
 		if (!pPlayer)
 			continue;
@@ -378,7 +378,7 @@ bool CHostageImprov::IsFriendInTheWay(const Vector &goalPos) const
 }
 
 // Return true if a friend is between us and the given entity
-bool CHostageImprov::IsFriendInTheWay(CBaseEntity *myFriend, const Vector &goalPos) const
+bool CHostageImprov::IsFriendInTheWay(CBaseEntity* myFriend, const Vector& goalPos) const
 {
 	if (m_hostage == myFriend)
 		return false;
@@ -493,18 +493,18 @@ void CHostageImprov::Stop()
 		m_moveType = m_moveLimit;
 }
 
-const Vector &CHostageImprov::GetFeet() const
+const Vector& CHostageImprov::GetFeet() const
 {
 	return m_hostage->pev->origin;
 }
 
-const Vector &CHostageImprov::GetCentroid() const
+const Vector& CHostageImprov::GetCentroid() const
 {
 	m_centroid = m_hostage->pev->origin + Vector(0, 0, HalfHumanHeight);
 	return m_centroid;
 }
 
-const Vector &CHostageImprov::GetEyes() const
+const Vector& CHostageImprov::GetEyes() const
 {
 	m_eye = m_hostage->pev->origin + Vector(0, 0, HumanHeight) - Vector(0, 0, 7);
 	return m_eye;
@@ -521,7 +521,7 @@ bool CHostageImprov::IsMoving() const
 	return m_actualVel.IsLengthGreaterThan(epsilon);
 }
 
-bool CHostageImprov::IsVisible(const Vector &pos, bool testFOV) const
+bool CHostageImprov::IsVisible(const Vector& pos, bool testFOV) const
 {
 	const Vector eye = GetEyes();
 	TraceResult result;
@@ -530,7 +530,7 @@ bool CHostageImprov::IsVisible(const Vector &pos, bool testFOV) const
 	return result.flFraction == 1.0f;
 }
 
-bool CHostageImprov::IsPlayerLookingAtMe(CBasePlayer *pOther, float cosTolerance) const
+bool CHostageImprov::IsPlayerLookingAtMe(CBasePlayer* pOther, float cosTolerance) const
 {
 	Vector2D toOther = (pOther->pev->origin - GetCentroid()).Make2D();
 	toOther.NormalizeInPlace();
@@ -551,11 +551,11 @@ bool CHostageImprov::IsPlayerLookingAtMe(CBasePlayer *pOther, float cosTolerance
 	return false;
 }
 
-CBasePlayer *CHostageImprov::IsAnyPlayerLookingAtMe(int team, float cosTolerance) const
+CBasePlayer* CHostageImprov::IsAnyPlayerLookingAtMe(int team, float cosTolerance) const
 {
 	for (int i = 1; i <= gpGlobals->maxClients; i++)
 	{
-		CBasePlayer *pPlayer = UTIL_PlayerByIndex(i);
+		CBasePlayer* pPlayer = UTIL_PlayerByIndex(i);
 
 		if (!IsEntityValid(pPlayer))
 			continue;
@@ -572,9 +572,9 @@ CBasePlayer *CHostageImprov::IsAnyPlayerLookingAtMe(int team, float cosTolerance
 	return nullptr;
 }
 
-CBasePlayer *CHostageImprov::GetClosestPlayerByTravelDistance(int team, float *range) const
+CBasePlayer* CHostageImprov::GetClosestPlayerByTravelDistance(int team, float* range) const
 {
-	CBasePlayer *close = nullptr;
+	CBasePlayer* close = nullptr;
 	float closeRange = 9.9999998e10f;
 
 	if (!GetLastKnownArea())
@@ -582,7 +582,7 @@ CBasePlayer *CHostageImprov::GetClosestPlayerByTravelDistance(int team, float *r
 
 	for (int i = 1; i <= gpGlobals->maxClients; i++)
 	{
-		CBasePlayer *pPlayer = UTIL_PlayerByIndex(i);
+		CBasePlayer* pPlayer = UTIL_PlayerByIndex(i);
 
 		if (!IsEntityValid(pPlayer))
 			continue;
@@ -673,7 +673,7 @@ void CHostageImprov::UpdateVision()
 
 	for (int i = 1; i <= gpGlobals->maxClients; i++)
 	{
-		CBasePlayer *pPlayer = UTIL_PlayerByIndex(i);
+		CBasePlayer* pPlayer = UTIL_PlayerByIndex(i);
 
 		if (!pPlayer)
 			continue;
@@ -701,7 +701,7 @@ void CHostageImprov::UpdateVision()
 	m_visionTimer.Start(RANDOM_FLOAT(0.4f, 0.6f));
 }
 
-void CHostageImprov::TrackPath(const Vector &pathGoal, float deltaT)
+void CHostageImprov::TrackPath(const Vector& pathGoal, float deltaT)
 {
 	FaceTowards(pathGoal, deltaT);
 	MoveTowards(pathGoal, deltaT);
@@ -710,7 +710,7 @@ void CHostageImprov::TrackPath(const Vector &pathGoal, float deltaT)
 	DrawAxes(pathGoal, 255, 0, 255);
 }
 
-void CHostageImprov::SetKnownGoodPosition(const Vector &pos)
+void CHostageImprov::SetKnownGoodPosition(const Vector& pos)
 {
 	if (IsJumping() || IsCrouching())
 		return;
@@ -760,12 +760,12 @@ void CHostageImprov::ResetToKnownGoodPosition()
 	Stop();
 }
 
-void CHostageImprov::StartLadder(const CNavLadder *ladder, NavTraverseType how, const Vector *approachPos, const Vector *departPos)
+void CHostageImprov::StartLadder(const CNavLadder* ladder, NavTraverseType how, const Vector* approachPos, const Vector* departPos)
 {
 	m_traversingLadder = true;
 }
 
-bool CHostageImprov::TraverseLadder(const CNavLadder *ladder, NavTraverseType how, const Vector *approachPos, const Vector *departPos, float deltaT)
+bool CHostageImprov::TraverseLadder(const CNavLadder* ladder, NavTraverseType how, const Vector* approachPos, const Vector* departPos, float deltaT)
 {
 	Vector goal;
 
@@ -872,7 +872,7 @@ bool CHostageImprov::TraverseLadder(const CNavLadder *ladder, NavTraverseType ho
 
 void CHostageImprov::UpdatePosition(float deltaT)
 {
-	CNavArea *area = TheNavAreaGrid.GetNavArea(&m_hostage->pev->origin);
+	CNavArea* area = TheNavAreaGrid.GetNavArea(&m_hostage->pev->origin);
 
 	if (area)
 	{
@@ -1067,7 +1067,7 @@ void CHostageImprov::UpdateGrenadeReactions()
 
 	if (m_grenadeTimer.IsElapsed())
 	{
-		CGrenade *pGrenade = nullptr;
+		CGrenade* pGrenade = nullptr;
 		const float watchGrenadeRadius = 500.0f;
 
 		m_grenadeTimer.Start(RANDOM_FLOAT(0.4f, 0.6f));
@@ -1254,13 +1254,13 @@ void CHostageImprov::OnUpdate(float deltaT)
 	m_animateState.OnUpdate(this);
 }
 
-void CHostageImprov::OnGameEvent(GameEventType event, CBaseEntity *pEntity, CBaseEntity *pOther)
+void CHostageImprov::OnGameEvent(GameEventType event, CBaseEntity* pEntity, CBaseEntity* pOther)
 {
 	switch (event)
 	{
 	case EVENT_BULLET_IMPACT:
 	{
-		Vector *impactPos = (Vector *)pOther;
+		Vector* impactPos = (Vector*)pOther;
 		const float nearRange = 100.0f;
 
 		if ((GetCentroid() - *impactPos).IsLengthLessThan(nearRange))
@@ -1275,7 +1275,7 @@ void CHostageImprov::OnGameEvent(GameEventType event, CBaseEntity *pEntity, CBas
 		{
 			Frighten(TERRIFIED);
 
-			if (!pEntity->IsPlayer() || (pEntity->IsPlayer() && ((CBasePlayer *)pEntity)->m_iTeam != TERRORIST))
+			if (!pEntity->IsPlayer() || (pEntity->IsPlayer() && ((CBasePlayer*)pEntity)->m_iTeam != TERRORIST))
 			{
 				DelayedChatter(RANDOM_FLOAT(0.5f, 0.7f), HOSTAGE_CHATTER_SCARED_OF_MURDER, true);
 			}
@@ -1348,7 +1348,7 @@ void CHostageImprov::OnGameEvent(GameEventType event, CBaseEntity *pEntity, CBas
 
 	if (event == EVENT_FLASHBANG_GRENADE_EXPLODED)
 	{
-		Vector *impactPos = (Vector *)pOther;
+		Vector* impactPos = (Vector*)pOther;
 		const float flashRange = 1000.0f;
 
 		if ((GetEyes() - *impactPos).IsLengthLessThan(flashRange) && IsVisible(*impactPos))
@@ -1359,7 +1359,7 @@ void CHostageImprov::OnGameEvent(GameEventType event, CBaseEntity *pEntity, CBas
 	}
 }
 
-void CHostageImprov::OnTouch(CBaseEntity *pOther)
+void CHostageImprov::OnTouch(CBaseEntity* pOther)
 {
 	Vector2D to;
 	const float pushForce = 20.0f;
@@ -1496,7 +1496,7 @@ bool CHostageImprov::CanSeeRescueZone() const
 	if (!TheCSBots())
 		return false;
 
-	const CCSBotManager::Zone *zone = TheCSBots()->GetClosestZone(&GetCentroid());
+	const CCSBotManager::Zone* zone = TheCSBots()->GetClosestZone(&GetCentroid());
 
 	if (zone)
 		return IsVisible(zone->m_center);
@@ -1504,14 +1504,14 @@ bool CHostageImprov::CanSeeRescueZone() const
 	return false;
 }
 
-CBasePlayer *CHostageImprov::GetClosestVisiblePlayer(int team)
+CBasePlayer* CHostageImprov::GetClosestVisiblePlayer(int team)
 {
-	CBasePlayer *close = nullptr;
+	CBasePlayer* close = nullptr;
 	float closeRangeSq = 1e8f;
 
 	for (int i = 0; i < m_visiblePlayerCount; i++)
 	{
-		CBasePlayer *pPlayer = m_visiblePlayer[i];
+		CBasePlayer* pPlayer = m_visiblePlayer[i];
 
 		if (!pPlayer || (team > 0 && pPlayer->m_iTeam != team))
 			continue;
@@ -1745,7 +1745,7 @@ void CHostageImprov::Wave()
 }
 
 // Invoked when an improv fails to reach a MoveTo goal
-void CHostageImprov::OnMoveToFailure(const Vector &goal, MoveToFailureType reason)
+void CHostageImprov::OnMoveToFailure(const Vector& goal, MoveToFailureType reason)
 {
 	m_behavior.OnMoveToFailure(goal, reason);
 
@@ -1820,10 +1820,10 @@ void CHostageImprov::ClearPath()
 
 	if (result.pHit)
 	{
-		edict_t *pEntity = result.pHit;
+		edict_t* pEntity = result.pHit;
 		if (FClassnameIs(pEntity, "func_door") || FClassnameIs(pEntity, "func_door_rotating"))
 		{
-			CBaseEntity *pObject = CBaseEntity::Instance(pEntity);
+			CBaseEntity* pObject = CBaseEntity::Instance(pEntity);
 			if (pObject)
 			{
 				pObject->Touch(m_hostage);
@@ -1831,7 +1831,7 @@ void CHostageImprov::ClearPath()
 		}
 		else if (FClassnameIs(pEntity, "func_breakable") && pEntity->v.takedamage == DAMAGE_YES)
 		{
-			CBaseEntity *pObject = CBaseEntity::Instance(pEntity);
+			CBaseEntity* pObject = CBaseEntity::Instance(pEntity);
 			if (pObject)
 			{
 				pObject->TakeDamage(m_hostage->pev, m_hostage->pev, 9999.9, DMG_BULLET);

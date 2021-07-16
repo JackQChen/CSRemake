@@ -355,7 +355,7 @@ v4sf cos_ps(v4sf x) { // any x
 
 /* since sin_ps and cos_ps are almost identical, sincos_ps could replace both of them..
 it is almost as fast, and gives you a free cosine with your sine */
-void sincos_ps(v4sf x, v4sf *s, v4sf *c) {
+void sincos_ps(v4sf x, v4sf* s, v4sf* c) {
 	v4sf xmm1, xmm2, xmm3 = _mm_setzero_ps(), sign_bit_sin, y;
 	v4si emm0, emm2, emm4;
 

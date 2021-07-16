@@ -139,7 +139,7 @@ typedef enum Activity_s
 typedef struct
 {
 	int type;
-	char *name;
+	char* name;
 
 } activity_map_t;
 

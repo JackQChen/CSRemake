@@ -28,13 +28,13 @@
 
 #include "precompiled.h"
 
-void HostageRetreatState::OnEnter(CHostageImprov *improv)
+void HostageRetreatState::OnEnter(CHostageImprov* improv)
 {
 	improv->Walk();
 	improv->MoveTo(improv->GetEntity()->m_vStart);
 }
 
-void HostageRetreatState::OnUpdate(CHostageImprov *improv)
+void HostageRetreatState::OnUpdate(CHostageImprov* improv)
 {
 	if (improv->IsAtHome())
 	{
@@ -43,7 +43,7 @@ void HostageRetreatState::OnUpdate(CHostageImprov *improv)
 		return;
 	}
 
-	CBasePlayer *pPlayer = improv->GetClosestVisiblePlayer(UNASSIGNED);
+	CBasePlayer* pPlayer = improv->GetClosestVisiblePlayer(UNASSIGNED);
 	if (pPlayer)
 	{
 		const float farRange = 400.0f;
@@ -64,7 +64,7 @@ void HostageRetreatState::OnUpdate(CHostageImprov *improv)
 		improv->Walk();
 }
 
-void HostageRetreatState::OnExit(CHostageImprov *improv)
+void HostageRetreatState::OnExit(CHostageImprov* improv)
 {
 	;
 }

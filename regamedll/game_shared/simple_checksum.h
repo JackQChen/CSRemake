@@ -30,7 +30,7 @@
 
 // Compute a simple checksum for the given data.
 // Each byte in the data is multiplied by its position to track re-ordering changes
-inline unsigned int ComputeSimpleChecksum(const unsigned char *dataPointer, int dataLength)
+inline unsigned int ComputeSimpleChecksum(const unsigned char* dataPointer, int dataLength)
 {
 	unsigned int checksum = 0;
 	for (int i = 1; i <= dataLength; i++)

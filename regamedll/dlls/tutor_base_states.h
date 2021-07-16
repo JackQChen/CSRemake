@@ -59,14 +59,14 @@ public:
 	CBaseTutorState();
 
 	virtual ~CBaseTutorState();
-	virtual TutorStateType CheckForStateTransition(GameEventType event, CBaseEntity *pEntity, CBaseEntity *pOther) = 0;
-	virtual const char *GetStateString() = 0;
+	virtual TutorStateType CheckForStateTransition(GameEventType event, CBaseEntity* pEntity, CBaseEntity* pOther) = 0;
+	virtual const char* GetStateString() = 0;
 
 public:
 	TutorStateType GetType() const;
 
 protected:
-	static const char *m_TutorStateStrings[];
+	static const char* m_TutorStateStrings[];
 	TutorStateType m_type;
 };
 
@@ -76,13 +76,13 @@ public:
 	CBaseTutorStateSystem();
 
 	virtual ~CBaseTutorStateSystem();
-	virtual bool UpdateState(GameEventType event, CBaseEntity *pEntity, CBaseEntity *pOther) = 0;
-	virtual const char *GetCurrentStateString() = 0;
-	virtual CBaseTutorState *ConstructNewState(TutorStateType stateType) = 0;
+	virtual bool UpdateState(GameEventType event, CBaseEntity* pEntity, CBaseEntity* pOther) = 0;
+	virtual const char* GetCurrentStateString() = 0;
+	virtual CBaseTutorState* ConstructNewState(TutorStateType stateType) = 0;
 
 public:
 	TutorStateType GetCurrentStateType() const;
 
 protected:
-	CBaseTutorState *m_currentState;
+	CBaseTutorState* m_currentState;
 };

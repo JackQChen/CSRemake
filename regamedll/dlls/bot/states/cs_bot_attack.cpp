@@ -29,9 +29,9 @@
 #include "precompiled.h"
 
 // Begin attacking
-void AttackState::OnEnter(CCSBot *me)
+void AttackState::OnEnter(CCSBot* me)
 {
-	CBasePlayer *pEnemy = me->GetEnemy();
+	CBasePlayer* pEnemy = me->GetEnemy();
 
 	// store our posture when the attack began
 	me->PushPostureContext();
@@ -139,7 +139,7 @@ void AttackState::OnEnter(CCSBot *me)
 	m_isCoward = (RANDOM_FLOAT(0.0f, 100.0f) > 100.0f * me->GetProfile()->GetAggression());
 }
 
-void AttackState::StopAttacking(CCSBot *me)
+void AttackState::StopAttacking(CCSBot* me)
 {
 	if (me->m_task == CCSBot::SNIPING)
 	{
@@ -153,13 +153,13 @@ void AttackState::StopAttacking(CCSBot *me)
 }
 
 // Perform attack behavior
-void AttackState::OnUpdate(CCSBot *me)
+void AttackState::OnUpdate(CCSBot* me)
 {
 	// can't be stuck while attacking
 	me->ResetStuckMonitor();
 	me->StopRapidFire();
 
-	CBasePlayerWeapon *pWeapon = me->GetActiveWeapon();
+	CBasePlayerWeapon* pWeapon = me->GetActiveWeapon();
 	if (pWeapon)
 	{
 		if (pWeapon->m_iId == WEAPON_C4 ||
@@ -171,7 +171,7 @@ void AttackState::OnUpdate(CCSBot *me)
 		}
 	}
 
-	CBasePlayer *pEnemy = me->GetEnemy();
+	CBasePlayer* pEnemy = me->GetEnemy();
 	if (!pEnemy)
 	{
 		StopAttacking(me);
@@ -399,7 +399,7 @@ void AttackState::OnUpdate(CCSBot *me)
 
 						// hide in ambush nearby
 						// TODO: look towards where we know enemy is
-						const Vector *spot = FindNearbyRetreatSpot(me, 200.0f);
+						const Vector* spot = FindNearbyRetreatSpot(me, 200.0f);
 						if (spot)
 						{
 							me->IgnoreEnemies(1.0f);
@@ -525,8 +525,7 @@ void AttackState::OnUpdate(CCSBot *me)
 					next = RANDOM_LONG(0, NUM_ATTACK_STATES - 1);
 				else
 					next = RANDOM_LONG(0, NUM_ATTACK_STATES - 2);
-			}
-			while (!m_firstDodge && next == m_dodgeState);
+			} while (!m_firstDodge && next == m_dodgeState);
 
 			m_dodgeState = (DodgeStateType)next;
 			m_nextDodgeStateTimestamp = gpGlobals->time + RANDOM_FLOAT(0.3f, 1.0f);
@@ -562,7 +561,7 @@ void AttackState::OnUpdate(CCSBot *me)
 }
 
 // Finish attack
-void AttackState::OnExit(CCSBot *me)
+void AttackState::OnExit(CCSBot* me)
 {
 	me->PrintIfWatched("AttackState:OnExit()\n");
 

@@ -91,17 +91,17 @@ extern enginefuncs_t g_engfuncs;
 #define GET_TIMES_TUTOR_MESSAGE_SHOWN	(*g_engfuncs.pfnGetTimesTutorMessageShown)
 #define ENG_CHECK_PARM					(*g_engfuncs.pfnEngCheckParm)
 
-inline void MESSAGE_BEGIN(int msg_dest, int msg_type, const float *pOrigin = nullptr, edict_t *ed = nullptr)
+inline void MESSAGE_BEGIN(int msg_dest, int msg_type, const float* pOrigin = nullptr, edict_t* ed = nullptr)
 {
 	(*g_engfuncs.pfnMessageBegin)(msg_dest, msg_type, pOrigin, ed);
 }
 
 template <typename T = void>
-inline T *GET_PRIVATE(edict_t *pEdict)
+inline T* GET_PRIVATE(edict_t* pEdict)
 {
 	if (pEdict)
 	{
-		return static_cast<T *>(pEdict->pvPrivateData);
+		return static_cast<T*>(pEdict->pvPrivateData);
 	}
 
 	return nullptr;

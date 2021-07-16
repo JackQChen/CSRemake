@@ -1,6 +1,6 @@
 #include "precompiled.h"
 
-CSoundEnt *pSoundEnt = nullptr;
+CSoundEnt* pSoundEnt = nullptr;
 
 // The entity that spawns when the world spawns,
 // and handles the world's active and free sound lists.
@@ -164,7 +164,7 @@ int CSoundEnt::IAllocSound()
 
 // InsertSound - Allocates a free sound and fills it with
 // sound info.
-void CSoundEnt::InsertSound(int iType, const Vector &vecOrigin, int iVolume, float flDuration)
+void CSoundEnt::InsertSound(int iType, const Vector& vecOrigin, int iVolume, float flDuration)
 {
 	int iThisSound;
 
@@ -192,7 +192,7 @@ void CSoundEnt::InsertSound(int iType, const Vector &vecOrigin, int iVolume, flo
 // free sound list.
 void CSoundEnt::Initialize()
 {
-  	int i;
+	int i;
 	int iSound;
 
 	m_cLastActiveSounds = 0;
@@ -294,7 +294,7 @@ NOXREF int CSoundEnt::FreeList()
 
 // SoundPointerForIndex - returns a pointer to the instance
 // of CSound at index's position in the sound pool.
-CSound *CSoundEnt::SoundPointerForIndex(int iIndex)
+CSound* CSoundEnt::SoundPointerForIndex(int iIndex)
 {
 	if (!pSoundEnt)
 	{
@@ -320,7 +320,7 @@ CSound *CSoundEnt::SoundPointerForIndex(int iIndex)
 // reserved sounds in the soundlist are from 0 to MAXCLIENTS - 1,
 // so this function ensures that a client gets the proper index
 // to his reserved sound in the soundlist.
-int CSoundEnt::ClientSoundIndex(edict_t *pClient)
+int CSoundEnt::ClientSoundIndex(edict_t* pClient)
 {
 	int iReturn = ENTINDEX(pClient) - 1;
 

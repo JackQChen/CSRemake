@@ -29,13 +29,13 @@
 #include "precompiled.h"
 
 // Move to the bomb on the floor and pick it up
-void FetchBombState::OnEnter(CCSBot *me)
+void FetchBombState::OnEnter(CCSBot* me)
 {
 	me->DestroyPath();
 }
 
 // Move to the bomb on the floor and pick it up
-void FetchBombState::OnUpdate(CCSBot *me)
+void FetchBombState::OnUpdate(CCSBot* me)
 {
 	if (me->IsCarryingBomb())
 	{
@@ -44,7 +44,7 @@ void FetchBombState::OnUpdate(CCSBot *me)
 		return;
 	}
 
-	CBaseEntity *pBomb = TheCSBots()->GetLooseBomb();
+	CBaseEntity* pBomb = TheCSBots()->GetLooseBomb();
 	if (pBomb)
 	{
 		if (!me->HasPath())

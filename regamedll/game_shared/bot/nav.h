@@ -65,8 +65,8 @@ enum NavErrorType
 
 enum NavAttributeType
 {
-	NAV_CROUCH  = 0x01, // must crouch to use this node/area
-	NAV_JUMP    = 0x02, // must jump to traverse this area
+	NAV_CROUCH = 0x01, // must crouch to use this node/area
+	NAV_JUMP = 0x02, // must jump to traverse this area
 	NAV_PRECISE = 0x04, // do not adjust for obstacles, just move along area
 	NAV_NO_JUMP = 0x08, // inhibit discontinuity jumping
 };
@@ -119,14 +119,14 @@ enum NavRelativeDirType
 };
 
 const double GenerationStepSize = 25.0;  // (30) was 20, but bots can't always fit
-const float StepHeight          = 18.0f; // if delta Z is greater than this, we have to jump to get up
-const float JumpHeight          = 41.8f; // if delta Z is less than this, we can jump up on it
-const float JumpCrouchHeight    = 58.0f; // (48) if delta Z is less than or equal to this, we can jumpcrouch up on it
+const float StepHeight = 18.0f; // if delta Z is greater than this, we have to jump to get up
+const float JumpHeight = 41.8f; // if delta Z is less than this, we can jump up on it
+const float JumpCrouchHeight = 58.0f; // (48) if delta Z is less than or equal to this, we can jumpcrouch up on it
 
 // Strictly speaking, you CAN get up a slope of 1.643 (about 59 degrees), but you move very, very slowly
 // This slope will represent the slope you can navigate without much slowdown
 // rise/run - if greater than this, we can't move up it (de_survivor canyon ramps)
-const float MaxSlope      = 1.4f;
+const float MaxSlope = 1.4f;
 
 // instead of MaxSlope, we are using the following max Z component of a unit normal
 const float MaxUnitZSlope = 0.7f;
@@ -134,9 +134,9 @@ const float MaxUnitZSlope = 0.7f;
 const float BotRadius = 10.0f;  // circular extent that contains bot
 const float DeathDrop = 200.0f; // (300) distance at which we will die if we fall - should be about 600, and pay attention to fall damage during pathfind
 
-const float HalfHumanWidth  = 16.0f;
+const float HalfHumanWidth = 16.0f;
 const float HalfHumanHeight = 36.0f;
-const float HumanHeight     = 72.0f;
+const float HumanHeight = 72.0f;
 
 struct Extent
 {
@@ -149,7 +149,7 @@ struct Extent
 	float Area()  const { return SizeX() * SizeY(); }
 
 	// return true if 'pos' is inside of this extent
-	bool Contains(const Vector *pos) const
+	bool Contains(const Vector* pos) const
 	{
 		return (pos->x >= lo.x && pos->x <= hi.x &&
 			pos->y >= lo.y && pos->y <= hi.y &&
@@ -214,7 +214,7 @@ inline NavDirType DirectionRight(NavDirType dir)
 	return NORTH;
 }
 
-inline void AddDirectionVector(Vector *v, NavDirType dir, float amount)
+inline void AddDirectionVector(Vector* v, NavDirType dir, float amount)
 {
 	switch (dir)
 	{
@@ -270,30 +270,30 @@ inline NavDirType AngleToDirection(real_t angle)
 	return NORTH;
 }
 
-inline void DirectionToVector2D(NavDirType dir, Vector2D *v)
+inline void DirectionToVector2D(NavDirType dir, Vector2D* v)
 {
 	switch (dir)
 	{
 	case NORTH:
-		v->x =  0.0f;
+		v->x = 0.0f;
 		v->y = -1.0f;
 		break;
 	case SOUTH:
-		v->x =  0.0f;
-		v->y =  1.0f;
+		v->x = 0.0f;
+		v->y = 1.0f;
 		break;
 	case EAST:
-		v->x =  1.0f;
-		v->y =  0.0f;
+		v->x = 1.0f;
+		v->y = 0.0f;
 		break;
 	case WEST:
 		v->x = -1.0f;
-		v->y =  0.0f;
+		v->y = 0.0f;
 		break;
 	}
 }
 
-inline void SnapToGrid(Vector *pos)
+inline void SnapToGrid(Vector* pos)
 {
 	int cx = pos->x / GenerationStepSize;
 	int cy = pos->y / GenerationStepSize;
@@ -301,7 +301,7 @@ inline void SnapToGrid(Vector *pos)
 	pos->y = cy * GenerationStepSize;
 }
 
-inline void SnapToGrid(float *value)
+inline void SnapToGrid(float* value)
 {
 	int c = *value / GenerationStepSize;
 	*value = c * GenerationStepSize;
@@ -360,7 +360,7 @@ inline bool AnglesAreEqual(float a, float b, float tolerance = 5.0f)
 	return false;
 }
 
-inline bool VectorsAreEqual(const Vector *a, const Vector *b, float tolerance = 0.1f)
+inline bool VectorsAreEqual(const Vector* a, const Vector* b, float tolerance = 0.1f)
 {
 	if (Q_abs(a->x - b->x) < tolerance
 		&& Q_abs(a->y - b->y) < tolerance
@@ -370,7 +370,7 @@ inline bool VectorsAreEqual(const Vector *a, const Vector *b, float tolerance = 
 	return false;
 }
 
-inline bool IsEntityWalkable(entvars_t *pev, unsigned int flags)
+inline bool IsEntityWalkable(entvars_t* pev, unsigned int flags)
 {
 	// if we hit a door, assume its walkable because it will open when we touch it
 	if (FClassnameIs(pev, "func_door") || FClassnameIs(pev, "func_door_rotating"))
@@ -384,10 +384,10 @@ inline bool IsEntityWalkable(entvars_t *pev, unsigned int flags)
 }
 
 // Check LOS, ignoring any entities that we can walk through
-inline bool IsWalkableTraceLineClear(Vector &from, Vector &to, unsigned int flags = 0)
+inline bool IsWalkableTraceLineClear(Vector& from, Vector& to, unsigned int flags = 0)
 {
 	TraceResult result;
-	edict_t *pEntIgnore = nullptr;
+	edict_t* pEntIgnore = nullptr;
 	Vector useFrom = from;
 
 	while (true)

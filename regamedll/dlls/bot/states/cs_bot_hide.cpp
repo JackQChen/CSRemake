@@ -30,7 +30,7 @@
 
 // Begin moving to a nearby hidey-hole.
 // NOTE: Do not forget this state may include a very long "move-to" time to get to our hidey spot!
-void HideState::OnEnter(CCSBot *me)
+void HideState::OnEnter(CCSBot* me)
 {
 	m_isAtSpot = false;
 
@@ -68,7 +68,7 @@ void HideState::OnEnter(CCSBot *me)
 
 // Move to a nearby hidey-hole.
 // NOTE: Do not forget this state may include a very long "move-to" time to get to our hidey spot!
-void HideState::OnUpdate(CCSBot *me)
+void HideState::OnUpdate(CCSBot* me)
 {
 	// wait until finished reloading to leave hide state
 	if (!me->IsActiveWeaponReloading())
@@ -84,10 +84,10 @@ void HideState::OnUpdate(CCSBot *me)
 			else if (me->GetTask() == CCSBot::GUARD_BOMB_ZONE)
 			{
 				// if we're guarding a bombsite, continue to guard it but pick a new spot
-				const CCSBotManager::Zone *zone = TheCSBots()->GetClosestZone(&me->pev->origin);
+				const CCSBotManager::Zone* zone = TheCSBots()->GetClosestZone(&me->pev->origin);
 				if (zone)
 				{
-					CNavArea *area = TheCSBots()->GetRandomAreaInZone(zone);
+					CNavArea* area = TheCSBots()->GetRandomAreaInZone(zone);
 					if (area)
 					{
 						me->Hide(area);
@@ -115,7 +115,7 @@ void HideState::OnUpdate(CCSBot *me)
 		// if we are momentarily hiding while following someone, check to see if he has moved on
 		if (me->IsFollowing())
 		{
-			CBasePlayer *pLeader = me->GetFollowLeader();
+			CBasePlayer* pLeader = me->GetFollowLeader();
 
 			// BOTPORT: Determine walk/run velocity thresholds
 			float runThreshold = 200.0f;
@@ -225,11 +225,11 @@ void HideState::OnUpdate(CCSBot *me)
 			else if (me->GetTask() == CCSBot::GUARD_HOSTAGE_RESCUE_ZONE)
 			{
 				// if we stumble across a hostage, guard it
-				CHostage *pHostage = me->GetGameState()->GetNearestVisibleFreeHostage();
+				CHostage* pHostage = me->GetGameState()->GetNearestVisibleFreeHostage();
 				if (pHostage)
 				{
 					// we see a free hostage, guard it
-					CNavArea *area = TheNavAreaGrid.GetNearestNavArea(&pHostage->pev->origin);
+					CNavArea* area = TheNavAreaGrid.GetNearestNavArea(&pHostage->pev->origin);
 					if (area)
 					{
 						me->SetTask(CCSBot::GUARD_HOSTAGES);
@@ -328,7 +328,7 @@ void HideState::OnUpdate(CCSBot *me)
 				{
 					if (me->GetNearbyEnemyCount() == 0)
 					{
-						CHostage *pHostage = me->GetGameState()->GetNearestVisibleFreeHostage();
+						CHostage* pHostage = me->GetGameState()->GetNearestVisibleFreeHostage();
 						if (pHostage)
 						{
 							me->GetChatter()->Encourage("WaitingForHumanToRescueHostages", RANDOM_FLOAT(10.0f, 15.0f));
@@ -342,7 +342,7 @@ void HideState::OnUpdate(CCSBot *me)
 	{
 		// if a Player is using this hiding spot, give up
 		float range;
-		CBasePlayer *pCamper = UTIL_GetClosestPlayer(&m_hidingSpot, &range);
+		CBasePlayer* pCamper = UTIL_GetClosestPlayer(&m_hidingSpot, &range);
 
 		const float closeRange = 75.0f;
 		if (pCamper && pCamper != me && range < closeRange && me->IsVisible(pCamper, CHECK_FOV))
@@ -416,7 +416,7 @@ void HideState::OnUpdate(CCSBot *me)
 			me->PrintIfWatched("Can't get to my hiding spot - finding another...\n");
 
 			// search from hiding spot, since we know it was valid
-			const Vector *pos = FindNearbyHidingSpot(me, &m_hidingSpot, m_searchFromArea, m_range, me->IsSniper());
+			const Vector* pos = FindNearbyHidingSpot(me, &m_hidingSpot, m_searchFromArea, m_range, me->IsSniper());
 			if (!pos)
 			{
 				// no available hiding spots
@@ -449,7 +449,7 @@ void HideState::OnUpdate(CCSBot *me)
 	}
 }
 
-void HideState::OnExit(CCSBot *me)
+void HideState::OnExit(CCSBot* me)
 {
 	m_isHoldingPosition = false;
 

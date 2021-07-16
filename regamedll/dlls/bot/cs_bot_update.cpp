@@ -255,7 +255,7 @@ void CCSBot::Update()
 			Vector dir = m_spotEncounter->path.to - m_spotEncounter->path.from;
 			float length = dir.NormalizeInPlace();
 
-			for (auto &order : m_spotEncounter->spotList) {
+			for (auto& order : m_spotEncounter->spotList) {
 				UTIL_DrawBeamPoints(m_spotEncounter->path.from + order.t * length * dir, *order.spot->GetPosition(), 3, 0, 255, 255);
 			}
 		}
@@ -339,7 +339,7 @@ void CCSBot::Update()
 	UpdateReactionQueue();
 
 	// "threat" may be the same as our current enemy
-	CBasePlayer *threat = GetRecognizedEnemy();
+	CBasePlayer* threat = GetRecognizedEnemy();
 	if (threat)
 	{
 		// adjust our personal "safe" time
@@ -673,7 +673,7 @@ void CCSBot::Update()
 		// chance of following is proportional to teamwork attribute
 		if (GetProfile()->GetTeamwork() > RANDOM_FLOAT(0.0f, 1.0f))
 		{
-			CBasePlayer *pLeader = GetClosestVisibleHumanFriend();
+			CBasePlayer* pLeader = GetClosestVisibleHumanFriend();
 			if (pLeader && pLeader->IsAutoFollowAllowed())
 			{
 				// count how many bots are already following this player
@@ -683,7 +683,7 @@ void CCSBot::Update()
 					const float autoFollowRange = 300.0f;
 					if ((pLeader->pev->origin - pev->origin).IsLengthLessThan(autoFollowRange))
 					{
-						CNavArea *leaderArea = TheNavAreaGrid.GetNavArea(&pLeader->pev->origin);
+						CNavArea* leaderArea = TheNavAreaGrid.GetNavArea(&pLeader->pev->origin);
 						if (leaderArea)
 						{
 							PathCost cost(this, FASTEST_ROUTE);
@@ -718,7 +718,7 @@ void CCSBot::Update()
 	if (IsFollowing())
 	{
 		// if we are following someone, make sure they are still alive
-		CBaseEntity *pLeader = m_leader;
+		CBaseEntity* pLeader = m_leader;
 		if (!pLeader || !pLeader->IsAlive())
 		{
 			StopFollowing();

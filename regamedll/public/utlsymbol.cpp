@@ -29,7 +29,7 @@
 #include "precompiled.h"
 
 LessCtx_t g_LessCtx;
-CUtlSymbolTable *CUtlSymbol::s_pSymbolTable = nullptr;
+CUtlSymbolTable* CUtlSymbol::s_pSymbolTable = nullptr;
 
 void CUtlSymbol::Initialize()
 {
@@ -42,23 +42,23 @@ void CUtlSymbol::Initialize()
 	}
 }
 
-CUtlSymbolTable *CUtlSymbol::CurrTable()
+CUtlSymbolTable* CUtlSymbol::CurrTable()
 {
 	Initialize();
 	return s_pSymbolTable;
 }
 
-CUtlSymbol::CUtlSymbol(const char *pStr)
+CUtlSymbol::CUtlSymbol(const char* pStr)
 {
 	m_Id = CurrTable()->AddString(pStr);
 }
 
-const char *CUtlSymbol::String() const
+const char* CUtlSymbol::String() const
 {
 	return CurrTable()->String(m_Id);
 }
 
-bool CUtlSymbol::operator==(const char *pStr) const
+bool CUtlSymbol::operator==(const char* pStr) const
 {
 	if (m_Id == UTL_INVAL_SYMBOL)
 		return false;
@@ -66,18 +66,18 @@ bool CUtlSymbol::operator==(const char *pStr) const
 	return Q_strcmp(String(), pStr) == 0;
 }
 
-bool CUtlSymbolTable::SymLess(const unsigned int &i1, const unsigned int &i2)
+bool CUtlSymbolTable::SymLess(const unsigned int& i1, const unsigned int& i2)
 {
-	const char *str1 = g_LessCtx.m_pTable->String(i1);
-	const char *str2 = g_LessCtx.m_pTable->String(i2);
+	const char* str1 = g_LessCtx.m_pTable->String(i1);
+	const char* str2 = g_LessCtx.m_pTable->String(i2);
 
 	return Q_strcmp(str1, str2) < 0;
 }
 
-bool CUtlSymbolTable::SymLessi(const unsigned int &i1, const unsigned int &i2)
+bool CUtlSymbolTable::SymLessi(const unsigned int& i1, const unsigned int& i2)
 {
-	const char *str1 = g_LessCtx.m_pTable->String(i1);
-	const char *str2 = g_LessCtx.m_pTable->String(i2);
+	const char* str1 = g_LessCtx.m_pTable->String(i1);
+	const char* str2 = g_LessCtx.m_pTable->String(i2);
 
 	return Q_stricmp(str1, str2) < 0;
 }
@@ -95,7 +95,7 @@ CUtlSymbolTable::~CUtlSymbolTable()
 	RemoveAll();
 }
 
-CUtlSymbol CUtlSymbolTable::Find(const char *pString) const
+CUtlSymbol CUtlSymbolTable::Find(const char* pString) const
 {
 	// Passing this special invalid symbol makes the comparison function
 	// use the string passed in the context
@@ -104,7 +104,7 @@ CUtlSymbol CUtlSymbolTable::Find(const char *pString) const
 }
 
 // Finds and/or creates a symbol based on the string
-CUtlSymbol CUtlSymbolTable::AddString(const char *pString)
+CUtlSymbol CUtlSymbolTable::AddString(const char* pString)
 {
 	if (!pString)
 		return CUtlSymbol(UTL_INVAL_SYMBOL);
@@ -121,7 +121,7 @@ CUtlSymbol CUtlSymbolTable::AddString(const char *pString)
 	return CUtlSymbol(idx);
 }
 
-const char *CUtlSymbolTable::String(CUtlSymbol id) const
+const char* CUtlSymbolTable::String(CUtlSymbol id) const
 {
 	if (!id.IsValid())
 		return "";

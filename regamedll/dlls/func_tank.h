@@ -45,22 +45,22 @@ enum TANKBULLET
 
 #define SF_TANK_SOUNDON     BIT(15)
 
-class CFuncTank: public CBaseEntity
+class CFuncTank : public CBaseEntity
 {
 public:
 	virtual void Spawn();
 	virtual void Precache();
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
 
 	// Bmodels don't go across transitions
 	virtual int ObjectCaps() { return CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION; }
-	virtual BOOL OnControls(entvars_t *pevTest);
+	virtual BOOL OnControls(entvars_t* pevTest);
 	virtual void Think();
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
-	virtual void Fire(const Vector &barrelEnd, const Vector &forward, entvars_t *pevAttacker);
-	virtual Vector UpdateTargetPosition(CBaseEntity *pTarget) { return pTarget->BodyTarget(pev->origin); }
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
+	virtual void Fire(const Vector& barrelEnd, const Vector& forward, entvars_t* pevAttacker);
+	virtual Vector UpdateTargetPosition(CBaseEntity* pTarget) { return pTarget->BodyTarget(pev->origin); }
 
 public:
 	void TrackTarget();
@@ -85,8 +85,8 @@ public:
 	BOOL InRange(float range);
 
 	// Acquire a target.  pPlayer is a player in the PVS
-	edict_t *FindTarget(edict_t *pPlayer);
-	void TankTrace(const Vector &vecStart, const Vector &vecForward, const Vector &vecSpread, TraceResult &tr);
+	edict_t* FindTarget(edict_t* pPlayer);
+	void TankTrace(const Vector& vecStart, const Vector& vecForward, const Vector& vecSpread, TraceResult& tr);
 
 	Vector BarrelPosition()
 	{
@@ -95,8 +95,8 @@ public:
 		return pev->origin + (forward * m_barrelPos.x) + (right * m_barrelPos.y) + (up * m_barrelPos.z);
 	}
 
-	void AdjustAnglesForBarrel(Vector &angles, float distance);
-	BOOL StartControl(CBasePlayer *pController);
+	void AdjustAnglesForBarrel(Vector& angles, float distance);
+	BOOL StartControl(CBasePlayer* pController);
 	void StopControl();
 	void ControllerPostFrame();
 
@@ -105,7 +105,7 @@ public:
 	static Vector m_TankSpread[];
 
 protected:
-	CBasePlayer *m_pController;
+	CBasePlayer* m_pController;
 	float m_flNextAttack;
 	Vector m_vecControllerUsePos;
 
@@ -140,57 +140,57 @@ protected:
 	int m_iszMaster;		// Master entity (game_team_master or multisource)
 };
 
-class CFuncTankGun: public CFuncTank
+class CFuncTankGun : public CFuncTank
 {
 public:
-	virtual void Fire(const Vector &barrelEnd, const Vector &forward, entvars_t *pevAttacker);
+	virtual void Fire(const Vector& barrelEnd, const Vector& forward, entvars_t* pevAttacker);
 };
 
-class CFuncTankLaser: public CFuncTank
+class CFuncTankLaser : public CFuncTank
 {
 public:
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
 	virtual void Activate();
 	virtual void Think();
-	virtual void Fire(const Vector &barrelEnd, const Vector &forward, entvars_t *pevAttacker);
+	virtual void Fire(const Vector& barrelEnd, const Vector& forward, entvars_t* pevAttacker);
 
-	CLaser *GetLaser();
+	CLaser* GetLaser();
 
 public:
 	static TYPEDESCRIPTION m_SaveData[];
 
 private:
-	CLaser *m_pLaser;
+	CLaser* m_pLaser;
 	float m_laserTime;
 };
 
-class CFuncTankRocket: public CFuncTank
+class CFuncTankRocket : public CFuncTank
 {
 public:
 	virtual void Precache();
-	virtual void Fire(const Vector &barrelEnd, const Vector &forward, entvars_t *pevAttacker);
+	virtual void Fire(const Vector& barrelEnd, const Vector& forward, entvars_t* pevAttacker);
 };
 
-class CFuncTankMortar: public CFuncTank
+class CFuncTankMortar : public CFuncTank
 {
 public:
-	virtual void KeyValue(KeyValueData *pkvd);
-	virtual void Fire(const Vector &barrelEnd, const Vector &forward, entvars_t *pevAttacker);
+	virtual void KeyValue(KeyValueData* pkvd);
+	virtual void Fire(const Vector& barrelEnd, const Vector& forward, entvars_t* pevAttacker);
 };
 
-class CFuncTankControls: public CBaseEntity
+class CFuncTankControls : public CBaseEntity
 {
 public:
 	virtual void Spawn();
-	virtual int Save(CSave &save);
-	virtual int Restore(CRestore &restore);
+	virtual int Save(CSave& save);
+	virtual int Restore(CRestore& restore);
 	virtual int ObjectCaps() { return (CBaseEntity::ObjectCaps() & ~FCAP_ACROSS_TRANSITION) | FCAP_IMPULSE_USE; }
 	virtual void Think();
-	virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+	virtual void Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value);
 
 public:
 	static TYPEDESCRIPTION m_SaveData[];
-	CFuncTank *m_pTank;
+	CFuncTank* m_pTank;
 };

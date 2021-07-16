@@ -30,7 +30,7 @@
 
 // Listen for enemy noises, and determine if we should react to them.
 // Returns true if heard a noise and should move to investigate.
-bool CCSBot::ShouldInvestigateNoise(float *retNoiseDist)
+bool CCSBot::ShouldInvestigateNoise(float* retNoiseDist)
 {
 	if (m_isNoiseTravelRangeChecked)
 		return false;

@@ -29,7 +29,7 @@
 #include "precompiled.h"
 
 // Begin defusing the bomb
-void DefuseBombState::OnEnter(CCSBot *me)
+void DefuseBombState::OnEnter(CCSBot* me)
 {
 	me->Crouch();
 	me->SetDisposition(CCSBot::SELF_DEFENSE);
@@ -37,9 +37,9 @@ void DefuseBombState::OnEnter(CCSBot *me)
 }
 
 // Defuse the bomb
-void DefuseBombState::OnUpdate(CCSBot *me)
+void DefuseBombState::OnUpdate(CCSBot* me)
 {
-	const Vector *bombPos = me->GetGameState()->GetBombPosition();
+	const Vector* bombPos = me->GetGameState()->GetBombPosition();
 
 	if (!bombPos)
 	{
@@ -88,7 +88,7 @@ void DefuseBombState::OnUpdate(CCSBot *me)
 	}
 }
 
-void DefuseBombState::OnExit(CCSBot *me)
+void DefuseBombState::OnExit(CCSBot* me)
 {
 	me->StandUp();
 	me->ResetStuckMonitor();

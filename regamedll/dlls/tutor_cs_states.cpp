@@ -14,7 +14,7 @@ CCSTutorStateSystem::~CCSTutorStateSystem()
 	}
 }
 
-bool CCSTutorStateSystem::UpdateState(GameEventType event, CBaseEntity *pEntity, CBaseEntity *pOther)
+bool CCSTutorStateSystem::UpdateState(GameEventType event, CBaseEntity* pEntity, CBaseEntity* pOther)
 {
 	if (!m_currentState)
 	{
@@ -35,7 +35,7 @@ bool CCSTutorStateSystem::UpdateState(GameEventType event, CBaseEntity *pEntity,
 	return false;
 }
 
-const char *CCSTutorStateSystem::GetCurrentStateString()
+const char* CCSTutorStateSystem::GetCurrentStateString()
 {
 	if (m_currentState)
 	{
@@ -45,7 +45,7 @@ const char *CCSTutorStateSystem::GetCurrentStateString()
 	return nullptr;
 }
 
-CBaseTutorState *CCSTutorStateSystem::ConstructNewState(TutorStateType stateType)
+CBaseTutorState* CCSTutorStateSystem::ConstructNewState(TutorStateType stateType)
 {
 	switch (stateType)
 	{
@@ -67,7 +67,7 @@ CCSTutorUndefinedState::~CCSTutorUndefinedState()
 	;
 }
 
-TutorStateType CCSTutorUndefinedState::CheckForStateTransition(GameEventType event, CBaseEntity *pEntity, CBaseEntity *pOther)
+TutorStateType CCSTutorUndefinedState::CheckForStateTransition(GameEventType event, CBaseEntity* pEntity, CBaseEntity* pOther)
 {
 	if (event == EVENT_PLAYER_SPAWNED)
 	{
@@ -77,12 +77,12 @@ TutorStateType CCSTutorUndefinedState::CheckForStateTransition(GameEventType eve
 	return TUTORSTATE_UNDEFINED;
 }
 
-TutorStateType CCSTutorUndefinedState::HandlePlayerSpawned(CBaseEntity *pEntity, CBaseEntity *pOther)
+TutorStateType CCSTutorUndefinedState::HandlePlayerSpawned(CBaseEntity* pEntity, CBaseEntity* pOther)
 {
-	CBasePlayer *pLocalPlayer = UTIL_GetLocalPlayer();
+	CBasePlayer* pLocalPlayer = UTIL_GetLocalPlayer();
 	if (pLocalPlayer)
 	{
-		CBasePlayer *pPlayer = static_cast<CBasePlayer *>(pEntity);
+		CBasePlayer* pPlayer = static_cast<CBasePlayer*>(pEntity);
 		if (pPlayer && pPlayer->IsPlayer() && pPlayer == pLocalPlayer)
 		{
 			return TUTORSTATE_WAITING_FOR_START;
@@ -92,7 +92,7 @@ TutorStateType CCSTutorUndefinedState::HandlePlayerSpawned(CBaseEntity *pEntity,
 	return TUTORSTATE_UNDEFINED;
 }
 
-const char *CCSTutorUndefinedState::GetStateString()
+const char* CCSTutorUndefinedState::GetStateString()
 {
 	return nullptr;
 }
@@ -107,7 +107,7 @@ CCSTutorWaitingForStartState::~CCSTutorWaitingForStartState()
 	;
 }
 
-TutorStateType CCSTutorWaitingForStartState::CheckForStateTransition(GameEventType event, CBaseEntity *pEntity, CBaseEntity *pOther)
+TutorStateType CCSTutorWaitingForStartState::CheckForStateTransition(GameEventType event, CBaseEntity* pEntity, CBaseEntity* pOther)
 {
 	switch (event)
 	{
@@ -120,7 +120,7 @@ TutorStateType CCSTutorWaitingForStartState::CheckForStateTransition(GameEventTy
 	return TUTORSTATE_UNDEFINED;
 }
 
-const char *CCSTutorWaitingForStartState::GetStateString()
+const char* CCSTutorWaitingForStartState::GetStateString()
 {
 #ifdef REGAMEDLL_FIXES
 	if (m_type < TUTORSTATE_UNDEFINED || m_type > TUTORSTATE_WAITING_FOR_START)
@@ -132,12 +132,12 @@ const char *CCSTutorWaitingForStartState::GetStateString()
 	return m_TutorStateStrings[m_type];
 }
 
-TutorStateType CCSTutorWaitingForStartState::HandlePlayerSpawned(CBaseEntity *pEntity, CBaseEntity *pOther)
+TutorStateType CCSTutorWaitingForStartState::HandlePlayerSpawned(CBaseEntity* pEntity, CBaseEntity* pOther)
 {
-	CBasePlayer *pLocalPlayer = UTIL_GetLocalPlayer();
+	CBasePlayer* pLocalPlayer = UTIL_GetLocalPlayer();
 	if (pLocalPlayer)
 	{
-		CBasePlayer *pPlayer = static_cast<CBasePlayer *>(pEntity);
+		CBasePlayer* pPlayer = static_cast<CBasePlayer*>(pEntity);
 		if (pPlayer && pPlayer->IsPlayer() && pPlayer == pLocalPlayer)
 		{
 			return TUTORSTATE_WAITING_FOR_START;
@@ -147,7 +147,7 @@ TutorStateType CCSTutorWaitingForStartState::HandlePlayerSpawned(CBaseEntity *pE
 	return TUTORSTATE_UNDEFINED;
 }
 
-TutorStateType CCSTutorWaitingForStartState::HandleBuyTimeStart(CBaseEntity *pEntity, CBaseEntity *pOther)
+TutorStateType CCSTutorWaitingForStartState::HandleBuyTimeStart(CBaseEntity* pEntity, CBaseEntity* pOther)
 {
 	return TUTORSTATE_BUYTIME;
 }
@@ -162,7 +162,7 @@ CCSTutorBuyMenuState::~CCSTutorBuyMenuState()
 	;
 }
 
-TutorStateType CCSTutorBuyMenuState::CheckForStateTransition(GameEventType event, CBaseEntity *pEntity, CBaseEntity *pOther)
+TutorStateType CCSTutorBuyMenuState::CheckForStateTransition(GameEventType event, CBaseEntity* pEntity, CBaseEntity* pOther)
 {
 	if (event == EVENT_ROUND_START)
 	{
@@ -172,7 +172,7 @@ TutorStateType CCSTutorBuyMenuState::CheckForStateTransition(GameEventType event
 	return TUTORSTATE_UNDEFINED;
 }
 
-const char *CCSTutorBuyMenuState::GetStateString()
+const char* CCSTutorBuyMenuState::GetStateString()
 {
 #ifdef REGAMEDLL_FIXES
 	if (m_type < TUTORSTATE_UNDEFINED || m_type > TUTORSTATE_WAITING_FOR_START)
@@ -184,7 +184,7 @@ const char *CCSTutorBuyMenuState::GetStateString()
 	return m_TutorStateStrings[m_type];
 }
 
-TutorStateType CCSTutorBuyMenuState::HandleRoundStart(CBaseEntity *pEntity, CBaseEntity *pOther)
+TutorStateType CCSTutorBuyMenuState::HandleRoundStart(CBaseEntity* pEntity, CBaseEntity* pOther)
 {
 	return TUTORSTATE_WAITING_FOR_START;
 }

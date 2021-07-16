@@ -20,7 +20,7 @@ TutorStateType CBaseTutorStateSystem::GetCurrentStateType() const
 	return TUTORSTATE_UNDEFINED;
 }
 
-const char *CBaseTutorState::m_TutorStateStrings[] =
+const char* CBaseTutorState::m_TutorStateStrings[] =
 {
 	"#Cstrike_TutorState_Undefined",						// TUTORSTATE_UNDEFINED
 	"#Cstrike_TutorState_Looking_For_Hostage",				// TUTORSTATE_LOOKING_FOR_HOSTAGE

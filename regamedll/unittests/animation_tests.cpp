@@ -5,7 +5,7 @@
 #pragma push_macro("vec3_t")
 #undef vec3_t
 
-extern void AngleQuaternion(vec_t *angles, vec_t *quaternion);
+extern void AngleQuaternion(vec_t* angles, vec_t* quaternion);
 
 TEST(AngleQuaternion, AnimationFuncs, 10000) {
 	struct testdata_t {

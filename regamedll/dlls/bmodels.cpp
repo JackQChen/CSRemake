@@ -1,7 +1,7 @@
 #include "precompiled.h"
 
 // Calculates origin of a bmodel from absmin/size because all bmodel origins are 0 0 0
-Vector VecBModelOrigin(entvars_t *pevBModel)
+Vector VecBModelOrigin(entvars_t* pevBModel)
 {
 	return pevBModel->absmin + (pevBModel->size * 0.5f);
 }
@@ -22,7 +22,7 @@ void CFuncWall::Spawn()
 	pev->flags |= FL_WORLDBRUSH;
 }
 
-void CFuncWall::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void CFuncWall::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	if (ShouldToggle(useType, int(pev->frame)))
 	{
@@ -89,7 +89,7 @@ BOOL CFuncWallToggle::IsOn()
 	return TRUE;
 }
 
-void CFuncWallToggle::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void CFuncWallToggle::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	int status = IsOn();
 
@@ -143,7 +143,7 @@ void CFuncConveyor::UpdateSpeed(float speed)
 	pev->rendercolor.z = (speedCode & 0xFF);
 }
 
-void CFuncConveyor::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void CFuncConveyor::Use(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	pev->speed = -pev->speed;
 	UpdateSpeed(pev->speed);
@@ -151,7 +151,7 @@ void CFuncConveyor::Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE 
 
 LINK_ENTITY_TO_CLASS(func_illusionary, CFuncIllusionary, CCSFuncIllusionary)
 
-void CFuncIllusionary::KeyValue(KeyValueData *pkvd)
+void CFuncIllusionary::KeyValue(KeyValueData* pkvd)
 {
 	// skin is used for content type
 	if (FStrEq(pkvd->szKeyName, "skin"))
@@ -207,7 +207,7 @@ TYPEDESCRIPTION CFuncRotating::m_SaveData[] =
 LINK_ENTITY_TO_CLASS(func_rotating, CFuncRotating, CCSFuncRotating)
 IMPLEMENT_SAVERESTORE(CFuncRotating, CBaseEntity)
 
-void CFuncRotating::KeyValue(KeyValueData *pkvd)
+void CFuncRotating::KeyValue(KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "fanfriction"))
 	{
@@ -233,7 +233,7 @@ void CFuncRotating::KeyValue(KeyValueData *pkvd)
 	else if (FStrEq(pkvd->szKeyName, "spawnorigin"))
 	{
 		Vector tmp;
-		UTIL_StringToVector((float *)tmp, pkvd->szValue);
+		UTIL_StringToVector((float*)tmp, pkvd->szValue);
 
 		if (tmp != g_vecZero)
 		{
@@ -368,7 +368,7 @@ void CFuncRotating::Spawn()
 void CFuncRotating::Restart()
 {
 	// stop sound, we're done
-	EMIT_SOUND_DYN(ENT(pev), CHAN_STATIC, (char *)STRING(pev->noiseRunning), 0, ATTN_NONE, SND_STOP, m_pitch);
+	EMIT_SOUND_DYN(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseRunning), 0, ATTN_NONE, SND_STOP, m_pitch);
 
 	// restore angles
 	pev->angles = m_angles;
@@ -417,7 +417,7 @@ void CFuncRotating::Restart()
 
 void CFuncRotating::Precache()
 {
-	char *szSoundFile = (char *)STRING(pev->message);
+	char* szSoundFile = (char*)STRING(pev->message);
 
 	// set up fan sounds
 	if (!FStringNull(pev->message) && Q_strlen(szSoundFile) > 0)
@@ -478,9 +478,9 @@ void CFuncRotating::Precache()
 }
 
 // Will hurt others based on how fast the brush is spinning
-void CFuncRotating::HurtTouch(CBaseEntity *pOther)
+void CFuncRotating::HurtTouch(CBaseEntity* pOther)
 {
-	entvars_t *pevOther = pOther->pev;
+	entvars_t* pevOther = pOther->pev;
 
 	// we can't hurt this thing, so we're not concerned with it
 	if (pevOther->takedamage == DAMAGE_NO)
@@ -545,7 +545,7 @@ void CFuncRotating::RampPitchVol(BOOL fUp)
 	}
 
 	// change the fan's vol and pitch
-	EMIT_SOUND_DYN(ENT(pev), CHAN_STATIC, (char *)STRING(pev->noiseRunning), fvol, m_flAttenuation, (SND_CHANGE_PITCH | SND_CHANGE_VOL), pitch);
+	EMIT_SOUND_DYN(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseRunning), fvol, m_flAttenuation, (SND_CHANGE_PITCH | SND_CHANGE_VOL), pitch);
 }
 
 // Accelerates a non-moving func_rotating up to it's speed
@@ -563,14 +563,14 @@ void CFuncRotating::SpinUp()
 		&& Q_abs(vecAVel.y) >= Q_abs(pev->movedir.y * pev->speed)
 		&& Q_abs(vecAVel.z) >= Q_abs(pev->movedir.z * pev->speed))
 #else
-	if (Q_abs(int(vecAVel.x)) >= Q_abs(int(pev->movedir.x * pev->speed))	
+	if (Q_abs(int(vecAVel.x)) >= Q_abs(int(pev->movedir.x * pev->speed))
 		&& Q_abs(int(vecAVel.y)) >= Q_abs(int(pev->movedir.y * pev->speed))
 		&& Q_abs(int(vecAVel.z)) >= Q_abs(int(pev->movedir.z * pev->speed)))
 #endif
 	{
 		// set speed in case we overshot
 		pev->avelocity = pev->movedir * pev->speed;
-		EMIT_SOUND_DYN(ENT(pev), CHAN_STATIC, (char *)STRING(pev->noiseRunning), m_flVolume, m_flAttenuation, (SND_CHANGE_PITCH | SND_CHANGE_VOL), MAX_FANPITCH);
+		EMIT_SOUND_DYN(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseRunning), m_flVolume, m_flAttenuation, (SND_CHANGE_PITCH | SND_CHANGE_VOL), MAX_FANPITCH);
 
 		SetThink(&CFuncRotating::Rotate);
 		Rotate();
@@ -611,7 +611,7 @@ void CFuncRotating::SpinDown()
 		pev->avelocity = g_vecZero;
 
 		// stop sound, we're done
-		EMIT_SOUND_DYN(ENT(pev), CHAN_STATIC, (char *)STRING(pev->noiseRunning), 0, ATTN_NONE, SND_STOP, m_pitch);
+		EMIT_SOUND_DYN(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseRunning), 0, ATTN_NONE, SND_STOP, m_pitch);
 
 		SetThink(&CFuncRotating::Rotate);
 		Rotate();
@@ -628,7 +628,7 @@ void CFuncRotating::Rotate()
 }
 
 // When a rotating brush is triggered
-void CFuncRotating::RotatingUse(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void CFuncRotating::RotatingUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	// is this a brush that should accelerate and decelerate when turned on/off (fan)?
 	if (pev->spawnflags & SF_BRUSH_ACCDCC)
@@ -645,7 +645,7 @@ void CFuncRotating::RotatingUse(CBaseEntity *pActivator, CBaseEntity *pCaller, U
 		else
 		{
 			SetThink(&CFuncRotating::SpinUp);
-			EMIT_SOUND_DYN(ENT(pev), CHAN_STATIC, (char *)STRING(pev->noiseRunning), 0.01, m_flAttenuation, 0, MIN_FANPITCH);
+			EMIT_SOUND_DYN(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseRunning), 0.01, m_flAttenuation, 0, MIN_FANPITCH);
 
 			pev->nextthink = pev->ltime + 0.1;
 		}
@@ -664,7 +664,7 @@ void CFuncRotating::RotatingUse(CBaseEntity *pActivator, CBaseEntity *pCaller, U
 		}
 		else
 		{
-			EMIT_SOUND_DYN(ENT(pev), CHAN_STATIC, (char *)STRING(pev->noiseRunning), m_flVolume, m_flAttenuation, 0, MAX_FANPITCH);
+			EMIT_SOUND_DYN(ENT(pev), CHAN_STATIC, (char*)STRING(pev->noiseRunning), m_flVolume, m_flAttenuation, 0, MAX_FANPITCH);
 			pev->avelocity = pev->movedir * pev->speed;
 
 			SetThink(&CFuncRotating::Rotate);
@@ -674,7 +674,7 @@ void CFuncRotating::RotatingUse(CBaseEntity *pActivator, CBaseEntity *pCaller, U
 }
 
 // An entity has blocked the brush
-void CFuncRotating::Blocked(CBaseEntity *pOther)
+void CFuncRotating::Blocked(CBaseEntity* pOther)
 {
 	pOther->TakeDamage(pev, pev, pev->dmg, DMG_CRUSH);
 }
@@ -694,7 +694,7 @@ TYPEDESCRIPTION CPendulum::m_SaveData[] =
 LINK_ENTITY_TO_CLASS(func_pendulum, CPendulum, CCSPendulum)
 IMPLEMENT_SAVERESTORE(CPendulum, CBaseEntity)
 
-void CPendulum::KeyValue(KeyValueData *pkvd)
+void CPendulum::KeyValue(KeyValueData* pkvd)
 {
 	if (FStrEq(pkvd->szKeyName, "distance"))
 	{
@@ -757,7 +757,7 @@ void CPendulum::Spawn()
 	}
 }
 
-void CPendulum::PendulumUse(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value)
+void CPendulum::PendulumUse(CBaseEntity* pActivator, CBaseEntity* pCaller, USE_TYPE useType, float value)
 {
 	// Pendulum is moving, stop it and auto-return if necessary
 	if (pev->speed)
@@ -800,7 +800,7 @@ void CPendulum::Stop()
 	pev->avelocity = g_vecZero;
 }
 
-void CPendulum::Blocked(CBaseEntity *pOther)
+void CPendulum::Blocked(CBaseEntity* pOther)
 {
 	m_time = gpGlobals->time;
 }
@@ -856,9 +856,9 @@ void CPendulum::Swing()
 	}
 }
 
-void CPendulum::Touch(CBaseEntity *pOther)
+void CPendulum::Touch(CBaseEntity* pOther)
 {
-	entvars_t *pevOther = pOther->pev;
+	entvars_t* pevOther = pOther->pev;
 
 	if (pev->dmg <= 0)
 		return;
@@ -879,9 +879,9 @@ void CPendulum::Touch(CBaseEntity *pOther)
 	pevOther->velocity = (pevOther->origin - VecBModelOrigin(pev)).Normalize() * damage;
 }
 
-void CPendulum::RopeTouch(CBaseEntity *pOther)
+void CPendulum::RopeTouch(CBaseEntity* pOther)
 {
-	entvars_t *pevOther = pOther->pev;
+	entvars_t* pevOther = pOther->pev;
 
 	// not a player!
 	if (!pOther->IsPlayer())

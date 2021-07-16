@@ -18,14 +18,14 @@
 
 #pragma once
 
-class CItemAirBox: public CArmoury {
+class CItemAirBox : public CArmoury {
 public:
 	void Spawn();
 	void Precache();
 	void Restart();
 	void OnDestroy();
-	void Touch(CBaseEntity *pOther);
-	void KeyValue(KeyValueData *pkvd);
+	void Touch(CBaseEntity* pOther);
+	void KeyValue(KeyValueData* pkvd);
 	int ObjectCaps() { return (CArmoury::ObjectCaps() | FCAP_MUST_RESET); }
 
 protected:

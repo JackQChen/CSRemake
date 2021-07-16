@@ -55,7 +55,7 @@ BOOL CBaseMonster::HasHumanGibs()
 		|| myClass == CLASS_PLAYER_ALLY
 		|| myClass == CLASS_HUMAN_PASSIVE
 		|| myClass == CLASS_PLAYER)
-		 return TRUE;
+		return TRUE;
 
 	return FALSE;
 }
@@ -69,7 +69,7 @@ BOOL CBaseMonster::HasAlienGibs()
 		|| myClass == CLASS_INSECT
 		|| myClass == CLASS_ALIEN_PREDATOR
 		|| myClass == CLASS_ALIEN_PREY)
-		 return TRUE;
+		return TRUE;
 
 	return FALSE;
 }
@@ -320,7 +320,7 @@ void CBaseMonster::CallGibMonster()
 		UTIL_Remove(this);
 }
 
-void CBaseMonster::Killed(entvars_t *pevAttacker, int iGib)
+void CBaseMonster::Killed(entvars_t* pevAttacker, int iGib)
 {
 	if (HasMemory(bits_MEMORY_KILLED))
 	{
@@ -341,7 +341,7 @@ void CBaseMonster::Killed(entvars_t *pevAttacker, int iGib)
 	SetConditions(bits_COND_LIGHT_DAMAGE);
 
 	// tell owner ( if any ) that we're dead.This is mostly for MonsterMaker functionality.
-	CBaseEntity *pOwner = CBaseEntity::Instance(pev->owner);
+	CBaseEntity* pOwner = CBaseEntity::Instance(pev->owner);
 	if (pOwner)
 	{
 		pOwner->DeathNotice(pev);
@@ -387,7 +387,7 @@ BOOL CBaseMonster::TakeHealth(float flHealth, int bitsDamageType)
 //
 // Time-based damage: only occurs while the monster is within the trigger_hurt.
 // When a monster is poisoned via an arrow etc it takes all the poison damage at once.
-BOOL CBaseMonster::TakeDamage(entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType)
+BOOL CBaseMonster::TakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
 {
 	if (pev->takedamage == DAMAGE_NO)
 		return FALSE;
@@ -414,7 +414,7 @@ BOOL CBaseMonster::TakeDamage(entvars_t *pevInflictor, entvars_t *pevAttacker, f
 
 	if (!FNullEnt(pevInflictor))
 	{
-		CBaseEntity *pInflictor = CBaseEntity::Instance(pevInflictor);
+		CBaseEntity* pInflictor = CBaseEntity::Instance(pevInflictor);
 
 		if (pInflictor)
 		{
@@ -496,14 +496,14 @@ BOOL CBaseMonster::TakeDamage(entvars_t *pevInflictor, entvars_t *pevAttacker, f
 }
 
 // Takedamage function called when a monster's corpse is damaged.
-BOOL CBaseMonster::DeadTakeDamage(entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType)
+BOOL CBaseMonster::DeadTakeDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int bitsDamageType)
 {
 	// grab the vector of the incoming attack. ( pretend that the inflictor is a little lower than it really is, so the body will tend to fly upward a bit).
 	Vector vecDir(0, 0, 0);
 
 	if (!FNullEnt(pevInflictor))
 	{
-		CBaseEntity *pInflictor = CBaseEntity::Instance(pevInflictor);
+		CBaseEntity* pInflictor = CBaseEntity::Instance(pevInflictor);
 		if (pInflictor)
 		{
 			vecDir = (pInflictor->Center() - Vector(0, 0, 10) - Center()).Normalize();
@@ -511,7 +511,7 @@ BOOL CBaseMonster::DeadTakeDamage(entvars_t *pevInflictor, entvars_t *pevAttacke
 		}
 	}
 
-// turn this back on when the bounding box issues are resolved.
+	// turn this back on when the bounding box issues are resolved.
 #if 0
 
 	pev->flags &= ~FL_ONGROUND;
@@ -554,7 +554,7 @@ float CBaseMonster::DamageForce(float damage)
 }
 
 
-void CBaseMonster::RadiusDamage(entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int iClassIgnore, int bitsDamageType)
+void CBaseMonster::RadiusDamage(entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int iClassIgnore, int bitsDamageType)
 {
 	if (flDamage > 80)
 		::RadiusDamage(pev->origin, pevInflictor, pevAttacker, flDamage, flDamage * 3.5, iClassIgnore, bitsDamageType);
@@ -562,7 +562,7 @@ void CBaseMonster::RadiusDamage(entvars_t *pevInflictor, entvars_t *pevAttacker,
 		::RadiusDamage2(pev->origin, pevInflictor, pevAttacker, flDamage, flDamage * (RANDOM_FLOAT(0.5, 1.5) + 3), iClassIgnore, bitsDamageType);
 }
 
-NOXREF void CBaseMonster::RadiusDamage(Vector vecSrc, entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int iClassIgnore, int bitsDamageType)
+NOXREF void CBaseMonster::RadiusDamage(Vector vecSrc, entvars_t* pevInflictor, entvars_t* pevAttacker, float flDamage, int iClassIgnore, int bitsDamageType)
 {
 	if (flDamage > 80)
 		::RadiusDamage(vecSrc, pevInflictor, pevAttacker, flDamage, flDamage * 3.5, iClassIgnore, bitsDamageType);
@@ -575,7 +575,7 @@ NOXREF void CBaseMonster::RadiusDamage(Vector vecSrc, entvars_t *pevInflictor, e
 // other stuff to the victim (punchangle, etc)
 //
 // Used for many contact-range melee attacks. Bites, claws, etc.
-NOXREF CBaseEntity *CBaseMonster::CheckTraceHullAttack(float flDist, int iDamage, int iDmgType)
+NOXREF CBaseEntity* CBaseMonster::CheckTraceHullAttack(float flDist, int iDamage, int iDmgType)
 {
 	TraceResult tr;
 
@@ -592,7 +592,7 @@ NOXREF CBaseEntity *CBaseMonster::CheckTraceHullAttack(float flDist, int iDamage
 
 	if (tr.pHit)
 	{
-		CBaseEntity *pEntity = CBaseEntity::Instance(tr.pHit);
+		CBaseEntity* pEntity = CBaseEntity::Instance(tr.pHit);
 
 		if (iDamage > 0)
 		{
@@ -607,7 +607,7 @@ NOXREF CBaseEntity *CBaseMonster::CheckTraceHullAttack(float flDist, int iDamage
 
 // Returns true is the passed ent is in the caller's forward view cone.
 // The dot product is performed in 2d, making the view cone infinitely tall.
-BOOL CBaseMonster::FInViewCone(CBaseEntity *pEntity)
+BOOL CBaseMonster::FInViewCone(CBaseEntity* pEntity)
 {
 	Vector2D vec2LOS;
 	float flDot;
@@ -631,7 +631,7 @@ BOOL CBaseMonster::FInViewCone(CBaseEntity *pEntity)
 
 // Returns true is the passed vector is in the caller's forward view cone.
 // The dot product is performed in 2d, making the view cone infinitely tall.
-BOOL CBaseMonster::FInViewCone(const Vector *pOrigin)
+BOOL CBaseMonster::FInViewCone(const Vector* pOrigin)
 {
 	Vector2D vec2LOS;
 	float flDot;
@@ -653,7 +653,7 @@ BOOL CBaseMonster::FInViewCone(const Vector *pOrigin)
 	}
 }
 
-void CBaseMonster::TraceAttack(entvars_t *pevAttacker, float flDamage, Vector vecDir, TraceResult *ptr, int bitsDamageType)
+void CBaseMonster::TraceAttack(entvars_t* pevAttacker, float flDamage, Vector vecDir, TraceResult* ptr, int bitsDamageType)
 {
 	Vector vecOrigin = ptr->vecEndPos - vecDir * 4;
 
@@ -762,12 +762,12 @@ BOOL CBaseMonster::FCheckAITrigger()
 	return FALSE;
 }
 
-void CBaseMonster::KeyValue(KeyValueData *pkvd)
+void CBaseMonster::KeyValue(KeyValueData* pkvd)
 {
 	CBaseToggle::KeyValue(pkvd);
 }
 
-int CBaseMonster::IRelationship(CBaseEntity *pTarget)
+int CBaseMonster::IRelationship(CBaseEntity* pTarget)
 {
 	static int const iEnemy[14][14] =
 	{
@@ -809,8 +809,8 @@ void CBaseMonster::Look(int iDistance)
 	m_pLink = nullptr;
 
 	// the current visible entity that we're dealing with
-	CBaseEntity *pSightEnt = nullptr;
-	CBaseEntity *pList[100];
+	CBaseEntity* pSightEnt = nullptr;
+	CBaseEntity* pList[100];
 
 	Vector delta(iDistance, iDistance, iDistance);
 
@@ -874,10 +874,10 @@ void CBaseMonster::Look(int iDistance)
 //
 // UNDONE: currently, this only returns the closest enemy.
 // we'll want to consider distance, relationship, attack types, back turned, etc.
-CBaseEntity *CBaseMonster::BestVisibleEnemy()
+CBaseEntity* CBaseMonster::BestVisibleEnemy()
 {
-	CBaseEntity *pReturn;
-	CBaseEntity *pNextEnt;
+	CBaseEntity* pReturn;
+	CBaseEntity* pNextEnt;
 	int iNearest;
 	int iDist;
 	int iBestRelationship;
@@ -923,7 +923,7 @@ CBaseEntity *CBaseMonster::BestVisibleEnemy()
 	return pReturn;
 }
 
-NOXREF void CBaseMonster::MakeDamageBloodDecal(int cCount, float flNoise, TraceResult *ptr, Vector &vecDir)
+NOXREF void CBaseMonster::MakeDamageBloodDecal(int cCount, float flNoise, TraceResult* ptr, Vector& vecDir)
 {
 	// make blood decal on the wall!
 	TraceResult Bloodtr;
@@ -961,7 +961,7 @@ NOXREF void CBaseMonster::MakeDamageBloodDecal(int cCount, float flNoise, TraceR
 	}
 }
 
-void CBaseMonster::BloodSplat(const Vector &vecSrc, const Vector &vecDir, int HitLocation, int iVelocity)
+void CBaseMonster::BloodSplat(const Vector& vecSrc, const Vector& vecDir, int HitLocation, int iVelocity)
 {
 	if (HitLocation != HITGROUP_HEAD)
 		return;
@@ -970,15 +970,15 @@ void CBaseMonster::BloodSplat(const Vector &vecSrc, const Vector &vecDir, int Hi
 	UTIL_BloodStream(vecSrc, vecDir, BLOOD_COLOR_DARKRED, iVelocity + RANDOM_LONG(0, 100));
 #else
 	MESSAGE_BEGIN(MSG_PVS, SVC_TEMPENTITY, vecSrc);
-		WRITE_BYTE(TE_BLOODSTREAM);
-		WRITE_COORD(vecSrc.x);
-		WRITE_COORD(vecSrc.y);
-		WRITE_COORD(vecSrc.z);
-		WRITE_COORD(vecDir.x);
-		WRITE_COORD(vecDir.y);
-		WRITE_COORD(vecDir.z);
-		WRITE_BYTE(BLOOD_COLOR_DARKRED);
-		WRITE_BYTE(iVelocity + RANDOM_LONG(0, 100));
+	WRITE_BYTE(TE_BLOODSTREAM);
+	WRITE_COORD(vecSrc.x);
+	WRITE_COORD(vecSrc.y);
+	WRITE_COORD(vecSrc.z);
+	WRITE_COORD(vecDir.x);
+	WRITE_COORD(vecDir.y);
+	WRITE_COORD(vecDir.z);
+	WRITE_BYTE(BLOOD_COLOR_DARKRED);
+	WRITE_BYTE(iVelocity + RANDOM_LONG(0, 100));
 	MESSAGE_END();
 #endif
 }

@@ -53,4 +53,4 @@ struct skilldata_t
 
 extern skilldata_t gSkillData;
 
-float GetSkillCvar(char *pName);
+float GetSkillCvar(char* pName);

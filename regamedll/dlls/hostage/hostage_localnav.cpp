@@ -31,16 +31,16 @@
 EntityHandle<CHostage> CLocalNav::m_hQueue[MAX_HOSTAGES_NAV];
 EntityHandle<CHostage> CLocalNav::m_hHostages[MAX_HOSTAGES_NAV];
 
-int CLocalNav::m_CurRequest  = 0;
-int CLocalNav::m_NumRequest  = 0;
+int CLocalNav::m_CurRequest = 0;
+int CLocalNav::m_NumRequest = 0;
 int CLocalNav::m_NumHostages = 0;
-int CLocalNav::m_NodeValue   = 0;
+int CLocalNav::m_NodeValue = 0;
 
-float CLocalNav::m_flStepSize      = 18.0f; // sv_stepsize by default
+float CLocalNav::m_flStepSize = 18.0f; // sv_stepsize by default
 float CLocalNav::m_flNextCvarCheck = 0.0f;
 float CLocalNav::m_flLastThinkTime = 0.0f;
 
-CLocalNav::CLocalNav(CHostage *pOwner)
+CLocalNav::CLocalNav(CHostage* pOwner)
 {
 	m_pOwner = pOwner;
 	m_pTargetEnt = nullptr;
@@ -61,9 +61,9 @@ CLocalNav::~CLocalNav()
 	}
 }
 
-node_index_t CLocalNav::AddNode(node_index_t nindexParent, Vector &vecLoc, int offsetX, int offsetY, byte bDepth)
+node_index_t CLocalNav::AddNode(node_index_t nindexParent, Vector& vecLoc, int offsetX, int offsetY, byte bDepth)
 {
-	localnode_t *nodeNew;
+	localnode_t* nodeNew;
 
 	if (m_nindexAvailableNode == MAX_NODES)
 		return NODE_INVALID_EMPTY;
@@ -80,7 +80,7 @@ node_index_t CLocalNav::AddNode(node_index_t nindexParent, Vector &vecLoc, int o
 	return m_nindexAvailableNode++;
 }
 
-localnode_t *CLocalNav::GetNode(node_index_t nindex)
+localnode_t* CLocalNav::GetNode(node_index_t nindex)
 {
 	return &m_nodeArr[nindex];
 }
@@ -88,7 +88,7 @@ localnode_t *CLocalNav::GetNode(node_index_t nindex)
 node_index_t CLocalNav::NodeExists(int offsetX, int offsetY)
 {
 	node_index_t nindexCurrent = NODE_INVALID_EMPTY;
-	localnode_t *nodeCurrent;
+	localnode_t* nodeCurrent;
 
 	for (nindexCurrent = m_nindexAvailableNode - 1; nindexCurrent != NODE_INVALID_EMPTY; nindexCurrent--)
 	{
@@ -133,8 +133,8 @@ void CLocalNav::AddPathNode(node_index_t nindexSource, int offsetX, int offsetY,
 	}
 	else
 	{
-		localnode_t *nodeSource;
-		localnode_t *nodeCurrent;
+		localnode_t* nodeSource;
+		localnode_t* nodeCurrent;
 		node_index_t nindexCurrent;
 
 		nodeCurrent = GetNode(nindexSource);
@@ -199,8 +199,7 @@ void CLocalNav::AddPathNode(node_index_t nindexSource, int offsetX, int offsetY,
 					nodeCurrent = nodeSource;
 					nindexSource = nindexCurrent;
 				}
-			}
-			while (nindexCurrent);
+			} while (nindexCurrent);
 		}
 
 		vecSource = nodeCurrent->vecLoc;
@@ -213,10 +212,10 @@ void CLocalNav::AddPathNode(node_index_t nindexSource, int offsetX, int offsetY,
 	}
 }
 
-node_index_t CLocalNav::GetBestNode(Vector &vecOrigin, Vector &vecDest)
+node_index_t CLocalNav::GetBestNode(Vector& vecOrigin, Vector& vecDest)
 {
 	node_index_t nindexCurrent;
-	localnode_t *nodeCurrent;
+	localnode_t* nodeCurrent;
 	node_index_t nindexBest;
 	float flBestVal;
 
@@ -263,14 +262,14 @@ node_index_t CLocalNav::GetBestNode(Vector &vecOrigin, Vector &vecDest)
 	return nindexBest;
 }
 
-int CLocalNav::SetupPathNodes(node_index_t nindex, Vector *vecNodes, BOOL fNoMonsters)
+int CLocalNav::SetupPathNodes(node_index_t nindex, Vector* vecNodes, BOOL fNoMonsters)
 {
 	node_index_t nCurrentIndex = nindex;
 	int nNodeCount = 0;
 
 	while (nCurrentIndex != NODE_INVALID_EMPTY)
 	{
-		localnode_t *nodeCurrent = GetNode(nCurrentIndex);
+		localnode_t* nodeCurrent = GetNode(nCurrentIndex);
 		Vector vecCurrentLoc = nodeCurrent->vecLoc;
 		vecNodes[nNodeCount++] = vecCurrentLoc;
 
@@ -280,7 +279,7 @@ int CLocalNav::SetupPathNodes(node_index_t nindex, Vector *vecNodes, BOOL fNoMon
 	return nNodeCount;
 }
 
-node_index_t CLocalNav::GetFurthestTraversableNode(Vector &vecStartingLoc, Vector *vecNodes, int nTotalNodes, BOOL fNoMonsters)
+node_index_t CLocalNav::GetFurthestTraversableNode(Vector& vecStartingLoc, Vector* vecNodes, int nTotalNodes, BOOL fNoMonsters)
 {
 	int nCount = 0;
 	while (nCount < nTotalNodes)
@@ -294,7 +293,7 @@ node_index_t CLocalNav::GetFurthestTraversableNode(Vector &vecStartingLoc, Vecto
 	return NODE_INVALID_EMPTY;
 }
 
-node_index_t CLocalNav::FindPath(Vector &vecStart, Vector &vecDest, float flTargetRadius, BOOL fNoMonsters)
+node_index_t CLocalNav::FindPath(Vector& vecStart, Vector& vecDest, float flTargetRadius, BOOL fNoMonsters)
 {
 	node_index_t nIndexBest = FindDirectPath(vecStart, vecDest, flTargetRadius, fNoMonsters);
 
@@ -303,7 +302,7 @@ node_index_t CLocalNav::FindPath(Vector &vecStart, Vector &vecDest, float flTarg
 		return nIndexBest;
 	}
 
-	localnode_t *node;
+	localnode_t* node;
 	Vector vecNodeLoc;
 	real_t flDistToDest;
 
@@ -391,7 +390,7 @@ node_index_t CLocalNav::FindPath(Vector &vecStart, Vector &vecDest, float flTarg
 	return nIndexBest;
 }
 
-node_index_t CLocalNav::FindDirectPath(Vector &vecStart, Vector &vecDest, float flTargetRadius, BOOL fNoMonsters)
+node_index_t CLocalNav::FindDirectPath(Vector& vecStart, Vector& vecDest, float flTargetRadius, BOOL fNoMonsters)
 {
 	Vector vecActualDest;
 	Vector vecPathDir;
@@ -424,7 +423,7 @@ node_index_t CLocalNav::FindDirectPath(Vector &vecStart, Vector &vecDest, float 
 	return nIndexLast;
 }
 
-BOOL CLocalNav::PathClear(Vector &vecOrigin, Vector &vecDest, BOOL fNoMonsters, TraceResult &tr)
+BOOL CLocalNav::PathClear(Vector& vecOrigin, Vector& vecDest, BOOL fNoMonsters, TraceResult& tr)
 {
 	TRACE_MONSTER_HULL(m_pOwner->edict(), vecOrigin, vecDest, fNoMonsters, m_pOwner->edict(), &tr);
 
@@ -443,13 +442,13 @@ BOOL CLocalNav::PathClear(Vector &vecOrigin, Vector &vecDest, BOOL fNoMonsters, 
 	return FALSE;
 }
 
-BOOL CLocalNav::PathClear(Vector &vecSource, Vector &vecDest, BOOL fNoMonsters)
+BOOL CLocalNav::PathClear(Vector& vecSource, Vector& vecDest, BOOL fNoMonsters)
 {
 	TraceResult tr;
 	return PathClear(vecSource, vecDest, fNoMonsters, tr);
 }
 
-PathTraversAble CLocalNav::PathTraversable(Vector &vecSource, Vector &vecDest, BOOL fNoMonsters)
+PathTraversAble CLocalNav::PathTraversable(Vector& vecSource, Vector& vecDest, BOOL fNoMonsters)
 {
 	TraceResult tr;
 	Vector vecSrcTmp;
@@ -573,7 +572,7 @@ PathTraversAble CLocalNav::PathTraversable(Vector &vecSource, Vector &vecDest, B
 	return retval;
 }
 
-BOOL CLocalNav::SlopeTraversable(Vector &vecSource, Vector &vecDest, BOOL fNoMonsters, TraceResult &tr)
+BOOL CLocalNav::SlopeTraversable(Vector& vecSource, Vector& vecDest, BOOL fNoMonsters, TraceResult& tr)
 {
 	Vector vecSlopeEnd;
 	Vector vecDown;
@@ -612,7 +611,7 @@ BOOL CLocalNav::SlopeTraversable(Vector &vecSource, Vector &vecDest, BOOL fNoMon
 	return TRUE;
 }
 
-BOOL CLocalNav::LadderTraversable(Vector &vecSource, Vector &vecDest, BOOL fNoMonsters, TraceResult &tr)
+BOOL CLocalNav::LadderTraversable(Vector& vecSource, Vector& vecDest, BOOL fNoMonsters, TraceResult& tr)
 {
 	Vector vecStepStart;
 	Vector vecStepDest;
@@ -636,7 +635,7 @@ BOOL CLocalNav::LadderTraversable(Vector &vecSource, Vector &vecDest, BOOL fNoMo
 	return PathTraversable(vecStepStart, vecDest, fNoMonsters);
 }
 
-BOOL CLocalNav::StepTraversable(Vector &vecSource, Vector &vecDest, BOOL fNoMonsters, TraceResult &tr)
+BOOL CLocalNav::StepTraversable(Vector& vecSource, Vector& vecDest, BOOL fNoMonsters, TraceResult& tr)
 {
 	Vector vecStepStart;
 	Vector vecStepDest;
@@ -678,7 +677,7 @@ BOOL CLocalNav::StepTraversable(Vector &vecSource, Vector &vecDest, BOOL fNoMons
 	return TRUE;
 }
 
-BOOL CLocalNav::StepJumpable(Vector &vecSource, Vector &vecDest, BOOL fNoMonsters, TraceResult &tr)
+BOOL CLocalNav::StepJumpable(Vector& vecSource, Vector& vecDest, BOOL fNoMonsters, TraceResult& tr)
 {
 	Vector vecStepStart;
 	Vector vecStepDest;
@@ -729,7 +728,7 @@ BOOL CLocalNav::StepJumpable(Vector &vecSource, Vector &vecDest, BOOL fNoMonster
 	return FALSE;
 }
 
-BOOL CLocalNav::LadderHit(Vector &vecSource, Vector &vecDest, TraceResult &tr)
+BOOL CLocalNav::LadderHit(Vector& vecSource, Vector& vecDest, TraceResult& tr)
 {
 	Vector vecFwd, vecRight, vecUp;
 	Vector vecAngles, vecOrigin;
@@ -822,7 +821,7 @@ void CLocalNav::Think()
 	}
 }
 
-void CLocalNav::RequestNav(CHostage *pCaller)
+void CLocalNav::RequestNav(CHostage* pCaller)
 {
 	int curr = m_CurRequest;
 	int found = 0;

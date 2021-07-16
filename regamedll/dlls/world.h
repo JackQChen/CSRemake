@@ -33,14 +33,14 @@
 #define SF_WORLD_FORCETEAM  BIT(2) // Force teams
 
 // This spawns first when each level begins.
-class CWorld: public CBaseEntity {
+class CWorld : public CBaseEntity {
 public:
 	virtual void Spawn();
 	virtual void Precache();
-	virtual void KeyValue(KeyValueData *pkvd);
+	virtual void KeyValue(KeyValueData* pkvd);
 };
 
-void CopyToBodyQue(entvars_t *pev);
+void CopyToBodyQue(entvars_t* pev);
 void ClearBodyQue();
 
 extern char g_szMapBriefingText[512];

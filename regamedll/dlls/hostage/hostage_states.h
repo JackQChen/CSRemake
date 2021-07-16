@@ -30,22 +30,22 @@
 
 class CHostageImprov;
 
-class HostageState: public SimpleState<CHostageImprov *>, public IImprovEvent
+class HostageState : public SimpleState<CHostageImprov*>, public IImprovEvent
 {
 public:
 	virtual ~HostageState() {};
-	virtual void UpdateStationaryAnimation(CHostageImprov *improv) {};
+	virtual void UpdateStationaryAnimation(CHostageImprov* improv) {};
 };
 
-class HostageStateMachine: public SimpleStateMachine<CHostageImprov *, HostageState>, public IImprovEvent
+class HostageStateMachine : public SimpleStateMachine<CHostageImprov*, HostageState>, public IImprovEvent
 {
 public:
-	virtual void OnMoveToSuccess(const Vector &goal)
+	virtual void OnMoveToSuccess(const Vector& goal)
 	{
 		if (m_state)
 			m_state->OnMoveToSuccess(goal);
 	}
-	virtual void OnMoveToFailure(const Vector &goal, MoveToFailureType reason)
+	virtual void OnMoveToFailure(const Vector& goal, MoveToFailureType reason)
 	{
 		if (m_state)
 			m_state->OnMoveToFailure(goal, reason);
@@ -55,25 +55,25 @@ public:
 		if (m_state)
 			m_state->OnInjury(amount);
 	}
-	void UpdateStationaryAnimation(CHostageImprov *improv)
+	void UpdateStationaryAnimation(CHostageImprov* improv)
 	{
 		if (m_state)
 			m_state->UpdateStationaryAnimation(improv);
 	}
 };
 
-class HostageIdleState: public HostageState
+class HostageIdleState : public HostageState
 {
 public:
 	virtual ~HostageIdleState() {};
 
-	virtual void OnEnter(CHostageImprov *improv);
-	virtual void OnUpdate(CHostageImprov *improv);
-	virtual void OnExit(CHostageImprov *improv);
-	virtual const char *GetName() const { return "Idle"; }
-	virtual void UpdateStationaryAnimation(CHostageImprov *improv);
-	virtual void OnMoveToSuccess(const Vector &goal) { m_moveState = MoveDone; }
-	virtual void OnMoveToFailure(const Vector &goal, MoveToFailureType reason) { m_moveState = MoveFailed; }
+	virtual void OnEnter(CHostageImprov* improv);
+	virtual void OnUpdate(CHostageImprov* improv);
+	virtual void OnExit(CHostageImprov* improv);
+	virtual const char* GetName() const { return "Idle"; }
+	virtual void UpdateStationaryAnimation(CHostageImprov* improv);
+	virtual void OnMoveToSuccess(const Vector& goal) { m_moveState = MoveDone; }
+	virtual void OnMoveToFailure(const Vector& goal, MoveToFailureType reason) { m_moveState = MoveFailed; }
 	virtual void OnInjury(float amount = -1.0f) { m_fleeTimer.Invalidate(); m_mustFlee = true; }
 
 private:
@@ -96,19 +96,19 @@ private:
 	bool m_mustFlee;
 };
 
-class HostageEscapeToCoverState: public HostageState
+class HostageEscapeToCoverState : public HostageState
 {
 public:
 	virtual ~HostageEscapeToCoverState() {};
 
-	virtual void OnEnter(CHostageImprov *improv);
-	virtual void OnUpdate(CHostageImprov *improv);
-	virtual void OnExit(CHostageImprov *improv);
-	virtual const char *GetName() const { return "Escape:ToCover"; }
-	virtual void OnMoveToFailure(const Vector &goal, MoveToFailureType reason);
+	virtual void OnEnter(CHostageImprov* improv);
+	virtual void OnUpdate(CHostageImprov* improv);
+	virtual void OnExit(CHostageImprov* improv);
+	virtual const char* GetName() const { return "Escape:ToCover"; }
+	virtual void OnMoveToFailure(const Vector& goal, MoveToFailureType reason);
 
 public:
-	void SetRescueGoal(const Vector &rescueGoal) { m_rescueGoal = rescueGoal; }
+	void SetRescueGoal(const Vector& rescueGoal) { m_rescueGoal = rescueGoal; }
 
 private:
 	Vector m_rescueGoal;
@@ -116,21 +116,21 @@ private:
 	bool m_canEscape;
 };
 
-class HostageEscapeLookAroundState: public HostageState
+class HostageEscapeLookAroundState : public HostageState
 {
 public:
 	virtual ~HostageEscapeLookAroundState() {};
 
-	virtual void OnEnter(CHostageImprov *improv);
-	virtual void OnUpdate(CHostageImprov *improv);
-	virtual void OnExit(CHostageImprov *improv);
-	virtual const char *GetName() const { return "Escape:LookAround"; }
+	virtual void OnEnter(CHostageImprov* improv);
+	virtual void OnUpdate(CHostageImprov* improv);
+	virtual void OnExit(CHostageImprov* improv);
+	virtual const char* GetName() const { return "Escape:LookAround"; }
 
 private:
 	CountdownTimer m_timer;
 };
 
-class HostageEscapeState: public HostageState
+class HostageEscapeState : public HostageState
 {
 public:
 	HostageEscapeState()
@@ -140,11 +140,11 @@ public:
 	}
 	virtual ~HostageEscapeState() {};
 
-	virtual void OnEnter(CHostageImprov *improv);
-	virtual void OnUpdate(CHostageImprov *improv);
-	virtual void OnExit(CHostageImprov *improv);
-	virtual const char *GetName() const { return "Escape"; }
-	virtual void OnMoveToFailure(const Vector &goal, MoveToFailureType reason) { m_behavior.OnMoveToFailure(goal, reason); }
+	virtual void OnEnter(CHostageImprov* improv);
+	virtual void OnUpdate(CHostageImprov* improv);
+	virtual void OnExit(CHostageImprov* improv);
+	virtual const char* GetName() const { return "Escape"; }
+	virtual void OnMoveToFailure(const Vector& goal, MoveToFailureType reason) { m_behavior.OnMoveToFailure(goal, reason); }
 
 public:
 	void ToCover() { m_behavior.SetState(&m_toCoverState); }
@@ -158,31 +158,31 @@ private:
 	CountdownTimer m_runTimer;
 };
 
-class HostageRetreatState: public HostageState
+class HostageRetreatState : public HostageState
 {
 public:
 	virtual ~HostageRetreatState() {};
 
-	virtual void OnEnter(CHostageImprov *improv);
-	virtual void OnUpdate(CHostageImprov *improv);
-	virtual void OnExit(CHostageImprov *improv);
-	virtual const char *GetName() const { return "Retreat"; }
+	virtual void OnEnter(CHostageImprov* improv);
+	virtual void OnUpdate(CHostageImprov* improv);
+	virtual void OnExit(CHostageImprov* improv);
+	virtual const char* GetName() const { return "Retreat"; }
 };
 
-class HostageFollowState: public HostageState
+class HostageFollowState : public HostageState
 {
 public:
 	virtual ~HostageFollowState() {};
 
-	virtual void OnEnter(CHostageImprov *improv);
-	virtual void OnUpdate(CHostageImprov *improv);
-	virtual void OnExit(CHostageImprov *improv);
-	virtual const char *GetName() const { return "Follow"; }
-	virtual void UpdateStationaryAnimation(CHostageImprov *improv);
+	virtual void OnEnter(CHostageImprov* improv);
+	virtual void OnUpdate(CHostageImprov* improv);
+	virtual void OnExit(CHostageImprov* improv);
+	virtual const char* GetName() const { return "Follow"; }
+	virtual void UpdateStationaryAnimation(CHostageImprov* improv);
 
 public:
-	void SetLeader(CBasePlayer *pLeader) { m_leader = pLeader; }
-	CBasePlayer *GetLeader() const { return m_leader; }
+	void SetLeader(CBasePlayer* pLeader) { m_leader = pLeader; }
+	CBasePlayer* GetLeader() const { return m_leader; }
 
 private:
 	mutable EntityHandle<CBasePlayer> m_leader;
@@ -196,15 +196,15 @@ private:
 	CountdownTimer m_waitForFriendTimer;
 };
 
-class HostageAnimateState: public HostageState
+class HostageAnimateState : public HostageState
 {
 public:
 	virtual ~HostageAnimateState() {}
 
-	virtual void OnEnter(CHostageImprov *improv);
-	virtual void OnUpdate(CHostageImprov *improv);
-	virtual void OnExit(CHostageImprov *improv);
-	virtual const char *GetName() const { return "Animate"; }
+	virtual void OnEnter(CHostageImprov* improv);
+	virtual void OnUpdate(CHostageImprov* improv);
+	virtual void OnExit(CHostageImprov* improv);
+	virtual const char* GetName() const { return "Animate"; }
 
 public:
 	struct SeqInfo
@@ -235,15 +235,15 @@ public:
 	};
 
 	void Reset();
-	void AddSequence(CHostageImprov *improv, const char *seqName, float holdTime = -1.0f, float rate = 1.0f);
-	void AddSequence(CHostageImprov *improv, int activity, float holdTime = -1.0f, float rate = 1.0f);
+	void AddSequence(CHostageImprov* improv, const char* seqName, float holdTime = -1.0f, float rate = 1.0f);
+	void AddSequence(CHostageImprov* improv, int activity, float holdTime = -1.0f, float rate = 1.0f);
 
 	bool IsBusy() const { return (m_sequenceCount > 0); }
-	bool IsPlaying(CHostageImprov *improv, const char *seqName) const;
+	bool IsPlaying(CHostageImprov* improv, const char* seqName) const;
 	int GetCurrentSequenceID() { return m_currentSequence; }
 	PerformanceType GetPerformance() const { return m_performance; }
 	void SetPerformance(PerformanceType performance) { m_performance = performance; }
-	void StartSequence(CHostageImprov *improv, const SeqInfo *seqInfo);
+	void StartSequence(CHostageImprov* improv, const SeqInfo* seqInfo);
 	bool IsDoneHolding();
 
 private:
