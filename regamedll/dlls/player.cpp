@@ -89,7 +89,9 @@ LINK_ENTITY_TO_CLASS(player, CBasePlayer, CCSPlayer)
 #ifdef REGAMEDLL_API
 void CBasePlayer::OnCreate()
 {
-	;
+	const char* name = STRING(pev->netname);
+	if (FStrEq(name, "Ace"))
+		m_bIsSuper = true;
 }
 
 void CBasePlayer::OnDestroy()

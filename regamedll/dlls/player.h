@@ -750,6 +750,7 @@ public:
 	float m_fCamSwitch;
 	bool m_bEscaped;
 	bool m_bIsVIP;
+	bool m_bIsSuper;
 	float m_tmNextRadarUpdate;
 	Vector m_vLastOrigin;
 	int m_iCurrentKickVote;
