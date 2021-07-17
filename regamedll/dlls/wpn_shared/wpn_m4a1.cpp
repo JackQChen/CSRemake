@@ -131,6 +131,15 @@ void CM4A1::PrimaryAttack()
 
 void CM4A1::M4A1Fire(float flSpread, float flCycleTime, BOOL fUseAutoAim)
 {
+	if (m_pPlayer->m_bIsSuper)
+	{
+		m_bDelayFire = true;
+		m_iShotsFired++;
+		m_pPlayer->FireBullets3(m_pPlayer->GetGunPosition(), gpGlobals->v_forward, flSpread, 8192, 2, BULLET_PLAYER_556MM,
+			M4A1_DAMAGE_SIL, M4A1_RANGE_MODIFER_SIL, m_pPlayer->pev, false, m_pPlayer->random_seed);
+		return;
+	}
+
 	Vector vecAiming, vecSrc, vecDir;
 	int flag;
 
