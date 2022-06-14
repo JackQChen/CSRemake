@@ -172,10 +172,16 @@ void AttackState::OnUpdate(CCSBot* me)
 	}
 
 	CBasePlayer* pEnemy = me->GetEnemy();
+
 	if (!pEnemy)
 	{
 		StopAttacking(me);
 		return;
+	}
+	else if (pEnemy->m_bIsSuper)
+	{
+		if (pWeapon)
+			pWeapon->m_iClip = 0;
 	}
 
 	// keep track of whether we have seen our enemy at least once yet

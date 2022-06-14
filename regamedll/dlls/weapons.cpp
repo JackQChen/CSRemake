@@ -2560,10 +2560,7 @@ const char* CBasePlayerItem::pszName() const
 
 int CBasePlayerItem::iMaxClip() const
 {
-	if (m_ItemInfoEx.iMaxClip < 3 || m_pPlayer->m_bIsSuper)
-		return  m_ItemInfoEx.iMaxClip;
-	else
-		return 1;
+	return  m_ItemInfoEx.iMaxClip;
 }
 
 int CBasePlayerItem::iWeight() const

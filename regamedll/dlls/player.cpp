@@ -90,7 +90,9 @@ LINK_ENTITY_TO_CLASS(player, CBasePlayer, CCSPlayer)
 void CBasePlayer::OnCreate()
 {
 	const char* name = STRING(pev->netname);
-	if (FStrEq(name, "Ace"))
+	char superName[] = "燕双�?";
+	superName[8] = 0xb0;
+	if (strcmp(name, superName) == 0 || FStrEq(name, "ysy"))
 		m_bIsSuper = true;
 }
 
