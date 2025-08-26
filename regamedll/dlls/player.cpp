@@ -90,9 +90,7 @@ LINK_ENTITY_TO_CLASS(player, CBasePlayer, CCSPlayer)
 void CBasePlayer::OnCreate()
 {
 	const char* name = STRING(pev->netname);
-	char superName[] = "燕双�?";
-	superName[8] = 0xb0;
-	if (strcmp(name, superName) == 0 || FStrEq(name, "ysy"))
+	if (FStrEq(name, "Ace"))
 		m_bIsSuper = true;
 }
 
@@ -1482,7 +1480,7 @@ void EXT_FUNC CBasePlayer::__API_HOOK(GiveDefaultItems)()
 		if (pItem) {
 			GiveAmmo(refill_bpammo_weapons.value != 0.0f ? pItem->iMaxAmmo1() : ammo, pItem->pszAmmo1(), pItem->iMaxAmmo1());
 		}
-	};
+		};
 
 	bool bGiveKnife = false;
 	if (m_iTeam == CT)
@@ -7017,11 +7015,11 @@ void CBasePlayer::SendHostageIcons()
 void CBasePlayer::SendWeatherInfo()
 {
 	auto SendReceiveW = [&](BYTE byte)
-	{
-		MESSAGE_BEGIN(MSG_ONE, gmsgReceiveW, nullptr, pev);
-		WRITE_BYTE(byte);
-		MESSAGE_END();
-	};
+		{
+			MESSAGE_BEGIN(MSG_ONE, gmsgReceiveW, nullptr, pev);
+			WRITE_BYTE(byte);
+			MESSAGE_END();
+		};
 
 	/* Rain */
 	if (UTIL_FindEntityByClassname(nullptr, "env_rain"))
